@@ -18,13 +18,12 @@
  */
 
 #include "App.h"
-#include "Surface.h"
 
 App::App()
 {
     Surf_Test = NULL;
     Surf_Display = NULL;
-
+ 
     Running = true;
 }
 
@@ -62,15 +61,15 @@ bool App::OnInit()
     if(SDL_Init(SDL_INIT_EVERYTHING) < 0) {
         return false;
     }
-
+ 
     if((Surf_Display = SDL_SetVideoMode(640, 480, 32, SDL_HWSURFACE | SDL_DOUBLEBUF)) == NULL) {
         return false;
     }
-
-    if((Surf_Test = Surface::OnLoad("myimage.bmp")) == NULL) {
+ 
+    if((Surf_Test = CSurface::OnLoad("myimage.bmp")) == NULL) {
         return false;
     }
-
+ 
     return true;
 }
 
@@ -87,8 +86,8 @@ void App::OnLoop()
 
 void App::OnRender()
 {
-    Surface::OnDraw(Surf_Display, Surf_Test, 0, 0);
-
+    CSurface::OnDraw(Surf_Display, Surf_Test, 0, 0);
+ 
     SDL_Flip(Surf_Display);
 }
 
