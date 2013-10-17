@@ -1,5 +1,5 @@
 /**
- Surface.h
+ SoundBank.h
 
  Copyright 2013 Gaston Martinez Gaston.martinez.90@gmail.com
 
@@ -16,20 +16,31 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
-
-#ifndef _CSURFACE_H_
-#define _CSURFACE_H_
+#ifndef SOUNDBANK_H_
+#define SOUNDBANK_H_
 
 #include <SDL.h>
+#include <SDL_mixer.h>
+#include <vector>
 
-class Surface {
-    public:
-        Surface();
+/*
+ *
+ */
+class SoundBank {
+public:
+	static SoundBank SoundControl;
 
-    public:
-        static SDL_Surface* OnLoad(char* File);
-        static bool OnDraw(SDL_Surface* Surf_Dest, SDL_Surface* Surf_Src, int X, int Y);
+	std::vector<Mix_Chunk*> SoundList;
 
+public:
+	SoundBank();
+
+	int OnLoad(char* File);
+
+	void OnCleanup();
+
+public:
+	void Play(int ID);
 };
 
-#endif
+#endif /* SOUNDBANK_H_ */

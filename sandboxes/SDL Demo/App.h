@@ -34,6 +34,7 @@ private:
     int posx = 0;
     int posy = 0;
 
+    int sound;
 
 public:
     App();

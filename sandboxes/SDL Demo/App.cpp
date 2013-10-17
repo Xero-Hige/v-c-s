@@ -19,6 +19,7 @@
 
 #include "App.h"
 #include "Surface.h"
+#include "SoundBank.h"
 
 App::App()
 {
@@ -51,20 +52,17 @@ int App::OnExecute()
     return 0;
 }
 
-int main(int argc, char* argv[])
-{
-    App theApp;
-
-    return theApp.OnExecute();
-}
-
 bool App::OnInit()
 {
     if(SDL_Init(SDL_INIT_EVERYTHING) < 0) {
         return false;
     }
 
-    if((Surf_Display = SDL_SetVideoMode(800, 600, 32, SDL_HWSURFACE | SDL_DOUBLEBUF)) == NULL) {
+    if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 4096) < 0) {
+        return false;
+    }
+
+    if((Surf_Display = SDL_SetVideoMode(800, 500, 32, SDL_HWSURFACE | SDL_DOUBLEBUF)) == NULL) {
         return false;
     }
 
@@ -73,6 +71,10 @@ bool App::OnInit()
     }
 
     if((Surf_Test = Surface::OnLoad("octocat.png")) == NULL) {
+        return false;
+    }
+
+    if((sound = SoundBank::SoundControl.OnLoad("sonido.wav")) == -1) {
         return false;
     }
 
@@ -88,6 +90,8 @@ void App::OnEvent(SDL_Event* Event)
     if(Event->type == SDL_MOUSEBUTTONDOWN){
         posx = Event->button.x - 128;
         posy = Event->button.y - 128;
+
+        SoundBank::SoundControl.Play(sound);
     }
 }
 
@@ -109,3 +113,10 @@ void App::OnCleanup()
     SDL_FreeSurface(Surf_Display);
     SDL_Quit();
 }
+int main(int argc, char* argv[])
+{
+    App theApp;
+
+    return theApp.OnExecute();
+}
+

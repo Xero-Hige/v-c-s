@@ -1,25 +1,28 @@
-# Automatically generated Makefile for project: sdl_coords_and_blitting
-# Created on  by gaten for sdltutorials.com
-# Comments, suggestions and bugs email: gaten DOT net AT gmail DOT com
-
-# Compiler
 CC = gcc
+OBJECTS = App.o Surface.o SoundBank.o
 
-# Objects
-OBJECTS = App.o Surface.o
 
-# Compiler flags
 CPPFLAGS = -Wall -Wextra -g `sdl-config --cflags`
+LDFLAGS=`sdl-config --libs` -lSDL -lSDL_image -lSDL_mixer -lstdc++
 
-# Linker flags
-LDFLAGS=`sdl-config --libs` -lSDL -lSDL_image -lstdc++
+EXEC = sdl
 
-main: App.cpp
-	$(CC) $(CPPFLAGS) -c App.cpp Surface.cpp
-	$(CC) $(OBJECTS) $(CPPFLAGS) $(LDFLAGS) -o sdl
+all: $(EXEC)
+
+$(EXEC): $(OBJECTS)
+	$(CC) $(OBJECTS) $(CPPFLAGS) $(LDFLAGS) -o $(EXEC)
+	
+App.o: App.h App.cpp
+	$(CC) $(CPPFLAGS) -c App.cpp
+
+Surface.o: Surface.h Surface.cpp
+	$(CC) $(CPPFLAGS) -c Surface.cpp
+
+SoundBank.o: SoundBank.h SoundBank.cpp
+	$(CC) $(CPPFLAGS) -c SoundBank.cpp
 
 # cleanup
 clean:
-	rm -rf $(OBJECTS)
+	rm *.o *.save $(EXEC)
 
 # EOF
