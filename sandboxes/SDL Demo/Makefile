@@ -12,11 +12,11 @@ OBJECTS = App.o Surface.o
 CPPFLAGS = -Wall -Wextra -g `sdl-config --cflags`
 
 # Linker flags
-LDFLAGS=`sdl-config --libs` -lSDL -lSDL_image -lstdc++ 
+LDFLAGS=`sdl-config --libs` -lSDL -lSDL_image -lstdc++
 
 main: App.cpp
 	$(CC) $(CPPFLAGS) -c App.cpp Surface.cpp
-	$(CC) $(OBJECTS) $(CPPFLAGS) $(LDFLAGS) -o sdl_coords_and_blitting
+	$(CC) $(OBJECTS) $(CPPFLAGS) $(LDFLAGS) -o sdl
 
 # cleanup
 clean:

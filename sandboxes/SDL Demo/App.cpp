@@ -23,6 +23,7 @@
 App::App()
 {
     Surf_Test = NULL;
+    Surf_Back = NULL;
     Surf_Display = NULL;
 
     Running = true;
@@ -63,11 +64,15 @@ bool App::OnInit()
         return false;
     }
 
-    if((Surf_Display = SDL_SetVideoMode(640, 480, 32, SDL_HWSURFACE | SDL_DOUBLEBUF)) == NULL) {
+    if((Surf_Display = SDL_SetVideoMode(800, 600, 32, SDL_HWSURFACE | SDL_DOUBLEBUF)) == NULL) {
         return false;
     }
 
-    if((Surf_Test = Surface::OnLoad("myimage.bmp")) == NULL) {
+    if((Surf_Back = Surface::OnLoad("bg.bmp")) == NULL) {
+        return false;
+    }
+
+    if((Surf_Test = Surface::OnLoad("octocat.png")) == NULL) {
         return false;
     }
 
@@ -79,6 +84,11 @@ void App::OnEvent(SDL_Event* Event)
     if(Event->type == SDL_QUIT) {
         Running = false;
     }
+
+    if(Event->type == SDL_MOUSEBUTTONDOWN){
+        posx = Event->button.x - 128;
+        posy = Event->button.y - 128;
+    }
 }
 
 void App::OnLoop()
@@ -87,7 +97,8 @@ void App::OnLoop()
 
 void App::OnRender()
 {
-    Surface::OnDraw(Surf_Display, Surf_Test, 0, 0);
+    Surface::OnDraw(Surf_Display, Surf_Back, 0, 0);
+    Surface::OnDraw(Surf_Display, Surf_Test, posx, posy);
 
     SDL_Flip(Surf_Display);
 }

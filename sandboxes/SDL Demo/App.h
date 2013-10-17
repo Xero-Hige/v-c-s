@@ -28,7 +28,11 @@ class App
 private:
     bool    Running;
     SDL_Surface* Surf_Display;
+    SDL_Surface*    Surf_Back;
     SDL_Surface*    Surf_Test;
+
+    int posx = 0;
+    int posy = 0;
 
 
 public:
