@@ -15,8 +15,9 @@
 #include <unistd.h> //close
 #include <string>
 #include <sstream>
-#include <streambuf>
 #include "../common_src/common_BigEndianProtocol.h"
+
+#include <stdio.h>
 
 namespace std {
 
@@ -46,6 +47,20 @@ Client::Client(string ip, int port) {
 	if (sockfd == -1) cerr << "creation error" << endl;
 	this->ip = ip;
 	this->port = port;
+}
+
+void Client::enviarMsg(){
+	char c = 0;
+	while (c != 'q'){
+		char msg[80];
+		cout << "Envio: " << endl;
+		scanf("%s", msg);
+		c = msg[0];
+		this->clientSend(msg, 80);
+		this->clientReceive(msg, 80);
+		cout << "Recibido: ";
+		cout << msg << endl;
+	}
 }
 
 void Client::connectServer(int & errcode){

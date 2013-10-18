@@ -9,11 +9,13 @@
 #define SOCKETLISTENERHANDLER_H_
 
 #include "../common_src/common_Thread.h"
+#include "server_Lobby.h"
 #include <arpa/inet.h>
 
 namespace std {
 
 class SocketHandler: public Thread {
+	Lobby * lobby;
 	/*
 	 * port es el puerto del que se escucha.
 	 */
@@ -30,36 +32,22 @@ class SocketHandler: public Thread {
 	 * aceptar_conex indica si se siguen aceptando conexiones luego de procesar
 	 * la actual o si hay que detenerse.
 	 */
-	bool aceptar_conex;
+	bool keep_accepting;
 	/*
 	 * run es heredado de Thread. Espera por una nueva conexion, cuando se
 	 * conecta un nuevo cliente llama a procesarCliente, luego cierra la
 	 * conexion.
 	 */
 	void run();
-	/*
-	 * procesarCliente corre todas las funciones que completan la transferencia de
-	 * datos con el cliente, es decir, envia el mensaje de bienvenida, recibe el
-	 * archivo y envia el mensaje de verificacion.
-	 */
-	void procesarCliente(int & sock);
 
 public:
-	SocketHandler(struct sockaddr_in * addr);
-	/*
-	 * socketSend envia los datos de buf a traves del socket.
-	 */
-	int socketSend(const void * buf, size_t length, int & sock);
-	/*
-	 * socketReceive recibe datos y los almacena en buf.
-	 */
-	int socketReceive(void * buf, size_t length, int & sock);
-	int* getSockListener();
+	SocketHandler(struct sockaddr_in * addr, Lobby * lob);
 	uint16_t getPort();
+	void setListeningMode();
 	/*
-	 * dejarDeAceptarConex saltea el accept actual y cierra el socket.
+	 * stopAccepting saltea el accept actual y cierra el socket.
 	 */
-	void dejarDeAceptarConex();
+	void stopAccepting();
 	virtual ~SocketHandler();
 };
 

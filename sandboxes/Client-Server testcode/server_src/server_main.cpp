@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include "server_Server.h"
+#include "server_Lobby.h"
 #include "../common_src/common_Thread.h"
 #include <pthread.h>
 #include <string>
@@ -57,12 +58,13 @@ vector<int*> * getListaPuertos(int argc, char * argv[]){
 int main(int argc, char *argv[]){
 	std::vector<int*> * list_puertos = std::getListaPuertos(argc, argv);
 	if (!list_puertos) return 0;
-	std::Server s();
-//	s.serverListen(list_puertos);
-//	s.acceptConnections();
+	std::Lobby * lob = new std::Lobby();
+	std::Server s;
+	s.serverListen(list_puertos, lob);
+	s.acceptConnections();
 	while (!std::charDeSalidaApretado()){ //ignorar
 	}
-//	s.dejarDeAceptarConex();
+	s.dejarDeAceptarConex();
 	if (list_puertos) delete list_puertos;
 	return 0;
 }

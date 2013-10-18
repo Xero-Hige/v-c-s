@@ -27,7 +27,7 @@ class Server {
 	 * por cada uno de ellos. A cada SLH creado lo agrega a la lista
 	 * sock_listeners.
 	 */
-	void crearPuertosDeEscucha(vector<int*> * list_puertos);
+	void createListeningPorts(vector<int*> * list_puertos, Lobby * lob);
 
 public:
 	/*
@@ -38,7 +38,7 @@ public:
 	/*
 	 * serverListen indica a cada puerto que el server haya abierto que escuche.
 	 */
-	void serverListen(vector<int*> * list_puertos);
+	void serverListen(vector<int*> * list_puertos, Lobby * lob);
 	/*
 	 * acceptConnections indica a cada SocketListenerHandler de la lista
 	 *  que se ejecute (cada uno en un thread distinto).

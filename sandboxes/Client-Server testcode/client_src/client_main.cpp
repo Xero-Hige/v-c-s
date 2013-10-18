@@ -70,6 +70,8 @@ int main(int argc, char *argv[]){
 	int port = std::obtenerPort(argc, argv, errcode);
 	std::Client c(ip, port);
 	c.connectServer(errcode);
+	if (errcode) return errcode;
+	c.enviarMsg();
 	//Si algo fallo devuelve 1 (el codigo de error)
 	if (errcode) return errcode;
 	c.closeConection();

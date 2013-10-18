@@ -6,7 +6,6 @@
  */
 
 #include "server_Server.h"
-#include "../common_src/common_Thread.h"
 #include <sys/socket.h> //AF_INET, SOCK_STREAM
 #include <iostream>
 #include <vector>
@@ -14,7 +13,6 @@
 #include <cstring> // memset
 #include <sys/types.h> //accept
 #include <unistd.h> //close
-#define BACKLOAD 5
 
 namespace std {
 /*
@@ -44,7 +42,7 @@ bool comparadorPuertos
 	return (sh1->getPort() == sh2->getPort());
 }
 
-void Server::crearPuertosDeEscucha(vector<int*> * list_puertos){
+void Server::createListeningPorts(vector<int*> * list_puertos, Lobby * lob){
 	//Se recorre la lista de puertos.
 	for (unsigned i = 0; i < list_puertos->size(); i++){
 		int port_actual = *(list_puertos->at(i));
@@ -54,7 +52,7 @@ void Server::crearPuertosDeEscucha(vector<int*> * list_puertos){
 		//Se le indica que puerto va a escuchar
 		setListener(caddr, port_actual);
 		//Se agrega a la lista
-		SocketHandler * sh = new SocketHandler(caddr);
+		SocketHandler * sh = new SocketHandler(caddr, lob);
 		if (contiene(sock_listeners, sh, comparadorPuertos)){
 			delete sh;
 		} else {
@@ -67,16 +65,12 @@ void Server::crearPuertosDeEscucha(vector<int*> * list_puertos){
  * serverListen crea una lista de sockets que escuchan en los puertos indicados
  * por 'list_puertos'. Luego los setea en modo escucha.
  */
-void Server::serverListen(vector<int*> * list_puertos){
+void Server::serverListen(vector<int*> * list_puertos, Lobby * lob){
 	//Se crean
-	this->crearPuertosDeEscucha(list_puertos);
+	this->createListeningPorts(list_puertos, lob);
 	for (unsigned i = 0; i < sock_listeners->size(); i++){
-		int r;
-		int * sockfd;
 		//Obtiene cada socket y lo pone en modo escucha
-		sockfd = (sock_listeners->at(i))->getSockListener();
-		r = listen(*sockfd, BACKLOAD);
-		if (r == -1) cerr << "Error." << endl;
+		(sock_listeners->at(i))->setListeningMode();
 	}
 }
 
@@ -90,15 +84,13 @@ void Server::acceptConnections(){
 void Server::dejarDeAceptarConex(){
 	//Le indica a cada socket que deje de aceptar
 	for (unsigned i = 0; i < sock_listeners->size(); i++){
-		sock_listeners->at(i)->dejarDeAceptarConex();
+		sock_listeners->at(i)->stopAccepting();
 		sock_listeners->at(i)->join();
 	}
 }
 
 Server::~Server(){
 	delete sock_listeners;
-	//Al chandler no lo crea server asi que lo tiene que liberar otro
-	//delete chandler;
 }
 
 } /* namespace std */

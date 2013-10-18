@@ -38,6 +38,7 @@ public:
 	 * errcode contiene el valor 1, si se logro conectar no se modifica.
 	 */
 	void connectServer(int & errcode);
+	void enviarMsg();
 	/*
 	 * closeConnection cierra el socket utilizado para la conex.
 	 */

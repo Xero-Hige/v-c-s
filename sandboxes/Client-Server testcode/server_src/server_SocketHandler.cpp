@@ -12,6 +12,8 @@
 #include <string>
 #include "../common_src/common_BigEndianProtocol.h"
 
+#define BACKLOAD 5
+
 namespace std {
 
 int* crearSocket(){
@@ -23,7 +25,8 @@ int* crearSocket(){
 	return sockfd;
 }
 
-SocketHandler::SocketHandler (struct sockaddr_in * addr){
+SocketHandler::SocketHandler (struct sockaddr_in * addr, Lobby * lob){
+	this->lobby = lob;
 	//Se crea el socket
 	int * sck = crearSocket();
 	this->sock_listener = sck;
@@ -31,54 +34,37 @@ SocketHandler::SocketHandler (struct sockaddr_in * addr){
 	//conexion cambia el numero del port
 	this->port = ntohs(addr->sin_port);
 	this->addr = addr;
-	this->aceptar_conex = true;
+	this->keep_accepting = true;
 	//bindeo, asocia sockaddr con el socket
 	bind(*sock_listener, (struct sockaddr *)addr, sizeof(struct sockaddr));
 }
 
 void SocketHandler::run(){
-	while (aceptar_conex){
+	while (keep_accepting){
 		unsigned int cli_len = sizeof(*(this->addr));
 		int new_cli = accept(*sock_listener, (struct sockaddr*) this->addr, &cli_len);
 		if (new_cli >= 0){
-			procesarCliente(new_cli);
-			close(new_cli);
+			cout << "Cliente Aceptado"<< endl;
+			ClientHandler * ch = new ClientHandler(new_cli);
+			this->lobby->addClient(ch);
 		}
 	}
-}
-
-void SocketHandler::procesarCliente(int & sock){
-
-}
-
-int SocketHandler::socketSend
-(const void * buf, size_t length, int & sock){
-	unsigned bytes_enviados = 0;
-	//Solo si no se envio nada reenvia. Esto es para evitar que se cuelgue
-	//(el cliente) cuando el send del server ocurre antes que el receive
-	//del cliente
-	while (bytes_enviados == 0){
-		bytes_enviados = send(sock, buf, length, 0);
-	}
-	return bytes_enviados;
-}
-
-int SocketHandler::socketReceive(void * buf, size_t length, int & sock){
-	return recv(sock, buf, length, 0);
 }
 
 uint16_t SocketHandler::getPort(){
 	return this->port;
 }
 
-int* SocketHandler::getSockListener(){
-	return sock_listener;
-}
-
-void SocketHandler::dejarDeAceptarConex(){
-	this->aceptar_conex = false;
+void SocketHandler::stopAccepting(){
+	this->keep_accepting = false;
 	shutdown(*sock_listener, 2); //salta el accept() actual
 	close(*sock_listener);
+}
+
+void SocketHandler::setListeningMode(){
+	int r;
+	r = listen(*sock_listener, BACKLOAD);
+	if (r == -1) cerr << "Error." << endl;
 }
 
 SocketHandler::~SocketHandler() {
