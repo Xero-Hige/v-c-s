@@ -20,8 +20,22 @@
 #include "App.h"
 #include "SoundBank.h"
 
+#include <stdlib.h>     /* srand, rand */
+
+#define COLUMNS 10
+#define ROWS 9
+
+#define XINIT 100
+#define YINIT 20
+
 App::App() {
 	Running = true;
+
+    int button_1x = -1;
+    int button_1y = -1;
+
+    int button_2x = -1;
+    int button_2y = -1;
 }
 
 int App::OnExecute() {
@@ -59,17 +73,15 @@ bool App::OnInit() {
 	cell = Sprite("res/images/cell.png", 60, 60);
 	cell.set_transparency(255, 255, 255);
 
+	hover_cell = Sprite("res/images/hover_cell.png");
+	hover_cell.set_transparency(255, 255, 255);
+
 	background = Surface("res/images/forrest.jpg");
 
-	int x = 100;
-	int y = 20;
-	int rows = 9;
-	int colums = 10;
+	for (int i = 0; i < COLUMNS; i++) {
+		for (int j = 0; j < ROWS; j++) {
 
-	for (int i = 0; i < colums; i++) {
-		for (int j = 0; j < rows; j++) {
-
-			cell.draw_over(background, x + (36 * i), y + (37 * j));
+			cell.draw_over(background, XINIT + (36 * i), YINIT + (37 * j));
 
 		}
 	}
@@ -94,6 +106,15 @@ bool App::OnInit() {
 		return false;
 	}
 
+	table = new int*[COLUMNS]();
+
+	for (int i = 0; i < COLUMNS; i++) {
+		table[i] = new int[ROWS]();
+		for (int j = 0; j < ROWS; j++) {
+			table[i][j] = rand() % 5;
+		}
+	}
+
 	return true;
 }
 
@@ -104,6 +125,36 @@ void App::OnEvent(SDL_Event* Event) {
 
 	if (Event->type == SDL_MOUSEBUTTONDOWN) {
 		SoundBank::SoundControl.Play(sound);
+
+		int x = Event->button.x;
+		int y = Event->button.y;
+
+		int max_x = XINIT + 36*COLUMNS;
+		int max_y = YINIT + 37*ROWS;
+
+
+		if ((x > XINIT) && (x < max_x) && (y > YINIT) && (y < max_y) )
+		{
+			int columna = (x-XINIT) / 36;
+			int fila = (y-YINIT) / 37;
+
+			if ( button_1x < 0 )
+			{
+				button_1x = columna;
+				button_1y = fila;
+			}else
+			{
+				button_2x = columna;
+				button_2y = fila;
+
+				int aux = table[button_1x][button_1y];
+				table[button_1x][button_1y] = table[button_2x][button_2y];
+				table[button_2x][button_2y] = aux;
+
+				button_1x = -100;
+				button_1y = -100;
+			}
+		}
 	}
 }
 
@@ -118,28 +169,27 @@ void App::OnLoop() {
 void App::OnRender() {
 	Surf_Display.draw_on(background, 0, 0);
 
-	int x = 100;
-	int y = 20;
-	int colums = 9;
-	int rows = 10;
+	for (int i = 0; i < COLUMNS; i++) {
+		for (int j = 0; j < ROWS; j++) {
 
-	for (int i = 0; i < rows; i++) {
-		for (int j = 0; j < colums; j++) {
-			if (((i * j) + j + i) % 5 == 0) {
-				a.draw_over(Surf_Display, x + (36 * i) + 1,
-						y + (37 * j) + 1);
+			if ( i == button_1x && j == button_1y){
+				hover_cell.draw_over(Surf_Display, XINIT + (36 * i), YINIT + (37 * j));
 			}
-			if (((i * j) + j + i) % 5 == 1) {
-				b.draw_over(Surf_Display, x + (36 * i) + 1, y + (37 * j) + 1);
+
+			if (table[i][j] == 0) {
+				a.draw_over(Surf_Display, XINIT + (36 * i) + 1, YINIT + (37 * j) + 1);
 			}
-			if (((i * j) + j + i) % 5 == 2) {
-				c.draw_over(Surf_Display, x + (36 * i) + 1, y + (37 * j) + 1);
+			if (table[i][j] == 1) {
+				b.draw_over(Surf_Display, XINIT + (36 * i) + 1, YINIT + (37 * j) + 1);
 			}
-			if (((i * j) + j + i) % 5 == 3) {
-				d.draw_over(Surf_Display, x + (36 * i) + 1, y + (37 * j) + 1);
+			if (table[i][j] == 2) {
+				c.draw_over(Surf_Display, XINIT + (36 * i) + 1, YINIT + (37 * j) + 1);
 			}
-			if (((i * j) + j + i) % 5 == 4) {
-				e.draw_over(Surf_Display, x + (36 * i) + 1, y + (37 * j) + 1);
+			if (table[i][j] == 3) {
+				d.draw_over(Surf_Display, XINIT + (36 * i) + 1, YINIT + (37 * j) + 1);
+			}
+			if (table[i][j] == 4) {
+				e.draw_over(Surf_Display, XINIT + (36 * i) + 1, YINIT + (37 * j) + 1);
 			}
 		}
 	}

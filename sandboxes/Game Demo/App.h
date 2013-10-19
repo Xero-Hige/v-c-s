@@ -35,6 +35,8 @@ private:
     Window_Surface  Surf_Display;
     Surface   		background;
     Sprite    		cell;
+    Sprite    		hover_cell;
+
 
     Animated_Sprite a;
     Animated_Sprite b;
@@ -42,7 +44,13 @@ private:
     Animated_Sprite d;
     Animated_Sprite e;
 
+    int** table;
 
+    int button_1x = -100;
+    int button_1y = -100;
+
+    int button_2x;
+    int button_2y;
 
     int sound;
 
