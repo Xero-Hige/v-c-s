@@ -1,5 +1,5 @@
+#summary Pagina manual de las librerias graficas.
 #labels Phase-Implementation
-#Pagina manual de las librerias graficas.
 = Librerias Graficas =
 
 == Descripcion ==
