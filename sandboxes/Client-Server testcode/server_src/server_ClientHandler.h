@@ -8,6 +8,7 @@
 #ifndef CLIENTHANDLER_H_
 #define CLIENTHANDLER_H_
 #include "../common_src/common_Thread.h"
+#include "../common_src/common_MsgConstants.h"
 #include <stdlib.h>
 
 namespace std {
@@ -19,6 +20,8 @@ class ClientHandler : public Thread {
 
 	bool keep_communicating;
 
+	void requestIds();
+
 public:
 	explicit ClientHandler(int sock);
 	/*
@@ -29,6 +32,9 @@ public:
 	 * socketReceive recibe datos y los almacena en buf.
 	 */
 	int socketReceive(void * buf, size_t length);
+
+	void getIds(void * buf, size_t length = RESPONSE_SIZE);
+
 	virtual ~ClientHandler();
 };
 

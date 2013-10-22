@@ -40,6 +40,9 @@ class SocketHandler: public Thread {
 	 */
 	void run();
 
+	bool authenticateClient(ClientHandler * ch);
+	void addClient(int new_client);
+
 public:
 	SocketHandler(struct sockaddr_in * addr, Lobby * lob);
 	uint16_t getPort();

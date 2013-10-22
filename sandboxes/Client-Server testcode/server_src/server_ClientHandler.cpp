@@ -8,6 +8,7 @@
 #include "server_ClientHandler.h"
 #include <arpa/inet.h>
 #include <iostream>
+#include "../common_src/common_MsgConstants.h"
 
 namespace std {
 
@@ -43,6 +44,16 @@ int ClientHandler::socketSend(const void * buf, size_t length){
 		bytes_enviados = send(this->sock, buf, length, 0);
 	}
 	return bytes_enviados;
+}
+
+void ClientHandler::getIds(void * buf, size_t size){
+	this->requestIds();
+	this->socketReceive(buf, size);
+}
+
+void ClientHandler::requestIds(){
+	char req[] = REQUEST_IDS;
+	this->socketSend(req, REQUEST_SIZE);
 }
 
 int ClientHandler::socketReceive(void * buf, size_t length){

@@ -11,6 +11,7 @@
 #include <sstream>
 #include <string>
 #include "../common_src/common_BigEndianProtocol.h"
+#include "../common_src/common_MsgConstants.h"
 
 #define BACKLOAD 5
 
@@ -45,10 +46,21 @@ void SocketHandler::run(){
 		int new_cli = accept(*sock_listener, (struct sockaddr*) this->addr, &cli_len);
 		if (new_cli >= 0){
 			cout << "Cliente Aceptado"<< endl;
-			ClientHandler * ch = new ClientHandler(new_cli);
-			this->lobby->addClient(ch);
+			this->addClient(new_cli);//addClient decide si acepta o no
 		}
 	}
+}
+
+void SocketHandler::addClient(int new_client){
+	ClientHandler * ch = new ClientHandler(new_client);
+	if (authenticateClient(ch)) this->lobby->addClient(ch);
+}
+
+bool SocketHandler::authenticateClient(ClientHandler * ch){
+	char ids[RESPONSE_SIZE];
+	ch->getIds(ids, RESPONSE_SIZE);
+	//todo REALIZAR CHEQUEO DE IDS
+	return true;
 }
 
 uint16_t SocketHandler::getPort(){
@@ -68,7 +80,6 @@ void SocketHandler::setListeningMode(){
 }
 
 SocketHandler::~SocketHandler() {
-	// TODO Auto-generated destructor stub
 	delete addr;
 	delete sock_listener;
 }
