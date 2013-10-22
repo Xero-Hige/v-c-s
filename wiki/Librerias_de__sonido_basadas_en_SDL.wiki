@@ -1,0 +1,12 @@
+#summary Pagina manual de las librerias de sonido.
+#labels Phase-Implementation
+= Librerias Graficas =
+
+== Descripcion ==
+
+Librerias para crear un framework de sonidos basado en SDL orientado a objetos y amigable al usuario.
+
+== Requerimientos ==
+
+ * *Libsdl*
+ * *SDL Mixer 1.2*
