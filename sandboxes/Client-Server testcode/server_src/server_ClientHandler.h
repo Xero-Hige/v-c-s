@@ -22,6 +22,7 @@ class ClientHandler : public Thread {
 
 	void requestIds();
 
+
 public:
 	explicit ClientHandler(int sock);
 	/*
@@ -33,7 +34,9 @@ public:
 	 */
 	int socketReceive(void * buf, size_t length);
 
-	void getIds(void * buf, size_t length = RESPONSE_SIZE);
+	void getIds(void * buf, size_t length = IDS_RESPONSE_SIZE);
+
+	void sendIdsVerifMsg();
 
 	virtual ~ClientHandler();
 };

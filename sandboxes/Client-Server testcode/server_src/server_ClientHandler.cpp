@@ -46,14 +46,19 @@ int ClientHandler::socketSend(const void * buf, size_t length){
 	return bytes_enviados;
 }
 
+void ClientHandler::sendIdsVerifMsg(){
+	char verif[] = IDS_VERIF;
+	this->socketSend(verif, IDS_VERIF_SIZE);
+}
+
 void ClientHandler::getIds(void * buf, size_t size){
 	this->requestIds();
 	this->socketReceive(buf, size);
 }
 
 void ClientHandler::requestIds(){
-	char req[] = REQUEST_IDS;
-	this->socketSend(req, REQUEST_SIZE);
+	char req[] = IDS_REQUEST;
+	this->socketSend(req, IDS_REQUEST_SIZE);
 }
 
 int ClientHandler::socketReceive(void * buf, size_t length){

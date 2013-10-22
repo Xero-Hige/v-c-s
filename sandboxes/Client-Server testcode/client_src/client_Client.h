@@ -14,6 +14,8 @@
 namespace std {
 
 class Client {
+	friend class Authenticator;
+
 	string ip;
 	int port;
 	int sockfd;//socket file descriptor
@@ -26,6 +28,9 @@ class Client {
 	 * clientReceive recibe un buffer entrante.
 	 */
 	int clientReceive(char * buf, size_t length);
+
+	void getPasswd(char * passwd, size_t size);
+	void getUsername(char * user, size_t size);
 
 public:
 	/*

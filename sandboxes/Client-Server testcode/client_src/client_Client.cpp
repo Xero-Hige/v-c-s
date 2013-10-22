@@ -16,6 +16,8 @@
 #include <string>
 #include <sstream>
 #include "../common_src/common_BigEndianProtocol.h"
+#include "../common_src/common_MsgConstants.h"
+#include "client_Authenticator.h"
 
 #include <stdio.h>
 
@@ -42,7 +44,6 @@ int setServerAddr(struct sockaddr_in & server_addr, string ip, int port){
 }
 
 Client::Client(string ip, int port) {
-	// TODO Auto-generated constructor stub
 	sockfd = socket(AF_INET, SOCK_STREAM, 0); //SOCK_STREAM = TCP
 	if (sockfd == -1) cerr << "creation error" << endl;
 	this->ip = ip;
@@ -69,15 +70,24 @@ void Client::connectServer(int & errcode){
 	r = setServerAddr(s_addr, ip, port);
 	//Intenta conectarse
 	if (r < 0){
-		//Cambia el codigo de error para que coincida con lo pedido en el informe
 		errcode = 1;
 		//Usa return porque si fallo setServerAddr connect se bloquea
 		return;
 	}
 	r += connect(sockfd, (struct sockaddr*) & s_addr, sizeof(struct sockaddr));
 	memset(&(server_addr.sin_zero), 0, sizeof(s_addr.sin_zero));
-	//Cambia el codigo de error para que coincida con lo pedido en el informe
 	if (r < 0) errcode = 1;
+	Authenticator auth(this);
+	if (!auth.authenticate()) errcode = 1;
+}
+
+void Client::getPasswd(char * passwd, size_t size){
+	cout << "ingresar passwd: " << endl;
+	scanf("%s", passwd);
+}
+void Client::getUsername(char * user, size_t size){
+	cout << "ingresar username: " << endl;
+	scanf("%s", user);
 }
 
 int Client::clientSend(char * buf, size_t length){
@@ -97,7 +107,6 @@ void Client::closeConection(){
 }
 
 Client::~Client() {
-	// TODO Auto-generated destructor stub
 }
 
 } /* namespace std */
