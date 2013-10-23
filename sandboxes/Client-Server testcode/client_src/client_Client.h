@@ -31,6 +31,7 @@ class Client {
 
 	void getPasswd(char * passwd, size_t size);
 	void getUsername(char * user, size_t size);
+	int makeConnection();
 
 public:
 	/*

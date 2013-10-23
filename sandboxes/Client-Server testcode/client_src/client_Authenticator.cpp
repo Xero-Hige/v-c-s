@@ -54,13 +54,15 @@ void Authenticator::sendAuth
 	this->client->clientSend(msg, u_size + p_size);
 }
 
-bool Authenticator::authenticate(){
+bool Authenticator::authenticate
+(char* user, size_t u_size, char* passwd, size_t p_size){
 	if(this->receiveAuthRequest()){
-		char passwd[IDS_PASSWD_SIZE];
-		this->client->getPasswd(passwd, IDS_PASSWD_SIZE);
-		char username[IDS_USERNAME_SIZE];
-		this->client->getUsername(username, IDS_USERNAME_SIZE);
-		this->sendAuth(username, IDS_USERNAME_SIZE, passwd, IDS_PASSWD_SIZE);
+//		char passwd[IDS_PASSWD_SIZE];
+//		this->client->getPasswd(passwd, IDS_PASSWD_SIZE);
+//		char username[IDS_USERNAME_SIZE];
+//		this->client->getUsername(username, IDS_USERNAME_SIZE);
+//		this->sendAuth(username, IDS_USERNAME_SIZE, passwd, IDS_PASSWD_SIZE);
+		this->sendAuth(user, u_size, passwd, p_size);
 		if (this->receiveAuthVerif()) return true;
 	}
 	return false;

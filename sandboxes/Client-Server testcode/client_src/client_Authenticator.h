@@ -21,7 +21,7 @@ class Authenticator {
 
 public:
 	Authenticator(Client * c);
-	bool authenticate();
+	bool authenticate(char* user, size_t u_size, char* passwd, size_t p_size);
 	virtual ~Authenticator();
 };
 

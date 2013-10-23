@@ -64,21 +64,28 @@ void Client::enviarMsg(){
 	}
 }
 
-void Client::connectServer(int & errcode){
+int Client::makeConnection(){
 	int r;
 	struct sockaddr_in s_addr;
 	r = setServerAddr(s_addr, ip, port);
 	//Intenta conectarse
-	if (r < 0){
-		errcode = 1;
-		//Usa return porque si fallo setServerAddr connect se bloquea
-		return;
-	}
+	if (r < 0)
+		return 1;
 	r += connect(sockfd, (struct sockaddr*) & s_addr, sizeof(struct sockaddr));
 	memset(&(server_addr.sin_zero), 0, sizeof(s_addr.sin_zero));
-	if (r < 0) errcode = 1;
+	if (r < 0) return 1;
+	return 0;
+}
+
+void Client::connectServer(int & errcode){
+	char passwd[IDS_PASSWD_SIZE];
+	getPasswd(passwd, IDS_PASSWD_SIZE);
+	char username[IDS_USERNAME_SIZE];
+	getUsername(username, IDS_USERNAME_SIZE);
+	errcode = makeConnection(); //1 si no se pudo establecer conexion
 	Authenticator auth(this);
-	if (!auth.authenticate()) errcode = 1;
+	if (!auth.authenticate(username, IDS_USERNAME_SIZE, passwd, IDS_PASSWD_SIZE))
+		errcode = 2; //passwd/username incorrectos
 }
 
 void Client::getPasswd(char * passwd, size_t size){
