@@ -29,6 +29,7 @@ class Client {
 	 */
 	int clientReceive(char * buf, size_t length);
 
+	void getConnectionType(char * a_type, size_t size);
 	void getPasswd(char * passwd, size_t size);
 	void getUsername(char * user, size_t size);
 	int makeConnection();

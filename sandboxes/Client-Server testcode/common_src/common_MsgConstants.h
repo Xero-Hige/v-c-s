@@ -16,6 +16,8 @@
 #define IDS_VERIF "VERIF-IDS"
 #define IDS_VERIF_SIZE 9
 
-
+#define TYPE_SIZE 1
+#define TYPE_REGISTER "2"
+#define TYPE_LOGIN "1"
 
 #endif /* COMMON_MSGCONSTANTS_H_ */

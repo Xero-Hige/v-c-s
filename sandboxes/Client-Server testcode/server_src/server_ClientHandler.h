@@ -20,8 +20,6 @@ class ClientHandler : public Thread {
 
 	bool keep_communicating;
 
-	void requestIds();
-
 
 public:
 	explicit ClientHandler(int sock);
@@ -33,6 +31,8 @@ public:
 	 * socketReceive recibe datos y los almacena en buf.
 	 */
 	int socketReceive(void * buf, size_t length);
+
+	void getAuthType(void * buf, size_t length = TYPE_SIZE);
 
 	void getIds(void * buf, size_t length = IDS_RESPONSE_SIZE);
 

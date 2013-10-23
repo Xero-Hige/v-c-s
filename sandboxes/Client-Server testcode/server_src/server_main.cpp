@@ -31,8 +31,8 @@ bool charDeSalidaApretado(){
  * getListaPuertos devuelve una lista de ints que corresponden a los puertos
  * donde el server tiene que escuchar.
  */
-vector<int*> * getListaPuertos(int argc, char * argv[]){
-	vector<int*> * l_ports = new vector<int*>();
+vector<int> * getListaPuertos(int argc, char * argv[]){
+	vector<int> * l_ports = new vector<int>();
 	if (argc != 2) return NULL;
 	string str;
 	int i = 0;
@@ -41,31 +41,29 @@ vector<int*> * getListaPuertos(int argc, char * argv[]){
 		if (c != SEPARADOR_PORTS) {
 			str += c;
 		} else {
-			l_ports->push_back(new int(atoi(str.c_str())));
+			l_ports->push_back(atoi(str.c_str()));
 			str.clear();
 		}
 		i++;
 		c = (argv[1])[i];
 	}
 	//Agrego el ultimo
-	if (str.length() > 0) l_ports->push_back(new int (atoi(str.c_str())));
+	if (str.length() > 0) l_ports->push_back(atoi(str.c_str()));
 	return l_ports;
 }
-
-
 }
 
 int main(int argc, char *argv[]){
-	std::vector<int*> * list_puertos = std::getListaPuertos(argc, argv);
+	std::vector<int> * list_puertos = std::getListaPuertos(argc, argv);
 	if (!list_puertos) return 0;
-	std::Lobby * lob = new std::Lobby();
+	std::Lobby lob;
 	std::Server s;
-	s.serverListen(list_puertos, lob);
+	s.serverListen(list_puertos, &lob);
 	s.acceptConnections();
 	while (!std::charDeSalidaApretado()){ //ignorar
 	}
 	s.dejarDeAceptarConex();
-	if (list_puertos) delete list_puertos;
+	delete list_puertos;
 	return 0;
 }
 

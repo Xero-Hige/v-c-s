@@ -15,10 +15,6 @@ Authenticator::Authenticator(Client * c) {
 	this->client = c;
 }
 
-bool Authenticator::receiveAuthRequest(){
-	return verificateMessage(IDS_REQUEST, IDS_REQUEST_SIZE);
-}
-
 bool Authenticator::receiveAuthVerif(){
 	return verificateMessage(IDS_VERIF, IDS_VERIF_SIZE);
 }
@@ -52,19 +48,18 @@ void Authenticator::sendAuth
 	char * msg = new char[u_size + p_size];
 	concatenateUserPassword(msg, user, u_size, passwd, p_size);
 	this->client->clientSend(msg, u_size + p_size);
+	delete[] msg;
 }
 
-bool Authenticator::authenticate
-(char* user, size_t u_size, char* passwd, size_t p_size){
-	if(this->receiveAuthRequest()){
-//		char passwd[IDS_PASSWD_SIZE];
-//		this->client->getPasswd(passwd, IDS_PASSWD_SIZE);
-//		char username[IDS_USERNAME_SIZE];
-//		this->client->getUsername(username, IDS_USERNAME_SIZE);
-//		this->sendAuth(username, IDS_USERNAME_SIZE, passwd, IDS_PASSWD_SIZE);
-		this->sendAuth(user, u_size, passwd, p_size);
-		if (this->receiveAuthVerif()) return true;
-	}
+void Authenticator::sendAuthType(char * auth_type, size_t size){
+	this->client->clientSend(auth_type, TYPE_SIZE);
+}
+
+bool Authenticator::sendIds
+(char* user, char* passwd, char* auth_type){
+	this->sendAuthType(auth_type, TYPE_SIZE);
+	this->sendAuth(user, IDS_USERNAME_SIZE, passwd, IDS_PASSWD_SIZE);
+	if (this->receiveAuthVerif()) return true;
 	return false;
 }
 

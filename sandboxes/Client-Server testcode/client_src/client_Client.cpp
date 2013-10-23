@@ -78,22 +78,31 @@ int Client::makeConnection(){
 }
 
 void Client::connectServer(int & errcode){
-	char passwd[IDS_PASSWD_SIZE];
-	getPasswd(passwd, IDS_PASSWD_SIZE);
+	//Obtiene user y pass y si los quiere usar para logearse o registrarse
+	char a_type[TYPE_SIZE];
+	getConnectionType(a_type, TYPE_SIZE);
 	char username[IDS_USERNAME_SIZE];
 	getUsername(username, IDS_USERNAME_SIZE);
+	char passwd[IDS_PASSWD_SIZE];
+	getPasswd(passwd, IDS_PASSWD_SIZE);
 	errcode = makeConnection(); //1 si no se pudo establecer conexion
 	Authenticator auth(this);
-	if (!auth.authenticate(username, IDS_USERNAME_SIZE, passwd, IDS_PASSWD_SIZE))
+	if (!auth.sendIds(username, passwd, a_type))
 		errcode = 2; //passwd/username incorrectos
 }
 
+void Client::getConnectionType(char * a_type, size_t size){
+	cout << "1 - Login \n2 - Registrarse\n";
+	scanf("%s", a_type);
+	return;
+}
+
 void Client::getPasswd(char * passwd, size_t size){
-	cout << "ingresar passwd: " << endl;
+	cout << "Ingresar passwd: " << endl;
 	scanf("%s", passwd);
 }
 void Client::getUsername(char * user, size_t size){
-	cout << "ingresar username: " << endl;
+	cout << "Ingresar username: " << endl;
 	scanf("%s", user);
 }
 

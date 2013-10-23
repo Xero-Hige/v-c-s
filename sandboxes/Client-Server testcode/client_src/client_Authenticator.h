@@ -15,13 +15,13 @@ namespace std {
 class Authenticator {
 	Client * client;
 	bool verificateMessage(const char * msg, size_t msg_size);
-	bool receiveAuthRequest();
 	bool receiveAuthVerif();
 	void sendAuth(char * user, size_t u_size, char * passwd, size_t p_size);
+	void sendAuthType(char * auth_type, size_t size);
 
 public:
 	Authenticator(Client * c);
-	bool authenticate(char* user, size_t u_size, char* passwd, size_t p_size);
+	bool sendIds(char* user, char* passwd, char * auth_type);
 	virtual ~Authenticator();
 };
 

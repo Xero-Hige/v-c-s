@@ -6,6 +6,7 @@
  */
 
 #include "server_SocketHandler.h"
+#include "server_ClientAuthenticator.h"
 #include <unistd.h> //close
 #include <iostream>
 #include <sstream>
@@ -53,19 +54,9 @@ void SocketHandler::run(){
 
 void SocketHandler::addClient(int & new_client){
 	ClientHandler * ch = new ClientHandler(new_client);
-	if (authenticateClient(ch)) this->lobby->addClient(ch);
+	ClientAuthenticator ca(ch);
+	if (ca.authenticate()) this->lobby->addClient(ch);
 	else close(new_client);
-}
-
-bool SocketHandler::authenticateClient(ClientHandler * ch){
-	char ids[IDS_RESPONSE_SIZE];
-	ch->getIds(ids, IDS_RESPONSE_SIZE);
-	//todo REALIZAR CHEQUEO DE IDS
-	//if (chequeoIds(ids))
-	ch->sendIdsVerifMsg();
-	return true;
-	//else
-	//return false;
 }
 
 uint16_t SocketHandler::getPort(){

@@ -42,10 +42,10 @@ bool comparadorPuertos
 	return (sh1->getPort() == sh2->getPort());
 }
 
-void Server::createListeningPorts(vector<int*> * list_puertos, Lobby * lob){
+void Server::createListeningPorts(vector<int> * list_puertos, Lobby * lob){
 	//Se recorre la lista de puertos.
 	for (unsigned i = 0; i < list_puertos->size(); i++){
-		int port_actual = *(list_puertos->at(i));
+		int port_actual = list_puertos->at(i);
 		//Se crea un nuevo sockaddr
 		//Lo libera SocketListenerHandler
 		struct sockaddr_in * caddr = new struct sockaddr_in();
@@ -65,7 +65,7 @@ void Server::createListeningPorts(vector<int*> * list_puertos, Lobby * lob){
  * serverListen crea una lista de sockets que escuchan en los puertos indicados
  * por 'list_puertos'. Luego los setea en modo escucha.
  */
-void Server::serverListen(vector<int*> * list_puertos, Lobby * lob){
+void Server::serverListen(vector<int> * list_puertos, Lobby * lob){
 	//Se crean
 	this->createListeningPorts(list_puertos, lob);
 	for (unsigned i = 0; i < sock_listeners->size(); i++){
@@ -90,6 +90,9 @@ void Server::dejarDeAceptarConex(){
 }
 
 Server::~Server(){
+	for (unsigned i = 0; i < sock_listeners->size(); i++){
+		delete sock_listeners->at(i);
+	}
 	delete sock_listeners;
 }
 

@@ -40,7 +40,6 @@ class SocketHandler: public Thread {
 	 */
 	void run();
 
-	bool authenticateClient(ClientHandler * ch);
 	void addClient(int & new_client);
 
 public:

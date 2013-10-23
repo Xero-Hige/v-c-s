@@ -52,13 +52,11 @@ void ClientHandler::sendIdsVerifMsg(){
 }
 
 void ClientHandler::getIds(void * buf, size_t size){
-	this->requestIds();
 	this->socketReceive(buf, size);
 }
 
-void ClientHandler::requestIds(){
-	char req[] = IDS_REQUEST;
-	this->socketSend(req, IDS_REQUEST_SIZE);
+void ClientHandler::getAuthType(void * buf, size_t length){
+	this->socketReceive(buf, length);
 }
 
 int ClientHandler::socketReceive(void * buf, size_t length){
