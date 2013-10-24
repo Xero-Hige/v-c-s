@@ -21,9 +21,13 @@ class Client {
 	int port;
 	ServerHandler * s_handler;//socket file descriptor
 
+	void getMatchmaking(string & mm);
 	void getConnectionType(string & a_type);
 	void getPasswd(string & passwd);
 	void getUsername(string & user);
+	void getRoomId(string & id);
+	void useUserDefinedMatchmaking();
+	void useDefaultMatchmaking();
 	int makeConnection();
 
 public:
@@ -37,6 +41,7 @@ public:
 	 * errcode contiene el valor 1, si se logro conectar no se modifica.
 	 */
 	void connectServer(int & errcode);
+	void enterRoom();
 	void enviarMsg();
 	/*
 	 * closeConnection cierra el socket utilizado para la conex.

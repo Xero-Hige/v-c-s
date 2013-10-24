@@ -41,6 +41,8 @@ public:
 
 	void getAuthType(string & auth_type);
 
+	void getMatchMaking(string & mm);
+
 	void getIds(string & user, string & passwd);
 
 	void sendIdsVerifMsg();

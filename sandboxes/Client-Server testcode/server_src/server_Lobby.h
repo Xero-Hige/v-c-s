@@ -11,10 +11,12 @@
 #include <vector>
 #include "server_Room.h"
 #include "../common_src/common_Mutex.h"
+#include "../common_src/common_Thread.h"
 
 namespace std {
 
-class Lobby {
+class Lobby{
+	friend class MatchMakingStrategy;
 	Mutex m;
 	vector<Room*> rooms;
 

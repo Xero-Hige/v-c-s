@@ -69,6 +69,10 @@ void ClientHandler::getAuthType(string & auth_type){
 	recvMsg(auth_type);
 }
 
+void ClientHandler::getMatchMaking(string & mm){
+	recvMsg(mm);
+}
+
 int ClientHandler::socketReceive(void * buf, size_t length){
 	return recv(this->sock, buf, length, 0);
 }

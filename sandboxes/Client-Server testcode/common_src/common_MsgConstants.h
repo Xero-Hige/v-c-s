@@ -15,4 +15,8 @@
 #define TYPE_REGISTER "2"
 #define TYPE_LOGIN "1"
 
+//MM = MatchMaking
+#define MM_USER_DEF "1"
+#define MM_DEFAULT "2"
+
 #endif /* COMMON_MSGCONSTANTS_H_ */

@@ -59,6 +59,7 @@ void Client::enviarMsg(){
 		c = msg[0];
 		string s_msg(msg);
 		this->s_handler->sendMsg(s_msg);
+		s_msg.clear();
 		this->s_handler->recvMsg(s_msg);
 		cout << "Recibido: ";
 		cout << s_msg << endl;
@@ -89,6 +90,44 @@ void Client::connectServer(int & errcode){
 	Authenticator auth(this);
 	if (!auth.sendIds(username, passwd, a_type))
 		errcode = 2; //passwd/username incorrectos
+}
+
+void Client::useUserDefinedMatchmaking(){
+	string id;
+	getRoomId(id);
+	s_handler->sendMsg(id);
+}
+
+void Client::useDefaultMatchmaking(){
+	//Do nothing
+}
+
+void Client::enterRoom(){
+	string mm;
+	getMatchmaking(mm);
+	s_handler->sendMsg(mm);
+	if (mm.compare(MM_USER_DEF) == 0){
+		useUserDefinedMatchmaking();
+	} else if (mm.compare(MM_DEFAULT) == 0){
+		useDefaultMatchmaking();
+	}
+	return;
+}
+
+void Client::getRoomId(string & id){
+	cout << "Enter room id: \n";
+	char c[256];
+	scanf("%s", c);
+	id.append(c);
+	return;
+}
+
+void Client::getMatchmaking(string & mm){
+	cout << "1 - User-defined room \n2 - Default\n";
+	char c[256];
+	scanf("%s", c);
+	mm.append(c);
+	return;
 }
 
 void Client::getConnectionType(string & a_type){

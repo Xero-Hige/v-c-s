@@ -71,6 +71,7 @@ int main(int argc, char *argv[]){
 	std::Client c(ip, port);
 	c.connectServer(errcode);
 	if (errcode) return errcode;
+	c.enterRoom();
 	c.enviarMsg();
 	//Si algo fallo devuelve 1 (el codigo de error)
 	if (errcode) return errcode;
