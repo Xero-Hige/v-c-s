@@ -17,26 +17,26 @@ ClientAuthenticator::ClientAuthenticator(ClientHandler * ch) {
 
 bool ClientAuthenticator::authenticate(){
 	//Determina si el cliente quiere registrarse o logearse
-	char auth_type[TYPE_SIZE];
-	this->client->getAuthType(auth_type, TYPE_SIZE);
-	if (strcmp(auth_type, TYPE_LOGIN) == 0)
+	string auth_type;
+	this->client->getAuthType(auth_type);
+	if (auth_type.compare(TYPE_LOGIN) == 0)
 		return login();
-	else /*if (strcmp(auth_type, TYPE_REGISTER) == 0)*/
+	else /*if (auth_type.compare(TYPE_REGISTER) == 0)*/
 		return registrate();
 }
 
 bool ClientAuthenticator::registrate(){
 	//todo
-	char ids[IDS_RESPONSE_SIZE];
-	client->getIds(ids, IDS_RESPONSE_SIZE);
+	string user, passwd;
+	client->getIds(user, passwd);
 	//DO SHIT
 	client->sendIdsVerifMsg();
 	return true;
 }
 
 bool ClientAuthenticator::login(){
-	char ids[IDS_RESPONSE_SIZE];
-	client->getIds(ids, IDS_RESPONSE_SIZE);
+	string user, passwd;
+	client->getIds(user, passwd);
 	//todo REALIZAR CHEQUEO DE IDS
 	//if (chequeoIds(ids))
 	client->sendIdsVerifMsg();

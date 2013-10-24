@@ -10,6 +10,7 @@
 #include "../common_src/common_Thread.h"
 #include "../common_src/common_MsgConstants.h"
 #include <stdlib.h>
+#include <string>
 
 namespace std {
 
@@ -19,10 +20,6 @@ class ClientHandler : public Thread {
 	void run();
 
 	bool keep_communicating;
-
-
-public:
-	explicit ClientHandler(int sock);
 	/*
 	 * socketSend envia los datos de buf a traves del socket.
 	 */
@@ -32,9 +29,15 @@ public:
 	 */
 	int socketReceive(void * buf, size_t length);
 
-	void getAuthType(void * buf, size_t length = TYPE_SIZE);
+	void getUser(string & user);
+	void getPasswd(string & passwd);
 
-	void getIds(void * buf, size_t length = IDS_RESPONSE_SIZE);
+public:
+	explicit ClientHandler(int sock);
+
+	void getAuthType(string & auth_type);
+
+	void getIds(string & user, string & passwd);
 
 	void sendIdsVerifMsg();
 

@@ -7,6 +7,7 @@
 
 #include "client_Authenticator.h"
 #include "../common_src/common_MsgConstants.h"
+#include "../common_src/common_BigEndianProtocol.h"
 #include <cstring>
 
 namespace std {
@@ -16,49 +17,60 @@ Authenticator::Authenticator(Client * c) {
 }
 
 bool Authenticator::receiveAuthVerif(){
-	return verificateMessage(IDS_VERIF, IDS_VERIF_SIZE);
+	string s(IDS_VERIF);
+	return verificateMessage(s);
 }
 
-bool Authenticator::verificateMessage(const char * msg, size_t msg_size){
+bool Authenticator::verificateMessage(string msg){
 	//Compara si el mensaje que envio el server coincide con 'msg'
-	char * req = new char[msg_size];
-	char * compare = new char[msg_size];
-	strcpy(compare, msg);
-	client->clientReceive(req, msg_size);
-	if (strcmp(req, compare) == 0) {
-		delete[] req;
-		delete[] compare;
+	char c_size[sizeof(uint32_t)];
+	client->clientReceive(c_size, sizeof(uint32_t));
+	uint32_t size = readSize(c_size);
+	string recvd_msg;
+	char * c_msg = new char[size];
+	client->clientReceive(c_msg, size);
+	recvd_msg.append(c_msg, size);
+	if ( recvd_msg.compare(msg) == 0) {
+		delete[] c_msg;
 		return true;
 	}
-	delete[] req;
-	delete[] compare;
+	delete[] c_msg;
 	return false;
 }
 
-void concatenateUserPassword //result tiene el tamanho u_size + p_size
-(char * result, char * user, size_t u_size, char * passwd, size_t p_size){
-	for (unsigned i = 0; i < u_size; i++)
-		result[i] = user[i];
-	for (unsigned i = u_size; i < u_size + p_size; i++)
-		result[i] = passwd[i - u_size];
+void Authenticator::sendAuth(string & user, string & passwd){
+	sendUser(user);
+	sendPasswd(passwd);
 }
 
-void Authenticator::sendAuth
-(char * user, size_t u_size, char * passwd, size_t p_size){
-	char * msg = new char[u_size + p_size];
-	concatenateUserPassword(msg, user, u_size, passwd, p_size);
-	this->client->clientSend(msg, u_size + p_size);
-	delete[] msg;
+void Authenticator::sendUser(string & user){
+	unsigned size = sizeof(uint32_t) + user.length();
+	char * msg_with_size = new char[size];
+	darFormato(msg_with_size, user);
+	this->client->clientSend(msg_with_size, size);
+	delete[] msg_with_size;
 }
 
-void Authenticator::sendAuthType(char * auth_type, size_t size){
-	this->client->clientSend(auth_type, TYPE_SIZE);
+void Authenticator::sendPasswd(string & passwd){
+	unsigned size = sizeof(uint32_t) + passwd.length();
+	char * msg_with_size = new char[size];
+	darFormato(msg_with_size, passwd);
+	this->client->clientSend(msg_with_size, size);
+	delete[] msg_with_size;
+}
+
+void Authenticator::sendAuthType(string & auth_type){
+	unsigned size = sizeof(uint32_t) + auth_type.length();
+	char * msg_with_size = new char[size];
+	darFormato(msg_with_size, auth_type);
+	this->client->clientSend(msg_with_size, size);
+	delete[] msg_with_size;
 }
 
 bool Authenticator::sendIds
-(char* user, char* passwd, char* auth_type){
-	this->sendAuthType(auth_type, TYPE_SIZE);
-	this->sendAuth(user, IDS_USERNAME_SIZE, passwd, IDS_PASSWD_SIZE);
+(string & user, string & passwd, string & auth_type){
+	this->sendAuthType(auth_type);
+	this->sendAuth(user, passwd);
 	if (this->receiveAuthVerif()) return true;
 	return false;
 }
