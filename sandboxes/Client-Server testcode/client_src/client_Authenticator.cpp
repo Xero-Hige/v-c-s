@@ -23,18 +23,11 @@ bool Authenticator::receiveAuthVerif(){
 
 bool Authenticator::verificateMessage(string msg){
 	//Compara si el mensaje que envio el server coincide con 'msg'
-	char c_size[sizeof(uint32_t)];
-	client->clientReceive(c_size, sizeof(uint32_t));
-	uint32_t size = readSize(c_size);
 	string recvd_msg;
-	char * c_msg = new char[size];
-	client->clientReceive(c_msg, size);
-	recvd_msg.append(c_msg, size);
-	if ( recvd_msg.compare(msg) == 0) {
-		delete[] c_msg;
+	client->s_handler->recvMsg(recvd_msg);
+	if (recvd_msg.compare(msg) == 0) {
 		return true;
 	}
-	delete[] c_msg;
 	return false;
 }
 
@@ -44,27 +37,15 @@ void Authenticator::sendAuth(string & user, string & passwd){
 }
 
 void Authenticator::sendUser(string & user){
-	unsigned size = sizeof(uint32_t) + user.length();
-	char * msg_with_size = new char[size];
-	darFormato(msg_with_size, user);
-	this->client->clientSend(msg_with_size, size);
-	delete[] msg_with_size;
+	this->client->s_handler->sendMsg(user);
 }
 
 void Authenticator::sendPasswd(string & passwd){
-	unsigned size = sizeof(uint32_t) + passwd.length();
-	char * msg_with_size = new char[size];
-	darFormato(msg_with_size, passwd);
-	this->client->clientSend(msg_with_size, size);
-	delete[] msg_with_size;
+	this->client->s_handler->sendMsg(passwd);
 }
 
 void Authenticator::sendAuthType(string & auth_type){
-	unsigned size = sizeof(uint32_t) + auth_type.length();
-	char * msg_with_size = new char[size];
-	darFormato(msg_with_size, auth_type);
-	this->client->clientSend(msg_with_size, size);
-	delete[] msg_with_size;
+	this->client->s_handler->sendMsg(auth_type);
 }
 
 bool Authenticator::sendIds

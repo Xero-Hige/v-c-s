@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <string>
 #include <inttypes.h>
+#include "client_ServerHandler.h"
 
 namespace std {
 
@@ -18,16 +19,7 @@ class Client {
 
 	string ip;
 	int port;
-	int sockfd;//socket file descriptor
-	/*
-	 * clientSend envia el contenido de buf a traves de la conexion establecida.
-	 * length es el tamanho del buffer.
-	 */
-	int clientSend(char * buf, size_t length);
-	/*
-	 * clientReceive recibe un buffer entrante.
-	 */
-	int clientReceive(char * buf, size_t length);
+	ServerHandler * s_handler;//socket file descriptor
 
 	void getConnectionType(string & a_type);
 	void getPasswd(string & passwd);

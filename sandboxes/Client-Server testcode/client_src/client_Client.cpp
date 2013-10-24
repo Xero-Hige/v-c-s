@@ -12,7 +12,6 @@
 #include <algorithm> //reverse de string
 #include <arpa/inet.h> //inet_addr, htons, server_addr
 #include <cstring> //memset
-#include <unistd.h> //close
 #include <string>
 #include <sstream>
 #include "../common_src/common_BigEndianProtocol.h"
@@ -44,8 +43,9 @@ int setServerAddr(struct sockaddr_in & server_addr, string ip, int port){
 }
 
 Client::Client(string ip, int port) {
-	sockfd = socket(AF_INET, SOCK_STREAM, 0); //SOCK_STREAM = TCP
+	int sockfd = socket(AF_INET, SOCK_STREAM, 0); //SOCK_STREAM = TCP
 	if (sockfd == -1) cerr << "creation error" << endl;
+	s_handler = new ServerHandler(sockfd);
 	this->ip = ip;
 	this->port = port;
 }
@@ -57,10 +57,11 @@ void Client::enviarMsg(){
 		cout << "Envio: " << endl;
 		scanf("%s", msg);
 		c = msg[0];
-		this->clientSend(msg, 80);
-		this->clientReceive(msg, 80);
+		string s_msg(msg);
+		this->s_handler->sendMsg(s_msg);
+		this->s_handler->recvMsg(s_msg);
 		cout << "Recibido: ";
-		cout << msg << endl;
+		cout << s_msg << endl;
 	}
 }
 
@@ -71,7 +72,8 @@ int Client::makeConnection(){
 	//Intenta conectarse
 	if (r < 0)
 		return 1;
-	r += connect(sockfd, (struct sockaddr*) & s_addr, sizeof(struct sockaddr));
+	int sock = s_handler->getSocket();
+	r += connect(sock, (struct sockaddr*) & s_addr, sizeof(struct sockaddr));
 	memset(&(server_addr.sin_zero), 0, sizeof(s_addr.sin_zero));
 	if (r < 0) return 1;
 	return 0;
@@ -110,23 +112,12 @@ void Client::getUsername(string & user){
 	user.append(c);
 }
 
-int Client::clientSend(char * buf, size_t length){
-	unsigned bytes_enviados = 0;
-	while (bytes_enviados == 0){
-		bytes_enviados = send(sockfd, buf, length, 0);
-	}
-	return bytes_enviados;
-}
-
-int Client::clientReceive(char * buf, size_t length){
-	return recv(sockfd, buf, length, 0);
-}
-
 void Client::closeConection(){
-	close(sockfd);
+	s_handler->closeConnection();
 }
 
 Client::~Client() {
+	delete s_handler;
 }
 
 } /* namespace std */
