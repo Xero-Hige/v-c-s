@@ -35,6 +35,10 @@ class ClientHandler : public Thread {
 public:
 	explicit ClientHandler(int sock);
 
+	int recvMsg(string & msg);
+
+	int sendMsg(string msg);
+
 	void getAuthType(string & auth_type);
 
 	void getIds(string & user, string & passwd);

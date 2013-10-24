@@ -20,18 +20,18 @@ ClientHandler::ClientHandler(int sock) {
 //////////////////////////////////DEBUGGGGGGGGGGGGGGGGGGGGGG
 void ClientHandler::run(){
 	while (keep_communicating){
-		char msg[80];
-		socketReceive(msg, 80);
-		if (msg[0] == 'q') {
+		string rcvd_msg;
+		recvMsg(rcvd_msg);
+		if (rcvd_msg.compare("q") == 0) {
 			cout << "Mensaje recibido: SALIDA" << endl;
-			char msg2[] = "EXIT";
-			socketSend(msg2, 80);
+			string msg2("EXIT");
+			sendMsg(msg2);
 			break;
 		}
 		cout << "Mensaje recibido: ";
-		cout << msg << endl;
-		char msg2[] = "CONFIRMACION";
-		socketSend(msg2, 80);
+		cout << rcvd_msg << endl;
+		string msg2("CONFIRMACION");
+		sendMsg(msg2);
 	}
 	keep_communicating = false;
 }
@@ -49,10 +49,7 @@ int ClientHandler::socketSend(const void * buf, size_t length){
 
 void ClientHandler::sendIdsVerifMsg(){
 	string msg(IDS_VERIF);
-	char * msg_with_size = new char[sizeof(uint32_t) + msg.length()];
-	darFormato(msg_with_size, msg);
-	this->socketSend(msg_with_size, sizeof(uint32_t) + msg.length());
-	delete[] msg_with_size;
+	sendMsg(msg);
 }
 
 void ClientHandler::getIds(string & user, string & passwd){
@@ -61,38 +58,39 @@ void ClientHandler::getIds(string & user, string & passwd){
 }
 
 void ClientHandler::getUser(string & user){
-	char c_size[sizeof(uint32_t)];
-	this->socketReceive(c_size, sizeof(uint32_t));
-	uint32_t size = readSize(c_size);
-	char * c_user = new char[size];
-	this->socketReceive(c_user, size);
-	user.append(c_user, size);
-	delete[] c_user;
+	recvMsg(user);
 }
 
 void ClientHandler::getPasswd(string & passwd){
-	char c_size[sizeof(uint32_t)];
-	this->socketReceive(c_size, sizeof(uint32_t));
-	uint32_t size = readSize(c_size);
-	char * c_passwd = new char[size];
-	this->socketReceive(c_passwd, size);
-	passwd.append(c_passwd, size);
-	delete[] c_passwd;
+	recvMsg(passwd);
 }
 
 void ClientHandler::getAuthType(string & auth_type){
-	char c_size[sizeof(uint32_t)];
-	this->socketReceive(c_size, sizeof(uint32_t));
-	uint32_t size = readSize(c_size);
-	auth_type.clear();
-	char * c_auth_type = new char[size];
-	this->socketReceive(c_auth_type, size);
-	auth_type.append(c_auth_type, size);
-	delete[] c_auth_type;
+	recvMsg(auth_type);
 }
 
 int ClientHandler::socketReceive(void * buf, size_t length){
 	return recv(this->sock, buf, length, 0);
+}
+
+int ClientHandler::sendMsg(string msg){
+	unsigned size = sizeof(uint32_t) + msg.length();
+	char * msg_with_size = new char[size];
+	darFormato(msg_with_size, msg);
+	int r = socketSend(msg_with_size, size);
+	delete[] msg_with_size;
+	return r;
+}
+
+int ClientHandler::recvMsg(string & msg){
+	char c_size[sizeof(uint32_t)];
+	socketReceive(c_size, sizeof(uint32_t));
+	uint32_t size = readSize(c_size);
+	char * c_msg = new char[size];
+	int r = socketReceive(c_msg, size);
+	msg.append(c_msg, size);
+	delete[] c_msg;
+	return r;
 }
 
 ClientHandler::~ClientHandler() {
