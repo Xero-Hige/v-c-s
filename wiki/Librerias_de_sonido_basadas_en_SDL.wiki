@@ -8,5 +8,5 @@ Librerias para crear un framework de sonidos basado en SDL orientado a objetos y
 
 == Requerimientos ==
 
- * *Libsdl*
- * *SDL Mixer 1.2*
+ * *Libsdl2* (_SDL 2_)
+ * *SDL Mixer 2* (_SDL 2_) 

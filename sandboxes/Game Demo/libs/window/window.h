@@ -1,5 +1,5 @@
 /**
- WindowSurface.cpp
+ window.h
 
  Copyright 2013 Gaston Martinez Gaston.martinez.90@gmail.com
 
@@ -16,16 +16,32 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
-#include "window_surface.h"
+#ifndef WINDOW_H_
+#define WINDOW_H_
 
-Window_Surface::Window_Surface(size_t height, size_t width, size_t deep,
-		int flags) {
+#include <SDL.h>
+#include <string>
 
-	_surface = SDL_SetVideoMode(height, width , deep , flags);
+#include <iostream>
+/*
+ *
+ */
+class Window {
+public: //TODO: Fixear
+	SDL_Window* window;
+	SDL_Renderer* window_render;
 
-}
+public:
+	Window(): window(NULL), window_render(NULL){}
+	Window(const std::string& title,int widht,int height,int flags);
 
-void Window_Surface::flip()
-{
-	SDL_Flip(_surface);
-}
+	virtual ~Window(){}
+
+	SDL_Renderer* get_renderer();
+
+	void render();
+	void clear();
+	bool draw_on(SDL_Texture* source_sprite, SDL_Rect& source_rect, SDL_Rect& dest_rect);
+};
+
+#endif /* WINDOW_H_ */

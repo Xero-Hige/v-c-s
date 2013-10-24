@@ -8,7 +8,7 @@
  * *Librerias graficas basadas en SDL*:
   _[https://code.google.com/p/v-c-s/wiki/Librerias_graficas_basadas_en_SDL]_
  * *Librerias de sonido basadas en SDL*
-  _[https://code.google.com/p/v-c-s/wiki/Librerias_de__sonido_basadas_en_SDL]_
+  _[https://code.google.com/p/v-c-s/wiki/Librerias_de_sonido_basadas_en_SDL]_
 == SDL vs GTK ==
 
 Es importante hacer notar el porque de la elección de desarrollar enteramente la interfaz en SDL y no en GTK.

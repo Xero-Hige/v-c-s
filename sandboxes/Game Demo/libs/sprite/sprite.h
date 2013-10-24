@@ -23,23 +23,34 @@
 #include <string>
 
 #include "../surface/surface.h"
+#include "../window/window.h"
 
 /*
  *
  */
-class Sprite : public Surface {
+class Sprite {
 
-protected:
+private:
+	SDL_Texture* _texture;
 	int x_pos;
 	int y_pos;
 
+	int image_width;
+	int image_height;
+
+	int scaled_width;
+	int scaled_height;
+
 public:
-	Sprite(){};
-	Sprite(const std::string& file_path,int x_pos=0,int y_pos=0);
-	void set_transparency(int red,int green,int blue);
-	virtual bool draw_over(Surface& destination_surface);
-	virtual bool draw_over(Surface& destination_surface,int x_pos,int y_pos);
-	void move(int x_pos,int y_pos);
+	Sprite() {}
+	virtual ~Sprite() {	}
+	Sprite(const std::string& file_path, SDL_Renderer* window_render,
+			int image_width, int image_height);
+	void set_transparency(int red, int green, int blue);
+	void move(int x_pos, int y_pos);
+	virtual bool draw(Window& destination_window);
+	virtual bool draw(Window& destination_window, SDL_Rect& DesR);
+	void free();
 };
 
 #endif /* SPRITE_H_ */

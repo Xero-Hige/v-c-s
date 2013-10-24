@@ -8,8 +8,8 @@ Librerias para crear un framework grafico basado en SDL orientado a objetos y am
 
 == Requerimientos ==
 
- * *Libsdl*
- * *SDL Images 1.2*
+ * *Libsdl2* (_SDL 2_)
+ * *SDL Images 2*  (_SDL 2_)
 
 == Archivos ==
 

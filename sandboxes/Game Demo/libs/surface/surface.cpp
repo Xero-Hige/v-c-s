@@ -33,12 +33,12 @@ Surface::Surface(const string& file_path) {
 		return;
 	}
 
-	_surface = SDL_DisplayFormat(temporal);
-	SDL_FreeSurface(temporal);
+	_surface = temporal;//SDL_ConvertSurfaceFormat(temporal);
+	//SDL_FreeSurface(temporal);
 }
 
 /**
- * Dibuja en destination_surface la source_surface
+ * Dibuja en sobre si la source_surface
  */
 bool Surface::draw_on(Surface& source_surface, int source_x_pos, int source_y_pos, SDL_Rect* source_rect){
 

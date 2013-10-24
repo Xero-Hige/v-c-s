@@ -22,9 +22,9 @@
 
 #include <SDL.h>
 #include "libs/surface/surface.h"
-#include "libs/window_surface/window_surface.h"
+#include "libs/window/window.h"
 #include "libs/sprite/sprite.h"
-#include "libs/animated_sprite/animated_sprite.h"
+//#include "libs/animated_sprite/animated_sprite.h"
 
 
 class App
@@ -32,17 +32,17 @@ class App
 
 private:
     bool    Running;
-    Window_Surface  Surf_Display;
-    Surface   		background;
+    Window          window;
+    Sprite   		background;
     Sprite    		cell;
     Sprite    		hover_cell;
 
 
-    Animated_Sprite a;
-    Animated_Sprite b;
-    Animated_Sprite c;
-    Animated_Sprite d;
-    Animated_Sprite e;
+    //Animated_Sprite a;
+    //Animated_Sprite b;
+    //Animated_Sprite c;
+    //Animated_Sprite d;
+    //Animated_Sprite e;
 
     int** table;
 
