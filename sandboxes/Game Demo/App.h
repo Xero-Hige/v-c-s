@@ -39,10 +39,10 @@ private:
 
 
     Animated_Sprite a;
-    //Animated_Sprite b;
-    //Animated_Sprite c;
-    //Animated_Sprite d;
-    //Animated_Sprite e;
+    Animated_Sprite b;
+    Animated_Sprite c;
+    Animated_Sprite d;
+    Animated_Sprite e;
 
     int** table;
 

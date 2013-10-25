@@ -77,7 +77,7 @@ bool Animated_Sprite::draw(Window& destination_window){
 	SDL_Rect SrcR;
 	SDL_Rect DesR;
 
-	SrcR.x = frame_width * actual_frame + 1;
+	SrcR.x = frame_width * actual_frame;
 	SrcR.y = 0;
 	SrcR.w = frame_width;
 	SrcR.h = frame_height;
@@ -95,10 +95,31 @@ bool Animated_Sprite::draw(Window& destination_window, SDL_Rect& DesR) {
 
 	SDL_Rect SrcR;
 
-	SrcR.x = frame_width * actual_frame + 1;
+	SrcR.x = frame_width * actual_frame;
 	SrcR.y = 0;
 	SrcR.w = frame_width;
 	SrcR.h = frame_height;
 
 	destination_window.draw_on(*_texture, SrcR, DesR);
+}
+
+bool Animated_Sprite::draw(Window& destination_window, int x_pos, int y_pos) {
+	SDL_Rect SrcR;
+	SDL_Rect DesR;
+
+	SrcR.x = frame_width * actual_frame;
+	SrcR.y = 0;
+	SrcR.w = frame_width;
+	SrcR.h = frame_height;
+
+	DesR.x = x_pos;
+	DesR.y = y_pos;
+	DesR.w = scaled_width;
+	DesR.h = scaled_height;
+
+	destination_window.draw_on(*_texture, SrcR, DesR);
+}
+
+void Animated_Sprite::set_fps(int fps) {
+	framerate = 1000/fps;
 }

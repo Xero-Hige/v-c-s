@@ -25,12 +25,10 @@ Window::Window(const string& title,int widht,int height,int flags) {
 	SDL_CreateWindowAndRenderer(widht, height, flags, &window, &window_render);
 
 	SDL_SetRenderDrawColor(window_render, 0, 0, 0, 255);
-	SDL_RenderClear(window_render);
-	SDL_RenderPresent(window_render);
 
 	SDL_SetWindowTitle(window,title.c_str());
-	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
 
+	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "best");
 	SDL_RenderSetLogicalSize(window_render, widht, height);
 }
 

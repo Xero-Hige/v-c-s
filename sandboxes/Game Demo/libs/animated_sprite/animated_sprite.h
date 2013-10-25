@@ -46,7 +46,9 @@ public:
 				int image_width, int image_height, int frames);
 	virtual bool draw(Window& destination_window);
 	virtual bool draw(Window& destination_window, SDL_Rect& DesR);
+	virtual bool draw(Window& destination_window,int x_pos,int y_pos);
     void animate();
+    void set_fps(int fps);
 
 };
 
