@@ -9,12 +9,12 @@
 
 namespace std {
 
-MatchMakingStrategy::MatchMakingStrategy() {
-	// TODO Auto-generated constructor stub
-
+MatchMakingStrategy::MatchMakingStrategy(Lobby * lob, ClientHandler * ch) {
+	this->lob = lob;
+	this->ch = ch;
 }
 
-void MatchMakingStrategy::addClient(Lobby * lob, ClientHandler * ch){
+void MatchMakingStrategy::addClient(){
 	string s;
 	ch->getMatchMaking(s);
 	if (!s.compare(MM_USER_DEF)) //==0
