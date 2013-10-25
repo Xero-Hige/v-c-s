@@ -33,14 +33,15 @@ Surface::Surface(const string& file_path) {
 		return;
 	}
 
-	_surface = temporal;//SDL_ConvertSurfaceFormat(temporal);
+	_surface = temporal; //SDL_ConvertSurfaceFormat(temporal);
 	//SDL_FreeSurface(temporal);
 }
 
 /**
  * Dibuja en sobre si la source_surface
  */
-bool Surface::draw_on(Surface& source_surface, int source_x_pos, int source_y_pos, SDL_Rect* source_rect){
+bool Surface::draw_on(Surface& source_surface, int source_x_pos,
+		int source_y_pos, SDL_Rect* source_rect) {
 
 	if (_surface == NULL || source_surface._surface == NULL) {
 		return false;
@@ -51,12 +52,27 @@ bool Surface::draw_on(Surface& source_surface, int source_x_pos, int source_y_po
 	destination_rectangle.x = source_x_pos;
 	destination_rectangle.y = source_y_pos;
 
-	SDL_BlitSurface(source_surface._surface, source_rect, _surface, &destination_rectangle);
+	SDL_BlitSurface(source_surface._surface, source_rect, _surface,
+			&destination_rectangle);
 
 	return true;
 }
 
-void Surface::free()
-{
+void Surface::free() {
 	SDL_FreeSurface(_surface);
+}
+
+void Surface::set_transparency(int red, int green, int blue) {
+	SDL_SetColorKey(_surface, SDL_TRUE | SDL_RLEACCEL,
+			SDL_MapRGB(this->_surface->format, red, green, blue));
+}
+
+Sprite Surface::convert_to_sprite(SDL_Renderer& window_render, int image_width,
+		int image_height) {
+	return Sprite(*this->_surface, window_render, image_width, image_height);
+}
+
+Animated_Sprite Surface::convert_to_animated_sprite(SDL_Renderer& window_render, int image_width,
+		int image_height,int frames) {
+	return Animated_Sprite(*this->_surface, window_render, image_width, image_height,frames);
 }

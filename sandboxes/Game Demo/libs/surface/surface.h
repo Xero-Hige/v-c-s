@@ -24,6 +24,10 @@
 
 #include <string>
 
+#include "../sprite/sprite.h"
+#include "../animated_sprite/animated_sprite.h"
+
+
 class Surface {
 
 protected:
@@ -33,6 +37,13 @@ public:
 	Surface(){};
 	Surface(const std::string& File);
 	bool draw_on(Surface& source_surface, int source_x_pos, int source_y_pos , SDL_Rect* source_rect = NULL);
+
+	void set_transparency(int red, int green, int blue);
+
+	Sprite convert_to_sprite(SDL_Renderer& window_render, int image_width,
+			int image_height);
+	Animated_Sprite convert_to_animated_sprite(SDL_Renderer& window_render, int image_width,int image_height,int frames);
+
 	void free();
 };
 

@@ -41,7 +41,6 @@ void Window::clear()
 
 void Window::render()
 {
-	//SDL_RenderClear(window_render);
 	SDL_RenderPresent(window_render);
 }
 
@@ -50,7 +49,6 @@ SDL_Renderer* Window::get_renderer()
 	return window_render;
 }
 
-bool Window::draw_on(SDL_Texture* source_sprite, SDL_Rect& source_rect, SDL_Rect& dest_rect) {
-    SDL_RenderCopy(window_render, source_sprite, &source_rect, &dest_rect);
-    //SDL_RenderPresent(window_render);
+bool Window::draw_on(SDL_Texture& source_sprite, SDL_Rect& source_rect, SDL_Rect& dest_rect) {
+    SDL_RenderCopy(window_render, &source_sprite, &source_rect, &dest_rect);
 }

@@ -39,10 +39,13 @@ private:
 
 
 public:
-	Animated_Sprite(){};
-	Animated_Sprite(const std::string& file_path,int fps, int frames, int frame_height, int frame_width);
-	virtual bool draw_over(Surface& destination_surface);
-	virtual bool draw_over(Surface& destination_surface,int x_pos,int y_pos);
+    Animated_Sprite(){}
+    Animated_Sprite(const std::string& file_path, SDL_Renderer& window_render,
+			int image_width, int image_height, int frames);
+    Animated_Sprite(SDL_Surface& file_path, SDL_Renderer& window_render,
+				int image_width, int image_height, int frames);
+	virtual bool draw(Window& destination_window);
+	virtual bool draw(Window& destination_window, SDL_Rect& DesR);
     void animate();
 
 };

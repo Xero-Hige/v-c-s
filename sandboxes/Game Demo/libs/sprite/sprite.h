@@ -22,7 +22,6 @@
 #include <SDL.h>
 #include <string>
 
-#include "../surface/surface.h"
 #include "../window/window.h"
 
 /*
@@ -30,7 +29,8 @@
  */
 class Sprite {
 
-private:
+protected:
+
 	SDL_Texture* _texture;
 	int x_pos;
 	int y_pos;
@@ -44,12 +44,22 @@ private:
 public:
 	Sprite() {}
 	virtual ~Sprite() {	}
-	Sprite(const std::string& file_path, SDL_Renderer* window_render,
+	Sprite(const std::string& file_path, SDL_Renderer& window_render,
 			int image_width, int image_height);
+	Sprite(SDL_Surface& file_path, SDL_Renderer& window_render,
+				int image_width, int image_height);
 	void set_transparency(int red, int green, int blue);
 	void move(int x_pos, int y_pos);
 	virtual bool draw(Window& destination_window);
 	virtual bool draw(Window& destination_window, SDL_Rect& DesR);
+
+	void scale(double scale);
+	void scale_width(double scale);
+	void scale_height(double scale);
+
+	void set_scaled_width(int scaled_width);
+	void set_scaled_height(int scaled_height);
+
 	void free();
 };
 

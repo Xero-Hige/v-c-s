@@ -1,9 +1,9 @@
 CC = gcc
-OBJECTS = App.o surface.o sprite.o window.o SoundBank.o
+OBJECTS = App.o surface.o sprite.o animated_sprite.o window.o SoundBank.o
 
 
 CPPFLAGS = -Wall -Wextra -g -pedantic `sdl2-config --cflags`
-LDFLAGS=`sdl2-config --libs` -lSDL2 -lSDL2_image -lSDL2_mixer -lstdc++
+LDFLAGS=`sdl2-config --libs` -lSDL2 -lSDL2_image -lSDL2_mixer -lstdc++ -lm
 
 EXEC = sdl
 

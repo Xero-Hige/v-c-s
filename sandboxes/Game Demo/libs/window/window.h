@@ -41,7 +41,7 @@ public:
 
 	void render();
 	void clear();
-	bool draw_on(SDL_Texture* source_sprite, SDL_Rect& source_rect, SDL_Rect& dest_rect);
+	bool draw_on(SDL_Texture& source_sprite, SDL_Rect& source_rect, SDL_Rect& dest_rect);
 };
 
 #endif /* WINDOW_H_ */

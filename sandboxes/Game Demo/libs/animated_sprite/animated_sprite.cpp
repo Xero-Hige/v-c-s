@@ -18,6 +18,8 @@
  */
 #include "animated_sprite.h"
 
+using std::string;
+
 void Animated_Sprite::animate() {
     if(time + framerate > SDL_GetTicks()) {
         return;
@@ -45,19 +47,51 @@ void Animated_Sprite::animate() {
 
 }
 
-Animated_Sprite::Animated_Sprite(const std::string& file_path, int fps,
-		int frames, int frame_height, int frame_width) : Sprite(file_path){
-	framerate = 1000/fps;
+Animated_Sprite::Animated_Sprite(const string& file_path, SDL_Renderer& window_render,
+		int image_width, int image_height, int frames) : Sprite(file_path,window_render,image_width,image_height){
+
+	framerate = 1000/frames;
 	max_frames = frames;
-	this->frame_height = frame_height;
-	this->frame_width = frame_width;
+	this->frame_height = image_height;
+	this->frame_width = image_width;
 	frame_increment = 1;
 	actual_frame = 0;
 	oscillate = true;
 	time = 0;
 }
 
-bool Animated_Sprite::draw_over(Surface& destination_surface) {
+Animated_Sprite::Animated_Sprite(SDL_Surface& surface, SDL_Renderer& window_render,
+		int image_width, int image_height, int frames) : Sprite(surface,window_render,image_width,image_height){
+
+	framerate = 1000/frames;
+	max_frames = frames;
+	this->frame_height = image_height;
+	this->frame_width = image_width;
+	frame_increment = 1;
+	actual_frame = 0;
+	oscillate = true;
+	time = 0;
+}
+
+bool Animated_Sprite::draw(Window& destination_window){
+	SDL_Rect SrcR;
+	SDL_Rect DesR;
+
+	SrcR.x = frame_width * actual_frame + 1;
+	SrcR.y = 0;
+	SrcR.w = frame_width;
+	SrcR.h = frame_height;
+
+	DesR.x = x_pos;
+	DesR.y = y_pos;
+	DesR.w = scaled_width;
+	DesR.h = scaled_height;
+
+	destination_window.draw_on(*_texture, SrcR, DesR);
+
+}
+
+bool Animated_Sprite::draw(Window& destination_window, SDL_Rect& DesR) {
 
 	SDL_Rect SrcR;
 
@@ -66,19 +100,5 @@ bool Animated_Sprite::draw_over(Surface& destination_surface) {
 	SrcR.w = frame_width;
 	SrcR.h = frame_height;
 
-	destination_surface.draw_on(*this,x_pos,y_pos,&SrcR);
-
-}
-
-bool Animated_Sprite::draw_over(Surface& destination_surface, int x_pos,
-		int y_pos) {
-
-	SDL_Rect SrcR;
-
-	SrcR.x = frame_height * actual_frame;
-	SrcR.y = 0;
-	SrcR.w = frame_width;
-	SrcR.h = frame_height;
-
-	destination_surface.draw_on(*this,x_pos,y_pos,&SrcR);
+	destination_window.draw_on(*_texture, SrcR, DesR);
 }

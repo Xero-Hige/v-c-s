@@ -28,6 +28,9 @@
 #define XINIT 100
 #define YINIT 20
 
+#define WINDOW_HEIGHT 720
+#define WINDOW_WIDTH 1280
+
 App::App() {
 	Running = true;
 
@@ -36,7 +39,7 @@ App::App() {
 
     int button_2x = -1;
     int button_2y = -1;
-    this->window = Window("Hola",640,480,SDL_WINDOW_RESIZABLE);
+    this->window = Window("Hola",WINDOW_WIDTH,WINDOW_HEIGHT,SDL_WINDOW_RESIZABLE);
 }
 
 int App::OnExecute() {
@@ -66,8 +69,20 @@ bool App::OnInit() {
 		return false;
 	}
 
-	cell = Sprite("res/images/forrest.jpg", window.window_render,539,400);
-	cell.draw(window);
+	Surface temp = Surface("res/images/lab_tutorial2.jpg");
+	Surface temp2 = Surface("res/images/cell.png");
+	Surface temp3 = Surface("res/images/cell.png");
+	temp2.set_transparency(255, 255, 255);
+	temp3.set_transparency(255, 255, 255);
+
+
+	temp2.draw_on(temp3,5,5);
+	temp.draw_on(temp2,180,180);
+
+	cell = temp.convert_to_sprite(*window.window_render,1280,720);
+
+	cell.set_scaled_width(WINDOW_WIDTH);
+	cell.set_scaled_height(WINDOW_HEIGHT);
 	//cell.set_transparency(255, 255, 255);
 
 	//hover_cell = Sprite("res/images/hover_cell.png");
@@ -83,8 +98,10 @@ bool App::OnInit() {
 		}
 	}
 
-	//a = Animated_Sprite("res/images/001_button.png", 6, 3, 35, 35);
-	//a.set_transparency(0, 128, 128);
+	Surface temp4 = Surface("res/images/001_button.png");
+	temp4.set_transparency(0, 128, 128);
+	a = temp4.convert_to_animated_sprite(*window.window_render, 35, 35,3);
+
 
 	//b = Animated_Sprite("res/images/025_button.png", 6, 3, 35, 35);
 	//b.set_transparency(0, 128, 128);
@@ -156,12 +173,11 @@ void App::OnEvent(SDL_Event* Event) {
 }
 
 void App::OnLoop() {
-	//a.animate();
+	a.animate();
 	//b.animate();
 	//c.animate();
 	//d.animate();
 	//e.animate();
-
 }
 
 void App::OnRender() {
@@ -195,6 +211,7 @@ void App::OnRender() {
 //	Surf_Display.flip();*/
 	window.clear();
 	cell.draw(window);
+	a.draw(window);
 
 window.render();
 }
