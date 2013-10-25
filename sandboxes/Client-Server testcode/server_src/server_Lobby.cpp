@@ -27,8 +27,8 @@ struct thread_data {
 
 void * threadAddClient(void * data){
 	struct thread_data * t_data = (struct thread_data *)data;
-	MatchMakingStrategy mms (t_data->lobby, t_data->ch);
-	mms.addClient();
+	MatchMakingStrategy mms;
+	mms.addClient(t_data->lobby, t_data->ch);
 	return NULL;
 }
 

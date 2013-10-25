@@ -15,14 +15,12 @@
 namespace std {
 
 class MatchMakingStrategy {
-	Lobby * lob;
-	ClientHandler * ch;
 	void addUserDefined(Lobby * lob, ClientHandler * ch);
 	void addDefault(Lobby * lob, ClientHandler * ch);
 
 public:
-	MatchMakingStrategy(Lobby * lob, ClientHandler * ch);
-	void addClient();
+	MatchMakingStrategy();
+	void addClient(Lobby * lob, ClientHandler * ch);
 	virtual ~MatchMakingStrategy();
 };
 

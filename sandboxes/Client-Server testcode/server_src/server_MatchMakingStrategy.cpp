@@ -9,12 +9,10 @@
 
 namespace std {
 
-MatchMakingStrategy::MatchMakingStrategy(Lobby * lob, ClientHandler * ch) {
-	this->lob = lob;
-	this->ch = ch;
+MatchMakingStrategy::MatchMakingStrategy() {
 }
 
-void MatchMakingStrategy::addClient(){
+void MatchMakingStrategy::addClient(Lobby * lob, ClientHandler * ch){
 	string s;
 	ch->getMatchMaking(s);
 	if (!s.compare(MM_USER_DEF)) //==0
