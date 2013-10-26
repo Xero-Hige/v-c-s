@@ -92,28 +92,43 @@ bool App::OnInit() {
 	background.set_scaled_height(WINDOW_HEIGHT);
 
 	Surface temp = Surface("res/images/001_button.png");
-	temp.set_transparency(0, 128, 128);
+	temp.set_transparency(0, 128, 120);
 	a = temp.convert_to_animated_sprite(*window.window_render, 35, 36, 3);
 	temp.free();
 
-	temp = Surface("res/images/025_button.png");
+	temp = Surface("res/images/004_button.png");
 	temp.set_transparency(0, 128, 128);
 	b = temp.convert_to_animated_sprite(*window.window_render, 35, 36, 3);
 	temp.free();
 
-	temp = Surface("res/images/124_button.png");
+	temp = Surface("res/images/007_button.png");
 	temp.set_transparency(0, 128, 128);
 	c = temp.convert_to_animated_sprite(*window.window_render, 35, 36, 3);
 	temp.free();
 
-	temp = Surface("res/images/228_button.png");
+	temp = Surface("res/images/025_button.png");
 	temp.set_transparency(0, 128, 128);
 	d = temp.convert_to_animated_sprite(*window.window_render, 35, 36, 3);
 	temp.free();
 
-	temp = Surface("res/images/319_button.png");
+	temp = Surface("res/images/133_button.png");
 	temp.set_transparency(0, 128, 128);
 	e = temp.convert_to_animated_sprite(*window.window_render, 35, 36, 3);
+	temp.free();
+
+	temp = Surface("res/images/001_minA.png");
+	temp.set_transparency(0, 153, 153);
+	A = temp.convert_to_animated_sprite(*window.window_render, 32, 32, 4);
+	temp.free();
+
+	temp = Surface("res/images/001_minB.png");
+	temp.set_transparency(0, 153, 153);
+	B = temp.convert_to_animated_sprite(*window.window_render, 32, 32, 4);
+	temp.free();
+
+	temp = Surface("res/images/star_A.png");
+	temp.set_transparency(0, 128, 128);
+	C = temp.convert_to_animated_sprite(*window.window_render, 32, 32, 4);
 	temp.free();
 
 	if ((sound = SoundBank::SoundControl.OnLoad("res/sounds/sonido.wav"))
@@ -126,7 +141,7 @@ bool App::OnInit() {
 	for (int i = 0; i < COLUMNS; i++) {
 		table[i] = new int[ROWS]();
 		for (int j = 0; j < ROWS; j++) {
-			table[i][j] = rand() % 5;
+			table[i][j] = rand() % 8;
 		}
 	}
 
@@ -135,6 +150,16 @@ bool App::OnInit() {
 	c.set_fps(6);
 	d.set_fps(6);
 	e.set_fps(6);
+
+	A.set_fps(4);
+	A.set_scaled_width(35);
+	A.set_scaled_height(36);
+	B.set_fps(4);
+	B.set_scaled_width(35);
+	B.set_scaled_height(36);
+	C.set_fps(4);
+	C.set_scaled_width(35);
+	C.set_scaled_height(36);
 
 	back_temp.free();
 	cell_temp.free();
@@ -183,6 +208,9 @@ void App::OnLoop() {
 	c.animate();
 	d.animate();
 	e.animate();
+	A.animate();
+	B.animate();
+	C.animate();
 }
 
 void App::OnRender() {
@@ -212,6 +240,15 @@ void App::OnRender() {
 			}
 			if (table[i][j] == 4) {
 				e.draw(window, XINIT + (36 * i) + 1, YINIT + (37 * j) + 1);
+			}
+			if (table[i][j] == 5) {
+				A.draw(window, XINIT + (36 * i) + 1, YINIT + (37 * j) + 1);
+			}
+			if (table[i][j] == 6) {
+				B.draw(window, XINIT + (36 * i) + 1, YINIT + (37 * j) + 1);
+			}
+			if (table[i][j] == 7) {
+				C.draw(window, XINIT + (36 * i) + 1, YINIT + (37 * j) + 1);
 			}
 		}
 	}

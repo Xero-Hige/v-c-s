@@ -44,6 +44,10 @@ private:
     Animated_Sprite d;
     Animated_Sprite e;
 
+    Animated_Sprite A;
+    Animated_Sprite B;
+    Animated_Sprite C;
+
     int** table;
 
     int button_1x = -100;
