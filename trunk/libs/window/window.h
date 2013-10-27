@@ -27,7 +27,6 @@
 class Window {
 
 friend class Sprite;
-friend class Animated_Sprite;
 
 private:
 	SDL_Window* window;
