@@ -56,7 +56,7 @@ int main() {
         if(not parsed)
         {
             // Se muestran las fallas y su ubicación
-            cout << "Error parsing JSON" << endl;
+            cout << "Error parseando" << endl;
             cout << reader.getFormatedErrorMessages() << endl;
             return 1;
         }
