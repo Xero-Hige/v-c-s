@@ -28,7 +28,7 @@
 #include "../sprite/sprite.h"
 #include "../animated_sprite/animated_sprite.h"
 
-class Surface_Construction_Error: public exception
+class Surface_Construction_Error: public std::exception
 {
   virtual const char* what() const throw()
   {
