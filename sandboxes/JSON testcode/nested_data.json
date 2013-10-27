@@ -1,0 +1,45 @@
+{
+    "number": 1,
+    "width": 3,
+    "height": 3,
+    "goalScore": 3,
+    "players": 2,
+    "tiles": [
+        {
+            "type": "cell",
+            "number": 1
+        },
+        {
+            "type": "hole",
+            "number": 2
+        },
+        {
+            "type": "cell",
+            "number": 3
+	},
+        {
+            "type": "hole",
+            "number": 4
+        },
+        {
+            "type": "cell",
+            "number": 5
+        },
+        {
+            "type": "hole",
+            "number": 6
+	},
+        {
+            "type": "cell",
+            "number": 7
+        },
+        {
+            "type": "hole",
+            "number": 8
+        },
+        {
+            "type": "cell",
+            "number": 9
+	}
+    ]
+}
