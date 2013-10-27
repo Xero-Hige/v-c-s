@@ -31,7 +31,7 @@
 class Surface {
 
 protected:
-	SDL_Surface* _surface;
+	SDL_Surface _surface;
 
 public:
 	Surface(){};
