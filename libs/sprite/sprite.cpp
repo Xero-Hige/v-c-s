@@ -24,16 +24,17 @@
 
 using std::string;
 
-Sprite::Sprite(const string& file_path, SDL_Renderer& window_render,
-		int image_width, int image_height) {
+Sprite::Sprite(const string& file_path, Window& window, int image_width,
+		int image_height) {
 
 	_texture = NULL;
 	SDL_Surface* temporal = NULL;
+
 	if ((temporal = IMG_Load(file_path.c_str())) == NULL) {
 		throw Sprite_Construction_Error;
 	}
 
-	_texture = SDL_CreateTextureFromSurface(&window_render, temporal);
+	_texture = SDL_CreateTextureFromSurface(window.window_render, temporal);
 
 	SDL_FreeSurface(temporal);
 
@@ -51,11 +52,11 @@ Sprite::Sprite(const string& file_path, SDL_Renderer& window_render,
 	scaled_height = image_height;
 }
 
-Sprite::Sprite(SDL_Surface& surface, SDL_Renderer& window_render,
-		int image_width, int image_height) {
-	_texture = SDL_CreateTextureFromSurface(&window_render, &surface);
+Sprite::Sprite(SDL_Surface& surface, Window& window, int image_width,
+		int image_height) {
+	_texture = SDL_CreateTextureFromSurface(window.window_render, &surface);
 
-	if (_texture == NULL) throw Sprite_Construction_Error
+	if (_texture == NULL) throw Sprite_Construction_Error;
 
 	this->x_pos = 0;
 	this->y_pos = 0;
