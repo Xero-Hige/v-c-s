@@ -1,0 +1,113 @@
+/**
+ sprite.h
+
+ Copyright 2013 Gaston Martinez Gaston.martinez.90@gmail.com
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses
+ */
+#ifndef SPRITE_H_
+#define SPRITE_H_
+
+#include <SDL.h>
+
+#include <string>
+#include <exception>
+
+#include "../window/window.h"
+
+class Sprite_Construction_Error: public std::exception
+{
+  virtual const char* what() const throw()
+  {
+    return "Ocurrio un error al crear la surface";
+  }
+};
+
+class Sprite {
+
+protected:
+
+	SDL_Texture* _texture;
+	int x_pos;
+	int y_pos;
+
+	int image_width;
+	int image_height;
+
+	int scaled_width;
+	int scaled_height;
+
+public:
+	/**
+	 * Dummy
+	 */
+	Sprite() {}
+	virtual ~Sprite() {}
+	/**
+	 * TODO:
+	 */
+	Sprite(const std::string& file_path, Window& window, int image_width,
+			int image_height);
+	/**
+	 * TODO:
+	 */
+	Sprite(SDL_Surface& file_path, Window& window, int image_width,
+			int image_height);
+	/**
+	 * Setea las posiciones x e y donde debe ser dibujado
+	 * el sprite
+	 */
+	void move(int x_pos, int y_pos);
+	/**
+	 * Dibuja el sprite en la ventana correspondiente
+	 */
+	virtual bool draw(Window& destination_window);
+	/**
+	 * Dibuja el sprite en la ventana correspondiente
+	 * en la posicion indicada por el rectangulo
+	 */
+	virtual bool draw(Window& destination_window, SDL_Rect& destination_rect);
+
+	/**
+	 * Cambia el tamaño final del sprite al ser dibujado en todas
+	 * sus dimensiones segun la escala pasada
+	 */
+	void scale(double scale);
+	/**
+	 * Cambia el tamaño final del sprite al ser dibujado en
+	 * su ancho segun la escala pasada
+	 */
+	void scale_width(double scale);
+	/**
+	 * Cambia el tamaño final del sprite al ser dibujado en
+	 * su alto segun la escala pasada
+	 */
+	void scale_height(double scale);
+	/**
+	 * Define el tamaño final del sprite al ser dibujado en
+	 * su ancho segun el valor pasado
+	 */
+	void set_scaled_width(int scaled_width);
+	/**
+	 * Define el tamaño final del sprite al ser dibujado en
+	 * su alto segun el valor pasado
+	 */
+	void set_scaled_height(int scaled_height);
+	/**
+	 * Libera la textura asociada al sprite
+	 */
+	void free();
+};
+
+#endif /* SPRITE_H_ */
