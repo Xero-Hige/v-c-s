@@ -19,47 +19,51 @@
 #ifndef LOGINSCREEN_H_
 #define LOGINSCREEN_H_
 
-#define SCREEN_WIDTH	300
-#define SCREEN_HEIGHT   100
+#define SCREEN_WIDTH	600
+#define SCREEN_HEIGHT   300
 #define TITLE 		"Login"
 #define WINDOW_FLAGS SDL_WINDOW_RESIZABLE
 
+#include <SDL_ttf.h>
+
 #include "app.h"
 #include "../libs/window/window.h"
+#include "../libs/animated_sprite/animated_sprite.h"
+#include "../libs/surface/surface.h"
 
-/*
- *
- */
+
 class Login_Screen: public App {
 
 private:
 
 	Window window;
+	Sprite background;
+	Sprite mugshot;
 
 public:
 
 	/**
 	 * Metodo para inicializar la app
 	 */
-	bool initialize();
+	virtual bool initialize();
 	/**
 	 * Metodo para manejar los eventos de sdl
 	 */
-	void handle_event(SDL_Event& event);
+	virtual void handle_event(SDL_Event& event);
 	/**
 	 * Metodo para ejecutar durante el loop
 	 * (actualizacion de estados de la aplicacion)
 	 */
-	void loop();
+	virtual void loop();
 	/**
 	 * Metodo para ejecutar durante la etapa de
 	 * dibujado en pantalla
 	 */
-	void render();
+	virtual void render();
 	/**
 	 * Metodo para limpiar el contenido de la app
 	 */
-	void cleanup();
+	virtual void cleanup();
 
 };
 

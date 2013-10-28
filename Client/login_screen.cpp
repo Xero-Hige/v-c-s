@@ -19,11 +19,31 @@
 #include "login_screen.h"
 
 bool Login_Screen::initialize() {
-	window = Window(TITLE,SCREEN_WIDTH,SCREEN_HEIGHT,WINDOW_FLAGS);
+
+	window = Window(TITLE, SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_FLAGS);
 	//TODO: excepciones
+
+	Surface background_temp = Surface("resources/login/background.png");
+	Surface textbox_temp = Surface("resources/login/textbox.png");
+
+	background_temp.draw_on(textbox_temp, 190, 200);
+
+	background = background_temp.convert_to_sprite(window, 790, 315);
+
+	background_temp.free();
+	textbox_temp.free();
+
+	background.set_scaled_height(SCREEN_HEIGHT);
+	background.set_scaled_width(SCREEN_WIDTH);
+
+	return true;
 }
 
 void Login_Screen::handle_event(SDL_Event& event) {
+	if (event.type == SDL_MOUSEBUTTONDOWN) {
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Click",
+				"Oh, un click (?)", window.window);
+	}
 }
 
 void Login_Screen::loop() {
@@ -31,8 +51,14 @@ void Login_Screen::loop() {
 
 void Login_Screen::render() {
 	window.clear();
+
+	background.draw(window);
+
 	window.render();
+
 }
 
 void Login_Screen::cleanup() {
+	background.free();
+	window.free();
 }

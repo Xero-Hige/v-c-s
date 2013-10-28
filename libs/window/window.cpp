@@ -21,12 +21,12 @@
 
 using std::string;
 
-Window::Window(const string& title,int widht,int height,int flags) {
+Window::Window(const string& title, int widht, int height, int flags) {
 	SDL_CreateWindowAndRenderer(widht, height, flags, &window, &window_render);
 	//TODO: Excepciones durante la creacion
 	SDL_SetRenderDrawColor(window_render, 0, 0, 0, 255);
 
-	SDL_SetWindowTitle(window,title.c_str());
+	SDL_SetWindowTitle(window, title.c_str());
 
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "best");
 	//Setea el render a un tamaño fijo para uqe funcione durante
@@ -34,16 +34,20 @@ Window::Window(const string& title,int widht,int height,int flags) {
 	SDL_RenderSetLogicalSize(window_render, widht, height);
 }
 
-void Window::clear()
-{
+void Window::clear() {
 	SDL_RenderClear(window_render);
 }
 
-void Window::render()
-{
+void Window::render() {
 	SDL_RenderPresent(window_render);
 }
 
-bool Window::draw_on(SDL_Texture& source_sprite, SDL_Rect& source_rect, SDL_Rect& dest_rect) {
-    SDL_RenderCopy(window_render, &source_sprite, &source_rect, &dest_rect);
+bool Window::draw_on(SDL_Texture& source_sprite, SDL_Rect& source_rect,
+		SDL_Rect& dest_rect) {
+	SDL_RenderCopy(window_render, &source_sprite, &source_rect, &dest_rect);
+}
+
+void Window::free() {
+	SDL_DestroyRenderer(window_render);
+	SDL_DestroyWindow(window);
 }

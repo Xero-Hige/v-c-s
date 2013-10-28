@@ -8,7 +8,7 @@ CPPFLAGS = -Wall -Wextra -g -pedantic `sdl2-config --cflags` -lstdc++ -lm
 
 SDL_CPPFLAGS = -Wall -Wextra -g -pedantic `sdl2-config --cflags` -lstdc++ -lm #//TODO: arreglar
 
-SDL_LDFLAGS =`sdl2-config --libs` -lSDL2 -lSDL2_image -lSDL2_mixer
+SDL_LDFLAGS =`sdl2-config --libs` -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf
 
 GRAPHIC_LIBS = surface.o sprite.o animated_sprite.o window.o
 

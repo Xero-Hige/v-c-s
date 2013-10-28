@@ -127,3 +127,6 @@ void Sprite::set_scaled_height(int scaled_height) {
 	this->scaled_height = scaled_height;
 }
 
+void Sprite::free() {
+    SDL_DestroyTexture(_texture);
+}

@@ -33,25 +33,25 @@ public:
 	/**
 	 * Metodo para inicializar la app
 	 */
-	virtual bool initialize(){};
+	virtual bool initialize()=0;
 	/**
 	 * Metodo para manejar los eventos de sdl
 	 */
-	virtual void handle_event(SDL_Event& event){};
+	virtual void handle_event(SDL_Event& event)=0;
 	/**
 	 * Metodo para ejecutar durante el loop
 	 * (actualizacion de estados de la aplicacion)
 	 */
-	virtual void loop(){};
+	virtual void loop()=0;
 	/**
 	 * Metodo para ejecutar durante la etapa de
 	 * dibujado en pantalla
 	 */
-	virtual void render(){};
+	virtual void render()=0;
 	/**
 	 * Metodo para limpiar el contenido de la app
 	 */
-	virtual void cleanup(){};
+	virtual void cleanup()=0;
 };
 
 #endif /* APP_H_ */
