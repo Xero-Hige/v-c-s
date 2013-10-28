@@ -14,12 +14,20 @@
 
 namespace std {
 
+class Room; //Por la refsa circulares...
+class Lobby;
+
 class ClientHandler : public Thread {
+	Room * room;
+
+	Lobby * lobby;
+
+	bool keep_communicating;
+
 	int sock;
 
 	void run();
 
-	bool keep_communicating;
 	/*
 	 * socketSend envia los datos de buf a traves del socket.
 	 */
@@ -29,19 +37,16 @@ class ClientHandler : public Thread {
 	 */
 	int socketReceive(void * buf, size_t length);
 
-	void getUser(string & user);
-	void getPasswd(string & passwd);
-
 public:
-	explicit ClientHandler(int sock);
+	explicit ClientHandler(int sock, Lobby * lob);
 
 	int recvMsg(string & msg);
 
 	int sendMsg(string msg);
 
-	void getAuthType(string & auth_type);
+	void setRoom(Room * r);
 
-	void getMatchMaking(string & mm);
+	void exitRoom();
 
 	void getIds(string & user, string & passwd);
 

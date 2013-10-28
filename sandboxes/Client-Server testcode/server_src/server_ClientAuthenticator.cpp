@@ -18,7 +18,7 @@ ClientAuthenticator::ClientAuthenticator(ClientHandler * ch) {
 bool ClientAuthenticator::authenticate(){
 	//Determina si el cliente quiere registrarse o logearse
 	string auth_type;
-	this->client->getAuthType(auth_type);
+	this->client->recvMsg(auth_type);
 	if (auth_type.compare(TYPE_LOGIN) == 0)
 		return login();
 	else /*if (auth_type.compare(TYPE_REGISTER) == 0)*/

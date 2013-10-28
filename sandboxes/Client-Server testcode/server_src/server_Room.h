@@ -22,6 +22,7 @@ class Room {
 public:
 	Room(unsigned limit);
 	bool addClient(ClientHandler* ch);
+	bool exitRoom(ClientHandler* ch);
 	bool isFull();
 	virtual ~Room();
 };

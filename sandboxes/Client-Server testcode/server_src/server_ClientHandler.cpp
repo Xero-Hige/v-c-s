@@ -7,33 +7,38 @@
 
 #include "server_ClientHandler.h"
 #include <arpa/inet.h>
+#include "server_Room.h"
+#include "server_Lobby.h"
+#include "server_MsgInterpreter.h"
 #include <iostream>
 #include "../common_src/common_MsgConstants.h"
 #include "../common_src/common_BigEndianProtocol.h"
 
 namespace std {
 
-ClientHandler::ClientHandler(int sock) {
+ClientHandler::ClientHandler(int sock, Lobby * lob) {
+	this->room = NULL;
 	this->sock = sock;
 	this->keep_communicating = true;
+	this->lobby = lob;
 }
 //////////////////////////////////DEBUGGGGGGGGGGGGGGGGGGGGGG
 void ClientHandler::run(){
+	MsgInterpreter interpreter(this);
 	while (keep_communicating){
 		string rcvd_msg;
 		recvMsg(rcvd_msg);
 		if (rcvd_msg.compare("q") == 0) {
 			cout << "Mensaje recibido: SALIDA" << endl;
-			string msg2("EXIT");
-			sendMsg(msg2);
 			break;
 		}
-		cout << "Mensaje recibido: ";
-		cout << rcvd_msg << endl;
-		string msg2("CONFIRMACION");
-		sendMsg(msg2);
+		interpreter.interpret(rcvd_msg);
 	}
-	keep_communicating = false;
+}
+
+void ClientHandler::exitRoom(){
+	room->exitRoom(this);
+//	lobby->addClient(this);
 }
 
 int ClientHandler::socketSend(const void * buf, size_t length){
@@ -53,28 +58,16 @@ void ClientHandler::sendIdsVerifMsg(){
 }
 
 void ClientHandler::getIds(string & user, string & passwd){
-	getUser(user);
-	getPasswd(passwd);
-}
-
-void ClientHandler::getUser(string & user){
 	recvMsg(user);
-}
-
-void ClientHandler::getPasswd(string & passwd){
 	recvMsg(passwd);
-}
-
-void ClientHandler::getAuthType(string & auth_type){
-	recvMsg(auth_type);
-}
-
-void ClientHandler::getMatchMaking(string & mm){
-	recvMsg(mm);
 }
 
 int ClientHandler::socketReceive(void * buf, size_t length){
 	return recv(this->sock, buf, length, 0);
+}
+
+void ClientHandler::setRoom(Room * r){
+	this->room = r;
 }
 
 int ClientHandler::sendMsg(string msg){

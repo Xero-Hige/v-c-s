@@ -72,7 +72,7 @@ int main(int argc, char *argv[]){
 	c.connectServer(errcode);
 	if (errcode) return errcode;
 	c.enterRoom();
-	c.enviarMsg();
+	c.communicate();
 	//Si algo fallo devuelve 1 (el codigo de error)
 	if (errcode) return errcode;
 	c.closeConection();

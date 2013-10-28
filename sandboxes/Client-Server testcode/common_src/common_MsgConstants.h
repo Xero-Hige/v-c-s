@@ -19,4 +19,6 @@
 #define MM_USER_DEF "1"
 #define MM_DEFAULT "2"
 
+#define CLIENT_EXIT_ROOM "e"
+
 #endif /* COMMON_MSGCONSTANTS_H_ */

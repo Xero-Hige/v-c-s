@@ -42,7 +42,9 @@ public:
 	 */
 	void connectServer(int & errcode);
 	void enterRoom();
-	void enviarMsg();
+	void communicate();
+	int recvMsg(string msg);
+	int sendMsg(string msg);
 	/*
 	 * closeConnection cierra el socket utilizado para la conex.
 	 */

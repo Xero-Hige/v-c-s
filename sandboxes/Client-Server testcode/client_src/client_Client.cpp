@@ -17,6 +17,7 @@
 #include "../common_src/common_BigEndianProtocol.h"
 #include "../common_src/common_MsgConstants.h"
 #include "client_Authenticator.h"
+#include "client_MsgInterpreter.h"
 
 #include <stdio.h>
 
@@ -50,7 +51,8 @@ Client::Client(string ip, int port) {
 	this->port = port;
 }
 
-void Client::enviarMsg(){
+void Client::communicate(){
+	MsgInterpreter interpreter(this);
 	char c = 0;
 	while (c != 'q'){
 		char msg[80];
@@ -59,10 +61,11 @@ void Client::enviarMsg(){
 		c = msg[0];
 		string s_msg(msg);
 		this->s_handler->sendMsg(s_msg);
-		s_msg.clear();
-		this->s_handler->recvMsg(s_msg);
-		cout << "Recibido: ";
-		cout << s_msg << endl;
+		interpreter.interpret(s_msg);
+//		s_msg.clear();
+//		this->s_handler->recvMsg(s_msg);
+//		cout << "Recibido: ";
+//		cout << s_msg << endl;
 	}
 }
 
@@ -105,13 +108,21 @@ void Client::useDefaultMatchmaking(){
 void Client::enterRoom(){
 	string mm;
 	getMatchmaking(mm);
-	s_handler->sendMsg(mm);
+	s_handler->sendMsg(mm);//envia modo de matchmaking
 	if (mm.compare(MM_USER_DEF) == 0){
 		useUserDefinedMatchmaking();
 	} else if (mm.compare(MM_DEFAULT) == 0){
 		useDefaultMatchmaking();
 	}
 	return;
+}
+
+int Client::sendMsg(string msg){
+	return this->s_handler->sendMsg(msg);
+}
+
+int Client::recvMsg(string msg){
+	return this->s_handler->recvMsg(msg);
 }
 
 void Client::getRoomId(string & id){

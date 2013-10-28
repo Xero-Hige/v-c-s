@@ -53,7 +53,7 @@ void SocketHandler::run(){
 }
 
 void SocketHandler::addClient(int & new_client){
-	ClientHandler * ch = new ClientHandler(new_client);
+	ClientHandler * ch = new ClientHandler(new_client, this->lobby);
 	ClientAuthenticator ca(ch);
 	if (ca.authenticate()) this->lobby->addClient(ch);
 	else close(new_client);
