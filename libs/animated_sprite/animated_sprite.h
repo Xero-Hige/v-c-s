@@ -55,17 +55,17 @@ public:
 	/**
 	 * Dibuja el sprite animado en la ventana correspondiente
 	 */
-	virtual bool draw(Window& destination_window);
+	virtual void draw(Window& destination_window);
 	/**
 	 * Dibuja el sprite en la ventana correspondiente
 	 * en la posicion indicada por el rectangulo
 	 */
-	virtual bool draw(Window& destination_window, SDL_Rect& destination_rect);
+	virtual void draw(Window& destination_window, SDL_Rect& destination_rect);
 	/**
 	 * Dibuja el sprite en la ventana correspondiente
 	 * en la posicion indicada por los puntos
 	 */
-	virtual bool draw(Window& destination_window, int x_pos, int y_pos);
+	virtual void draw(Window& destination_window, int x_pos, int y_pos);
 	/**
 	 * Ejecuta el cambio de frame del sprite si corresponde
 	 * segun el tiempo transcurrido desde la ultima llamada a

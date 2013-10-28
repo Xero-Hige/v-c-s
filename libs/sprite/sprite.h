@@ -26,12 +26,10 @@
 
 #include "../window/window.h"
 
-class Sprite_Construction_Error: public std::exception
-{
-  virtual const char* what() const throw()
-  {
-    return "Ocurrio un error al crear la surface";
-  }
+class Sprite_Construction_Error: public std::exception {
+	virtual const char* what() const throw () {
+		return "Ocurrio un error al crear la surface";
+	}
 };
 
 class Sprite {
@@ -72,12 +70,12 @@ public:
 	/**
 	 * Dibuja el sprite en la ventana correspondiente
 	 */
-	virtual bool draw(Window& destination_window);
+	virtual void draw(Window& destination_window);
 	/**
 	 * Dibuja el sprite en la ventana correspondiente
 	 * en la posicion indicada por el rectangulo
 	 */
-	virtual bool draw(Window& destination_window, SDL_Rect& destination_rect);
+	virtual void draw(Window& destination_window, SDL_Rect& destination_rect);
 
 	/**
 	 * Cambia el tamaño final del sprite al ser dibujado en todas
