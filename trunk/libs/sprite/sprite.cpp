@@ -31,7 +31,7 @@ Sprite::Sprite(const string& file_path, Window& window, int image_width,
 	SDL_Surface* temporal = NULL;
 
 	if ((temporal = IMG_Load(file_path.c_str())) == NULL) {
-		throw Sprite_Construction_Error;
+		throw Sprite_Construction_Error();
 	}
 
 	_texture = SDL_CreateTextureFromSurface(window.window_render, temporal);
@@ -39,7 +39,7 @@ Sprite::Sprite(const string& file_path, Window& window, int image_width,
 	SDL_FreeSurface(temporal);
 
 	if (_texture == NULL) {
-		throw Sprite_Construction_Error;
+		throw Sprite_Construction_Error();
 	}
 
 	this->x_pos = 0;
@@ -56,7 +56,8 @@ Sprite::Sprite(SDL_Surface& surface, Window& window, int image_width,
 		int image_height) {
 	_texture = SDL_CreateTextureFromSurface(window.window_render, &surface);
 
-	if (_texture == NULL) throw Sprite_Construction_Error;
+	if (_texture == NULL)
+		throw Sprite_Construction_Error();
 
 	this->x_pos = 0;
 	this->y_pos = 0;
@@ -68,7 +69,7 @@ Sprite::Sprite(SDL_Surface& surface, Window& window, int image_width,
 	scaled_height = image_height;
 }
 
-bool Sprite::draw(Window& destination_window) {
+void Sprite::draw(Window& destination_window) {
 
 	SDL_Rect source_rect;
 	SDL_Rect destination_rect;
@@ -87,7 +88,7 @@ bool Sprite::draw(Window& destination_window) {
 
 }
 
-bool Sprite::draw(Window& destination_window, SDL_Rect& destination_rect) {
+void Sprite::draw(Window& destination_window, SDL_Rect& destination_rect) {
 
 	SDL_Rect source_rect;
 

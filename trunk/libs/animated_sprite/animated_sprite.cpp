@@ -47,10 +47,9 @@ void Animated_Sprite::animate() {
 
 }
 
-Animated_Sprite::Animated_Sprite(const string& file_path,
-		Window& window, int image_width, int image_height,
-		int frames) :
-		Sprite(file_path, window, image_width, image_height) {
+Animated_Sprite::Animated_Sprite(const string& file_path, Window& window,
+		int image_width, int image_height, int frames) :
+				Sprite(file_path, window, image_width, image_height) {
 
 	// cada frame esta 1/frames Seg
 	framerate = 1000 / frames;
@@ -63,10 +62,9 @@ Animated_Sprite::Animated_Sprite(const string& file_path,
 	time = 0;
 }
 
-Animated_Sprite::Animated_Sprite(SDL_Surface& surface,
-		Window& window, int image_width, int image_height,
-		int frames) :
-		Sprite(surface, window, image_width, image_height) {
+Animated_Sprite::Animated_Sprite(SDL_Surface& surface, Window& window,
+		int image_width, int image_height, int frames) :
+				Sprite(surface, window, image_width, image_height) {
 
 	// cada frame esta 1/frames Seg
 	framerate = 1000 / frames;
@@ -79,7 +77,7 @@ Animated_Sprite::Animated_Sprite(SDL_Surface& surface,
 	time = 0;
 }
 
-bool Animated_Sprite::draw(Window& destination_window) {
+void Animated_Sprite::draw(Window& destination_window) {
 	SDL_Rect source_rect;
 	SDL_Rect destination_rect;
 
@@ -97,7 +95,8 @@ bool Animated_Sprite::draw(Window& destination_window) {
 
 }
 
-bool Animated_Sprite::draw(Window& destination_window, SDL_Rect& destination_rect) {
+void Animated_Sprite::draw(Window& destination_window,
+		SDL_Rect& destination_rect) {
 
 	SDL_Rect source_rect;
 
@@ -109,7 +108,7 @@ bool Animated_Sprite::draw(Window& destination_window, SDL_Rect& destination_rec
 	destination_window.draw_on(*_texture, source_rect, destination_rect);
 }
 
-bool Animated_Sprite::draw(Window& destination_window, int x_pos, int y_pos) {
+void Animated_Sprite::draw(Window& destination_window, int x_pos, int y_pos) {
 	SDL_Rect source_rect;
 	SDL_Rect destination_rect;
 

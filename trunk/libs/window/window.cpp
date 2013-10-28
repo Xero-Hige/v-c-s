@@ -23,7 +23,7 @@ using std::string;
 
 Window::Window(const string& title,int widht,int height,int flags) {
 	SDL_CreateWindowAndRenderer(widht, height, flags, &window, &window_render);
-
+	//TODO: Excepciones durante la creacion
 	SDL_SetRenderDrawColor(window_render, 0, 0, 0, 255);
 
 	SDL_SetWindowTitle(window,title.c_str());
