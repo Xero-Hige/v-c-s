@@ -29,10 +29,11 @@ class Client_App : public App{
 
 private:
 	bool running;
-	std::vector<App> apps;
+	std::vector<App*> apps;
 
 public:
 	Client_App();
+	~Client_App();
 	int run();
 
 	bool initialize();

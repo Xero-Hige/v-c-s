@@ -21,17 +21,22 @@
 using std::vector;
 
 Client_App::Client_App() {
+	SDL_Init (SDL_INIT_EVERYTHING);
 	running = false;
-	apps = vector<App>();
-	apps.push_back(Login_Screen());
+	apps = vector<App*>();
+
+	apps.push_back(new Login_Screen());
+}
+
+Client_App::~Client_App() {
+	delete apps[0];
+	SDL_Quit();
 }
 
 int Client_App::run() {
 	if (initialize() == false) {
 		return 1;
 	}
-
-	Window window = Window(TITLE, SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_FLAGS);
 
 	SDL_Event Event;
 
@@ -48,9 +53,8 @@ int Client_App::run() {
 }
 
 bool Client_App::initialize() {
-	SDL_Init (SDL_INIT_EVERYTHING);
 	running = true;
-	apps[0].initialize();
+	apps[0]->initialize();
 	return true;
 }
 
@@ -59,21 +63,20 @@ void Client_App::handle_event(SDL_Event& event) {
 		running = false;
 
 	}
-	apps[0].handle_event(event);
+	apps[0]->handle_event(event);
 	return;
 }
 
 void Client_App::loop() {
-	apps[0].loop();
+	apps[0]->loop();
 	return;
 }
 
 void Client_App::render() {
-	apps[0].render();
+	apps[0]->render();
 	return;
 }
 
 void Client_App::cleanup() {
-	apps[0].cleanup();
-	SDL_Quit();
+	apps[0]->cleanup();
 }

@@ -28,7 +28,7 @@ class Window {
 
 friend class Sprite;
 
-private:
+public:
 	SDL_Window* window;
 	SDL_Renderer* window_render;
 
@@ -53,6 +53,10 @@ public:
 	 * Dibija sobre el render la textura pasada como parametro
 	 */
 	bool draw_on(SDL_Texture& source_sprite, SDL_Rect& source_rect, SDL_Rect& dest_rect);
+	/**
+	 * Libera los recursos de la ventana
+	 */
+	void free();
 };
 
 #endif /* WINDOW_H_ */
