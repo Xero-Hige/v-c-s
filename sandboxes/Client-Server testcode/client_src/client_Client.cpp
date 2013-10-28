@@ -53,15 +53,14 @@ Client::Client(string ip, int port) {
 
 void Client::communicate(){
 	MsgInterpreter interpreter(this);
-	char c = 0;
-	while (c != 'q'){
+	bool exit_char_pressed = false;
+	while (!exit_char_pressed){
 		char msg[80];
 		cout << "Envio: " << endl;
 		scanf("%s", msg);
-		c = msg[0];
 		string s_msg(msg);
 		this->s_handler->sendMsg(s_msg);
-		interpreter.interpret(s_msg);
+		exit_char_pressed = interpreter.interpret(s_msg);
 //		s_msg.clear();
 //		this->s_handler->recvMsg(s_msg);
 //		cout << "Recibido: ";

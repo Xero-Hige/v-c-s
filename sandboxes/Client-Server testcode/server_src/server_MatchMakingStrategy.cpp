@@ -16,7 +16,6 @@ MatchMakingStrategy::MatchMakingStrategy() {
 void MatchMakingStrategy::addClient(Lobby * lob, ClientHandler * ch){
 	string s;
 	ch->recvMsg(s);//matchmaking message
-	cout << s << endl;
 	if (!s.compare(MM_USER_DEF)) //==0
 		addUserDefined(lob, ch);
 	else if (!s.compare(MM_DEFAULT)) //==0

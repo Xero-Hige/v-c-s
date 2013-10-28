@@ -26,7 +26,7 @@ bool Room::addClient(ClientHandler* ch){
 	cout << endl;
 	clients.push_back(ch);
 	ch->setRoom(this);
-	ch->start();
+//	ch->start();
 	return true;
 }
 

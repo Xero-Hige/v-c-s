@@ -22,7 +22,7 @@ class Lobby{
 
 public:
 	Lobby();
-	void addClient(ClientHandler * ch);
+	void addClient(ClientHandler * ch); //Usar solo cuando es un nuevo cliente
 	virtual ~Lobby();
 };
 

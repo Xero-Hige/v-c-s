@@ -21,9 +21,15 @@ void MsgInterpreter::exitRoom(){
 	client->enterRoom();
 }
 
-void MsgInterpreter::interpret(string s){
-	if (s.compare(CLIENT_EXIT_ROOM) == 0)
+bool MsgInterpreter::interpret(string s){
+	if (s.compare("q") == 0){
+		return true;
+	}
+	else if (s.compare(CLIENT_EXIT_ROOM) == 0){
 		exitRoom();
+		return false;
+	}
+	return false;
 }
 
 MsgInterpreter::~MsgInterpreter() {

@@ -20,10 +20,18 @@ void MsgInterpreter::exitRoom(){
 	client->exitRoom();
 }
 
-void MsgInterpreter::interpret(string s) {
+//Devuelve si se presiono el char de salida
+bool MsgInterpreter::interpret(string s) {
 	cout << s << endl;
-	if (s.compare(CLIENT_EXIT_ROOM) == 0)
+	if (s.compare("q") == 0){
+		cout << "Mensaje recibido: SALIDA" << endl;
+		return true;
+	}
+	else if (s.compare(CLIENT_EXIT_ROOM) == 0){
 		exitRoom();
+		return false;
+	}
+	return false;
 }
 
 MsgInterpreter::~MsgInterpreter() {

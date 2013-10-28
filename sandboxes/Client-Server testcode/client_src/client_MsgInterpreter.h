@@ -20,7 +20,7 @@ class MsgInterpreter {
 
 public:
 	MsgInterpreter(Client * c);
-	void interpret(string s); //metodo de ifs anidados
+	bool interpret(string s); //metodo de ifs anidados
 	virtual ~MsgInterpreter();
 };
 

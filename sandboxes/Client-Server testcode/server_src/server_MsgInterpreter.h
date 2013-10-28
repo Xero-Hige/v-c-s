@@ -19,7 +19,7 @@ class MsgInterpreter {
 
 public:
 	MsgInterpreter(ClientHandler* c);
-	void interpret(string s);
+	bool interpret(string s);
 	virtual ~MsgInterpreter();
 };
 

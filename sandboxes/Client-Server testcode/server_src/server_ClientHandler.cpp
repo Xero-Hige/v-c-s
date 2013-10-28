@@ -13,6 +13,7 @@
 #include <iostream>
 #include "../common_src/common_MsgConstants.h"
 #include "../common_src/common_BigEndianProtocol.h"
+#include "server_MatchMakingStrategy.h"
 
 namespace std {
 
@@ -25,20 +26,19 @@ ClientHandler::ClientHandler(int sock, Lobby * lob) {
 //////////////////////////////////DEBUGGGGGGGGGGGGGGGGGGGGGG
 void ClientHandler::run(){
 	MsgInterpreter interpreter(this);
-	while (keep_communicating){
+	bool exit_char_pressed = false;
+	while (keep_communicating && !exit_char_pressed){
 		string rcvd_msg;
 		recvMsg(rcvd_msg);
-		if (rcvd_msg.compare("q") == 0) {
-			cout << "Mensaje recibido: SALIDA" << endl;
-			break;
-		}
-		interpreter.interpret(rcvd_msg);
+		exit_char_pressed = interpreter.interpret(rcvd_msg);
 	}
 }
 
 void ClientHandler::exitRoom(){
 	room->exitRoom(this);
-//	lobby->addClient(this);
+//	lobby->addClient();
+	MatchMakingStrategy mm; //Lo llamo asi para q no tire otro thread
+	mm.addClient(this->lobby, this);
 }
 
 int ClientHandler::socketSend(const void * buf, size_t length){
