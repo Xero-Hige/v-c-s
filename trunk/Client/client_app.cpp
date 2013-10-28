@@ -31,7 +31,7 @@ int Client_App::run() {
 		return 1;
 	}
 
-	Window window = Window(TITLE,SCREEN_WIDTH,SCREEN_HEIGHT,WINDOW_FLAGS);
+	Window window = Window(TITLE, SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_FLAGS);
 
 	SDL_Event Event;
 
