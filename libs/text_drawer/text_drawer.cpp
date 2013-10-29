@@ -18,22 +18,30 @@
  */
 #include "text_drawer.h"
 
-Text_Drawer::Text_Drawer() {
+using std::string;
+
+Text_Drawer::Text_Drawer(): font(NULL){
+	color = {0,0,0,255};//NEGRO
 }
 
-void Text_Drawer::set_font(TTF_Font* font) {
+void Text_Drawer::set_font(const string& path,int font_size) {
+	font = TTF_OpenFont( path.c_str() , font_size );
+	if(!font)printf("Well darn, \n%s",TTF_GetError());
+	if (font==NULL) throw Sprite_Construction_Error();
 }
 
-void Text_Drawer::set_color(SDL_Color& color) {
+void Text_Drawer::set_color(int r,int g,int b,int alpha_level) {
+	color = {r,g,b,alpha_level};
 }
 
-Sprite Text_Drawer::get_text_sprite(std::string text, Window& window) {
-	SDL_Surface* text_surface = TTF_RenderText_Solid(font, text, color);
+Sprite Text_Drawer::get_text_sprite(const string& text, Window& window) {
+	SDL_Surface* text_surface = TTF_RenderText_Solid(font, text.c_str(), color);
 	if (text_surface == NULL) {
+		throw Sprite_Construction_Error();
 	} //TODO: exception;
 
 	try {
-		return Sprite(text_surface, window, text_surface->w, text_surface->h);
+		return Sprite(*text_surface, window, text_surface->w, text_surface->h);
 	} catch (Sprite_Construction_Error& err) {
 		SDL_FreeSurface(text_surface);
 		throw err;
@@ -42,4 +50,5 @@ Sprite Text_Drawer::get_text_sprite(std::string text, Window& window) {
 }
 
 Text_Drawer::~Text_Drawer() {
+	TTF_CloseFont(font);
 }

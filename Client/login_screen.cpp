@@ -18,6 +18,8 @@
  */
 #include "login_screen.h"
 
+using std::string;
+
 bool Login_Screen::initialize() {
 
 	window = Window(TITLE, SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_FLAGS);
@@ -36,6 +38,17 @@ bool Login_Screen::initialize() {
 	background.set_scaled_height(SCREEN_HEIGHT);
 	background.set_scaled_width(SCREEN_WIDTH);
 
+	drawer.set_font("resources/login/logfont.ttf",10);
+
+	user_text = "";
+	pass_text = "";
+	shown_pass_text = "";
+
+	user_sprite = drawer.get_text_sprite("ASD",window);
+	pass_sprite = drawer.get_text_sprite(" ",window);
+
+	user_sprite.move(192,202);
+
 	return true;
 }
 
@@ -47,9 +60,9 @@ void Login_Screen::handle_event(SDL_Event& event) {
 		break;
 
 	case SDL_TEXTINPUT:
-
-		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Click",
-				"Oh, un texto (?)", window.window);
+		user_text += event.text.text;
+		user_sprite = drawer.get_text_sprite(user_text,window);
+		user_sprite.move(192,202);
 		break;
 
 	case SDL_TEXTEDITING:
@@ -62,8 +75,8 @@ void Login_Screen::loop() {
 
 void Login_Screen::render() {
 	window.clear();
-
 	background.draw(window);
+	user_sprite.draw(window);
 
 	window.render();
 

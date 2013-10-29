@@ -22,6 +22,7 @@ using std::vector;
 
 Client_App::Client_App() {
 	SDL_Init (SDL_INIT_EVERYTHING);
+	TTF_Init();
 	running = false;
 	apps = vector<App*>();
 
