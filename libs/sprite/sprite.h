@@ -60,7 +60,7 @@ public:
 	/**
 	 * TODO:
 	 */
-	Sprite(SDL_Surface& file_path, Window& window, int image_width,
+	Sprite(SDL_Surface& surface, Window& window, int image_width,
 			int image_height);
 	/**
 	 * Setea las posiciones x e y donde debe ser dibujado

@@ -40,9 +40,20 @@ bool Login_Screen::initialize() {
 }
 
 void Login_Screen::handle_event(SDL_Event& event) {
-	if (event.type == SDL_MOUSEBUTTONDOWN) {
+	switch (event.type) {
+	case SDL_MOUSEBUTTONDOWN:
 		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Click",
 				"Oh, un click (?)", window.window);
+		break;
+
+	case SDL_TEXTINPUT:
+
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Click",
+				"Oh, un texto (?)", window.window);
+		break;
+
+	case SDL_TEXTEDITING:
+		break;
 	}
 }
 
