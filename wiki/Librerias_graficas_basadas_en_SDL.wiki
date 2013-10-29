@@ -10,6 +10,7 @@ Librerias para crear un framework grafico basado en SDL orientado a objetos y am
 
  * *Libsdl2* (_SDL 2_)
  * *SDL Images 2*  (_SDL 2_)
+ * *SDL TTF* (_SDL 2_)
 
 == Archivos ==
 
@@ -17,3 +18,4 @@ Librerias para crear un framework grafico basado en SDL orientado a objetos y am
  * _sprite.h_ :
  * _animated_sprite.h_ :
  * _window.h_ :
+ * _text_drawer.h_:
