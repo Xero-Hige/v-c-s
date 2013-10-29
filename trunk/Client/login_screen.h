@@ -26,10 +26,13 @@
 
 #include <SDL_ttf.h>
 
+#include <string>
+
 #include "app.h"
 #include "../libs/window/window.h"
 #include "../libs/animated_sprite/animated_sprite.h"
 #include "../libs/surface/surface.h"
+#include "../libs/text_drawer/text_drawer.h"
 
 
 class Login_Screen: public App {
@@ -39,6 +42,14 @@ private:
 	Window window;
 	Sprite background;
 	Sprite mugshot;
+	Sprite user_sprite;
+	Sprite pass_sprite;
+
+	Text_Drawer drawer;
+
+	std::string user_text;
+	std::string pass_text;
+	std::string shown_pass_text;
 
 public:
 

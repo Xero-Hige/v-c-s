@@ -49,7 +49,7 @@ public:
 	/**
 	 * Construye un SDL_Surface en base al path pasado como parametro
 	 */
-	Surface(const std::string& File);
+	Surface(const std::string& file_path);
 	/**
 	 * Dibuja sobre si la source_surface
 	 */

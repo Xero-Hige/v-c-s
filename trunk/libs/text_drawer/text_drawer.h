@@ -23,7 +23,8 @@
 
 #include <string>
 
-#include "../libs/window/window.h"
+#include "../window/window.h"
+#include "../sprite/sprite.h"
 
 class Text_Drawer {
 private:
@@ -32,13 +33,11 @@ private:
 
 public:
 	Text_Drawer();
+	~Text_Drawer();
+	void set_font(const std::string& path,int font_size);
+	void set_color(int r,int g,int b,int alpha_level);
 
-	void set_font(TTF_Font* font);
-	void set_color(SDL_Color& color);
-
-	Sprite get_text_sprite(std::string text,Window& window);
-
-	virtual ~Text_Drawer();
+	Sprite get_text_sprite(const std::string& text,Window& window);
 };
 
 #endif /* TEXTDRAWER_H_ */
