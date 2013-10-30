@@ -32,7 +32,7 @@
 #include "../libs/window/window.h"
 #include "../libs/animated_sprite/animated_sprite.h"
 #include "../libs/surface/surface.h"
-#include "../libs/text_drawer/text_drawer.h"
+#include "../libs/text_box/text_box.h"
 
 
 class Login_Screen: public App {
@@ -42,10 +42,8 @@ private:
 	Window window;
 	Sprite background;
 	Sprite mugshot;
-	Sprite user_sprite;
-	Sprite pass_sprite;
 
-	Text_Drawer drawer;
+	Text_Box user_nick;
 
 	std::string user_text;
 	std::string pass_text;

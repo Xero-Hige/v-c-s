@@ -38,16 +38,8 @@ bool Login_Screen::initialize() {
 	background.set_scaled_height(SCREEN_HEIGHT);
 	background.set_scaled_width(SCREEN_WIDTH);
 
-	drawer.set_font("resources/login/logfont.ttf",10);
-
-	user_text = "";
-	pass_text = "";
-	shown_pass_text = "";
-
-	user_sprite = drawer.get_text_sprite("ASD",window);
-	pass_sprite = drawer.get_text_sprite(" ",window);
-
-	user_sprite.move(192,202);
+	user_nick = Text_Box(14,"resources/login/logfont.ttf",20,window);
+	user_nick.move(155,202);
 
 	return true;
 }
@@ -60,9 +52,7 @@ void Login_Screen::handle_event(SDL_Event& event) {
 		break;
 
 	case SDL_TEXTINPUT:
-		user_text += event.text.text;
-		user_sprite = drawer.get_text_sprite(user_text,window);
-		user_sprite.move(192,202);
+		user_nick.add_char(event.text.text[0]);
 		break;
 
 	case SDL_TEXTEDITING:
@@ -71,12 +61,14 @@ void Login_Screen::handle_event(SDL_Event& event) {
 }
 
 void Login_Screen::loop() {
+	user_nick.refresh(window);
 }
 
 void Login_Screen::render() {
 	window.clear();
+
 	background.draw(window);
-	user_sprite.draw(window);
+	user_nick.draw(window);
 
 	window.render();
 
@@ -84,5 +76,6 @@ void Login_Screen::render() {
 
 void Login_Screen::cleanup() {
 	background.free();
+	user_nick.free();
 	window.free();
 }

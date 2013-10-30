@@ -19,3 +19,4 @@ Librerias para crear un framework grafico basado en SDL orientado a objetos y am
  * _animated_sprite.h_ :
  * _window.h_ :
  * _text_drawer.h_:
+ * _text_box.h_:
