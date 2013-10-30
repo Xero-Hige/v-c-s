@@ -20,25 +20,30 @@
 
 using std::string;
 
-Text_Drawer::Text_Drawer(): font(NULL){
-	color = {0,0,0,255};//NEGRO
+Text_Drawer::Text_Drawer() :
+				font(NULL) {
+	color = {0,0,0,255}; //NEGRO
 }
 
-void Text_Drawer::set_font(const string& path,int font_size) {
-	font = TTF_OpenFont( path.c_str() , font_size );
-	if(!font)printf("Well darn, \n%s",TTF_GetError());
-	if (font==NULL) throw Sprite_Construction_Error();
+void Text_Drawer::set_font(const string& path, int font_size) {
+	if (font) close_font();
+
+	font = TTF_OpenFont(path.c_str(), font_size);
+	if (font == NULL)
+		throw Sprite_Construction_Error();
 }
 
-void Text_Drawer::set_color(int r,int g,int b,int alpha_level) {
+void Text_Drawer::set_color(int r, int g, int b, int alpha_level) {
 	color = {r,g,b,alpha_level};
 }
 
 Sprite Text_Drawer::get_text_sprite(const string& text, Window& window) {
-	SDL_Surface* text_surface = TTF_RenderText_Solid(font, text.c_str(), color);
+	SDL_Surface* text_surface = TTF_RenderUTF8_Blended(font, text.c_str(),
+			color);
+	//Esta manera es mas costosa pero los resultados son mejores
 	if (text_surface == NULL) {
 		throw Sprite_Construction_Error();
-	} //TODO: exception;
+	}
 
 	try {
 		return Sprite(*text_surface, window, text_surface->w, text_surface->h);
@@ -49,6 +54,7 @@ Sprite Text_Drawer::get_text_sprite(const string& text, Window& window) {
 
 }
 
-Text_Drawer::~Text_Drawer() {
+void Text_Drawer::close_font() {
 	TTF_CloseFont(font);
+	font = NULL;
 }

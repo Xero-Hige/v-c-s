@@ -33,11 +33,24 @@ private:
 
 public:
 	Text_Drawer();
-	~Text_Drawer();
+	~Text_Drawer(){};
+	/**
+	 * Setea la fuente a utilizar, abriendo la que recibe como
+	 * parametro
+	 */
 	void set_font(const std::string& path,int font_size);
+	/**
+	 * Setea el color del texto
+	 */
 	void set_color(int r,int g,int b,int alpha_level);
-
+	/**
+	 * Obtiene un sprite con el texto pasado por parametro
+	 */
 	Sprite get_text_sprite(const std::string& text,Window& window);
+	/**
+	 * Libera los recursos pedidos por el Drawer para la fuente
+	 */
+	void close_font();
 };
 
 #endif /* TEXTDRAWER_H_ */

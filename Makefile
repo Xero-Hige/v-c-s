@@ -10,7 +10,7 @@ SDL_CPPFLAGS = -Wall -Wextra -g -pedantic `sdl2-config --cflags` -lstdc++ -lm #/
 
 SDL_LDFLAGS =`sdl2-config --libs` -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf
 
-GRAPHIC_LIBS = surface.o sprite.o animated_sprite.o window.o text_drawer.o
+GRAPHIC_LIBS = surface.o sprite.o animated_sprite.o window.o text_drawer.o text_box.o
 
 surface.o: libs/surface/surface.h libs/surface/surface.cpp
 	$(CC) $(SDL_CPPFLAGS) -c libs/surface/surface.cpp
@@ -26,6 +26,9 @@ window.o: libs/window/window.h libs/window/window.cpp
 	
 text_drawer.o: libs/text_drawer/text_drawer.h libs/text_drawer/text_drawer.cpp
 	$(CC) $(SDL_CPPFLAGS) -c libs/text_drawer/text_drawer.cpp
+	
+text_box.o: libs/text_box/text_box.h libs/text_box/text_box.cpp
+	$(CC) $(SDL_CPPFLAGS) -c libs/text_box/text_box.cpp
 	
 #Sound libs builder
 
@@ -52,4 +55,4 @@ clean:
 	
 #Run
 run-client: client
-	./CLIENT_NAME
+	./$(CLIENT_NAME)
