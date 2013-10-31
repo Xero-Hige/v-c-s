@@ -54,7 +54,8 @@ void Text_Box::draw(Window& window) {
 
 void Text_Box::add_char(char character) {
 	text += character;
-	shown_text += character;
+	if (shown_text == " ") shown_text = character;
+	else shown_text += character;
 	if (shown_text.size() > max_len) {
 		shown_text = shown_text.substr(1, max_len);
 	}
@@ -62,12 +63,14 @@ void Text_Box::add_char(char character) {
 }
 
 void Text_Box::pop_char() {
+	if (text == "") return;
 	text = text.substr(0, text.size() - 1);
 	if (text.size() <= max_len) {
 		shown_text = text;
 	} else {
 		shown_text = text.substr(text.size() - max_len - 1, max_len);
 	}
+	if (shown_text == "") shown_text=" ";
 	need_refresh = true;
 }
 

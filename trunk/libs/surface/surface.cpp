@@ -66,7 +66,17 @@ Animated_Sprite Surface::convert_to_animated_sprite(Window& window,
 	return Animated_Sprite(*this->_surface, window, image_width, image_height,
 			frames);
 }
+
 void Surface::free() {
 	SDL_FreeSurface(_surface);
 }
 
+int Surface::get_width()
+{
+	return _surface->w;
+}
+
+int Surface::get_height()
+{
+	return _surface->h;
+}

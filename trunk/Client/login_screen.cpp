@@ -28,7 +28,10 @@ bool Login_Screen::initialize() {
 	Surface background_temp = Surface("resources/login/background.png");
 	Surface textbox_temp = Surface("resources/login/textbox.png");
 
-	background_temp.draw_on(textbox_temp, 190, 200);
+	int text_box_pos_x = background_temp.get_width()/2 - textbox_temp.get_width()/2;
+
+	background_temp.draw_on(textbox_temp, text_box_pos_x, 200);
+	background_temp.draw_on(textbox_temp, text_box_pos_x, 194+textbox_temp.get_height());
 
 	background = background_temp.convert_to_sprite(window, 790, 315);
 
@@ -39,7 +42,7 @@ bool Login_Screen::initialize() {
 	background.set_scaled_width(SCREEN_WIDTH);
 
 	user_nick = Text_Box(14,"resources/login/logfont.ttf",20,window);
-	user_nick.move(155,202);
+	user_nick.move(214,202);
 
 	return true;
 }
@@ -49,6 +52,11 @@ void Login_Screen::handle_event(SDL_Event& event) {
 	case SDL_MOUSEBUTTONDOWN:
 		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Click",
 				"Oh, un click (?)", window.window);
+		break;
+
+	case SDL_KEYDOWN:
+		if (SDL_SCANCODE_BACKSPACE == event.key.keysym.scancode)
+		user_nick.pop_char();
 		break;
 
 	case SDL_TEXTINPUT:
