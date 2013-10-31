@@ -130,3 +130,7 @@ void Sprite::set_scaled_height(int scaled_height) {
 void Sprite::free() {
     SDL_DestroyTexture(_texture);
 }
+
+void Sprite::set_transparency_level(int level) {
+	SDL_SetTextureAlphaMod(_texture,level);
+}

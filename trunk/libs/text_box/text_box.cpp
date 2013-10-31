@@ -88,3 +88,9 @@ void Text_Box::refresh(Window& window) {
 void Text_Box::free() {
 	drawer.close_font();
 }
+
+void Text_Box::set_alternative_text(const std::string& text, Window& window) {
+	//TODO exception
+	text_sprite = drawer.get_text_sprite(text, window);
+	text_sprite.move(x_pos,y_pos);
+}

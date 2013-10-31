@@ -128,3 +128,7 @@ void Animated_Sprite::draw(Window& destination_window, int x_pos, int y_pos) {
 void Animated_Sprite::set_fps(int fps) {
 	framerate = 1000 / fps;
 }
+
+void Animated_Sprite::set_oscillation(bool status) {
+	oscillate = status;
+}

@@ -70,6 +70,12 @@ public:
 	 */
 	void refresh(Window& window);
 
+
+	/**
+	 * Setea un texto alternativo que se muestra hasta que se
+	 * modifique el texto
+	 */
+	void set_alternative_text(const std::string& text, Window& window);
 	/**
 	 * Libera los recursos pedidos por el textbox
 	 */
