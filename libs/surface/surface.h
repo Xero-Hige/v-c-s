@@ -74,6 +74,14 @@ public:
 	 * Libera la surface interna del objeto
 	 */
 	void free();
+	/**
+	* Obtiene el ancho de la surface
+	*/
+	int get_width();
+	/**
+	* Obtiene el alto de la surface
+	*/
+	int get_height();
 };
 
 #endif
