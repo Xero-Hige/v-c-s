@@ -103,9 +103,23 @@ public:
 	 */
 	void set_scaled_height(int scaled_height);
 	/**
+	 * Setea el nivel de transparencia desde 0 (completamente transparente)
+	 * a 255 (completamente opaco)
+	 */
+	void set_transparency_level(int level);
+
+	int get_scaled_height() const {
+		return scaled_height;
+	}
+
+	int get_scaled_width() const {
+		return scaled_width;
+	}
+	/**
 	 * Libera la textura asociada al sprite
 	 */
 	void free();
+
 };
 
 #endif /* SPRITE_H_ */

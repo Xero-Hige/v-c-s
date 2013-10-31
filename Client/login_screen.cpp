@@ -28,10 +28,12 @@ bool Login_Screen::initialize() {
 	Surface background_temp = Surface("resources/login/background.png");
 	Surface textbox_temp = Surface("resources/login/textbox.png");
 
-	int text_box_pos_x = background_temp.get_width()/2 - textbox_temp.get_width()/2;
+	int text_box_pos_x = background_temp.get_width() / 2
+			- textbox_temp.get_width() / 2;
 
 	background_temp.draw_on(textbox_temp, text_box_pos_x, 200);
-	background_temp.draw_on(textbox_temp, text_box_pos_x, 194+textbox_temp.get_height());
+	background_temp.draw_on(textbox_temp, text_box_pos_x,
+			194 + textbox_temp.get_height());
 
 	background = background_temp.convert_to_sprite(window, 790, 315);
 
@@ -41,8 +43,22 @@ bool Login_Screen::initialize() {
 	background.set_scaled_height(SCREEN_HEIGHT);
 	background.set_scaled_width(SCREEN_WIDTH);
 
-	user_nick = Text_Box(14,"resources/login/logfont.ttf",20,window);
-	user_nick.move(214,202);
+	user_nick = Text_Box(14, "resources/login/logfont.ttf", 20, window);
+	user_nick.move(214, 202);
+	user_nick.set_alternative_text("USUARIO", window);
+
+	SDL_Surface* surface = SDL_CreateRGBSurface(0, SCREEN_WIDTH, SCREEN_HEIGHT,
+			32, 0, 0, 0, 255);
+	mugshot = Sprite(*surface, window, SCREEN_WIDTH, SCREEN_HEIGHT);
+	mugshot.set_transparency_level(128);
+
+	loading = Animated_Sprite("resources/general/pika_loading.png", window,
+			450, 321, 4);
+	loading.set_scaled_height(100);
+	loading.set_scaled_width(140);
+	loading.set_oscillation(false);
+	loading.set_fps(10);
+	loading.move(SCREEN_WIDTH - 140, SCREEN_HEIGHT - 100);
 
 	return true;
 }
@@ -55,10 +71,18 @@ void Login_Screen::handle_event(SDL_Event& event) {
 		break;
 
 	case SDL_KEYDOWN:
-		if (SDL_SCANCODE_BACKSPACE == event.key.keysym.scancode)
-		user_nick.pop_char();
+		if (SDL_SCANCODE_BACKSPACE == event.key.keysym.scancode) {
+			user_nick.pop_char();
+			break;
+		}
+		if (SDL_SCANCODE_KP_ENTER == event.key.keysym.scancode) {
+			while (true) {
+				render_loadscreen();
+				SDL_Delay(0);
+			}
+			break;
+		}
 		break;
-
 	case SDL_TEXTINPUT:
 		user_nick.add_char(event.text.text[0]);
 		break;
@@ -70,6 +94,7 @@ void Login_Screen::handle_event(SDL_Event& event) {
 
 void Login_Screen::loop() {
 	user_nick.refresh(window);
+	loading.animate();
 }
 
 void Login_Screen::render() {
@@ -77,7 +102,8 @@ void Login_Screen::render() {
 
 	background.draw(window);
 	user_nick.draw(window);
-
+	//mugshot.draw(window);
+	//loading.draw(window);
 	window.render();
 
 }
@@ -86,4 +112,15 @@ void Login_Screen::cleanup() {
 	background.free();
 	user_nick.free();
 	window.free();
+	//mugshot.free();
+}
+
+void Login_Screen::render_loadscreen() {
+	loading.animate();
+	window.clear();
+	background.draw(window);
+	user_nick.draw(window);
+	mugshot.draw(window);
+	loading.draw(window);
+	window.render();
 }

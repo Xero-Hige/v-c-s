@@ -42,12 +42,16 @@ private:
 	Window window;
 	Sprite background;
 	Sprite mugshot;
+	Animated_Sprite loading;
 
 	Text_Box user_nick;
 
 	std::string user_text;
 	std::string pass_text;
 	std::string shown_pass_text;
+
+private:
+	void render_loadscreen();
 
 public:
 
