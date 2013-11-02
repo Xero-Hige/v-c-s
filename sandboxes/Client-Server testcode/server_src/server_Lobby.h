@@ -8,17 +8,16 @@
 #ifndef LOBBY_H_
 #define LOBBY_H_
 
-#include <vector>
+#include <map>
 #include "server_Room.h"
-#include "../common_src/common_Mutex.h"
-#include "../common_src/common_Thread.h"
+#include "server_RoomKiller.h"
 
 namespace std {
 
 class Lobby{
 	friend class MatchMakingStrategy;
-	Mutex m;
-	vector<Room*> rooms;
+	map<unsigned long,Room*> rooms;
+	RoomKiller room_killer;
 
 public:
 	Lobby();

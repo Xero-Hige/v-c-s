@@ -14,6 +14,8 @@
 
 namespace std {
 
+typedef pair<unsigned long, Room*> map_pair;
+
 class MatchMakingStrategy {
 	void addUserDefined(Lobby * lob, ClientHandler * ch);
 	void addDefault(Lobby * lob, ClientHandler * ch);

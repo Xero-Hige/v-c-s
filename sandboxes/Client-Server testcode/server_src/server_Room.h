@@ -15,15 +15,20 @@ namespace std {
 
 class Room {
 	static unsigned long id_counter; //Generador de un id incremental
-	unsigned long id;
-	unsigned limit; //max players
+	unsigned limit; //max clients
 	vector<ClientHandler *> clients;
+	bool active;
+	bool currently_playing;
 
 public:
-	Room(unsigned limit);
+	unsigned long id; //room id
+
+	Room(unsigned limit, unsigned long r_id = 0);
 	bool addClient(ClientHandler* ch);
 	bool exitRoom(ClientHandler* ch);
+	bool isPlaying();
 	bool isFull();
+	bool isActive();
 	virtual ~Room();
 };
 

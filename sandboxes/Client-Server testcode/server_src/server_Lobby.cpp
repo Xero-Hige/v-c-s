@@ -13,9 +13,8 @@
 
 namespace std {
 
-Lobby::Lobby() {
-	// TODO Auto-generated constructor stub
-
+Lobby::Lobby(){
+	room_killer.setRooms(&rooms);//No se pq no me deja inicializarlo de entrada...
 }
 
 //Utilizo pthreads sin usar la clase Thread que construimos porque necesito pasar
@@ -43,7 +42,7 @@ void Lobby::addClient(ClientHandler * ch) {
 }
 
 Lobby::~Lobby() {
-	// TODO Auto-generated destructor stub
+	room_killer.stop();
 }
 
 } /* namespace std */

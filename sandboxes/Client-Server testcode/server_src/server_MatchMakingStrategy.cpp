@@ -23,25 +23,37 @@ void MatchMakingStrategy::addClient(Lobby * lob, ClientHandler * ch){
 }
 
 void MatchMakingStrategy::addUserDefined(Lobby * lob, ClientHandler * ch){
-	string room_id;
-	ch->recvMsg(room_id);
-	unsigned index = atoi(room_id.c_str());
-	if (index >= lob->rooms.size()) return addDefault(lob, ch);
-	Room * actual_room = lob->rooms.at(index);
-	if (actual_room->isFull()) return addDefault(lob, ch);
-	actual_room->addClient(ch);
+	string s_roomid;
+	ch->recvMsg(s_roomid);
+	unsigned long room_id = atoi(s_roomid.c_str());
+	// .at crea un nuevo pointer si no existe el room pedido
+	Room * actual_room = lob->rooms[room_id];
+	if(!actual_room){ //si no existe el id creo el room pedido
+		Room * new_room = new Room(2, room_id);
+		new_room->addClient(ch);
+		lob->rooms.insert(map_pair(room_id, new_room)); //piso el anterior
+		return;
+	}
+	else if (actual_room->isFull() || actual_room->isPlaying())
+		return addDefault(lob, ch);
+	else actual_room->addClient(ch);
 }
 
 void MatchMakingStrategy::addDefault(Lobby * lob, ClientHandler * ch){
-	//Si no hay ningun room creado o si el ultimo room esta lleno...
-		if (lob->rooms.size() == 0 || lob->rooms.back()->isFull()){
-			Room * new_room = new Room(2);
-			new_room->addClient(ch);
-			lob->rooms.push_back(new_room);
-		} else {
-			//Si no esta lleno y hay alguno creado...
-			lob->rooms.back()->addClient(ch);
+	//Si ya hay un room creado itera e inserta en alguno vacio.
+	if (lob->rooms.size() != 0){
+		map<unsigned long, Room*>::iterator it = lob->rooms.begin();
+		for (; it != lob->rooms.end(); it++){
+			if (! it->second->isFull()){
+				it->second->addClient(ch);
+				return;
+			}
 		}
+	}
+	//Si no hay uno creado o si no pudo insertar en uno vacio crea uno nuevo
+	Room * new_room = new Room(2);
+	new_room->addClient(ch);
+	lob->rooms.insert( map_pair(new_room->id,new_room));
 }
 
 MatchMakingStrategy::~MatchMakingStrategy() {
