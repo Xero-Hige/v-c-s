@@ -34,6 +34,22 @@ text_box.o: libs/text_box/text_box.h libs/text_box/text_box.cpp
 
 SOUND_LIBS = 
 
+#Thread libs builder
+
+THREAD_LIBS = Thread.o Mutex.o
+
+#Sockets libs builder 
+
+SOCKET_LIBS = Socket.o
+
+#Messages libs builder
+
+MESSAGES_LIBS = MsgInterpreter.o
+
+#Protocol libs builder
+
+COMUMINICATION_PROTOCOL_LIBS = HMAC.o BigEndianProtocol.o
+
 #Client
 
 CLIENT_OBJ = $(GRAPHIC_LIBS) login_screen.o client_app.o 

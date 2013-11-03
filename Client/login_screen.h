@@ -58,11 +58,6 @@ private:
 	Sprite loading_mask;
 	Animated_Sprite loading_icon;
 
-	//Datos
-	std::string user_text;
-	std::string pass_text;
-	std::string shown_pass_text;
-
 	int active_textbox;
 
 private:
