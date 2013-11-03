@@ -9,40 +9,26 @@
 #define CLIENTHANDLER_H_
 #include "../common_src/common_Thread.h"
 #include "../common_src/common_MsgConstants.h"
+#include "../common_src/common_Socket.h"
 #include <stdlib.h>
 #include <string>
 
 namespace std {
 
-class Room; //Por la refsa circulares...
+class Room; //Por la refs circulares...
 class Lobby;
 
-class ClientHandler : public Thread {
+class ClientHandler : public Thread, public Socket {
 	Room * room;
 
 	Lobby * lobby;
 
 	bool keep_communicating;
 
-	int sock;
-
 	void run();
-
-	/*
-	 * socketSend envia los datos de buf a traves del socket.
-	 */
-	int socketSend(const void * buf, size_t length);
-	/*
-	 * socketReceive recibe datos y los almacena en buf.
-	 */
-	int socketReceive(void * buf, size_t length);
 
 public:
 	explicit ClientHandler(int sock, Lobby * lob);
-
-	int recvMsg(string & msg);
-
-	int sendMsg(string msg);
 
 	void setRoom(Room * r);
 

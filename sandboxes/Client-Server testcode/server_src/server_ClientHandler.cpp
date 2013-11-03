@@ -9,23 +9,22 @@
 #include <arpa/inet.h>
 #include "server_Room.h"
 #include "server_Lobby.h"
-#include "server_MsgInterpreter.h"
 #include <iostream>
 #include "../common_src/common_MsgConstants.h"
 #include "../common_src/common_BigEndianProtocol.h"
 #include "server_MatchMakingStrategy.h"
+#include "server_ServerMsgInterpreter.h"
 
 namespace std {
 
-ClientHandler::ClientHandler(int sock, Lobby * lob) {
+ClientHandler::ClientHandler(int s, Lobby * lob) : Socket(s) {
 	this->room = NULL;
-	this->sock = sock;
 	this->keep_communicating = true;
 	this->lobby = lob;
 }
 //////////////////////////////////DEBUGGGGGGGGGGGGGGGGGGGGGG
 void ClientHandler::run(){
-	MsgInterpreter interpreter(this);
+	ServerMsgInterpreter interpreter(this);
 	bool exit_char_pressed = false;
 	while (keep_communicating && !exit_char_pressed){
 		string rcvd_msg;
@@ -36,20 +35,8 @@ void ClientHandler::run(){
 
 void ClientHandler::exitRoom(){
 	room->exitRoom(this);
-//	lobby->addClient();
 	MatchMakingStrategy mm; //Lo llamo asi para q no tire otro thread
 	mm.addClient(this->lobby, this);
-}
-
-int ClientHandler::socketSend(const void * buf, size_t length){
-	unsigned bytes_enviados = 0;
-	//Solo si no se envio nada reenvia. Esto es para evitar que se cuelgue
-	//(el cliente) cuando el send del server ocurre antes que el receive
-	//del cliente
-	while (bytes_enviados == 0){
-		bytes_enviados = send(this->sock, buf, length, 0);
-	}
-	return bytes_enviados;
 }
 
 void ClientHandler::sendIdsVerifMsg(){
@@ -62,32 +49,8 @@ void ClientHandler::getIds(string & user, string & passwd){
 	recvMsg(passwd);
 }
 
-int ClientHandler::socketReceive(void * buf, size_t length){
-	return recv(this->sock, buf, length, 0);
-}
-
 void ClientHandler::setRoom(Room * r){
 	this->room = r;
-}
-
-int ClientHandler::sendMsg(string msg){
-	unsigned size = sizeof(uint32_t) + msg.length();
-	char * msg_with_size = new char[size];
-	darFormato(msg_with_size, msg);
-	int r = socketSend(msg_with_size, size);
-	delete[] msg_with_size;
-	return r;
-}
-
-int ClientHandler::recvMsg(string & msg){
-	char c_size[sizeof(uint32_t)];
-	socketReceive(c_size, sizeof(uint32_t));
-	uint32_t size = readSize(c_size);
-	char * c_msg = new char[size];
-	int r = socketReceive(c_msg, size);
-	msg.append(c_msg, size);
-	delete[] c_msg;
-	return r;
 }
 
 ClientHandler::~ClientHandler() {

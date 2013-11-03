@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <string>
 #include <inttypes.h>
-#include "client_ServerHandler.h"
+#include "../common_src/common_Socket.h"
 
 namespace std {
 
@@ -19,7 +19,7 @@ class Client {
 
 	string ip;
 	int port;
-	ServerHandler * s_handler;//socket file descriptor
+	Socket * sock;//socket file descriptor
 
 	void getMatchmaking(string & mm);
 	void getConnectionType(string & a_type);

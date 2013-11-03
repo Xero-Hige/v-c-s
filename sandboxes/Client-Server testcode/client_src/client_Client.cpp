@@ -16,8 +16,8 @@
 #include <sstream>
 #include "../common_src/common_BigEndianProtocol.h"
 #include "../common_src/common_MsgConstants.h"
+#include "client_ClientMsgInterpreter.h"
 #include "client_Authenticator.h"
-#include "client_MsgInterpreter.h"
 
 #include <stdio.h>
 
@@ -46,25 +46,21 @@ int setServerAddr(struct sockaddr_in & server_addr, string ip, int port){
 Client::Client(string ip, int port) {
 	int sockfd = socket(AF_INET, SOCK_STREAM, 0); //SOCK_STREAM = TCP
 	if (sockfd == -1) cerr << "creation error" << endl;
-	s_handler = new ServerHandler(sockfd);
+	this->sock = new Socket(sockfd);
 	this->ip = ip;
 	this->port = port;
 }
 
 void Client::communicate(){
-	MsgInterpreter interpreter(this);
+	ClientMsgInterpreter interpreter(this);
 	bool exit_char_pressed = false;
 	while (!exit_char_pressed){
 		char msg[80];
 		cout << "Envio: " << endl;
 		scanf("%s", msg);
 		string s_msg(msg);
-		this->s_handler->sendMsg(s_msg);
+		this->sock->sendMsg(s_msg);
 		exit_char_pressed = interpreter.interpret(s_msg);
-//		s_msg.clear();
-//		this->s_handler->recvMsg(s_msg);
-//		cout << "Recibido: ";
-//		cout << s_msg << endl;
 	}
 }
 
@@ -75,8 +71,8 @@ int Client::makeConnection(){
 	//Intenta conectarse
 	if (r < 0)
 		return 1;
-	int sock = s_handler->getSocket();
-	r += connect(sock, (struct sockaddr*) & s_addr, sizeof(struct sockaddr));
+	int actual_sock = this->sock->getSocket();
+	r += connect(actual_sock, (struct sockaddr*) & s_addr, sizeof(struct sockaddr));
 	memset(&(server_addr.sin_zero), 0, sizeof(s_addr.sin_zero));
 	if (r < 0) return 1;
 	return 0;
@@ -97,7 +93,7 @@ void Client::connectServer(int & errcode){
 void Client::useUserDefinedMatchmaking(){
 	string id;
 	getRoomId(id);
-	s_handler->sendMsg(id);
+	sock->sendMsg(id);
 }
 
 void Client::useDefaultMatchmaking(){
@@ -107,21 +103,13 @@ void Client::useDefaultMatchmaking(){
 void Client::enterRoom(){
 	string mm;
 	getMatchmaking(mm);
-	s_handler->sendMsg(mm);//envia modo de matchmaking
+	sock->sendMsg(mm);//envia modo de matchmaking
 	if (mm.compare(MM_USER_DEF) == 0){
 		useUserDefinedMatchmaking();
 	} else if (mm.compare(MM_DEFAULT) == 0){
 		useDefaultMatchmaking();
 	}
 	return;
-}
-
-int Client::sendMsg(string msg){
-	return this->s_handler->sendMsg(msg);
-}
-
-int Client::recvMsg(string msg){
-	return this->s_handler->recvMsg(msg);
 }
 
 void Client::getRoomId(string & id){
@@ -162,11 +150,11 @@ void Client::getUsername(string & user){
 }
 
 void Client::closeConection(){
-	s_handler->closeConnection();
+	sock->closeConnection();
 }
 
 Client::~Client() {
-	delete s_handler;
+	delete sock;
 }
 
 } /* namespace std */

@@ -16,10 +16,6 @@ class Authenticator {
 	Client * client;
 	bool verificateMessage(string msg);
 	bool receiveAuthVerif();
-	void sendAuth(string & user,  string & passwd);
-	void sendAuthType(string & auth_type);
-	void sendUser(string & user);
-	void sendPasswd(string & passwd);
 
 public:
 	Authenticator(Client * c);

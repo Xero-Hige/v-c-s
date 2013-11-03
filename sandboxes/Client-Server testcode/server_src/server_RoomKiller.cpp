@@ -6,6 +6,7 @@
  */
 
 #include "server_RoomKiller.h"
+#include <iostream>
 
 namespace std {
 

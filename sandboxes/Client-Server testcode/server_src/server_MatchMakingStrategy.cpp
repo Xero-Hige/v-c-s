@@ -16,9 +16,9 @@ MatchMakingStrategy::MatchMakingStrategy() {
 void MatchMakingStrategy::addClient(Lobby * lob, ClientHandler * ch){
 	string s;
 	ch->recvMsg(s);//matchmaking message
-	if (!s.compare(MM_USER_DEF)) //==0
+	if (!s.compare(MM_USER_DEF))
 		addUserDefined(lob, ch);
-	else if (!s.compare(MM_DEFAULT)) //==0
+	else if (!s.compare(MM_DEFAULT))
 		addDefault(lob, ch);
 }
 
@@ -26,25 +26,27 @@ void MatchMakingStrategy::addUserDefined(Lobby * lob, ClientHandler * ch){
 	string s_roomid;
 	ch->recvMsg(s_roomid);
 	unsigned long room_id = atoi(s_roomid.c_str());
-	// .at crea un nuevo pointer si no existe el room pedido
-	Room * actual_room = lob->rooms[room_id];
-	if(!actual_room){ //si no existe el id creo el room pedido
+	map<unsigned long, Room*>::iterator it;
+	it = lob->rooms.find(room_id); //intenta encontrar la key
+	if (it == lob->rooms.end()){//Si no la encontro no existe un room con ese id...
 		Room * new_room = new Room(2, room_id);
 		new_room->addClient(ch);
-		lob->rooms.insert(map_pair(room_id, new_room)); //piso el anterior
+		lob->rooms.insert(map_pair(room_id, new_room));
 		return;
 	}
-	else if (actual_room->isFull() || actual_room->isPlaying())
-		return addDefault(lob, ch);
-	else actual_room->addClient(ch);
+	//Si lo encontro...
+	else if (it->second->isFull() || it->second->isPlaying())
+				return addDefault(lob, ch);
+	else it->second->addClient(ch);
 }
 
 void MatchMakingStrategy::addDefault(Lobby * lob, ClientHandler * ch){
 	//Si ya hay un room creado itera e inserta en alguno vacio.
 	if (lob->rooms.size() != 0){
-		map<unsigned long, Room*>::iterator it = lob->rooms.begin();
-		for (; it != lob->rooms.end(); it++){
+		map<unsigned long, Room*>::iterator it;
+		for (it = lob->rooms.begin(); it != lob->rooms.end(); it++){
 			if (! it->second->isFull()){
+				cout << "ESTOY EN LA DEFAULT" << endl;
 				it->second->addClient(ch);
 				return;
 			}
