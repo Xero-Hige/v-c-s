@@ -19,13 +19,37 @@
 #ifndef BACKEND_H_
 #define BACKEND_H_
 
-/*
- *
- */
+#include <string>
+
 class Backend {
 public:
 	Backend();
 	virtual ~Backend();
+
+	//Async control
+	/**
+	 * Devuelve si la ultima operacion asincronica se termino de ejecutar
+	 * Similar a hacer poll en un subproceso
+	 */
+	bool operation_ended();
+	/**
+	 * Devuelve el error asociado a la ultima operacion o una cadena
+	 * vacia si la operacion fue exitosa
+	 */
+	std::string operation_error();
+
+	//Sync ops
+	/**
+	 * Devuelve si el backend tiene una sesion iniciada
+	 */
+	bool logued_in();
+
+	//Login
+	/**
+	 * Envia el comando de inicio de sesion
+	 */
+	void async_log_in(const std::string user,const std::string password);
+
 };
 
 #endif /* BACKEND_H_ */
