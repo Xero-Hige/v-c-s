@@ -20,10 +20,13 @@
 #define BACKEND_H_
 
 #include <string>
+#include "Client.h"
 
 class Backend {
 
 private:
+
+	std::Client client;
 
 	//Connection info
 	std::string ip;
