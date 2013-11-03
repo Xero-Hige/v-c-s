@@ -41,17 +41,62 @@ private:
 
 	Window window;
 	Sprite background;
-	Sprite mugshot;
-	Animated_Sprite loading;
 
 	Text_Box user_nick;
+	Text_Box user_pass;
+	Sprite hover_text;
 
+	Sprite mugshot_left;
+	Sprite mugshot_right;
+
+
+	//Loading_screen
+	Sprite loading_mask;
+	Animated_Sprite loading_icon;
+
+	//Datos
 	std::string user_text;
 	std::string pass_text;
 	std::string shown_pass_text;
 
+	int active_textbox;
+
 private:
+	/**
+	 * Dibuja la pantalla de carga
+	 */
 	void render_loadscreen();
+
+	/**
+	 * Maneja los eventos de teclas
+	 */
+	void key_press_event(SDL_Event& event);
+	/**
+	 * Maneja los eventos de texto (teclas de caracteres)
+	 */
+	void text_input_event(SDL_Event& event);
+	/**
+	 * Maneja los eventos de los botones del mouse
+	 */
+	void mouse_button_event(SDL_Event& event);
+
+	/**
+	 * Inicializa el fondo
+	 */
+	void setup_background();
+	/**
+	 * Inicializa los textboxes
+	 */
+	void setup_textboxes();
+	/**
+	 * Inicializa la pantalla de carga
+	 */
+	void setup_loadingscreen();
+
+	/**
+	 * Cambia el textbox activo de manera ciclica
+	 */
+	void change_active_textbox();
 
 public:
 

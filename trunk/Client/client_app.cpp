@@ -47,6 +47,7 @@ int Client_App::run() {
 		}
 		loop();
 		render();
+		SDL_Delay(1);
 	}
 
 	cleanup();

@@ -52,11 +52,17 @@ public:
 	 */
 	Sprite() {}
 	virtual ~Sprite() {}
+
 	/**
 	 * TODO:
 	 */
-	Sprite(const std::string& file_path, Window& window, int image_width,
-			int image_height);
+	Sprite(const std::string& file_path, Window& window);
+
+	/**
+	 * TODO:
+	 */
+	Sprite(SDL_Surface& surface, Window& window);
+
 	/**
 	 * TODO:
 	 */
@@ -118,7 +124,7 @@ public:
 	/**
 	 * Libera la textura asociada al sprite
 	 */
-	void free();
+	virtual void free();
 
 };
 
