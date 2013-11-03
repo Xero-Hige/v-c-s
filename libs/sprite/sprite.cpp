@@ -24,9 +24,7 @@
 
 using std::string;
 
-Sprite::Sprite(const string& file_path, Window& window, int image_width,
-		int image_height) {
-
+Sprite::Sprite(const std::string& file_path, Window& window) {
 	_texture = NULL;
 	SDL_Surface* temporal = NULL;
 
@@ -34,8 +32,10 @@ Sprite::Sprite(const string& file_path, Window& window, int image_width,
 		throw Sprite_Construction_Error();
 	}
 
-	_texture = SDL_CreateTextureFromSurface(window.window_render, temporal);
+	image_width = temporal->w;
+	image_height = temporal->h;
 
+	_texture = SDL_CreateTextureFromSurface(window.window_render, temporal);
 	SDL_FreeSurface(temporal);
 
 	if (_texture == NULL) {
@@ -45,8 +45,21 @@ Sprite::Sprite(const string& file_path, Window& window, int image_width,
 	this->x_pos = 0;
 	this->y_pos = 0;
 
-	this->image_width = image_width;
-	this->image_height = image_height;
+	scaled_width = image_width;
+	scaled_height = image_height;
+}
+
+Sprite::Sprite(SDL_Surface& surface, Window& window){
+	_texture = SDL_CreateTextureFromSurface(window.window_render, &surface);
+
+	if (_texture == NULL)
+		throw Sprite_Construction_Error();
+
+	this->x_pos = 0;
+	this->y_pos = 0;
+
+	image_width = surface.w;
+	image_height = surface.h;
 
 	scaled_width = image_width;
 	scaled_height = image_height;
@@ -134,3 +147,4 @@ void Sprite::free() {
 void Sprite::set_transparency_level(int level) {
 	SDL_SetTextureAlphaMod(_texture,level);
 }
+

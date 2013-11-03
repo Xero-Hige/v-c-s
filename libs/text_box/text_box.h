@@ -70,7 +70,6 @@ public:
 	 */
 	void refresh(Window& window);
 
-
 	/**
 	 * Setea un texto alternativo que se muestra hasta que se
 	 * modifique el texto

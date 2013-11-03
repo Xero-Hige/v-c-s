@@ -47,15 +47,14 @@ void Animated_Sprite::animate() {
 
 }
 
-Animated_Sprite::Animated_Sprite(const string& file_path, Window& window,
-		int image_width, int image_height, int frames) :
-				Sprite(file_path, window, image_width, image_height) {
+Animated_Sprite::Animated_Sprite(const string& file_path, Window& window,int frames) :
+				Sprite(file_path, window) {
 
 	// cada frame esta 1/frames Seg
 	framerate = 1000 / frames;
 	max_frames = frames;
-	this->frame_height = image_height;
-	this->frame_width = image_width;
+	frame_height = image_height/frames;
+	frame_width = image_width/frames;
 	frame_increment = 1;
 	actual_frame = 0;
 	oscillate = true;
@@ -69,8 +68,8 @@ Animated_Sprite::Animated_Sprite(SDL_Surface& surface, Window& window,
 	// cada frame esta 1/frames Seg
 	framerate = 1000 / frames;
 	max_frames = frames;
-	this->frame_height = image_height;
-	this->frame_width = image_width;
+	frame_height = image_height;
+	frame_width = image_width;
 	frame_increment = 1;
 	actual_frame = 0;
 	oscillate = true;

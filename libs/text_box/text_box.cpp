@@ -54,8 +54,10 @@ void Text_Box::draw(Window& window) {
 
 void Text_Box::add_char(char character) {
 	text += character;
-	if (shown_text == " ") shown_text = character;
-	else shown_text += character;
+	if (shown_text == " ")
+		shown_text = character;
+	else
+		shown_text += character;
 	if (shown_text.size() > max_len) {
 		shown_text = shown_text.substr(1, max_len);
 	}
@@ -63,14 +65,16 @@ void Text_Box::add_char(char character) {
 }
 
 void Text_Box::pop_char() {
-	if (text == "") return;
+	if (text == "")
+		return;
 	text = text.substr(0, text.size() - 1);
 	if (text.size() <= max_len) {
 		shown_text = text;
 	} else {
 		shown_text = text.substr(text.size() - max_len - 1, max_len);
 	}
-	if (shown_text == "") shown_text=" ";
+	if (shown_text == "")
+		shown_text = " ";
 	need_refresh = true;
 }
 
@@ -78,7 +82,8 @@ void Text_Box::pop_char() {
  * Refresca el textbox regenerando el sprite a imprimir
  */
 void Text_Box::refresh(Window& window) {
-	if (!need_refresh) return;
+	if (!need_refresh)
+		return;
 	text_sprite.free();
 	text_sprite = drawer.get_text_sprite(shown_text, window);
 	text_sprite.move(x_pos, y_pos);
@@ -92,5 +97,7 @@ void Text_Box::free() {
 void Text_Box::set_alternative_text(const std::string& text, Window& window) {
 	//TODO exception
 	text_sprite = drawer.get_text_sprite(text, window);
-	text_sprite.move(x_pos,y_pos);
+	text_sprite.move(x_pos, y_pos);
 }
+
+

@@ -40,8 +40,8 @@ CLIENT_OBJ = $(GRAPHIC_LIBS) login_screen.o client_app.o
 
 CLIENT_NAME = game-client
 
-login_screen.o: Client/login_screen.cpp Client/login_screen.h
-	$(CC) $(SDL_CPPFLAGS) -c Client/login_screen.cpp
+login_screen.o: Client/login_screen/login_screen.cpp Client/login_screen/login_screen_events.cpp Client/login_screen/login_screen_loading.cpp Client/login_screen.h
+	$(CC) $(SDL_CPPFLAGS) -c Client/login_screen/login_screen_events.cpp Client/login_screen/login_screen_loading.cpp Client/login_screen/login_screen.cpp
 
 client_app.o: Client/client_app.cpp Client/client_app.h
 	$(CC) $(SDL_CPPFLAGS) -c Client/client_app.cpp

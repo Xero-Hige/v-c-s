@@ -45,8 +45,7 @@ public:
 	/**
 	 * TODO
 	 */
-	Animated_Sprite(const std::string& file_path, Window& window,
-			int image_width, int image_height, int frames);
+	Animated_Sprite(const std::string& file_path, Window& window,int frames);
 	/**
 	 * TODO
 	 */
@@ -80,10 +79,6 @@ public:
 	 * Activa o desactiva la oscilacion
 	 */
 	void set_oscillation(bool status);
-	/**
-	 * Libera la textura asociada al sprite
-	 */
-	void free();
 
 };
 
