@@ -15,6 +15,7 @@ namespace std {
 
 Lobby::Lobby(){
 	room_killer.setRooms(&rooms);//No se pq no me deja inicializarlo de entrada...
+	room_killer.start();
 }
 
 //Utilizo pthreads sin usar la clase Thread que construimos porque necesito pasar

@@ -20,14 +20,14 @@ void RoomKiller::setRooms(map<unsigned long,Room*> * v){
 	rooms = v;
 }
 
-void RoomKiller::run(){
+void RoomKiller::run() {
 	map<unsigned long, Room*>::iterator it = rooms->begin();
-	while(keep_running){
+	while (keep_running) {
 		Room* actual_room = it->second;
-		if (!(actual_room->isActive())){
-			delete actual_room;
+		if (!(actual_room->isActive())) {
 			//erase(it++) funciona porque borra y luego incrementa el iter
-			rooms->erase(it++);//MAGIA
+			rooms->erase(it++); //MAGIA
+			delete actual_room;
 		} else {
 			it++;
 		}

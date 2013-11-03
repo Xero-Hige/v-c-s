@@ -54,6 +54,7 @@ vector<int> * getListaPuertos(int argc, char * argv[]){
 }
 
 int main(int argc, char *argv[]){
+	std::Room::id_counter = 0;
 	std::vector<int> * list_puertos = std::getListaPuertos(argc, argv);
 	if (!list_puertos) return 0;
 	std::Lobby lob;

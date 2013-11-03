@@ -14,13 +14,13 @@
 namespace std {
 
 class Room {
-	static unsigned long id_counter; //Generador de un id incremental
 	unsigned limit; //max clients
 	vector<ClientHandler *> clients;
 	bool active;
 	bool currently_playing;
 
 public:
+	static unsigned long id_counter; //Generador de un id incremental
 	unsigned long id; //room id
 
 	Room(unsigned limit, unsigned long r_id = 0);
