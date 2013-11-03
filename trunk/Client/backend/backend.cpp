@@ -19,8 +19,23 @@
 #include "backend.h"
 
 Backend::Backend() {
-	// TODO Auto-generated constructor stub
+}
 
+void Backend::async_connect(const std::string& ip,int port){
+	this->client.makeConnection(ip, port);
+}
+
+bool Backend::logged_in(){
+	return logged;
+}
+
+void Backend::async_log_in
+(const std::string& user,const std::string& password,int auth_type=TYPE_LOGIN){
+	int err = 0;
+	this->client.connectServer(err, user, password, std::string s(auth_type));
+	if (err){
+		//todo
+	}
 }
 
 Backend::~Backend() {
