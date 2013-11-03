@@ -26,7 +26,7 @@ Client_App::Client_App() {
 	running = false;
 	apps = vector<App*>();
 
-	apps.push_back(new Login_Screen());
+	apps.push_back(new Login_Screen(backend));
 }
 
 Client_App::~Client_App() {

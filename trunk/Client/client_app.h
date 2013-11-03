@@ -24,12 +24,15 @@
 #include <vector>
 
 #include "login_screen.h"
+#include "backend/backend.h"
 
 class Client_App : public App{
 
 private:
 	bool running;
 	std::vector<App*> apps;
+
+	Backend backend;
 
 public:
 	Client_App();
