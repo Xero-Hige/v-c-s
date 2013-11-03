@@ -26,6 +26,7 @@ public:
 	Room(unsigned limit, unsigned long r_id = 0);
 	bool addClient(ClientHandler* ch);
 	bool exitRoom(ClientHandler* ch);
+	void notifyClients(string msg);
 	bool isPlaying();
 	bool isFull();
 	bool isActive();

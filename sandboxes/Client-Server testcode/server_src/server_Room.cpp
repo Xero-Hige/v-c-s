@@ -13,7 +13,6 @@ namespace std {
 unsigned long Room::id_counter = 0;
 
 Room::Room(unsigned limit, unsigned long r_id) {
-	// TODO Auto-generated constructor stub
 	if (!r_id){
 		//el id se auto-genera
 		this->id = Room::id_counter;
@@ -57,7 +56,17 @@ bool Room::isPlaying(){
 	return currently_playing;
 }
 
-bool Room::isActive(){return active;} //todo
+bool Room::isActive(){
+	return active;
+}
+
+void Room::notifyClients(string msg){
+	vector<ClientHandler*>::iterator it;
+	for (it = clients.begin(); it != clients.end(); it++){
+		ClientHandler* ch = *it;
+		ch->sendMsg(msg);
+	}
+}
 
 Room::~Room() {
 	// TODO Auto-generated destructor stub
