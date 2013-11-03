@@ -12,7 +12,7 @@
 #include <sstream>
 #include <string>
 #include "../libs/communication_protocol/BigEndianProtocol.h"
-#include "../libs/msgs/MsgConstants.h"
+#include "../libs/messages/MsgConstants.h"
 
 #define BACKLOAD 5
 
