@@ -100,4 +100,6 @@ void Text_Box::set_alternative_text(const std::string& text, Window& window) {
 	text_sprite.move(x_pos, y_pos);
 }
 
-
+std::string Text_Box::get_text() {
+	return text;
+}

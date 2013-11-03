@@ -48,10 +48,16 @@ void Login_Screen::key_press_event(SDL_Event& event) {
 	}
 
 	if (SDL_SCANCODE_RETURN == event.key.keysym.scancode) {
-		for(int t=0;t<200;t++){
-		 render_loadscreen();
-		 SDL_Delay(10);
-		 }
+		backend.async_log_in(user_nick.get_text(), user_pass.get_text());
+		while (!backend.operation_ended()) {
+			render_loadscreen();
+			SDL_Delay(10);
+		}
+		if (backend.operation_error() != "")
+		{
+			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Error",
+					backend.operation_error().c_str(), window.window);
+		}
 	}
 
 	if (SDL_SCANCODE_TAB == event.key.keysym.scancode) {
