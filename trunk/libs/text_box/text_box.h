@@ -63,6 +63,10 @@ public:
 	 * Remueve el ultimo caracter del texto
 	 */
 	void pop_char();
+	/**
+	 * Obtiene el texto del cuadro de texto
+	 */
+	std::string get_text();
 
 	/**
 	 * Refresca los datos si se modifico alguno de los atributos,

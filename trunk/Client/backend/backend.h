@@ -22,6 +22,22 @@
 #include <string>
 
 class Backend {
+
+private:
+
+	//Connection info
+	std::string ip;
+	int port;
+
+	//Login info
+	bool logged;
+	std::string user_nick;
+	std::string user_pass;
+
+	//Async info
+	bool operation_ended;
+	std::string operation_error;
+
 public:
 	Backend();
 	virtual ~Backend();
@@ -42,13 +58,19 @@ public:
 	/**
 	 * Devuelve si el backend tiene una sesion iniciada
 	 */
-	bool logued_in();
+	bool logged_in();
+
+	//Connect
+	/**
+	 * Envia el comando de conexion con el servidor
+	 */
+	void async_connect(const std::string& ip,int port);
 
 	//Login
 	/**
 	 * Envia el comando de inicio de sesion
 	 */
-	void async_log_in(const std::string user,const std::string password);
+	void async_log_in(const std::string& user,const std::string& password,int auth_type=TYPE_LOGIN);
 
 };
 

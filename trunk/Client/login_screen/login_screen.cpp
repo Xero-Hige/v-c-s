@@ -33,6 +33,8 @@
 
 using std::string;
 
+Login_Screen::Login_Screen(Backend& back): backend(back){}
+
 void Login_Screen::setup_background() {
 	//TODO: excepciones
 	Surface background_temp = Surface("resources/login/background.png");

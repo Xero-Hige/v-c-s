@@ -29,15 +29,19 @@
 #include <string>
 
 #include "app.h"
+#include "backend/backend.h"
 #include "../libs/window/window.h"
 #include "../libs/animated_sprite/animated_sprite.h"
 #include "../libs/surface/surface.h"
 #include "../libs/text_box/text_box.h"
 
 
+
 class Login_Screen: public App {
 
 private:
+
+	Backend& backend;
 
 	Window window;
 	Sprite background;
@@ -99,6 +103,11 @@ private:
 	void change_active_textbox();
 
 public:
+
+	/**
+	 * Constructor que recibe un Backend
+	 */
+	Login_Screen(Backend& back);
 
 	/**
 	 * Metodo para inicializar la app
