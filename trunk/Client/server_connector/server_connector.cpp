@@ -5,7 +5,7 @@
  *      Author: juan
  */
 
-#include "Client.h"
+#include "server_connector.h"
 #include <iostream>
 #include <stdlib.h> //atoi strtol
 #include <sys/socket.h>
@@ -15,9 +15,9 @@
 #include <string>
 #include <sstream>
 #include "../../libs/communication_protocol/BigEndianProtocol.h"
-#include "../../libs/msgs/MsgConstants.h"
-#include "server_communication/ClientMsgInterpreter.h"
-#include "server_communication/Authenticator.h"
+#include "../../libs/messages/MsgConstants.h"
+//#include "server_communication/ClientMsgInterpreter.h"
+//#include "server_communication/Authenticator.h"
 
 #include <stdio.h>
 
@@ -43,13 +43,13 @@ int setServerAddr(struct sockaddr_in & server_addr, string ip, int port){
 	return 0;
 }
 
-Client::Client() {
+Server_Connector::Server_Connector() {
 	int sockfd = socket(AF_INET, SOCK_STREAM, 0); //SOCK_STREAM = TCP
 	if (sockfd == -1) cerr << "creation error" << endl;
 	this->sock = new Socket(sockfd);
 }
 
-void Client::communicate(){
+void Server_Connector::communicate(){
 	ClientMsgInterpreter interpreter(this);
 	bool exit_char_pressed = false;
 	while (!exit_char_pressed){
@@ -62,7 +62,7 @@ void Client::communicate(){
 	}
 }
 
-int Client::makeConnection(string ip, port){
+int Server_Connector::makeConnection(string ip, port){
 	int r;
 	struct sockaddr_in s_addr;
 	r = setServerAddr(s_addr, ip, port);
@@ -76,7 +76,7 @@ int Client::makeConnection(string ip, port){
 	return 0;
 }
 
-void Client::connectServer
+void Server_Connector::connectServer
 (int & errcode, string username, string passwd, string a_type){
 	//Obtiene user y pass y si los quiere usar para logearse o registrarse
 	Authenticator auth(this);
@@ -84,17 +84,17 @@ void Client::connectServer
 		errcode = 2; //passwd/username incorrectos
 }
 
-void Client::useUserDefinedMatchmaking(){
+void Server_Connector::useUserDefinedMatchmaking(){
 	string id;
 	getRoomId(id);
 	sock->sendMsg(id);
 }
 
-void Client::useDefaultMatchmaking(){
+void Server_Connector::useDefaultMatchmaking(){
 	//Do nothing
 }
 
-void Client::enterRoom(){
+void Server_Connector::enterRoom(){
 	string mm;
 	getMatchmaking(mm);
 	sock->sendMsg(mm);//envia modo de matchmaking
@@ -106,7 +106,7 @@ void Client::enterRoom(){
 	return;
 }
 
-void Client::getRoomId(string & id){
+void Server_Connector::getRoomId(string & id){
 	cout << "Enter room id: \n";
 	char c[256];
 	scanf("%s", c);
@@ -114,7 +114,7 @@ void Client::getRoomId(string & id){
 	return;
 }
 
-void Client::getMatchmaking(string & mm){
+void Server_Connector::getMatchmaking(string & mm){
 	cout << "1 - User-defined room \n2 - Default\n";
 	char c[256];
 	scanf("%s", c);
@@ -122,11 +122,11 @@ void Client::getMatchmaking(string & mm){
 	return;
 }
 
-void Client::closeConection(){
+void Server_Connector::closeConection(){
 	sock->closeConnection();
 }
 
-Client::~Client() {
+Server_Connector::~Server_Connector() {
 	delete sock;
 }
 

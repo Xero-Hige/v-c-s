@@ -14,7 +14,7 @@
 
 namespace std {
 
-class Client {
+class Server_Connector {
 	friend class Authenticator;
 
 	Socket * sock;//socket file descriptor
@@ -29,7 +29,7 @@ public:
 	 * ctor de cliente, se le pasa como param el ip al que se quiere conectar y el
 	 * puerto.
 	 */
-	Client();
+	Server_Connector();
 	/*
 	 * connectServer intenta conectar el cliente al servidor. Si hubo un problema
 	 * errcode contiene el valor 1, si se logro conectar no se modifica.
@@ -44,7 +44,7 @@ public:
 	 * closeConnection cierra el socket utilizado para la conex.
 	 */
 	void closeConection();
-	virtual ~Client();
+	virtual ~Server_Connector();
 };
 
 } /* namespace std */

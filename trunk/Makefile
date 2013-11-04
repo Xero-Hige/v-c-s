@@ -1,14 +1,16 @@
 #Project Builder
 #General
 CC = gcc
-CPPFLAGS = -Wall -Wextra -g -pedantic `sdl2-config --cflags` -lstdc++ -lm
+CPPFLAGS = -Wall -Wextra -g -pedantic 
+CPPLDFLAGS = -lstdc++ -lm
 
+all: run-client
 
 #Graphic libs builder
 
-SDL_CPPFLAGS = -Wall -Wextra -g -pedantic `sdl2-config --cflags` -lstdc++ -lm #//TODO: arreglar
+SDL_CPPFLAGS = $(CPPFLAGS) `sdl2-config --cflags`
 
-SDL_LDFLAGS =`sdl2-config --libs` -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf
+SDL_LDFLAGS = $(CPPLDFLAGS) `sdl2-config --libs` -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf
 
 GRAPHIC_LIBS = surface.o sprite.o animated_sprite.o window.o text_drawer.o text_box.o
 
@@ -36,7 +38,13 @@ SOUND_LIBS =
 
 #Thread libs builder
 
+THREAD_LDFLAGS = 
+
 THREAD_LIBS = Thread.o Mutex.o
+
+Thread.o:
+
+Mutex.o:
 
 #Sockets libs builder 
 
@@ -50,14 +58,24 @@ MESSAGES_LIBS = MsgInterpreter.o
 
 COMUMINICATION_PROTOCOL_LIBS = HMAC.o BigEndianProtocol.o
 
+HMAC.o:
+
+BigEndianProtocol.o:
+
 #Client
 
-CLIENT_OBJ = $(GRAPHIC_LIBS) login_screen.o client_app.o 
+CLIENT_OBJ = $(GRAPHIC_LIBS) login_screen.o client_app.o backend.o server_connector.o
 
 CLIENT_NAME = game-client
 
 login_screen.o: Client/login_screen/login_screen.cpp Client/login_screen/login_screen_events.cpp Client/login_screen/login_screen_loading.cpp Client/login_screen.h
 	$(CC) $(SDL_CPPFLAGS) -c Client/login_screen/login_screen_events.cpp Client/login_screen/login_screen_loading.cpp Client/login_screen/login_screen.cpp
+
+backend.o: Client/backend/backend.cpp Client/backend/backend.h
+	$(CC) $(SDL_CPPFLAGS) -c Client/backend/backend.cpp
+	
+server_connector.o: Client/server_connector/server_connector.cpp Client/server_connector/server_connector.h
+	$(CC) $(SDL_CPPFLAGS) -c Client/server_connector/server_connector.cpp
 
 client_app.o: Client/client_app.cpp Client/client_app.h
 	$(CC) $(SDL_CPPFLAGS) -c Client/client_app.cpp

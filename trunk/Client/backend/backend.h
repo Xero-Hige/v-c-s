@@ -20,13 +20,14 @@
 #define BACKEND_H_
 
 #include <string>
-#include "Client.h"
+#include "../server_connector/server_connector.h"
+#include "../../libs/messages/MsgConstants.h"
 
 class Backend {
 
 private:
 
-	std::Client client;
+	std::Server_Connector server_connector;
 
 	//Connection info
 	std::string ip;
@@ -38,8 +39,8 @@ private:
 	std::string user_pass;
 
 	//Async info
-	bool operation_ended;
-	std::string operation_error;
+	bool _operation_ended;
+	std::string _operation_error;
 
 public:
 	Backend();
