@@ -12,13 +12,13 @@
 #define IDS_USERNAME_SIZE 20
 #define IDS_VERIF "VERIF-IDS"
 
-#define TYPE_REGISTER "2"
-#define TYPE_LOGIN "1"
+#define TYPE_REGISTER 2
+#define TYPE_LOGIN 1
 
 //MM = MatchMaking
-#define MM_USER_DEF "1"
-#define MM_DEFAULT "2"
+#define MM_USER_DEF 1
+#define MM_DEFAULT 2
 
-#define CLIENT_EXIT_ROOM "e"
+#define CLIENT_EXIT_ROOM e
 
 #endif /* COMMON_MSGCONSTANTS_H_ */
