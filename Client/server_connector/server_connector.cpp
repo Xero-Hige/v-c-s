@@ -16,9 +16,9 @@
 #include <sstream>
 #include "../../libs/communication_protocol/BigEndianProtocol.h"
 #include "../../libs/messages/MsgConstants.h"
-//#include "server_communication/ClientMsgInterpreter.h"
-//#include "server_communication/Authenticator.h"
-
+#include "server_communication/ClientMsgInterpreter.h"
+#include "server_communication/Authenticator.h"
+#include <stdlib.h>
 #include <stdio.h>
 
 namespace std {
@@ -62,7 +62,7 @@ void Server_Connector::communicate(){
 	}
 }
 
-int Server_Connector::makeConnection(string ip, port){
+int Server_Connector::makeConnection(string ip, int port){
 	int r;
 	struct sockaddr_in s_addr;
 	r = setServerAddr(s_addr, ip, port);
@@ -98,9 +98,10 @@ void Server_Connector::enterRoom(){
 	string mm;
 	getMatchmaking(mm);
 	sock->sendMsg(mm);//envia modo de matchmaking
-	if (mm.compare(MM_USER_DEF) == 0){
+	int i_mm = atoi (mm.c_str());
+	if (i_mm == MM_USER_DEF){
 		useUserDefinedMatchmaking();
-	} else if (mm.compare(MM_DEFAULT) == 0){
+	} else if (i_mm == MM_DEFAULT){
 		useDefaultMatchmaking();
 	}
 	return;

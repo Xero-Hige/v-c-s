@@ -6,13 +6,13 @@
  */
 
 #include "ClientMsgInterpreter.h"
-#include "../../libs/msgs/MsgConstants.h"
+#include "../../libs/messages/MsgConstants.h"
 #include <string>
 #include <stdio.h>
 
 namespace std {
 
-ClientMsgInterpreter::ClientMsgInterpreter(Client* c) {
+ClientMsgInterpreter::ClientMsgInterpreter(Server_Connector* c) {
 	this->client = c;
 }
 

@@ -6,13 +6,13 @@
  */
 
 #include "Authenticator.h"
-#include "../../libs/msgs/MsgConstants.h"
+#include "../../libs/messages/MsgConstants.h"
 #include "../../libs/communication_protocol/BigEndianProtocol.h"
 #include <cstring>
 
 namespace std {
 
-Authenticator::Authenticator(Client * c) {
+Authenticator::Authenticator(Server_Connector * c) {
 	this->client = c;
 }
 

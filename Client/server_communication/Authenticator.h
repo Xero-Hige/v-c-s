@@ -8,17 +8,17 @@
 #ifndef AUTHENTICATOR_H_
 #define AUTHENTICATOR_H_
 
-#include "../Client.h"
+#include "../server_connector.h"
 
 namespace std {
 
 class Authenticator {
-	Client * client;
+	Server_Connector * client;
 	bool verificateMessage(string msg);
 	bool receiveAuthVerif();
 
 public:
-	Authenticator(Client * c);
+	Authenticator(Server_Connector * c);
 	bool sendIds(string & user, string & passwd, string & auth_type);
 	virtual ~Authenticator();
 };

@@ -8,18 +8,18 @@
 #ifndef CLIENTMSGINTERPRETER_H_
 #define CLIENTMSGINTERPRETER_H_
 
-#include "../../libs/msgs/MsgInterpreter.h"
-#include "../Client.h"
+#include "../../libs/messages/MsgInterpreter.h"
+#include "../server_connector.h"
 
 namespace std {
 
 class ClientMsgInterpreter : public MsgInterpreter{
-	Client* client;
+	Server_Connector* client;
 
 	void exitRoom();
 
 public:
-	ClientMsgInterpreter(Client * c);
+	ClientMsgInterpreter(Server_Connector * c);
 	virtual ~ClientMsgInterpreter();
 };
 
