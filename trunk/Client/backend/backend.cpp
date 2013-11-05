@@ -18,7 +18,19 @@
  */
 #include "backend.h"
 
+using std::string;
+
 Backend::Backend() {
+
+	ip="";
+	port=0;
+
+	logged=false;
+	user_nick="";
+	user_pass="";
+
+	_operation_ended = true;
+	_operation_error = "";
 }
 
 void Backend::async_connect(const std::string& ip,int port){
@@ -27,6 +39,14 @@ void Backend::async_connect(const std::string& ip,int port){
 
 bool Backend::logged_in(){
 	return logged;
+}
+
+bool Backend::operation_ended() {
+	return _operation_ended;
+}
+
+string Backend::operation_error() {
+	return _operation_error;
 }
 
 void Backend::async_log_in

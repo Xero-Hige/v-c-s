@@ -8,7 +8,7 @@
 #ifndef AUTHENTICATOR_H_
 #define AUTHENTICATOR_H_
 
-#include "../server_connector.h"
+#include "../server_connector/server_connector.h"
 
 namespace std {
 

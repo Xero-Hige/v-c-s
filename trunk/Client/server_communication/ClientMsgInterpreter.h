@@ -9,7 +9,7 @@
 #define CLIENTMSGINTERPRETER_H_
 
 #include "../../libs/messages/MsgInterpreter.h"
-#include "../server_connector.h"
+#include "../server_connector/server_connector.h"
 
 namespace std {
 
