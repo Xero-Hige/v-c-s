@@ -34,7 +34,7 @@ Backend::Backend() {
 }
 
 void Backend::async_connect(const std::string& ip,int port){
-	this->server_connector.makeConnection(ip, port);
+	//this->server_connector.makeConnection(ip, port);
 }
 
 bool Backend::logged_in(){
@@ -51,12 +51,14 @@ string Backend::operation_error() {
 
 void Backend::async_log_in
 (const std::string& user,const std::string& password,int auth_type){
-	int err = 0;
+/*	int err = 0;
 	//ESTO ES ASYNC?
 	this->server_connector.connectServer(err, user, password, "1");
 	if (err){
 		//todo
 	}
+	*/
+    _operation_error="No se puede conectar al servidor";
 }
 
 Backend::~Backend() {

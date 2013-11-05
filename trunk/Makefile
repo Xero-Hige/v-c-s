@@ -64,7 +64,7 @@ BigEndianProtocol.o:
 
 #Client
 
-CLIENT_OBJ = $(GRAPHIC_LIBS) login_screen.o client_app.o backend.o server_connector.o
+CLIENT_OBJ = $(GRAPHIC_LIBS) login_screen.o client_app.o backend.o #server_connector.o
 
 CLIENT_NAME = game-client
 

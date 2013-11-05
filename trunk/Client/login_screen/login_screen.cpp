@@ -143,7 +143,7 @@ void Login_Screen::cleanup() {
 
 	user_nick.free();
 	user_pass.free();
-	hover_text.free();
+//	hover_text.free();
 
 	mugshot_left.free();
 	mugshot_right.free();
