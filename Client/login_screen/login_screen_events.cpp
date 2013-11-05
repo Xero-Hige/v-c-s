@@ -57,6 +57,7 @@ void Login_Screen::key_press_event(SDL_Event& event) {
 		{
 			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Error",
 					backend.operation_error().c_str(), window.window);
+			return;
 		}
 	}
 

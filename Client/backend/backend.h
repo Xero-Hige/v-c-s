@@ -20,14 +20,14 @@
 #define BACKEND_H_
 
 #include <string>
-#include "../server_connector/server_connector.h"
+//#include "../server_connector/server_connector.h"
 #include "../../libs/messages/MsgConstants.h"
 
 class Backend {
 
 private:
 
-	std::Server_Connector server_connector;
+//	std::Server_Connector server_connector;
 
 	//Connection info
 	std::string ip;

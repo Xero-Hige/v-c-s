@@ -19,7 +19,7 @@ int Socket::sendMsg(string msg){
 	unsigned size = sizeof(uint32_t) + msg.length();
 	char * msg_with_size = new char[size];
 	darFormato(msg_with_size, msg);
-	int r = socketSend(msg_with_size, size);
+	int r = socketSend(msg, size);
 	delete[] msg_with_size;
 	return r;
 }
