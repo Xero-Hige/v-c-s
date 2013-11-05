@@ -6,6 +6,7 @@
  */
 
 #include "Socket.h"
+#include <sys/socket.h>
 
 namespace std {
 
@@ -44,6 +45,10 @@ int Socket::recvMsg(string & msg){
 
 int Socket::getSocket(){
 	return socket;
+}
+
+void Socket::socketShutdown(){
+	shutdown(socket, 0);
 }
 
 void Socket::closeConnection(){

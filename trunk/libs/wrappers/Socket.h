@@ -25,6 +25,7 @@ public:
 	int sendMsg(string msg);
 	int recvMsg(string & msg);
 	int getSocket();
+	void socketShutdown();
 	void closeConnection();
 	virtual ~Socket();
 };
