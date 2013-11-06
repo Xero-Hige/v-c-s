@@ -22,7 +22,7 @@ void insertSize(char * buf, uint32_t nro){
 	}
 }
 
-uint32_t readSize(char * buf){
+uint32_t readSize(const char * buf){
 	uint32_t nro;
 	char * ptr_nro = (char *)&nro;
 	//Copio 1 a 1 los bytes

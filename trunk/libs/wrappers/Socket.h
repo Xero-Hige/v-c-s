@@ -9,7 +9,6 @@
 #define SOCKET_H_
 
 #include <string>
-#include "../communication_protocol/BigEndianProtocol.h"
 #include <unistd.h> //close
 #include <arpa/inet.h>
 
@@ -23,7 +22,7 @@ class Socket {
 public:
 	Socket(int sockfd);
 	int sendMsg(string msg);
-	int recvMsg(string & msg);
+	int recvMsg(string & msg, size_t length);
 	int getSocket();
 	void socketShutdown();
 	void closeConnection();
