@@ -10,7 +10,7 @@
 
 namespace std {
 
-ServerListener::ServerListener(Socket * s, ClientMsgInterpreter * c) {
+ServerListener::ServerListener(FormattedSocket * s, ClientMsgInterpreter * c) {
 	sock = s;
 	msg_int = c;
 	keep_listening = true;

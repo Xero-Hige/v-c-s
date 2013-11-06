@@ -9,19 +9,19 @@
 #define SERVERLISTENER_H_
 
 #include "../../libs/wrappers/Thread.h"
-#include "../../libs/wrappers/Socket.h"
+#include "../../libs/communication_protocol/FormattedSocket.h"
 #include "ClientMsgInterpreter.h"
 
 namespace std {
 
 class ServerListener : public Thread {
-	Socket * sock;
+	FormattedSocket * sock;
 	ClientMsgInterpreter * msg_int;
 	bool keep_listening;
 	void run();
 
 public:
-	ServerListener(Socket * s, ClientMsgInterpreter * c);
+	ServerListener(FormattedSocket * s, ClientMsgInterpreter * c);
 	void notifyCommunicationStart();
 	void notifyCommunicationEnd();
 	virtual ~ServerListener();

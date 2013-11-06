@@ -16,10 +16,8 @@ Socket::Socket(int sockfd) {
 }
 
 int Socket::sendMsg(string msg){
-	unsigned size = sizeof(uint32_t) + msg.length();
-	char * msg_with_size = new char[size];
-	darFormato(msg_with_size, msg);
-	int r = socketSend(msg, size);
+	char * msg_with_size = new char[msg.length()];
+	int r = socketSend(msg_with_size, msg.length());
 	delete[] msg_with_size;
 	return r;
 }
@@ -32,13 +30,10 @@ int Socket::socketSend(char * buf, size_t length){
 	return bytes_enviados;
 }
 
-int Socket::recvMsg(string & msg){
-	char c_size[sizeof(uint32_t)];
-	socketRecv(c_size, sizeof(uint32_t));
-	uint32_t size = readSize(c_size);
-	char * c_msg = new char[size];
-	int r = socketRecv(c_msg, size);
-	msg.append(c_msg, size);
+int Socket::recvMsg(string & msg, size_t length){
+	char * c_msg = new char[length];
+	int r = socketRecv(c_msg, length);
+	msg.append(c_msg, length);
 	delete[] c_msg;
 	return r;
 }

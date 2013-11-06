@@ -10,14 +10,14 @@
 #include <stdlib.h>
 #include <string>
 #include <inttypes.h>
-#include "../../libs/wrappers/Socket.h"
+#include "../../libs/communication_protocol/FormattedSocket.h"
 
 namespace std {
 
 class Server_Connector {
 	friend class Authenticator;
 
-	Socket * sock;//socket file descriptor
+	FormattedSocket * sock;//socket file descriptor
 
 	void getMatchmaking(string & mm);
 	void getRoomId(string & id);

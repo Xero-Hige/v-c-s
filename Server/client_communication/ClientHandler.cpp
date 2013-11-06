@@ -10,7 +10,7 @@
 #include "../rooms/Room.h"
 #include "../rooms/Lobby.h"
 #include <iostream>
-#include "../../libs/msgs/MsgConstants.h"
+#include "../../libs/messages/MsgConstants.h"
 #include "../../libs/communication_protocol/BigEndianProtocol.h"
 #include "../rooms/MatchMakingStrategy.h"
 #include "ServerMsgInterpreter.h"
