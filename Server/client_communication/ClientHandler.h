@@ -7,9 +7,9 @@
 
 #ifndef CLIENTHANDLER_H_
 #define CLIENTHANDLER_H_
-#include "../common_src/common_Thread.h"
-#include "../common_src/common_MsgConstants.h"
-#include "../common_src/common_Socket.h"
+#include "../../libs/wrappers/Thread.h"
+#include "../../libs/messages/MsgConstants.h"
+#include "../../libs/communication_protocol/FormattedSocket.h"
 #include <stdlib.h>
 #include <string>
 
@@ -18,7 +18,7 @@ namespace std {
 class Room; //Por la refs circulares...
 class Lobby;
 
-class ClientHandler : public Thread, public Socket {
+class ClientHandler : public Thread, public FormattedSocket {
 	Room * room;
 
 	Lobby * lobby;
