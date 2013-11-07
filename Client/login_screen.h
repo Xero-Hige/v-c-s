@@ -34,6 +34,7 @@
 #include "../libs/animated_sprite/animated_sprite.h"
 #include "../libs/surface/surface.h"
 #include "../libs/text_box/text_box.h"
+#include "../libs/secret_text_box/secret_text_box.h"
 
 
 
@@ -47,7 +48,7 @@ private:
 	Sprite background;
 
 	Text_Box user_nick;
-	Text_Box user_pass;
+	Secret_Text_Box user_pass;
 	Sprite hover_text;
 
 	Sprite mugshot_left;

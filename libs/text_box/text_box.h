@@ -26,16 +26,17 @@
 class Text_Box {
 
 private:
-	std::string text;
-	std::string shown_text;
-
-	size_t max_len;
-
 	int x_pos;
 	int y_pos;
 
 	Sprite text_sprite;
 	Text_Drawer drawer;
+
+protected:
+	std::string text;
+	std::string shown_text;
+
+	size_t max_len;
 
 	bool need_refresh;
 
@@ -58,11 +59,11 @@ public:
 	/**
 	 * Agrega un caracter al final del texto
 	 */
-	void add_char(char character);
+	virtual void add_char(char character);
 	/**
 	 * Remueve el ultimo caracter del texto
 	 */
-	void pop_char();
+	virtual void pop_char();
 	/**
 	 * Obtiene el texto del cuadro de texto
 	 */
