@@ -5,7 +5,7 @@
  *      Author: juan
  */
 
-#include "server_MatchMakingStrategy.h"
+#include "MatchMakingStrategy.h"
 #include <iostream>
 
 namespace std {
@@ -16,9 +16,10 @@ MatchMakingStrategy::MatchMakingStrategy() {
 void MatchMakingStrategy::addClient(Lobby * lob, ClientHandler * ch){
 	string s;
 	ch->recvMsg(s);//matchmaking message
-	if (!s.compare(MM_USER_DEF))
+	unsigned msg = atoi(s.c_str());
+	if (msg == MM_USER_DEF)
 		addUserDefined(lob, ch);
-	else if (!s.compare(MM_DEFAULT))
+	else if (msg == MM_DEFAULT)
 		addDefault(lob, ch);
 }
 

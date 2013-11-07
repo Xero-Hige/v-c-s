@@ -17,7 +17,7 @@
 
 namespace std {
 
-ClientHandler::ClientHandler(int s, Lobby * lob) : Socket(s) {
+ClientHandler::ClientHandler(int s, Lobby * lob) : FormattedSocket(s) {
 	this->room = NULL;
 	this->keep_communicating = true;
 	this->lobby = lob;
