@@ -47,7 +47,7 @@ int Client_App::run() {
 		}
 		loop();
 		render();
-		SDL_Delay(1);
+		SDL_Delay(17); //60fps aprox;
 	}
 
 	cleanup();

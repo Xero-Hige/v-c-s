@@ -66,7 +66,7 @@ void Login_Screen::setup_textboxes() {
 	user_nick.move(X_USER_NICK, Y_USER_NICK);
 	user_nick.set_alternative_text("USUARIO", window);
 
-	user_pass = Text_Box(14, "resources/login/logfont.ttf", 20, window);
+	user_pass = Secret_Text_Box(14, "resources/login/logfont.ttf", 20, window);
 	user_pass.move(X_USER_PASS, Y_USER_PASS);
 	user_pass.set_alternative_text("PASSWORD", window);
 
