@@ -30,10 +30,8 @@ void MatchMakingStrategy::addUserDefined(Lobby * lob, ClientHandler * ch){
 	map<unsigned long, Room*>::iterator it;
 	it = lob->rooms.find(room_id); //intenta encontrar la key
 	if (it == lob->rooms.end()){//Si no la encontro no existe un room con ese id...
-		Room * new_room = new Room(2, room_id);
-		new_room->addClient(ch);
-		lob->rooms.insert(map_pair(room_id, new_room));
-		return;
+		return addDefault(lob, ch);
+		//todo notificar al client
 	}
 	//Si lo encontro...
 	else if (it->second->isFull() || it->second->isPlaying())

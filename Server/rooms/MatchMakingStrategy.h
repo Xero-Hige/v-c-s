@@ -9,8 +9,8 @@
 #define MATCHMAKINGSTRATEGY_H_
 
 #include "../client_communication/ClientHandler.h"
-#include "server_Lobby.h"
-#include "../common_src/common_Thread.h"
+#include "Lobby.h"
+#include "../../libs/wrappers/Thread.h"
 
 namespace std {
 
