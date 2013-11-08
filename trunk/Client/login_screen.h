@@ -22,7 +22,7 @@
 #define SCREEN_WIDTH	600
 #define SCREEN_HEIGHT   300
 #define TITLE 		"Login"
-#define WINDOW_FLAGS SDL_WINDOW_RESIZABLE
+#define WINDOW_FLAGS 0//SDL_WINDOW_RESIZABLE
 
 #include <SDL_ttf.h>
 
@@ -35,7 +35,7 @@
 #include "../libs/surface/surface.h"
 #include "../libs/text_box/text_box.h"
 #include "../libs/secret_text_box/secret_text_box.h"
-
+#include "../libs/music/music.h"
 
 
 class Login_Screen: public App {
@@ -54,12 +54,13 @@ private:
 	Sprite mugshot_left;
 	Sprite mugshot_right;
 
-
 	//Loading_screen
 	Sprite loading_mask;
 	Animated_Sprite loading_icon;
 
 	int active_textbox;
+
+	Music background_music;
 
 private:
 	/**
@@ -92,11 +93,20 @@ private:
 	 * Inicializa la pantalla de carga
 	 */
 	void setup_loadingscreen();
+	/**
+	 * Inicializa los mugshots
+	 */
+	void setup_mugshots();
+	/**
+	 * Inicializa el audio de la ventana
+	 */
+	void setup_audio();
 
 	/**
 	 * Cambia el textbox activo de manera ciclica
 	 */
 	void change_active_textbox();
+
 
 public:
 
