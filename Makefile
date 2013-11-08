@@ -37,7 +37,10 @@ secret_text_box.o: libs/secret_text_box/secret_text_box.h libs/secret_text_box/s
 	
 #Sound libs builder
 
-SOUND_LIBS = 
+SOUND_LIBS = music.o
+
+music.o: libs/music/music.h libs/music/music.cpp
+	$(CC) $(SDL_CPPFLAGS) -c libs/music/music.cpp
 
 #Thread libs builder
 
@@ -67,7 +70,7 @@ BigEndianProtocol.o:
 
 #Client
 
-CLIENT_OBJ = $(GRAPHIC_LIBS) login_screen.o client_app.o backend.o #server_connector.o
+CLIENT_OBJ = $(GRAPHIC_LIBS) $(SOUND_LIBS) login_screen.o client_app.o backend.o #server_connector.o
 
 CLIENT_NAME = game-client
 

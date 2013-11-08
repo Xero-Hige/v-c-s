@@ -94,6 +94,28 @@ void Login_Screen::setup_loadingscreen() {
 			SCREEN_HEIGHT - loading_height);
 }
 
+void Login_Screen::setup_mugshots() {
+	mugshot_left = Sprite("resources/login/left_mug.png", window);
+	mugshot_right = Sprite("resources/login/right_mug.png", window);
+	double scale_left = double(SCREEN_HEIGHT)
+			/ mugshot_left.get_scaled_height();
+	double scale_right = double(SCREEN_HEIGHT)
+			/ mugshot_right.get_scaled_height();
+	mugshot_left.scale(scale_left);
+	mugshot_right.scale(scale_right);
+	mugshot_left.scale(1.2d);
+	mugshot_right.scale(1.2d);
+	mugshot_left.move(-(mugshot_left.get_scaled_width() / 2), 0);
+	mugshot_right.move(SCREEN_WIDTH - (mugshot_right.get_scaled_width() / 2),
+			0);
+}
+
+void Login_Screen::setup_audio() {
+	background_music.open_audio();
+	background_music.open_music("resources/login/title_music.mp3");
+	background_music.play(-1);
+}
+
 bool Login_Screen::initialize() {
 
 	window = Window(TITLE, SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_FLAGS);
@@ -102,20 +124,8 @@ bool Login_Screen::initialize() {
 	setup_background();
 	setup_textboxes();
 	setup_loadingscreen();
-	mugshot_left = Sprite("resources/login/left_mug.png",window);
-	mugshot_right = Sprite("resources/login/right_mug.png",window);
-
-	double scale_left = double(SCREEN_HEIGHT)/mugshot_left.get_scaled_height();
-	double scale_right = double(SCREEN_HEIGHT)/mugshot_right.get_scaled_height();
-
-	mugshot_left.scale(scale_left);
-	mugshot_right.scale(scale_right);
-
-	mugshot_left.scale(1.2d);
-	mugshot_right.scale(1.2d);
-
-	mugshot_left.move(-(mugshot_left.get_scaled_width()/2),0);
-	mugshot_right.move(SCREEN_WIDTH -(mugshot_right.get_scaled_width()/2),0);
+	setup_mugshots();
+	setup_audio();
 	return true;
 }
 
@@ -150,6 +160,10 @@ void Login_Screen::cleanup() {
 
 	loading_mask.free();
 	loading_icon.free();
+
+	background_music.halt_audio();
+	background_music.free();
+	background_music.close_audio();
 
 }
 
