@@ -32,10 +32,10 @@ private:
 	int height;
 	int length;
 
+	bool active;
+
 	Sprite text_sprite;
 	Text_Drawer drawer;
-
-	bool active;
 
 protected:
 	std::string text;
