@@ -26,7 +26,7 @@
 #include "login_screen.h"
 #include "backend/backend.h"
 
-class Client_App : public App{
+class Client_App{
 
 private:
 	bool running;

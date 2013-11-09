@@ -29,8 +29,13 @@ private:
 	int x_pos;
 	int y_pos;
 
+	int height;
+	int length;
+
 	Sprite text_sprite;
 	Text_Drawer drawer;
+
+	bool active;
 
 protected:
 	std::string text;
@@ -40,8 +45,33 @@ protected:
 
 	bool need_refresh;
 
+private:
+	/**
+	 * Agrega un caracter al final del texto
+	 */
+	virtual void add_char(char character);
+	/**
+	 * Remueve el ultimo caracter del texto
+	 */
+	virtual void pop_char();
+
+	/**
+	 * Maneja los eventos de teclado no alfanumerico
+	 */
+	void keydown_event(SDL_Event& event);
+
+	/**
+	 * Maneja los eventos de teclado alfanumerico
+	 */
+	void text_input_event(SDL_Event& event);
+
+	/**
+	 * Maneja los eventos del click de mouse
+	 */
+	void mouse_click_event(SDL_Event& event);
+
 public:
-	Text_Box() {}
+	Text_Box();
 	/**
 	 * //TODO:
 	 */
@@ -57,18 +87,9 @@ public:
 	 */
 	void draw(Window& window);
 	/**
-	 * Agrega un caracter al final del texto
-	 */
-	virtual void add_char(char character);
-	/**
-	 * Remueve el ultimo caracter del texto
-	 */
-	virtual void pop_char();
-	/**
 	 * Obtiene el texto del cuadro de texto
 	 */
 	std::string get_text();
-
 	/**
 	 * Refresca los datos si se modifico alguno de los atributos,
 	 * sino se hace solo durante el draw
@@ -84,6 +105,11 @@ public:
 	 * Libera los recursos pedidos por el textbox
 	 */
 	void free();
+
+	/**
+	 * Metodo para manejar los eventos de sdl
+	 */
+	void handle_event(SDL_Event& event);
 };
 
 #endif /* TEXTBOX_H_ */

@@ -20,6 +20,9 @@
 
 using std::string;
 
+Text_Box::Text_Box() {
+}
+
 Text_Box::Text_Box(int max_len, const string& font_path, int font_size,
 		Window& window) {
 	this->max_len = max_len;
@@ -31,8 +34,12 @@ Text_Box::Text_Box(int max_len, const string& font_path, int font_size,
 
 	text_sprite = drawer.get_text_sprite(" ", window);
 
+	height = text_sprite.get_scaled_height();
+	length = text_sprite.get_scaled_width() * max_len;
+
 	x_pos = y_pos = 0;
 
+	active = false;
 	need_refresh = false;
 
 }
@@ -102,4 +109,45 @@ void Text_Box::set_alternative_text(const std::string& text, Window& window) {
 
 std::string Text_Box::get_text() {
 	return text;
+}
+
+void Text_Box::keydown_event(SDL_Event& event) {
+	if (!active)
+		return;
+	if (SDL_SCANCODE_BACKSPACE == event.key.keysym.scancode) {
+		pop_char();
+	}
+}
+
+void Text_Box::text_input_event(SDL_Event& event) {
+	if (!active)
+		return;
+	add_char(event.text.text[0]);
+}
+
+void Text_Box::mouse_click_event(SDL_Event& event) {
+	int x = event.button.x;
+	int y = event.button.y;
+	if (x >= x_pos && y >= y_pos && x <= x_pos + length
+			&& y <= y_pos + height) {
+		active = true;
+	} else {
+		active = false;
+	}
+}
+
+void Text_Box::handle_event(SDL_Event& event) {
+	switch (event.type) {
+	case SDL_MOUSEBUTTONDOWN:
+		mouse_click_event(event);
+		return;
+
+	case SDL_KEYDOWN:
+		keydown_event(event);
+		return;
+
+	case SDL_TEXTINPUT:
+		text_input_event(event);
+		return;
+	}
 }
