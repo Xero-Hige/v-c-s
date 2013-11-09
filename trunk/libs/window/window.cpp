@@ -42,7 +42,7 @@ void Window::render() {
 	SDL_RenderPresent(window_render);
 }
 
-bool Window::draw_on(SDL_Texture& source_sprite, SDL_Rect& source_rect,
+void Window::draw_on(SDL_Texture& source_sprite, SDL_Rect& source_rect,
 		SDL_Rect& dest_rect) {
 	SDL_RenderCopy(window_render, &source_sprite, &source_rect, &dest_rect);
 }
@@ -50,4 +50,9 @@ bool Window::draw_on(SDL_Texture& source_sprite, SDL_Rect& source_rect,
 void Window::free() {
 	SDL_DestroyRenderer(window_render);
 	SDL_DestroyWindow(window);
+}
+
+void Window::show_message_box(Uint32 flags, const string& title,
+		const string& message) {
+	SDL_ShowSimpleMessageBox(flags, title.c_str(), message.c_str(), window);
 }

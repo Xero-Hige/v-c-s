@@ -26,20 +26,23 @@
 
 class Window {
 
-friend class Sprite;
+	friend class Sprite;
 
-public:
+private:
 	SDL_Window* window;
 	SDL_Renderer* window_render;
 
 public:
-	Window(): window(NULL), window_render(NULL){}//TODO: ver
+	Window() :
+		window(NULL), window_render(NULL) {
+	} //TODO: ver
 	/**
 	 * Crea una ventana con el titulo y las dimensiones especificadas
 	 */
-	Window(const std::string& title,int widht,int height,int flags);
+	Window(const std::string& title, int widht, int height, int flags);
 
-	virtual ~Window(){}//TODO: ver tambien
+	virtual ~Window() {
+	} //TODO: ver tambien
 	/**
 	 * Dibuja en la pantalla el contenido almacenado en el render de
 	 * la ventana
@@ -52,7 +55,13 @@ public:
 	/**
 	 * Dibija sobre el render la textura pasada como parametro
 	 */
-	bool draw_on(SDL_Texture& source_sprite, SDL_Rect& source_rect, SDL_Rect& dest_rect);
+	void draw_on(SDL_Texture& source_sprite, SDL_Rect& source_rect,
+			SDL_Rect& dest_rect);
+	/**
+	 * Muestra un cuadro de dialogo asociado a la ventana
+	 */
+	void show_message_box(Uint32 flags, const std::string& title,
+			const std::string& message);
 	/**
 	 * Libera los recursos de la ventana
 	 */
