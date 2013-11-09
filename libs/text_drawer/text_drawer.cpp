@@ -33,7 +33,7 @@ void Text_Drawer::set_font(const string& path, int font_size) {
 		throw Sprite_Construction_Error();
 }
 
-void Text_Drawer::set_color(int r, int g, int b, int alpha_level) {
+void Text_Drawer::set_color(Uint8 r, Uint8 g, Uint8 b, Uint8 alpha_level) {
 	color = {r,g,b,alpha_level};
 }
 

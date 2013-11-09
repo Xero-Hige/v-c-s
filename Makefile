@@ -70,12 +70,15 @@ BigEndianProtocol.o:
 
 #Client
 
-CLIENT_OBJ = $(GRAPHIC_LIBS) $(SOUND_LIBS) login_screen.o client_app.o backend.o #server_connector.o
+CLIENT_OBJ = $(GRAPHIC_LIBS) $(SOUND_LIBS) login_screen.o client_app.o rooms_screen.o backend.o #server_connector.o
 
 CLIENT_NAME = game-client
 
-login_screen.o: Client/login_screen/login_screen.cpp Client/login_screen/login_screen_events.cpp Client/login_screen/login_screen_loading.cpp Client/login_screen.h
+login_screen.o: Client/login_screen/login_screen.cpp Client/login_screen/login_screen_events.cpp Client/login_screen/login_screen_loading.cpp Client/login_screen.h Client/app.h
 	$(CC) $(SDL_CPPFLAGS) -c Client/login_screen/login_screen_events.cpp Client/login_screen/login_screen_loading.cpp Client/login_screen/login_screen.cpp
+
+rooms_screen.o: Client/rooms_screen/rooms_screen.cpp Client/rooms_screen.h Client/app.h
+	$(CC) $(SDL_CPPFLAGS) -c Client/rooms_screen/rooms_screen.cpp
 
 backend.o: Client/backend/backend.cpp Client/backend/backend.h
 	$(CC) $(SDL_CPPFLAGS) -c Client/backend/backend.cpp

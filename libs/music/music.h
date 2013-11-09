@@ -29,7 +29,7 @@ public:
 	/**
 	 * Abre el dispositivo de salida de audio
 	 */
-	static bool open_audio(int audio_rate=22050,Uint16 audio_format=AUDIO_S16,int audio_channels=2,int audio_buffers=4096);
+	static void open_audio(int audio_rate=22050,Uint16 audio_format=AUDIO_S16,int audio_channels=2,int audio_buffers=4096);
 	/**
 	 * Cierra el dispositivo de salida de audio
 	 */

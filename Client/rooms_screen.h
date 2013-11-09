@@ -1,5 +1,5 @@
 /**
- login_screen.h
+ rooms_screen.h
 
  Copyright 2013 Gaston Martinez Gaston.martinez.90@gmail.com
 
@@ -16,46 +16,28 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
-#ifndef LOGINSCREEN_H_
-#define LOGINSCREEN_H_
-
-#define SCREEN_WIDTH	600
-#define SCREEN_HEIGHT   300
-#define TITLE 		"Login"
-#define WINDOW_FLAGS 0//SDL_WINDOW_RESIZABLE
+#ifndef ROOMSSCREEN_H_
+#define ROOMSSCREEN_H_
 
 #include <string>
 
 #include "app.h"
 #include "backend/backend.h"
 #include "../libs/window/window.h"
-#include "../libs/animated_sprite/animated_sprite.h"
 #include "../libs/surface/surface.h"
-#include "../libs/text_box/text_box.h"
-#include "../libs/secret_text_box/secret_text_box.h"
-#include "../libs/music/music.h"
+#include "../libs/animated_sprite/animated_sprite.h"
 
-
-class Login_Screen: public App {
+class Rooms_Screen: public App {
 
 private:
-
 	Backend& backend;
 
 	Window window;
 	Sprite background;
 
-	Text_Box user_nick;
-	Secret_Text_Box user_pass;
-
-	Sprite mugshot_left;
-	Sprite mugshot_right;
-
 	//Loading_screen
 	Sprite loading_mask;
 	Animated_Sprite loading_icon;
-
-	Music background_music;
 
 	int status;
 
@@ -93,19 +75,12 @@ private:
 	/**
 	 * Inicializa los mugshots
 	 */
-	void setup_mugshots();
-	/**
-	 * Inicializa el audio de la ventana
-	 */
-	void setup_audio();
-
 
 public:
-
 	/**
 	 * Constructor que recibe un Backend
 	 */
-	Login_Screen(Backend& back);
+	Rooms_Screen(Backend& back);
 
 	/**
 	 * Metodo para inicializar la app
@@ -133,7 +108,7 @@ public:
 	 *
 	 */
 	virtual int get_app_status();
-
 };
 
-#endif /* LOGINSCREEN_H_ */
+
+#endif /* ROOMSSCREEN_H_ */

@@ -25,6 +25,7 @@
 
 #include "login_screen.h"
 #include "backend/backend.h"
+#include "rooms_screen.h"
 
 class Client_App{
 
@@ -33,6 +34,9 @@ private:
 	std::vector<App*> apps;
 
 	Backend backend;
+	int actual_app;
+
+	void change_app();
 
 public:
 	Client_App();

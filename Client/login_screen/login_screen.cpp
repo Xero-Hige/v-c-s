@@ -33,7 +33,7 @@
 
 using std::string;
 
-Login_Screen::Login_Screen(Backend& back): backend(back){}
+Login_Screen::Login_Screen(Backend& back): backend(back), status(STATUS_RUNNING){}
 
 void Login_Screen::setup_background() {
 	//TODO: excepciones
@@ -70,7 +70,6 @@ void Login_Screen::setup_textboxes() {
 	user_pass.move(X_USER_PASS, Y_USER_PASS);
 	user_pass.set_alternative_text("PASSWORD", window);
 
-	active_textbox = ACTIVE_NICK;
 }
 
 void Login_Screen::setup_loadingscreen() {
@@ -103,8 +102,8 @@ void Login_Screen::setup_mugshots() {
 			/ mugshot_right.get_scaled_height();
 	mugshot_left.scale(scale_left);
 	mugshot_right.scale(scale_right);
-	mugshot_left.scale(1.2d);
-	mugshot_right.scale(1.2d);
+	mugshot_left.scale(1.2);
+	mugshot_right.scale(1.2);
 	mugshot_left.move(-(mugshot_left.get_scaled_width() / 2), 0);
 	mugshot_right.move(SCREEN_WIDTH - (mugshot_right.get_scaled_width() / 2),
 			0);
@@ -153,7 +152,6 @@ void Login_Screen::cleanup() {
 
 	user_nick.free();
 	user_pass.free();
-//	hover_text.free();
 
 	mugshot_left.free();
 	mugshot_right.free();
@@ -167,3 +165,6 @@ void Login_Screen::cleanup() {
 
 }
 
+int Login_Screen::get_app_status() {
+	return status;
+}

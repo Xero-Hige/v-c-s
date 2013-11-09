@@ -42,7 +42,7 @@ public:
 	/**
 	 * Setea el color del texto
 	 */
-	void set_color(int r,int g,int b,int alpha_level);
+	void set_color(Uint8 r,Uint8 g,Uint8 b,Uint8 alpha_level);
 	/**
 	 * Obtiene un sprite con el texto pasado por parametro
 	 */

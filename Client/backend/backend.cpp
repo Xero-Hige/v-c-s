@@ -58,7 +58,7 @@ void Backend::async_log_in
 		//todo
 	}
 	*/
-    _operation_error="No se puede conectar al servidor";
+    _operation_error="";//"No se puede conectar al servidor";
 }
 
 Backend::~Backend() {
