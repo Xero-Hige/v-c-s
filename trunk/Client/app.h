@@ -19,16 +19,20 @@
 #ifndef APP_H_
 #define APP_H_
 
+#define STATUS_RUNNING 0
+#define STATUS_ENDED_OK 1
+#define STATUS_ENDED_ERROR 2
+
 #include <SDL.h>
 
-/*
- *
- */
 class App {
+
 public:
 	App(){};
 
-	virtual ~App(){};
+	virtual ~App() {
+	}
+	;
 
 	/**
 	 * Metodo para inicializar la app
@@ -52,6 +56,14 @@ public:
 	 * Metodo para limpiar el contenido de la app
 	 */
 	virtual void cleanup()=0;
+	/**
+	 * Obtiene el estado actual:
+	 * -STATUS_RUNNING
+	 * -STATUS_ENDED_OK
+	 * -STATUS_ENDED_ERROR
+	 */
+	virtual int get_app_status()=0;
+
 };
 
 #endif /* APP_H_ */

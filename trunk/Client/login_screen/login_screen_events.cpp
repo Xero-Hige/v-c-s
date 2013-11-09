@@ -52,7 +52,7 @@ void Login_Screen::key_press_event(SDL_Event& event) {
 					backend.operation_error().c_str());
 			return;
 		}
-		//TODO; SALIR
+		status = STATUS_ENDED_OK;
 	}
 }
 
@@ -64,12 +64,4 @@ void Login_Screen::text_input_event(SDL_Event& event) {
 void Login_Screen::mouse_button_event(SDL_Event& event) {
 	user_nick.handle_event(event);
 	user_pass.handle_event(event);
-}
-
-void Login_Screen::change_active_textbox() {
-	if (active_textbox == ACTIVE_NICK) {
-		active_textbox = ACTIVE_PASS;
-	} else {
-		active_textbox = ACTIVE_NICK;
-	}
 }

@@ -18,7 +18,7 @@
  */
 #include "music.h"
 
-bool Music::open_audio(int audio_rate, Uint16 audio_format, int audio_channels,
+void Music::open_audio(int audio_rate, Uint16 audio_format, int audio_channels,
 		int audio_buffers) {
 	int result = Mix_OpenAudio(audio_rate, audio_format, audio_channels, audio_buffers);
 	if (result != 0)

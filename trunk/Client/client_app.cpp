@@ -27,21 +27,41 @@ Client_App::Client_App() {
 	apps = vector<App*>();
 
 	apps.push_back(new Login_Screen(backend));
+	apps.push_back(new Rooms_Screen(backend));
+
+	actual_app = 0;
 }
 
 Client_App::~Client_App() {
 	delete apps[0];
+	delete apps[1];
+
 	SDL_Quit();
+}
+
+void Client_App::change_app() {
+	if (apps[actual_app]->get_app_status() != STATUS_RUNNING) {
+		if (apps[actual_app]->get_app_status() == STATUS_ENDED_ERROR) {
+			running = false;
+			return;
+		}
+		switch (actual_app) {
+		case 0:
+			actual_app = 1;
+			apps[0]->cleanup();
+			apps[1]->initialize();
+		}
+	}
 }
 
 int Client_App::run() {
 	if (initialize() == false) {
 		return 1;
 	}
-
 	SDL_Event Event;
 
 	while (running) {
+		change_app();
 		while (SDL_PollEvent(&Event)) {
 			handle_event(Event);
 		}
@@ -61,11 +81,11 @@ bool Client_App::initialize() {
 }
 
 void Client_App::handle_event(SDL_Event& event) {
+	apps[0]->handle_event(event);
 	if (event.type == SDL_QUIT) {
 		running = false;
 
 	}
-	apps[0]->handle_event(event);
 	return;
 }
 
