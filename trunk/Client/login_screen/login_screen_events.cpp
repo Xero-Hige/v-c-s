@@ -38,44 +38,32 @@ void Login_Screen::handle_event(SDL_Event& event) {
 }
 
 void Login_Screen::key_press_event(SDL_Event& event) {
-	if (SDL_SCANCODE_BACKSPACE == event.key.keysym.scancode) {
-		if (active_textbox == ACTIVE_NICK) {
-			user_nick.pop_char();
-		} else {
-			user_pass.pop_char();
-		}
-		return;
-	}
+	user_nick.handle_event(event);
+	user_pass.handle_event(event);
 
 	if (SDL_SCANCODE_RETURN == event.key.keysym.scancode) {
 		backend.async_log_in(user_nick.get_text(), user_pass.get_text());
 		while (!backend.operation_ended()) {
-			render_loadscreen();
+			render_loadscreen(); //FIXME
 			SDL_Delay(10);
 		}
-		if (backend.operation_error() != "")
-		{
+		if (backend.operation_error() != "") {
 			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Error",
 					backend.operation_error().c_str(), window.window);
 			return;
 		}
-	}
-
-	if (SDL_SCANCODE_TAB == event.key.keysym.scancode) {
-		change_active_textbox();
+		//TODO; SALIR
 	}
 }
 
 void Login_Screen::text_input_event(SDL_Event& event) {
-	if (active_textbox == ACTIVE_NICK) {
-		user_nick.add_char(event.text.text[0]);
-	} else {
-		user_pass.add_char(event.text.text[0]);
-	}
+	user_nick.handle_event(event);
+	user_pass.handle_event(event);
 }
 
 void Login_Screen::mouse_button_event(SDL_Event& event) {
-
+	user_nick.handle_event(event);
+	user_pass.handle_event(event);
 }
 
 void Login_Screen::change_active_textbox() {
