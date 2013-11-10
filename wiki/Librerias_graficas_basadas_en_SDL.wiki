@@ -21,3 +21,6 @@ Librerias para crear un framework grafico basado en SDL orientado a objetos y am
  * _text_drawer.h_:
  * _text_box.h_:
  * _secret_text_box.h_:
+ * _button.h_:
+ 	Funciona simplemente como un boton que al ser clickeado se activa y al clickearse en otro lado se desactiva. Esto funciona segun el evento pasado, por lo que se puede restringir la zona donde se le pasa el evento o no.
+ * _screen_zone.h_:

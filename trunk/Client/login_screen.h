@@ -34,6 +34,7 @@
 #include "../libs/text_box/text_box.h"
 #include "../libs/secret_text_box/secret_text_box.h"
 #include "../libs/music/music.h"
+#include "../libs/button/button.h"
 
 
 class Login_Screen: public App {
@@ -56,6 +57,8 @@ private:
 	Animated_Sprite loading_icon;
 
 	Music background_music;
+
+	Button _register;
 
 	int status;
 

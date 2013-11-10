@@ -12,7 +12,7 @@ SDL_CPPFLAGS = $(CPPFLAGS) `sdl2-config --cflags`
 
 SDL_LDFLAGS = $(CPPLDFLAGS) `sdl2-config --libs` -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf
 
-GRAPHIC_LIBS = surface.o sprite.o animated_sprite.o window.o text_drawer.o text_box.o secret_text_box.o
+GRAPHIC_LIBS = surface.o sprite.o animated_sprite.o button.o window.o text_drawer.o text_box.o secret_text_box.o
 
 surface.o: libs/surface/surface.h libs/surface/surface.cpp
 	$(CC) $(SDL_CPPFLAGS) -c libs/surface/surface.cpp
@@ -22,6 +22,9 @@ sprite.o: libs/sprite/sprite.h libs/sprite/sprite.cpp
 
 animated_sprite.o: libs/animated_sprite/animated_sprite.h libs/animated_sprite/animated_sprite.cpp
 	$(CC) $(SDL_CPPFLAGS) -c libs/animated_sprite/animated_sprite.cpp
+
+button.o: libs/button/button.h libs/button/button.cpp
+	$(CC) $(SDL_CPPFLAGS) -c libs/button/button.cpp
 
 window.o: libs/window/window.h libs/window/window.cpp
 	$(CC) $(SDL_CPPFLAGS) -c libs/window/window.cpp
