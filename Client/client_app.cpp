@@ -90,15 +90,15 @@ void Client_App::handle_event(SDL_Event& event) {
 }
 
 void Client_App::loop() {
-	apps[0]->loop();
+	apps[actual_app]->loop();
 	return;
 }
 
 void Client_App::render() {
-	apps[0]->render();
+	apps[actual_app]->render();
 	return;
 }
 
 void Client_App::cleanup() {
-	apps[0]->cleanup();
+	apps[actual_app]->cleanup();
 }
