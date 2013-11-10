@@ -91,6 +91,11 @@ void Login_Screen::setup_loadingscreen() {
 	loading_icon.set_fps(10);
 	loading_icon.move(SCREEN_WIDTH - LOADING_ICON_WIDHT,
 			SCREEN_HEIGHT - loading_height);
+
+	//TODO: Remover
+	_register = Button("resources/general/pika_loading.png", window);
+	_register.set_scaled_height(loading_height);
+	_register.set_scaled_width(LOADING_ICON_WIDHT);
 }
 
 void Login_Screen::setup_mugshots() {
@@ -141,6 +146,7 @@ void Login_Screen::render() {
 	mugshot_right.draw(window);
 	user_nick.draw(window);
 	user_pass.draw(window);
+	_register.draw(window);
 
 	window.render();
 
