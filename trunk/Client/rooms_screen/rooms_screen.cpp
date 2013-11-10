@@ -19,7 +19,7 @@
 #include "../rooms_screen.h"
 
 #define TITLE "Lobby"
-#define SCREEN_WIDTH 1024
+#define SCREEN_WIDTH 1360
 #define SCREEN_HEIGHT 768
 #define WINDOW_FLAGS SDL_WINDOW_RESIZABLE
 
