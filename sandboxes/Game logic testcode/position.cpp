@@ -1,7 +1,7 @@
 /*
- * simple_product.cpp
+ * position.cpp
  *
- * Created on: Oct 27, 2013
+ * Created on: Nov 8, 2013
  * 
  * Copyright 2013 Bruno Merlo Schurmann <brunomerloschurmann@gmail.com>
  * 
@@ -19,20 +19,31 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses 
  */
 
-#include "simple_product.h"
+#include "position.h"
 
-int Product::getColor() {
-    return color;
+#include <vector>
+
+using std::vector;
+
+Position::Position(int x, int y) {
+    coordinates = vector<int>();
+    coordinates.reserve(2);
+    coordinates[0] = x;
+    coordinates[1] = y;
 }
 
-int Product::getType() {
-    return type;
+int Position::getX() {
+    return coordinates[0];
 }
 
-Effect& Product::getEffect() {
-    return effect;
+int Position::getY() {
+    return coordinates[1];
 }
 
-void Product::applyEffect() {
-    effect.apply();
+void Position::setX(int x) {
+    coordinates[0] = x;
+}
+
+void Position::setY(int y) {
+    coordinates[1] = y;
 }

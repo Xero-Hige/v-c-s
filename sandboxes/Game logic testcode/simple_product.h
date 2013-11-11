@@ -22,16 +22,38 @@
 #ifndef SIMPLE_PRODUCT_H_
 #define SIMPLE_PRODUCT_H_
 
+#include "simple_effect.h"
+#include "test_effect.h"
+
 // Color constants
-#define NO_COLOR 0
+#define NO_COLOR -1
+#define UNCOLORED 0
 #define RED      1
 #define YELLOW   2
 #define GREEN    3
 #define BLUE     4
 #define VIOLET   5
 
-class Product {
+// Type constants
+#define NO_TYPE -1
+#define BUTTON 1
+#define V_BAR 2
+#define H_BAR 3
+#define STAR 4
 
+class Product {
+private:
+    int color;
+    int type;
+    Effect effect;
+
+public:
+    Product(int color, int type)
+        : color(color), type(type), effect(TestEffect()) {}
+    int getColor();
+    int getType();
+    Effect& getEffect();
+    void applyEffect();
 };
 
 #endif /* SIMPLE_PRODUCT_H_ */

@@ -21,4 +21,105 @@
 
 #include "simple_board.h"
 
+#include <vector>
+#include <list>
 
+using std::vector;
+using std::list;
+
+Board::Board(unsigned int n_rows, unsigned int n_columns)
+    : rows(n_rows), columns(n_columns), tiles(vector<Tile>()) {
+    initTiles();
+}
+
+// products tiene Product* para los Tile que son celda, y NULL para los Tile que son agujeros
+Board::Board(unsigned int n_rows, unsigned int n_columns, list<Product*> products)
+    : rows(n_rows), columns(n_columns), tiles(vector<Tile>()) {
+    initTiles();
+    setUp(products);
+}
+
+void Board::setUp(list<Product*> products) {
+    unsigned int length = rows * columns;
+    for (unsigned int i = 0; i < length; i++) {
+        Product* product = products.front();
+        products.pop_front();
+        if (product != NULL) {
+            tiles[i].setProduct(product);
+        } else {
+            tiles[i].setType(HOLE);
+        }
+    }
+}
+
+// Product* getProduct(unsigned int x, unsigned int y);
+
+unsigned int Board::getHeight() {
+    return rows;
+}
+
+unsigned int Board::getLength() {
+    return columns;
+}
+
+int Board::getProductColor(unsigned int x, unsigned int y) {
+    unsigned int pos = getIndexFromPos(x, y);
+    return tiles[pos].getProductColor();
+}
+
+int Board::getProductType(unsigned int x, unsigned int y) {
+    unsigned int pos = getIndexFromPos(x, y);
+    return tiles[pos].getProductType();
+}
+
+Effect& Board::getProductEffect(unsigned int x, unsigned int y) {
+    unsigned int pos = getIndexFromPos(x, y);
+    return tiles[pos].getProductEffect();
+}
+
+Product* Board::takeOutProduct(unsigned int x, unsigned int y) {
+    unsigned int pos = getIndexFromPos(x, y);
+    return tiles[pos].popProduct();
+}
+
+bool Board::setProduct(Product* product, unsigned int x, unsigned int y) {
+    unsigned int pos = getIndexFromPos(x, y);
+    return tiles[pos].setProduct(product);
+}
+
+int Board::getProductColor(Position& pos) {
+    return getProductColor(pos.getX(), pos.getY());
+}
+
+int Board::getProductType(Position& pos) {
+    return getProductType(pos.getX(), pos.getY());
+}
+
+Effect& Board::getProductEffect(Position& pos) {
+    return getProductEffect(pos.getX(), pos.getY());
+}
+
+Product* Board::takeOutProduct(Position& pos) {
+    return takeOutProduct(pos.getX(), pos.getY());
+}
+
+bool Board::setProduct(Product* product, Position& pos) {
+    return setProduct(product, pos.getX(), pos.getY());
+}
+
+Board::~Board() {
+    tiles.clear();
+}
+
+unsigned int Board::getIndexFromPos(unsigned int x, unsigned int y) {
+    return (x + (y*columns));
+}
+
+void Board::initTiles() {
+    unsigned int length = rows * columns;
+    tiles.reserve(length);
+    for (unsigned int i = 0; i < length; i++) {
+        Tile tile = Tile(CELL);
+        tiles.push_back(tile);
+    }
+}

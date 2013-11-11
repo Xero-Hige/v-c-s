@@ -25,6 +25,7 @@
 #include <cstdlib>
 
 #include "simple_product.h"
+#include "position.h"
 
 // Type constants
 #define HOLE 0
@@ -33,23 +34,39 @@
 class Tile {
     int type;
     Product* product;
-    // TODO la posición hacerla una estructura o una clase?
-    unsigned int x;
-    unsigned int y;
+    // TODO la posición no seria necesaria para nada
+    Position pos;
 
 public:
     Tile(int type, unsigned int x, unsigned int y)
-        : type(type), product(NULL), x(x), y(y) {}
+        : type(type), product(NULL), pos(Position(x, y)) {}
     Tile(int type, Product* product, unsigned int x, unsigned int y)
-        : type(type), product(product), x(x), y(y) {}
+        : type(type), product(product), pos(Position(x, y)) {}
+    explicit Tile(int type)
+        : type(type), product(NULL), pos(Position(-1, -1)) {}
+    Tile(int type, Product* product)
+        : type(type), product(product), pos(Position(-1, -1)) {}
+    explicit Tile(Product* product)
+        : type((product==NULL)?HOLE:CELL), product(product), pos(Position(-1, -1)) {}
+//    explicit Tile(Tile& tile)
+//        : type(tile.type), product(tile.product), x(tile.x), y(tile.y) {}
+//    explicit Tile(const Tile& tile)
+//        : type(tile.type), product(tile.product), x(tile.x), y(tile.y) {}
+    // Esto creo que no vale la pena tenerlo, no se usa
     unsigned int getX();
     unsigned int getY();
+    void setType(int type);
     bool isHole();
     bool isCell();
     bool isEmpty();
     int getProductColor();
+    int getProductType();
+    Effect& getProductEffect();
+    Product* popProduct();
+    bool setProduct(Product* product);
+    // No se si hace falta
     void eliminateProduct();
-
+    ~Tile();
 };
 
 #endif /* SIMPLE_CELL_H_ */

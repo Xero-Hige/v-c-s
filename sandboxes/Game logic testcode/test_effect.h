@@ -1,7 +1,7 @@
 /*
- * simple_product.cpp
+ * test_effect.h
  *
- * Created on: Oct 27, 2013
+ * Created on: Nov 10, 2013
  * 
  * Copyright 2013 Bruno Merlo Schurmann <brunomerloschurmann@gmail.com>
  * 
@@ -19,20 +19,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses 
  */
 
-#include "simple_product.h"
+#ifndef TEST_EFFECT_H_
+#define TEST_EFFECT_H_
 
-int Product::getColor() {
-    return color;
-}
+#include "simple_effect.h"
 
-int Product::getType() {
-    return type;
-}
+#include <iostream>
 
-Effect& Product::getEffect() {
-    return effect;
-}
+class TestEffect : public Effect {
+    void apply() {
+        std::cout << "Explote!" << std::endl;
+    }
+};
 
-void Product::applyEffect() {
-    effect.apply();
-}
+
+#endif /* TEST_EFFECT_H_ */

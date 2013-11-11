@@ -1,7 +1,7 @@
 /*
- * simple_product.cpp
+ * simple_effect.cpp
  *
- * Created on: Oct 27, 2013
+ * Created on: Oct 30, 2013
  * 
  * Copyright 2013 Bruno Merlo Schurmann <brunomerloschurmann@gmail.com>
  * 
@@ -19,20 +19,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses 
  */
 
-#include "simple_product.h"
+#include "simple_effect.h"
 
-int Product::getColor() {
-    return color;
-}
+void Effect::apply() {
 
-int Product::getType() {
-    return type;
-}
-
-Effect& Product::getEffect() {
-    return effect;
-}
-
-void Product::applyEffect() {
-    effect.apply();
 }

@@ -21,4 +21,60 @@
 
 #include "simple_tile.h"
 
+void Tile::setType(int type) {
+    this->type = type;
+}
 
+unsigned int Tile::getX() {
+    return pos.getX();
+}
+
+unsigned int Tile::getY() {
+    return pos.getY();
+}
+
+bool Tile::isHole() {
+    return type == HOLE;
+}
+
+bool Tile::isCell() {
+    return type == CELL;
+}
+
+bool Tile::isEmpty() {
+    return (type == HOLE || product == NULL);
+}
+
+int Tile::getProductColor() {
+    return product->getColor();
+}
+
+int Tile::getProductType() {
+    return product->getType();
+}
+
+Effect& Tile::getProductEffect() {
+    return product->getEffect();
+}
+
+Product* Tile::popProduct(){
+    Product* product = this->product;
+    this->product = NULL;
+    return product;
+}
+
+bool Tile::setProduct(Product* product) {
+    if (type == HOLE || this->product != NULL) {
+        return false;
+    }
+    this->product = product;
+    return true;
+}
+
+void Tile::eliminateProduct() {
+    delete(product);
+}
+
+Tile::~Tile() {
+    delete(product);
+}
