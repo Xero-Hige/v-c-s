@@ -23,13 +23,18 @@
 #include "simple_product.h"
 #include "simple_board.h"
 #include "simple_combination_checker.h"
+#include "simple_refiller.h"
 
 #include <list>
 #include <iostream>
+#include <map>
+#include <vector>
 
 using std::list;
 using std::cout;
 using std::endl;
+using std::map;
+using std::vector;
 
 void printBoard(Board& board, int lenght, int width) {
     int color;
@@ -57,6 +62,17 @@ void printCheck(CombinationChecker& checker, int lenght, int width) {
     }
 }
 
+void setUpRefiller() {
+    vector<string> colors = vector<string>();
+    vector.push_back("uncolored");
+    vector.push_back("red");
+    vector.push_back("yellow");
+    vector.push_back("green");
+    vector.push_back("blue");
+    vector.push_back("violet");
+    Refiller::setConvertionTable(colors);
+}
+
 int main() {
     list<Product*> products;
     products.push_back(new Product(RED, BUTTON));
@@ -75,5 +91,7 @@ int main() {
     printBoard(board, 3, 4);
     CombinationChecker checker = CombinationChecker(board);
     printCheck(checker, 3, 4);
+    setUpRefiller();
+    Refiller refiller = Refiller();
     return 0;
 }
