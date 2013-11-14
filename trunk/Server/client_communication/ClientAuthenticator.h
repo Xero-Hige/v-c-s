@@ -8,7 +8,7 @@
 #ifndef CLIENTAUTHENTICATOR_H_
 #define CLIENTAUTHENTICATOR_H_
 
-#include "server_ClientHandler.h"
+#include "ClientHandler.h"
 
 namespace std {
 

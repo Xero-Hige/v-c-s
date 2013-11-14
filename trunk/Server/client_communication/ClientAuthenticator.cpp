@@ -5,7 +5,7 @@
  *      Author: juan
  */
 
-#include "server_ClientAuthenticator.h"
+#include "ClientAuthenticator.h"
 #include "../../libs/messages/MsgConstants.h"
 #include <cstring>
 
@@ -17,11 +17,12 @@ ClientAuthenticator::ClientAuthenticator(ClientHandler * ch) {
 
 bool ClientAuthenticator::authenticate(){
 	//Determina si el cliente quiere registrarse o logearse
-	string auth_type;
-	this->client->recvMsg(auth_type);
-	if (auth_type.compare(TYPE_LOGIN) == 0)
+	string s_auth_type;
+	this->client->recvMsg(s_auth_type);
+	int auth_type = atoi (s_auth_type.c_str());
+	if (auth_type == TYPE_LOGIN)
 		return login();
-	else /*if (auth_type.compare(TYPE_REGISTER) == 0)*/
+	else /*if (auth_type == TYPE_REGISTER)*/
 		return registrate();
 }
 
