@@ -77,11 +77,9 @@ int Server_Connector::makeConnection(string ip, int port){
 }
 
 void Server_Connector::connectServer
-(int & errcode, string username, string passwd, string a_type){
+(string username, string passwd, string a_type){
 	//Obtiene user y pass y si los quiere usar para logearse o registrarse
-	Authenticator auth(this);
-	if (!auth.sendIds(username, passwd, a_type))
-		errcode = 2; //passwd/username incorrectos
+	auth.authenticate(this, username, passwd, a_type);
 }
 
 void Server_Connector::useUserDefinedMatchmaking(){

@@ -27,7 +27,7 @@ class Backend {
 
 private:
 
-//	std::Server_Connector server_connector;
+	std::Server_Connector server_connector;
 
 	//Connection info
 	std::string ip;
@@ -45,6 +45,9 @@ private:
 public:
 	Backend();
 	virtual ~Backend();
+
+	void setOperationEnded(bool b);
+	void setLogged(bool b);
 
 	//Async control
 	/**
