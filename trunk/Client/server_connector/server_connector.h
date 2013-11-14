@@ -15,8 +15,9 @@
 namespace std {
 
 class Server_Connector {
-	friend class Authenticator;
+	friend class AuthenticationService;
 
+	Authenticator auth;
 	FormattedSocket * sock;//socket file descriptor
 
 	void getMatchmaking(string & mm);
@@ -34,7 +35,7 @@ public:
 	 * connectServer intenta conectar el cliente al servidor. Si hubo un problema
 	 * errcode contiene el valor 1, si se logro conectar no se modifica.
 	 */
-	void connectServer(int & errcode, string username, string passwd, string a_type);
+	void connectServer(string username, string passwd, string a_type);
 	int makeConnection(string ip, int port);
 	void enterRoom();
 	void communicate();

@@ -45,22 +45,21 @@ bool Backend::operation_ended() {
 	return _operation_ended;
 }
 
+void Backend::setOperationEnded(bool b){
+	this->_operation_ended = b;
+}
+void Backend::setLogged(bool b){
+	this->logged = b;
+}
+
 string Backend::operation_error() {
 	return _operation_error;
 }
 
 void Backend::async_log_in
 (const std::string& user,const std::string& password,int auth_type){
-/*	int err = 0;
-	//ESTO ES ASYNC?
-	this->server_connector.connectServer(err, user, password, "1");
-	if (err){
-		//todo
-	}
-	*/
-    _operation_error="";//"No se puede conectar al servidor";
+	this->server_connector.connectServer(user, password, "1");
 }
-
 Backend::~Backend() {
 	// TODO Auto-generated destructor stub
 }

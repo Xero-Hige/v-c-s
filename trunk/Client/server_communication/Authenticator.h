@@ -9,17 +9,15 @@
 #define AUTHENTICATOR_H_
 
 #include "../server_connector/server_connector.h"
-
+#include "AuthenticationService.h"
 namespace std {
 
 class Authenticator {
-	Server_Connector * client;
-	bool verificateMessage(string msg);
-	bool receiveAuthVerif();
+	AuthenticationService as;
 
 public:
-	Authenticator(Server_Connector * c);
-	bool sendIds(string & user, string & passwd, string & auth_type);
+	Authenticator();
+	void authenticate(Server_Connector * c, string u, string passwd, string type);
 	virtual ~Authenticator();
 };
 
