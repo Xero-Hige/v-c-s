@@ -6,7 +6,7 @@
  */
 
 #include "ServerMsgInterpreter.h"
-#include "../../libs/msgs/MsgConstants.h"
+#include "../../libs/messages/MsgConstants.h"
 #include <iostream>
 
 namespace std {

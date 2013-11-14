@@ -9,7 +9,7 @@
 #define SERVERMSGINTERPRETER_H_
 
 #include <string>
-#include "../../libs/msgs/MsgInterpreter.h"
+#include "../../libs/messages/MsgInterpreter.h"
 #include "ClientHandler.h"
 
 namespace std {
