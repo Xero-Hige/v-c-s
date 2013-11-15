@@ -42,7 +42,7 @@ bool AuthenticationService::receiveAuthVerif(){
 bool AuthenticationService::verificateMessage(string msg){
 	//Compara si el mensaje que envio el server coincide con 'msg'
 	string recvd_msg;
-	c->recvMsg(recvd_msg);
+	c->sock->recvMsg(recvd_msg);
 	if (recvd_msg.compare(msg) == 0) {
 		return true;
 	}
