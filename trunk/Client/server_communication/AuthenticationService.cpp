@@ -9,8 +9,7 @@
 #include "../../libs/messages/MsgConstants.h"
 #include "../../libs/communication_protocol/BigEndianProtocol.h"
 #include <cstring>
-
-namespace std {
+#include <string>
 
 AuthenticationService::AuthenticationService() {
 	this->be = NULL;
@@ -67,5 +66,3 @@ void AuthenticationService::run(){
 AuthenticationService::~AuthenticationService() {
 	// TODO Auto-generated destructor stub
 }
-
-} /* namespace std */

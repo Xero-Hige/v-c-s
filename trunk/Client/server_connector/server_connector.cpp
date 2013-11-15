@@ -6,22 +6,27 @@
  */
 
 #include "server_connector.h"
-#include <iostream>
-#include <stdlib.h> //atoi strtol
+
+#include <arpa/inet.h> //inet_addr, htons, server_addr
+#include <bits/socket_type.h>
+#include <netinet/in.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <sys/socket.h>
 #include <algorithm> //reverse de string
-#include <arpa/inet.h> //inet_addr, htons, server_addr
 #include <cstring> //memset
-#include <string>
+#include <iostream>
 #include <sstream>
+#include <string>
+
 #include "../../libs/communication_protocol/BigEndianProtocol.h"
 #include "../../libs/messages/MsgConstants.h"
-#include "../server_communication/ClientMsgInterpreter.h"
 #include "../server_communication/Authenticator.h"
-#include <stdlib.h>
-#include <stdio.h>
+#include "../server_communication/ClientMsgInterpreter.h"
 
-namespace std {
+
+using std::cerr;
+using std::endl;
 
 struct sockaddr_in server_addr;
 
@@ -129,6 +134,5 @@ void Server_Connector::closeConection(){
 
 Server_Connector::~Server_Connector() {
 	delete sock;
-}
 
 } /* namespace std */

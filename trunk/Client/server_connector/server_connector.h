@@ -11,8 +11,7 @@
 #include <string>
 #include <inttypes.h>
 #include "../../libs/communication_protocol/FormattedSocket.h"
-
-namespace std {
+#include "../server_communication/Authenticator.h"
 
 class Server_Connector {
 	friend class AuthenticationService;
@@ -22,8 +21,8 @@ class Server_Connector {
 
 	bool exit_char_pressed;
 
-	void getMatchmaking(string & mm);
-	void getRoomId(string & id);
+	void getMatchmaking(std::string & mm);
+	void getRoomId(std::string & id);
 	void useUserDefinedMatchmaking();
 	void useDefaultMatchmaking();
 
@@ -37,8 +36,8 @@ public:
 	 * connectServer intenta conectar el cliente al servidor. Si hubo un problema
 	 * errcode contiene el valor 1, si se logro conectar no se modifica.
 	 */
-	void connectServer(string username, string passwd, string a_type);
-	int makeConnection(string ip, int port);
+	void connectServer(std::string username, std::string passwd, std::string a_type);
+	int makeConnection(std::string ip, int port);
 	void enterRoom();
 	void exitCharPressed();
 	void communicate();
@@ -49,5 +48,4 @@ public:
 	virtual ~Server_Connector();
 };
 
-} /* namespace std */
 #endif /* CLIENT_H_ */
