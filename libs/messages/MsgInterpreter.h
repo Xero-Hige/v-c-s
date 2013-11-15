@@ -15,6 +15,7 @@ namespace std {
 
 class MsgInterpreter {
 	virtual void exitRoom() = 0;
+	virtual void exitCharPressed() = 0;
 
 public:
 	MsgInterpreter();

@@ -20,6 +20,8 @@ class Server_Connector {
 	Authenticator auth;
 	FormattedSocket * sock;//socket file descriptor
 
+	bool exit_char_pressed;
+
 	void getMatchmaking(string & mm);
 	void getRoomId(string & id);
 	void useUserDefinedMatchmaking();
@@ -38,9 +40,8 @@ public:
 	void connectServer(string username, string passwd, string a_type);
 	int makeConnection(string ip, int port);
 	void enterRoom();
+	void exitCharPressed();
 	void communicate();
-	int recvMsg(string msg);
-	int sendMsg(string msg);
 	/*
 	 * closeConnection cierra el socket utilizado para la conex.
 	 */

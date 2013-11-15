@@ -18,9 +18,9 @@ namespace std {
 class Room; //Por la refs circulares...
 class Lobby;
 
-class ClientHandler : public Thread, public FormattedSocket {
+class ClientHandler : public Thread{
 	Room * room;
-
+	FormattedSocket * sock;
 	Lobby * lobby;
 
 	bool keep_communicating;

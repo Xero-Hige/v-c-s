@@ -21,6 +21,9 @@ void ClientMsgInterpreter::exitRoom(){
 	client->enterRoom();
 }
 
+void ClientMsgInterpreter::exitCharPressed(){
+	client->exitCharPressed();
+}
 ClientMsgInterpreter::~ClientMsgInterpreter() {
 	// TODO Auto-generated destructor stub
 }

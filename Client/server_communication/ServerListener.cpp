@@ -24,19 +24,9 @@ void ServerListener::run(){
 	}
 }
 
-void ServerListener::notifyCommunicationStart(){
-	keep_listening = false;
-	//todo
-	//shutdown socket
-	this->join();
-}
-
-void ServerListener::notifyCommunicationEnd(){
-	keep_listening = true;
-	this->start();
-}
-
 ServerListener::~ServerListener() {
+	sock->socketShutdown();
+	this->join();
 }
 
 } /* namespace std */

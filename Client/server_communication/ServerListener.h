@@ -22,8 +22,6 @@ class ServerListener : public Thread {
 
 public:
 	ServerListener(FormattedSocket * s, ClientMsgInterpreter * c);
-	void notifyCommunicationStart();
-	void notifyCommunicationEnd();
 	virtual ~ServerListener();
 };
 

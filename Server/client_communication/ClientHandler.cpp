@@ -10,17 +10,17 @@
 #include "../rooms/Room.h"
 #include "../rooms/Lobby.h"
 #include <iostream>
-#include "../../libs/messages/MsgConstants.h"
 #include "../../libs/communication_protocol/BigEndianProtocol.h"
 #include "../rooms/MatchMakingStrategy.h"
 #include "ServerMsgInterpreter.h"
 
 namespace std {
 
-ClientHandler::ClientHandler(int s, Lobby * lob) : FormattedSocket(s) {
+ClientHandler::ClientHandler(int s, Lobby * lob){
 	this->room = NULL;
 	this->keep_communicating = true;
 	this->lobby = lob;
+	this->sock = new FormattedSocket(s);
 }
 //////////////////////////////////DEBUGGGGGGGGGGGGGGGGGGGGGG
 void ClientHandler::run(){
@@ -28,7 +28,7 @@ void ClientHandler::run(){
 	bool exit_char_pressed = false;
 	while (keep_communicating && !exit_char_pressed){
 		string rcvd_msg;
-		recvMsg(rcvd_msg);
+		sock->recvMsg(rcvd_msg);
 		exit_char_pressed = interpreter.interpret(rcvd_msg);
 	}
 }
@@ -41,12 +41,12 @@ void ClientHandler::exitRoom(){
 
 void ClientHandler::sendIdsVerifMsg(){
 	string msg(IDS_VERIF);
-	sendMsg(msg);
+	sock->sendMsg(msg);
 }
 
 void ClientHandler::getIds(string & user, string & passwd){
-	recvMsg(user);
-	recvMsg(passwd);
+	sock->recvMsg(user);
+	sock->recvMsg(passwd);
 }
 
 void ClientHandler::setRoom(Room * r){
