@@ -12,28 +12,25 @@
 #include "../backend/backend.h"
 #include <string>
 
-namespace std {
-
 class AuthenticationService : public Thread{
 	Backend * be;
 	Server_Connector * c;
-	string user;
-	string passwd;
-	string auth_type;
-	bool verificateMessage(string msg);
+	std::string user;
+	std::string passwd;
+	std::string auth_type;
+	bool verificateMessage(std::string msg);
 	bool receiveAuthVerif();
 
 public:
 	void setBackend(Backend * be);
 	void setServerConnector(Server_Connector * c);
-	void setUser(string s);
-	void setPasswd(string s);
-	void setAuthType(string s);
+	void setUser(std::string s);
+	void setPasswd(std::string s);
+	void setAuthType(std::string s);
 	AuthenticationService();
 	void run();
 	void authenticate();
 	virtual ~AuthenticationService();
 };
 
-} /* namespace std */
 #endif /* AUTHENTICATIONSERVICE_H_ */
