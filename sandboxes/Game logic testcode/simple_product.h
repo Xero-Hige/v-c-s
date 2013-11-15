@@ -27,12 +27,12 @@
 
 // Color constants
 #define NO_COLOR -1
-#define UNCOLORED 0
-#define RED      1
-#define YELLOW   2
-#define GREEN    3
-#define BLUE     4
-#define VIOLET   5
+#define RED      0
+#define YELLOW   1
+#define GREEN    2
+#define BLUE     3
+#define VIOLET   4
+#define UNCOLORED 5
 
 // Type constants
 #define NO_TYPE -1

@@ -32,11 +32,15 @@ class Refiller {
 private:
     static std::map<std::string, unsigned int> convertion_table;
     std::vector<int> probabilities;
+    int limit;
 
 public:
     static void setConvertionTable(std::vector<std::string>& colors);
     Refiller(std::map<std::string, int>& probabilities);
     Product* getNewProduct();
+
+private:
+    int getRandomNumber();
 };
 
 #endif /* SIMPLE_REFILLER_H_ */

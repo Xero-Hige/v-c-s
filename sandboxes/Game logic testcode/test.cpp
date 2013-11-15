@@ -29,12 +29,14 @@
 #include <iostream>
 #include <map>
 #include <vector>
+#include <string>
 
 using std::list;
 using std::cout;
 using std::endl;
 using std::map;
 using std::vector;
+using std::string;
 
 void printBoard(Board& board, int lenght, int width) {
     int color;
@@ -64,12 +66,11 @@ void printCheck(CombinationChecker& checker, int lenght, int width) {
 
 void setUpRefiller() {
     vector<string> colors = vector<string>();
-    vector.push_back("uncolored");
-    vector.push_back("red");
-    vector.push_back("yellow");
-    vector.push_back("green");
-    vector.push_back("blue");
-    vector.push_back("violet");
+    colors.push_back("red");
+    colors.push_back("yellow");
+    colors.push_back("green");
+    colors.push_back("blue");
+    colors.push_back("violet");
     Refiller::setConvertionTable(colors);
 }
 
@@ -92,6 +93,18 @@ int main() {
     CombinationChecker checker = CombinationChecker(board);
     printCheck(checker, 3, 4);
     setUpRefiller();
-    Refiller refiller = Refiller();
+    map<string, int> probabilities = map<string, int>();
+    probabilities["red"] = 33;
+    probabilities["yellow"] = 0;
+    probabilities["green"] = 33;
+    probabilities["blue"] = 33;
+    probabilities["violet"] = 0;
+    Refiller refiller = Refiller(probabilities);
+    Product* product;
+    for (int i = 0; i < 15; i++) {
+        product = refiller.getNewProduct();
+        cout << "Producto nuevo: " << product->getColor() << product->getType() << endl;
+        delete product;
+    }
     return 0;
 }

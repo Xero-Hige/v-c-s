@@ -21,9 +21,12 @@
 
 #include "simple_refiller.h"
 
+#include "simple_product.h"
+
 #include <map>
 #include <vector>
 #include <string>
+#include <cstdlib>
 
 using std::map;
 using std::vector;
@@ -41,15 +44,36 @@ void Refiller::setConvertionTable(vector<string>& colors) {
 }
 
 Refiller::Refiller(std::map<string, int>& probabilities) {
+    limit = 0;
     this->probabilities = vector<int>();
     this->probabilities.resize(convertion_table.size());
     map<string, int>::iterator it;
     for (it = probabilities.begin(); it != probabilities.end(); ++it) {
+        limit+= it->second;
         unsigned int pos = convertion_table[it->first];
         this->probabilities[pos] = it->second;
     }
 }
 
 Product* Refiller::getNewProduct() {
-    return NULL;
+    int n = getRandomNumber();
+    int color = -1;
+    for (unsigned int i = 0; i < probabilities.size(); i++) {
+        if (n <= probabilities[i]) {
+            color = i;
+            break;
+        }
+        n-= probabilities[i];
+    }
+    return (new Product(color, BUTTON));
+}
+
+// return a random number between 1 and limit (inclusive)
+int Refiller::getRandomNumber() {
+    int divisor = RAND_MAX/(limit+1);
+    int retval;
+    do {
+        retval = std::rand() / divisor;
+    } while (retval >= limit);
+    return retval+1;
 }
