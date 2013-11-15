@@ -36,10 +36,10 @@
 
 // Type constants
 #define NO_TYPE -1
-#define BUTTON 1
-#define V_BAR 2
-#define H_BAR 3
-#define STAR 4
+#define BUTTON 0
+#define V_BAR 1
+#define H_BAR 2
+#define STAR 3
 
 class Product {
 private:

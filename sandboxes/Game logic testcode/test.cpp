@@ -99,6 +99,14 @@ int main() {
     probabilities["green"] = 33;
     probabilities["blue"] = 33;
     probabilities["violet"] = 0;
+    Position pos = Position(1,0);
+    vector<int> types = checker.getVerticalCombinationTypes(pos);
+    cout << "Tipos de la combinación: ";
+    vector<int>::iterator it;
+    for (it = types.begin(); it != types.end(); ++it) {
+        cout << *it << " ";
+    }
+    cout << endl;
     Refiller refiller = Refiller(probabilities);
     Product* product;
     for (int i = 0; i < 15; i++) {

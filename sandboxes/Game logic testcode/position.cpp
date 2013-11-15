@@ -25,25 +25,25 @@
 
 using std::vector;
 
-Position::Position(int x, int y) {
-    coordinates = vector<int>();
-    coordinates.reserve(2);
-    coordinates[0] = x;
-    coordinates[1] = y;
-}
+//Position::Position(Position& pos) {
+//    coordinates = vector<int>();
+//    coordinates.reserve(2);
+//    coordinates[0] = pos.coordinates[0];
+//    coordinates[1] = pos.coordinates[1];
+//}
 
 int Position::getX() {
-    return coordinates[0];
+    return x;
 }
 
 int Position::getY() {
-    return coordinates[1];
+    return y;
 }
 
 void Position::setX(int x) {
-    coordinates[0] = x;
+    this->x = x;
 }
 
 void Position::setY(int y) {
-    coordinates[1] = y;
+    this->y = y;
 }

@@ -27,6 +27,7 @@
 #include "position.h"
 
 #include <list>
+#include <vector>
 
 class CombinationChecker {
 private:
@@ -36,9 +37,12 @@ public:
     CombinationChecker(Board& board)
         : board(board) {}
     bool check(Position& pos);
-    std::list<Position> getVerticalCombination(Position& pos);
-    std::list<Position> getHorizontalCombination(Position& pos);
+    bool getVerticalCombination(Position& pos, std::list<Position>& combination_list);
+    bool getHorizontalCombination(Position& pos, std::list<Position>& combination_list);
     int checkAll();
+    // TODO Esto se me hace mejor ponerlo en otra clase, pero ahora para probar lo dejo acá
+    std::vector<int> getVerticalCombinationTypes(Position& pos);
+    std::vector<int> getHorizontalCombinationTypes(Position& pos);
 
 private:
     bool isValidPosition(Position& pos);

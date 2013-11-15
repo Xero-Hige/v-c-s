@@ -26,10 +26,13 @@
 
 class Position {
 private:
-    std::vector<int> coordinates;
+    int x;
+    int y;
 
 public:
-    Position(int x, int y);
+    Position(int x, int y)
+        : x(x), y(y) {}
+//    Position(Position& pos);
     int getX();
     int getY();
     void setX(int x);

@@ -26,8 +26,12 @@
 #include "position.h"
 
 #include <list>
+#include <vector>
+
+#include <iostream>
 
 using std::list;
+using std::vector;
 
 bool CombinationChecker::check(Position& pos) {
     if (! isValidPosition(pos)) {
@@ -48,26 +52,55 @@ bool CombinationChecker::check(Position& pos) {
     return false;
 }
 
-list<Position> CombinationChecker::getVerticalCombination(Position& pos) {
+bool CombinationChecker::getVerticalCombination(Position& pos, list<Position>& combination_list) {
     int product_color = board.getProductColor(pos);
-    list<Position> vertical_combination = list<Position>();
-    vertical_combination.push_back(pos);
-    checkCombinationUp(pos, product_color, &vertical_combination);
-    checkCombinationDown(pos, product_color, &vertical_combination);
-    return vertical_combination;
+    int n_combination = checkCombinationUp(pos, product_color, &combination_list);
+    n_combination = checkCombinationDown(pos, product_color, &combination_list);
+    if (n_combination != 0) {
+        combination_list.push_front(pos);
+        return true;
+    }
+    return false;
 }
 
-std::list<Position> CombinationChecker::getHorizontalCombination(Position& pos) {
+bool CombinationChecker::getHorizontalCombination(Position& pos, list<Position>& combination_list) {
     int product_color = board.getProductColor(pos);
-    list<Position> horizontal_combination = list<Position>();
-    horizontal_combination.push_back(pos);
-    checkCombinationRight(pos, product_color, &horizontal_combination);
-    checkCombinationLeft(pos, product_color, &horizontal_combination);
-    return horizontal_combination;
+    int n_combination = checkCombinationRight(pos, product_color, &combination_list);
+    n_combination = checkCombinationLeft(pos, product_color, &combination_list);
+    if (n_combination != 0) {
+        combination_list.push_front(pos);
+        return true;
+    }
+    return false;
 }
 
 int CombinationChecker::checkAll() {
     return 0;
+}
+
+vector<int> CombinationChecker::getVerticalCombinationTypes(Position& pos) {
+    vector<int> types = vector<int>();
+    types.assign(4,0);
+    list<Position> products_pos = list<Position>();
+    getVerticalCombination(pos, products_pos);
+    list<Position>::iterator it;
+    for (it = products_pos.begin(); it != products_pos.end(); ++it) {
+        int type = board.getProductType(*it);
+        types[type]++;
+    }
+    return types;
+}
+
+vector<int> CombinationChecker::getHorizontalCombinationTypes(Position& pos) {
+    vector<int> types = vector<int>();
+//    types.assign(4,0);
+//    list<Position> products = getHorizontalCombination(pos);
+//    list<Position>::iterator it;
+//    for (it = products.begin(); it != products.end(); ++it) {
+//        int type = board.getProductType((*it));
+//        types[type]++;
+//    }
+    return types;
 }
 
 bool CombinationChecker::isValidPosition(Position& pos) {

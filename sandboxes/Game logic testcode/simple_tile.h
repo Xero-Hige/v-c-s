@@ -52,6 +52,8 @@ public:
 //        : type(tile.type), product(tile.product), x(tile.x), y(tile.y) {}
 //    explicit Tile(const Tile& tile)
 //        : type(tile.type), product(tile.product), x(tile.x), y(tile.y) {}
+//    explicit Tile(const Tile& tile)
+//        : type(tile.type), product(tile.product), pos(Position(tile.pos)) {}
     // Esto creo que no vale la pena tenerlo, no se usa
     unsigned int getX();
     unsigned int getY();
