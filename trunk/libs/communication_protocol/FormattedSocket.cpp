@@ -34,7 +34,8 @@ int FormattedSocket::recvMsg(string & msg){
 }
 
 FormattedSocket::~FormattedSocket() {
-	// TODO Auto-generated destructor stub
+	socketShutdown();
+	closeConnection();
 }
 
 } /* namespace std */

@@ -47,18 +47,16 @@ Server_Connector::Server_Connector() {
 	int sockfd = socket(AF_INET, SOCK_STREAM, 0); //SOCK_STREAM = TCP
 	if (sockfd == -1) cerr << "creation error" << endl;
 	this->sock = new Socket(sockfd);
+	this->exit_char_pressed = false;
 }
 
 void Server_Connector::communicate(){
-	ClientMsgInterpreter interpreter(this);
-	bool exit_char_pressed = false;
 	while (!exit_char_pressed){
 		char msg[80];
 		cout << "Envio: " << endl;
 		scanf("%s", msg);
 		string s_msg(msg);
 		this->sock->sendMsg(s_msg);
-		exit_char_pressed = interpreter.interpret(s_msg);
 	}
 }
 
@@ -103,6 +101,10 @@ void Server_Connector::enterRoom(){
 		useDefaultMatchmaking();
 	}
 	return;
+}
+
+void Server_Connector::exitCharPressed(){
+	exit_char_pressed = true;
 }
 
 void Server_Connector::getRoomId(string & id){

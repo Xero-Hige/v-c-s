@@ -20,6 +20,10 @@ void ServerMsgInterpreter::exitRoom(){
 	client->exitRoom();
 }
 
+void ServerMsgInterpreter::exitCharPressed(){
+	//todo cortar comunicacion con el user.
+}
+
 ServerMsgInterpreter::~ServerMsgInterpreter() {
 	// TODO Auto-generated destructor stub
 }

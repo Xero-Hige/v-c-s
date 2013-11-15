@@ -15,8 +15,8 @@ namespace std {
 
 class ClientMsgInterpreter : public MsgInterpreter{
 	Server_Connector* client;
-
 	void exitRoom();
+	void exitCharPressed();
 
 public:
 	ClientMsgInterpreter(Server_Connector * c);
