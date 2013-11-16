@@ -99,6 +99,16 @@ public:
 	 */
 	void scale_height(double scale);
 	/**
+	 * Cambia el tamaño final del sprite al ser dibujado en
+	 * su ancho segun la escala pasada, manteniendo el aspect ratio
+	 */
+	void scale_with_widht(int scaled_width);
+	/**
+	 * Cambia el tamaño final del sprite al ser dibujado en
+	 * su alto segun la escala pasada, manteniendo el aspect ratio
+	 */
+	void scale_with_height(int scaled_height);
+	/**
 	 * Define el tamaño final del sprite al ser dibujado en
 	 * su ancho segun el valor pasado
 	 */
@@ -108,11 +118,12 @@ public:
 	 * su alto segun el valor pasado
 	 */
 	void set_scaled_height(int scaled_height);
+
 	/**
 	 * Setea el nivel de transparencia desde 0 (completamente transparente)
 	 * a 255 (completamente opaco)
 	 */
-	void set_transparency_level(int level);
+	void set_transparency_level(Uint8 level);
 
 	int get_scaled_height() const {
 		return scaled_height;

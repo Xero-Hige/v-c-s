@@ -26,6 +26,7 @@
 #include "../libs/window/window.h"
 #include "../libs/surface/surface.h"
 #include "../libs/animated_sprite/animated_sprite.h"
+#include "../libs/button/button.h"
 
 class Rooms_Screen: public App {
 
@@ -38,6 +39,11 @@ private:
 	//Loading_screen
 	Sprite loading_mask;
 	Animated_Sprite loading_icon;
+
+	//Botones
+	Button next_level_button;
+	Button make_room_button;
+	Button make_custom_room_button;
 
 	int status;
 
@@ -72,6 +78,8 @@ private:
 	 * Inicializa la pantalla de carga
 	 */
 	void setup_loadingscreen();
+	void setup_buttons();
+
 	/**
 	 * Inicializa los mugshots
 	 */
