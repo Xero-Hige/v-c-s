@@ -132,6 +132,18 @@ void Sprite::scale_height(double scale) {
 	scaled_height = ceil(scaled_height * scale);
 }
 
+void Sprite::scale_with_widht(int scaled_width) {
+	double scale = (this->scaled_height+0.0)/this->scaled_width;
+	this->scaled_width = scaled_width;
+	this->scaled_height = ceil(scaled_width * scale);
+}
+
+void Sprite::scale_with_height(int scaled_height) {
+	double scale = (this->scaled_width+0.0)/this->scaled_height;
+	this->scaled_height = scaled_height;
+	this->scaled_width = ceil(scaled_height * scale);
+}
+
 void Sprite::set_scaled_width(int scaled_width) {
 	this->scaled_width = scaled_width;
 }
@@ -144,7 +156,6 @@ void Sprite::free() {
     SDL_DestroyTexture(_texture);
 }
 
-void Sprite::set_transparency_level(int level) {
+void Sprite::set_transparency_level(Uint8 level) {
 	SDL_SetTextureAlphaMod(_texture,level);
 }
-

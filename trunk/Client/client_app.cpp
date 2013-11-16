@@ -28,6 +28,7 @@ Client_App::Client_App() {
 
 	apps.push_back(new Login_Screen(backend));
 	apps.push_back(new Rooms_Screen(backend));
+	apps.push_back(new Login_Screen(backend));
 
 	actual_app = 0;
 }
@@ -46,10 +47,18 @@ void Client_App::change_app() {
 			return;
 		}
 		switch (actual_app) {
-		case 0:
-			actual_app = 1;
-			apps[0]->cleanup();
-			apps[1]->initialize();
+
+		case 2: //Tablero
+			apps[actual_app]->cleanup();
+			actual_app--;
+			apps[actual_app]->initialize();
+			break;
+
+		default:
+			apps[actual_app]->cleanup();
+			actual_app++;
+			apps[actual_app]->initialize();
+			break;
 		}
 	}
 }
@@ -81,7 +90,7 @@ bool Client_App::initialize() {
 }
 
 void Client_App::handle_event(SDL_Event& event) {
-	apps[0]->handle_event(event);
+	apps[actual_app]->handle_event(event);
 	if (event.type == SDL_QUIT) {
 		running = false;
 

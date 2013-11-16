@@ -153,7 +153,6 @@ void Login_Screen::render() {
 }
 
 void Login_Screen::cleanup() {
-	window.free();
 	background.free();
 
 	user_nick.free();
@@ -169,6 +168,7 @@ void Login_Screen::cleanup() {
 	background_music.free();
 	background_music.close_audio();
 
+	window.free();
 }
 
 int Login_Screen::get_app_status() {

@@ -60,6 +60,20 @@ public:
 	void draw(Window& destination_window, SDL_Rect& destination_rect);
 
 	void draw(Window& destination_window, int x_pos, int y_pos);
+
+	/**
+	 * Activa o desactiva el boton
+	 */
+	void set_active(bool active){this->active = active;}
+	/**
+	 * Setea al boton como clickeado o no
+	 */
+	void set_clicked(bool active){this->clicked = active;}
+
+	/**
+	 * Devuelve si el control esta clickeado
+	 */
+	bool is_clicked(){return this->clicked;}
 };
 
 #endif /* BUTTON_H_ */
