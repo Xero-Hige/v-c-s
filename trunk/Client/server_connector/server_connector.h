@@ -43,6 +43,8 @@ public:
 	void connectServer(std::string username, std::string passwd, std::string a_type);
 	int makeConnection(std::string ip, int port);
 	bool getAuthEnded();
+	int sendMsg(std::string msg);
+	int recvMsg(std::string & msg);
 	bool getLogged();
 	void enterRoom();
 	void exitCharPressed();
