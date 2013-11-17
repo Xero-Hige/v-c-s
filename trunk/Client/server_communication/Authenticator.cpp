@@ -13,13 +13,14 @@
 Authenticator::Authenticator() {
 }
 
-void Authenticator::authenticate
+bool Authenticator::authenticate
 (Server_Connector * c, string user, string passwd, string auth_type){
 	as.setServerConnector(c);
 	as.setAuthType(auth_type);
 	as.setUser(user);
 	as.setPasswd(passwd);
-	as.start();
+	//as.start();
+	return as.authenticate();
 }
 
 Authenticator::~Authenticator() {

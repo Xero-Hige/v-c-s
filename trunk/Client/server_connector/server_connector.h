@@ -37,10 +37,9 @@ public:
 	 */
 	Server_Connector();
 	/*
-	 * connectServer intenta conectar el cliente al servidor. Si hubo un problema
-	 * errcode contiene el valor 1, si se logro conectar no se modifica.
+	 * connectServer intenta conectar el cliente al servidor.
 	 */
-	void connectServer(std::string username, std::string passwd, std::string a_type);
+	bool connectServer(std::string username, std::string passwd, std::string a_type);
 	int makeConnection(std::string ip, int port);
 	bool getAuthEnded();
 	int sendMsg(std::string msg);

@@ -43,19 +43,21 @@ bool AuthenticationService::verificateMessage(string msg){
 	return false;
 }
 
-void AuthenticationService::authenticate(){
+bool AuthenticationService::authenticate(){
 	c->sock->sendMsg(auth_type);
 	c->sock->sendMsg(user);
 	c->sock->sendMsg(passwd);
 	if (this->receiveAuthVerif())
 		//se autentico
-		c->setLogged(true);
-	else c->setLogged(false);
-	c->setAuthEnded(true);
+		//c->setLogged(true);
+		return true;
+	else //c->setLogged(false);
+	//c->setAuthEnded(true);
+		return false;
 }
 
 void AuthenticationService::run(){
-	this->authenticate();
+	//this->authenticate();
 }
 
 AuthenticationService::~AuthenticationService() {
