@@ -28,7 +28,7 @@ Client_App::Client_App() {
 
 	apps.push_back(new Login_Screen(backend));
 	apps.push_back(new Rooms_Screen(backend));
-	apps.push_back(new Login_Screen(backend));
+	//apps.push_back(new Login_Screen(backend));
 
 	actual_app = 0;
 }
