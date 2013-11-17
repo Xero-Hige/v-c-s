@@ -33,7 +33,7 @@ private:
 	void setup_button();
 
 public:
-	Button(){};
+	Button(): active(false), clicked(false){};
 	/**
 	 * TODO:
 	 */

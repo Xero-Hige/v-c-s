@@ -43,7 +43,7 @@ Client_App::~Client_App() {
 
 void Client_App::change_app() {
 	if (apps[actual_app]->get_app_status() != STATUS_RUNNING) {
-		if (apps[actual_app]->get_app_status() == STATUS_ENDED_ERROR) {
+		if (apps[actual_app]->get_app_status() != STATUS_ENDED_OK) {
 			running = false;
 			return;
 		}

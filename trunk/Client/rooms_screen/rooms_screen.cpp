@@ -115,7 +115,6 @@ void Rooms_Screen::loop() {
 		while (!backend.operation_ended() && status == STATUS_RUNNING) {
 			render_loadscreen(100);
 		}
-		status = STATUS_ENDED_OK;
 	}
 }
 
