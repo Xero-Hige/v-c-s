@@ -5,13 +5,11 @@
  *      Author: juan
  */
 
-#include "server_Lobby.h"
-#include "server_Room.h"
-#include "server_MatchMakingStrategy.h"
-#include "../common_src/common_Thread.h"
+#include "Lobby.h"
+#include "Room.h"
+#include "MatchMakingStrategy.h"
+#include "../../libs/wrappers/Thread.h"
 #include <iostream>
-
-namespace std {
 
 Lobby::Lobby(){
 	room_killer.setRooms(&rooms);//No se pq no me deja inicializarlo de entrada...
@@ -34,7 +32,7 @@ void * threadAddClient(void * data){
 	return NULL;
 }
 
-void Lobby::addClient(ClientHandler * ch) {
+void Lobby::addNewClient(ClientHandler * ch) {
 	pthread_t thread;
 	struct thread_data data;
 	data.lobby = this;
@@ -42,8 +40,11 @@ void Lobby::addClient(ClientHandler * ch) {
 	pthread_create(&thread, NULL, threadAddClient, (void *) &data);
 }
 
+void Lobby::addClient(ClientHandler * ch){
+	MatchMakingStrategy mms;
+	mms.addClient(this, ch);
+}
+
 Lobby::~Lobby() {
 	room_killer.stop();
 }
-
-} /* namespace std */

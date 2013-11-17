@@ -16,14 +16,12 @@
 
 #define BACKLOAD 5
 
-namespace std {
-
 int* crearSocket(){
 	int * sockfd = new int();
 	(*sockfd) = socket(AF_INET, SOCK_STREAM, 0); //SOCK_STREAM = TCP
 	int bla = 1;
 	setsockopt(*sockfd, SOL_SOCKET, SO_REUSEADDR, &bla, sizeof(int));
-	if (*sockfd == -1) cerr << "error" << endl;
+	if (*sockfd == -1) std::cerr << "error" << std::endl;
 	return sockfd;
 }
 
@@ -46,7 +44,7 @@ void SocketHandler::run(){
 		unsigned int cli_len = sizeof(*(this->addr));
 		int new_cli = accept(*sock_listener, (struct sockaddr*) this->addr, &cli_len);
 		if (new_cli >= 0){
-			cout << "Cliente Aceptado"<< endl;
+			std::cout << "Cliente Aceptado"<< std::endl;
 			this->addClient(new_cli);//addClient decide si acepta o no
 		}
 	}
@@ -54,9 +52,12 @@ void SocketHandler::run(){
 
 void SocketHandler::addClient(int & new_client){
 	ClientHandler * ch = new ClientHandler(new_client, this->lobby);
-	ClientAuthenticator ca(ch);
-	if (ca.authenticate()) this->lobby->addClient(ch);
-	else close(new_client);
+	ClientAuthenticator ca(new_client);
+	if (ca.authenticate()) this->lobby->addNewClient(ch);
+	else {
+		close(new_client);
+		delete ch;
+	}
 }
 
 uint16_t SocketHandler::getPort(){
@@ -72,12 +73,10 @@ void SocketHandler::stopAccepting(){
 void SocketHandler::setListeningMode(){
 	int r;
 	r = listen(*sock_listener, BACKLOAD);
-	if (r == -1) cerr << "Error." << endl;
+	if (r == -1) std::cerr << "Error." << std::endl;
 }
 
 SocketHandler::~SocketHandler() {
 	delete addr;
 	delete sock_listener;
 }
-
-} /* namespace std */

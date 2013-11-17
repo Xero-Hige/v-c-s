@@ -10,8 +10,6 @@
 
 #include <pthread.h>
 
-namespace std {
-
 /*
  * La clase Mutex encapsula los metodos de pthread_mutex, utilizados para que solo
  * un hilo pueda acceder a una porcion de codigo por vez. Si una clase quiere
@@ -27,5 +25,4 @@ public:
 	virtual ~Mutex();
 };
 
-} /* namespace std */
 #endif /* MUTEX_H_ */

@@ -12,12 +12,7 @@
 #include <string>
 
 AuthenticationService::AuthenticationService() {
-	this->be = NULL;
 	this->c = NULL;
-}
-
-void AuthenticationService::setBackend(Backend * be){
-	this->be = be;
 }
 
 void AuthenticationService::setServerConnector(Server_Connector * c){
@@ -54,9 +49,9 @@ void AuthenticationService::authenticate(){
 	c->sock->sendMsg(passwd);
 	if (this->receiveAuthVerif())
 		//se autentico
-		be->setLogged(true);
-	else be->setLogged(false);
-	be->setOperationEnded(true);
+		c->setLogged(true);
+	else c->setLogged(false);
+	c->setAuthEnded(true);
 }
 
 void AuthenticationService::run(){

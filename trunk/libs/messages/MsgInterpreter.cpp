@@ -8,29 +8,26 @@
 #include "MsgInterpreter.h"
 #include <iostream>
 
-namespace std {
-
 MsgInterpreter::MsgInterpreter() {
 	// TODO Auto-generated constructor stub
 
 }
 
 //Devuelve si se presiono el char de salida
-bool MsgInterpreter::interpret(string s) {
-	cout << s << endl;
+bool MsgInterpreter::interpret(std::string s) {
+	std::cout << s << std::endl;
 	if (s.compare("q") == 0){
-		cout << "Mensaje: SALIDA" << endl;
+		std::cout << "Mensaje: SALIDA" << std::endl;
 		return true;
 	}
 	else if (s.compare(CLIENT_EXIT_ROOM) == 0){
 		exitRoom();
 		return false;
 	}
+	interpretParticularMsg(s);
 	return false;
 }
 
 MsgInterpreter::~MsgInterpreter() {
 	// TODO Auto-generated destructor stub
 }
-
-} /* namespace std */

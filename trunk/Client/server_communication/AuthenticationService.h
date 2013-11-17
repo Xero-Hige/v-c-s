@@ -13,13 +13,13 @@
 #include <string>
 
 class AuthenticationService : public Thread{
-	Backend * be;
 	Server_Connector * c;
 	std::string user;
 	std::string passwd;
 	std::string auth_type;
 	bool verificateMessage(std::string msg);
 	bool receiveAuthVerif();
+	void run();
 
 public:
 	void setBackend(Backend * be);
@@ -28,7 +28,6 @@ public:
 	void setPasswd(std::string s);
 	void setAuthType(std::string s);
 	AuthenticationService();
-	void run();
 	void authenticate();
 	virtual ~AuthenticationService();
 };

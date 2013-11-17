@@ -9,21 +9,21 @@
 #define LOBBY_H_
 
 #include <map>
-#include "server_Room.h"
-#include "server_RoomKiller.h"
-
-namespace std {
+#include "Room.h"
+#include "RoomKiller.h"
 
 class Lobby{
 	friend class MatchMakingStrategy;
-	map<unsigned long,Room*> rooms;
+	std::map<unsigned long,Room*> rooms;
 	RoomKiller room_killer;
 
 public:
 	Lobby();
-	void addClient(ClientHandler * ch); //Usar solo cuando es un nuevo cliente
+	void addClient(ClientHandler * ch); //usar solo cuando es un cliente viejo, que
+										//viene de otro room, ya que no inicia el
+										//thread
+	void addNewClient(ClientHandler * ch); //Usar solo cuando es un nuevo cliente
 	virtual ~Lobby();
 };
 
-} /* namespace std */
 #endif /* LOBBY_H_ */

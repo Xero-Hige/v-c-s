@@ -14,20 +14,18 @@
 #include "../../libs/wrappers/Thread.h"
 #include "SocketHandler.h"
 
-namespace std {
-
 class Server {
 	/*
 	 * sock_listeners contiene todos threads de cada socket que escucha el serv.
 	 */
-	vector<SocketHandler*> * sock_listeners;
+	std::vector<SocketHandler*> * sock_listeners;
 	/*
 	 * crearPuertosDeEscucha recibe una lista de puertos donde el server va a
 	 * escuchar (determinados por el usuario) y crea un SocketListenerHandler
 	 * por cada uno de ellos. A cada SLH creado lo agrega a la lista
 	 * sock_listeners.
 	 */
-	void createListeningPorts(vector<int> * list_puertos, Lobby * lob);
+	void createListeningPorts(std::vector<int> * list_puertos, Lobby * lob);
 
 public:
 	/*
@@ -38,7 +36,7 @@ public:
 	/*
 	 * serverListen indica a cada puerto que el server haya abierto que escuche.
 	 */
-	void serverListen(vector<int> * list_puertos, Lobby * lob);
+	void serverListen(std::vector<int> * list_puertos, Lobby * lob);
 	/*
 	 * acceptConnections indica a cada SocketListenerHandler de la lista
 	 *  que se ejecute (cada uno en un thread distinto).
@@ -55,12 +53,11 @@ public:
 //Agrega la funcion contiene a vector. Indica si el vector contiene un T segun
 //el criterio de comparador.
 template < class T >
-bool contiene(vector<T*> * vec, T * v, bool (*comparador)(T * v, T * a)){
+bool contiene(std::vector<T*> * vec, T * v, bool (*comparador)(T * v, T * a)){
 	for (unsigned i = 0; i < vec->size(); i++){
 		if (comparador(v, vec->at(i))) return true;
 	}
 	return false;
 }
 
-} /* namespace std */
 #endif /* SERVER_H_ */

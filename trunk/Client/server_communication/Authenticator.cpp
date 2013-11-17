@@ -10,8 +10,6 @@
 #include "../../libs/communication_protocol/BigEndianProtocol.h"
 #include <cstring>
 
-namespace std {
-
 Authenticator::Authenticator() {
 }
 
@@ -26,5 +24,3 @@ void Authenticator::authenticate
 
 Authenticator::~Authenticator() {
 }
-
-} /* namespace std */

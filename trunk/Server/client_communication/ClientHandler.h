@@ -13,33 +13,26 @@
 #include <stdlib.h>
 #include <string>
 
-namespace std {
-
 class Room; //Por la refs circulares...
 class Lobby;
 
 class ClientHandler : public Thread{
-	Room * room;
 	FormattedSocket * sock;
-	Lobby * lobby;
-
-	bool keep_communicating;
-
+	Room * room;
+	bool keep_listening;
 	void run();
 
 public:
-	explicit ClientHandler(int sock, Lobby * lob);
+	explicit ClientHandler(int sock);
 
 	void setRoom(Room * r);
 
+	void sendMsg(std::string s);
+	void recvMsg(std::string & s);
+
 	void exitRoom();
-
-	void getIds(string & user, string & passwd);
-
-	void sendIdsVerifMsg();
 
 	virtual ~ClientHandler();
 };
 
-} /* namespace std */
 #endif /* CLIENTHANDLER_H_ */

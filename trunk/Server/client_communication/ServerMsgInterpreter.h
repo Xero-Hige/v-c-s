@@ -12,17 +12,14 @@
 #include "../../libs/messages/MsgInterpreter.h"
 #include "ClientHandler.h"
 
-namespace std {
-
 class ServerMsgInterpreter : public MsgInterpreter {
 	ClientHandler * client;
 	void exitRoom();
 	void exitCharPressed();
-
+	void interpretParticularMsg(std::string s);
 public:
 	ServerMsgInterpreter(ClientHandler* c);
 	virtual ~ServerMsgInterpreter();
 };
 
-} /* namespace std */
 #endif /* MSGINTERPRETER_H_ */

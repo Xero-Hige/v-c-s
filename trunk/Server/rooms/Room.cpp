@@ -5,14 +5,13 @@
  *      Author: juan
  */
 
-#include "server_Room.h"
+#include "Room.h"
 #include <iostream>
-
-namespace std {
 
 unsigned long Room::id_counter = 0;
 
-Room::Room(unsigned limit, unsigned long r_id) {
+Room::Room(Lobby * lob, unsigned limit, unsigned long r_id) {
+	this->lob = lob;
 	if (!r_id){
 		//el id se auto-genera
 		this->id = Room::id_counter;
@@ -27,21 +26,22 @@ Room::Room(unsigned limit, unsigned long r_id) {
 
 bool Room::addClient(ClientHandler* ch){
 	if (this->clients.size() >= limit || currently_playing) return false;
-	cout << "Se agrego un cliente al room " << this->id;
-	cout << endl;
+	std::cout << "Se agrego un cliente al room " << this->id;
+	std::cout << std::endl;
 	clients.push_back(ch);
 	ch->setRoom(this);
 	return true;
 }
 
 bool Room::exitRoom(ClientHandler* ch){
-	for (vector<ClientHandler*>::iterator it = clients.begin(); it < clients.end(); it++){
+	for (std::vector<ClientHandler*>::iterator it = clients.begin(); it < clients.end(); it++){
 		ClientHandler* actual_ch = *it;
 		if (ch == actual_ch){//si los ptrs son iguales
 			clients.erase(it);
-			cout << "El cliente salio del room" << endl;
+			std::cout << "El cliente salio del room" << std::endl;
 			//Si se quedo sin clientes se pone como no activo
 			if (!clients.size()) active = false;
+			this->lob->addClient(ch);
 			return true;
 		}
 	}
@@ -60,8 +60,8 @@ bool Room::isActive(){
 	return active;
 }
 
-void Room::notifyClients(string msg){
-	vector<ClientHandler*>::iterator it;
+void Room::notifyClients(std::string msg){
+	std::vector<ClientHandler*>::iterator it;
 	for (it = clients.begin(); it != clients.end(); it++){
 		ClientHandler* ch = *it;
 		ch->sendMsg(msg);
@@ -71,5 +71,3 @@ void Room::notifyClients(string msg){
 Room::~Room() {
 	// TODO Auto-generated destructor stub
 }
-
-} /* namespace std */
