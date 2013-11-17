@@ -68,6 +68,13 @@ bool Server_Connector::getAuthEnded(){
 	return auth_ended;
 }
 
+int Server_Connector::sendMsg(std::string msg){
+	return sock->sendMsg(msg);
+}
+int Server_Connector::recvMsg(std::string & msg){
+	return sock->recvMsg(msg);
+}
+
 bool Server_Connector::getLogged(){
 	return logged;
 }

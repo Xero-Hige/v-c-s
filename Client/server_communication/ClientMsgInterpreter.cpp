@@ -19,6 +19,10 @@ void ClientMsgInterpreter::exitRoom(){
 	client->enterRoom();
 }
 
+void ClientMsgInterpreter::interpretParticularMsg(std::string msg){
+}
+
+
 void ClientMsgInterpreter::exitCharPressed(){
 	client->exitCharPressed();
 }

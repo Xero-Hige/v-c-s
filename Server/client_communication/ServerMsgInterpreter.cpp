@@ -22,6 +22,10 @@ void ServerMsgInterpreter::exitCharPressed(){
 	//todo cortar comunicacion con el user.
 }
 
+void ServerMsgInterpreter::interpretParticularMsg(std::string msg){
+
+}
+
 ServerMsgInterpreter::~ServerMsgInterpreter() {
 	// TODO Auto-generated destructor stub
 }
