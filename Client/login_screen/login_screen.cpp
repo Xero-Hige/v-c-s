@@ -20,11 +20,6 @@
 #include "login_screen_events.cpp"
 #include "login_screen_loading.cpp"
 
-#define SCREEN_WIDTH	600
-#define SCREEN_HEIGHT   300
-#define TITLE 		"Login"
-#define WINDOW_FLAGS 0
-
 #define CORRECTION_Y_TEXTBOX 19
 #define CORRECTION_Y_SECOND_TEXTBOX -5
 
@@ -34,12 +29,13 @@
 #define X_USER_PASS 214
 #define Y_USER_PASS 242
 
-#define LOADING_ICON_CORRECTION_FACTOR 2.3
-
 using std::string;
 
+const string Login_Screen::TITLE = "Login";
+const double Login_Screen::LOADING_ICON_CORRECTION_FACTOR = 2.3;
+
 Login_Screen::Login_Screen(Backend& back) :
-		backend(back), status(STATUS_RUNNING) {
+		App(), backend(back) {
 }
 
 void Login_Screen::setup_background() {
@@ -169,8 +165,4 @@ void Login_Screen::cleanup() {
 	background_music.close_audio();
 
 	window.free();
-}
-
-int Login_Screen::get_app_status() {
-	return status;
 }

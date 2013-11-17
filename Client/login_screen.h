@@ -19,11 +19,6 @@
 #ifndef LOGINSCREEN_H_
 #define LOGINSCREEN_H_
 
-#define SCREEN_WIDTH	600
-#define SCREEN_HEIGHT   300
-#define TITLE 		"Login"
-#define WINDOW_FLAGS 0
-
 #include <string>
 
 #include "app.h"
@@ -36,8 +31,14 @@
 #include "../libs/music/music.h"
 #include "../libs/button/button.h"
 
-
 class Login_Screen: public App {
+
+private:
+	static const std::string  TITLE;
+	static const int SCREEN_WIDTH = 600;
+	static const int SCREEN_HEIGHT = 300;
+	static const int WINDOW_FLAGS = 0;
+	static const double LOADING_ICON_CORRECTION_FACTOR;
 
 private:
 
@@ -59,8 +60,6 @@ private:
 	Music background_music;
 
 	Button _register;
-
-	int status;
 
 private:
 	/**
@@ -102,7 +101,6 @@ private:
 	 */
 	void setup_audio();
 
-
 public:
 
 	/**
@@ -132,10 +130,6 @@ public:
 	 * Metodo para limpiar el contenido de la app
 	 */
 	virtual void cleanup();
-	/**
-	 *
-	 */
-	virtual int get_app_status();
 
 };
 

@@ -18,14 +18,13 @@
  */
 #include "../rooms_screen.h"
 
-#define TITLE "Lobby"
-#define SCREEN_WIDTH 680
-#define SCREEN_HEIGHT 384
-#define WINDOW_FLAGS SDL_WINDOW_RESIZABLE
-#define LOADING_ICON_CORRECTION_FACTOR 2.5
+using std::string;
+
+const string Rooms_Screen::TITLE = "Lobby";
+const double Rooms_Screen::LOADING_ICON_CORRECTION_FACTOR = 2.3;
 
 Rooms_Screen::Rooms_Screen(Backend& back) :
-backend(back), status(STATUS_RUNNING) {
+		App(), backend(back) {
 }
 
 void Rooms_Screen::key_press_event(SDL_Event& event) {
@@ -145,16 +144,12 @@ void Rooms_Screen::cleanup() {
 	window.free();
 }
 
-int Rooms_Screen::get_app_status() {
-	return status;
-}
-
 void Rooms_Screen::render_loadscreen(int times) {
 	for (int i = 0; i < times; i++) {
 		SDL_Event event;
 		SDL_PollEvent(&event);
 
-		if (event and event.type == SDL_QUIT) {
+		if (event.type == SDL_QUIT) {
 			status = STATUS_ENDED_ERROR;
 			return;
 		}

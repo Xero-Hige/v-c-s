@@ -18,11 +18,10 @@
  */
 #include "../game_screen.h"
 
-#define TITLE "Level 1"
-#define SCREEN_WIDTH 1600
-#define SCREEN_HEIGHT 900
-#define WINDOW_FLAGS SDL_WINDOW_RESIZABLE
-#define LOADING_ICON_CORRECTION_FACTOR 2.3
+using std::string;
+
+const string Game_Screen::TITLE = "Level ";
+const double Game_Screen::LOADING_ICON_CORRECTION_FACTOR = 2.3;
 
 void Game_Screen::render_loadscreen() {
 }
@@ -59,7 +58,7 @@ void Game_Screen::setup_loadingscreen() {
 	loading_icon.set_oscillation(false);
 	loading_icon.set_fps(10);
 	loading_icon.move(SCREEN_WIDTH - loading_icon.get_scaled_width(),
-	SCREEN_HEIGHT - loading_icon.get_scaled_height());
+			SCREEN_HEIGHT - loading_icon.get_scaled_height());
 }
 
 void Game_Screen::setup_mugshots() {
@@ -69,7 +68,7 @@ void Game_Screen::setup_audio() {
 }
 
 Game_Screen::Game_Screen(Backend& back) :
-		backend(back), status(STATUS_RUNNING) {
+		App(), backend(back) {
 
 }
 
@@ -85,6 +84,10 @@ bool Game_Screen::initialize() {
 }
 
 void Game_Screen::handle_event(SDL_Event& event) {
+	if (event.type == SDL_QUIT) {
+		status = STATUS_ENDED_ERROR;
+		return;
+	}
 }
 
 void Game_Screen::loop() {
@@ -99,7 +102,4 @@ void Game_Screen::render() {
 }
 
 void Game_Screen::cleanup() {
-}
-
-int Game_Screen::get_app_status() {
 }
