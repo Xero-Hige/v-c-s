@@ -13,10 +13,12 @@
 
 class Database {
 	sqlite3 * db;
+	int prepare(std::string query, sqlite3_stmt * stmt);
+	int step(sqlite3_stmt * stmt);
 public:
 	Database();
 	int open(std::string path);
-	int exec(std::string query, std::string errmsg);
+	int query(std::string query);
 	int close();
 	virtual ~Database();
 };
