@@ -19,7 +19,7 @@
 #ifndef SPRITE_H_
 #define SPRITE_H_
 
-#include <SDL.h>
+#include <SDL2/SDL.h>
 
 #include <string>
 #include <exception>

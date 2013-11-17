@@ -64,5 +64,5 @@ void Login_Screen::text_input_event(SDL_Event& event) {
 void Login_Screen::mouse_button_event(SDL_Event& event) {
 	user_nick.handle_event(event);
 	user_pass.handle_event(event);
-	_register.handle_event(event);
+	//_register.handle_event(event);
 }

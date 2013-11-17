@@ -21,14 +21,14 @@
 using std::vector;
 
 Client_App::Client_App() {
-	SDL_Init (SDL_INIT_EVERYTHING);
+	SDL_Init(SDL_INIT_EVERYTHING);
 	TTF_Init();
 	running = false;
 	apps = vector<App*>();
 
 	apps.push_back(new Login_Screen(backend));
 	apps.push_back(new Rooms_Screen(backend));
-	//apps.push_back(new Login_Screen(backend));
+	apps.push_back(new Game_Screen(backend));
 
 	actual_app = 0;
 }
@@ -36,6 +36,7 @@ Client_App::Client_App() {
 Client_App::~Client_App() {
 	delete apps[0];
 	delete apps[1];
+	delete apps[2];
 
 	SDL_Quit();
 }
@@ -52,13 +53,13 @@ void Client_App::change_app() {
 			apps[actual_app]->cleanup();
 			actual_app--;
 			apps[actual_app]->initialize();
-			break;
+			return;
 
 		default:
 			apps[actual_app]->cleanup();
 			actual_app++;
 			apps[actual_app]->initialize();
-			break;
+			return;
 		}
 	}
 }
@@ -93,7 +94,6 @@ void Client_App::handle_event(SDL_Event& event) {
 	apps[actual_app]->handle_event(event);
 	if (event.type == SDL_QUIT) {
 		running = false;
-
 	}
 	return;
 }

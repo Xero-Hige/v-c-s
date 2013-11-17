@@ -20,6 +20,11 @@
 #include "login_screen_events.cpp"
 #include "login_screen_loading.cpp"
 
+#define SCREEN_WIDTH	600
+#define SCREEN_HEIGHT   300
+#define TITLE 		"Login"
+#define WINDOW_FLAGS 0
+
 #define CORRECTION_Y_TEXTBOX 19
 #define CORRECTION_Y_SECOND_TEXTBOX -5
 
@@ -29,11 +34,13 @@
 #define X_USER_PASS 214
 #define Y_USER_PASS 242
 
-#define LOADING_ICON_WIDHT 140
+#define LOADING_ICON_CORRECTION_FACTOR 2.3
 
 using std::string;
 
-Login_Screen::Login_Screen(Backend& back): backend(back), status(STATUS_RUNNING){}
+Login_Screen::Login_Screen(Backend& back) :
+		backend(back), status(STATUS_RUNNING) {
+}
 
 void Login_Screen::setup_background() {
 	//TODO: excepciones
@@ -44,12 +51,12 @@ void Login_Screen::setup_background() {
 			- textbox_temp.get_width() / 2;
 
 	int text_box_pos_y = background_temp.get_height()
-					/ 2 + textbox_temp.get_height() / 2 + CORRECTION_Y_TEXTBOX;
+			/ 2+ textbox_temp.get_height() / 2 + CORRECTION_Y_TEXTBOX;
 
 	background_temp.draw_on(textbox_temp, text_box_pos_x, text_box_pos_y);
 	background_temp.draw_on(textbox_temp, text_box_pos_x,
 			text_box_pos_y
-			+ textbox_temp.get_height() + CORRECTION_Y_SECOND_TEXTBOX);
+					+ textbox_temp.get_height() + CORRECTION_Y_SECOND_TEXTBOX);
 
 	background = background_temp.convert_to_sprite(window,
 			background_temp.get_width(), background_temp.get_width());
@@ -79,23 +86,16 @@ void Login_Screen::setup_loadingscreen() {
 	loading_mask = Sprite(*surface, window, SCREEN_WIDTH, SCREEN_HEIGHT);
 	loading_mask.set_transparency_level(128);
 
-	loading_icon = Animated_Sprite("resources/general/pika_loading.png", window, 4);
+	loading_icon = Animated_Sprite("resources/general/pika_loading.png", window,
+			4);
 
-	double loading_height = LOADING_ICON_WIDHT
-			* loading_icon.get_scaled_height()
-			/ loading_icon.get_scaled_width();
+	loading_icon.scale_with_widht(SCREEN_WIDTH / 4);
+	loading_icon.scale_height(LOADING_ICON_CORRECTION_FACTOR);
 
-	loading_icon.set_scaled_height(loading_height);
-	loading_icon.set_scaled_width(LOADING_ICON_WIDHT);
 	loading_icon.set_oscillation(false);
 	loading_icon.set_fps(10);
-	loading_icon.move(SCREEN_WIDTH - LOADING_ICON_WIDHT,
-			SCREEN_HEIGHT - loading_height);
-
-	//TODO: Remover
-	_register = Button("resources/general/pika_loading.png", window);
-	_register.set_scaled_height(loading_height);
-	_register.set_scaled_width(LOADING_ICON_WIDHT);
+	loading_icon.move(SCREEN_WIDTH - loading_icon.get_scaled_width(),
+			SCREEN_HEIGHT - loading_icon.get_scaled_height());
 }
 
 void Login_Screen::setup_mugshots() {
@@ -146,7 +146,7 @@ void Login_Screen::render() {
 	mugshot_right.draw(window);
 	user_nick.draw(window);
 	user_pass.draw(window);
-	_register.draw(window);
+	//_register.draw(window);
 
 	window.render();
 
