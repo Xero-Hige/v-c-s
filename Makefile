@@ -2,7 +2,7 @@
 #General
 CC = gcc
 CPPFLAGS = -Wall -Wextra -g -pedantic 
-CPPLDFLAGS = -lstdc++ -lm
+CPPLDFLAGS = -lm -lstdc++
 
 all: run-client
 
@@ -10,7 +10,7 @@ all: run-client
 
 SDL_CPPFLAGS = $(CPPFLAGS) `sdl2-config --cflags`
 
-SDL_LDFLAGS = $(CPPLDFLAGS) `sdl2-config --libs` -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf
+SDL_LDFLAGS = `sdl2-config --libs` -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf $(CPPLDFLAGS)
 
 GRAPHIC_LIBS = surface.o sprite.o animated_sprite.o button.o window.o text_drawer.o text_box.o secret_text_box.o
 
@@ -96,7 +96,7 @@ client_app.o: Client/client_app.cpp Client/client_app.h
 	$(CC) $(SDL_CPPFLAGS) -c Client/client_app.cpp
 
 client: Client/client.cpp $(CLIENT_OBJ)
-	$(CC) $(SDL_CPPFLAGS) $(SDL_LDFLAGS) $(CLIENT_OBJ) Client/client.cpp -o $(CLIENT_NAME)
+	$(CC) $(SDL_CPPFLAGS) $(CLIENT_OBJ) Client/client.cpp -o $(CLIENT_NAME) $(SDL_LDFLAGS)
 		
 #Cleanup
 clean:
