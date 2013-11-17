@@ -17,7 +17,7 @@
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
 #include "sprite.h"
-#include <SDL_image.h>
+#include <SDL2/SDL_image.h>
 #include <math.h>
 
 #include <iostream>

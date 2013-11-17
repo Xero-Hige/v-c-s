@@ -23,7 +23,7 @@
 #define STATUS_ENDED_OK 1
 #define STATUS_ENDED_ERROR 2
 
-#include <SDL.h>
+#include <SDL2/SDL.h>
 
 class App {
 

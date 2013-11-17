@@ -154,7 +154,7 @@ void Rooms_Screen::render_loadscreen(int times) {
 		SDL_Event event;
 		SDL_PollEvent(&event);
 
-		if (event.type == SDL_QUIT) {
+		if (event and event.type == SDL_QUIT) {
 			status = STATUS_ENDED_ERROR;
 			return;
 		}

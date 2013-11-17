@@ -19,7 +19,7 @@
 #ifndef TEXTDRAWER_H_
 #define TEXTDRAWER_H_
 
-#include <SDL_ttf.h>
+#include <SDL2/SDL_ttf.h>
 
 #include <string>
 

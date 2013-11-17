@@ -1,5 +1,5 @@
 /**
- login_screen.h
+ games_creen.h
 
  Copyright 2013 Gaston Martinez Gaston.martinez.90@gmail.com
 
@@ -16,28 +16,18 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
-#ifndef LOGINSCREEN_H_
-#define LOGINSCREEN_H_
-
-#define SCREEN_WIDTH	600
-#define SCREEN_HEIGHT   300
-#define TITLE 		"Login"
-#define WINDOW_FLAGS 0
-
-#include <string>
+#ifndef GAMES_CREEN_H_
+#define GAMES_CREEN_H_
 
 #include "app.h"
 #include "backend/backend.h"
 #include "../libs/window/window.h"
 #include "../libs/animated_sprite/animated_sprite.h"
 #include "../libs/surface/surface.h"
-#include "../libs/text_box/text_box.h"
-#include "../libs/secret_text_box/secret_text_box.h"
 #include "../libs/music/music.h"
 #include "../libs/button/button.h"
 
-
-class Login_Screen: public App {
+class Game_Screen: public App {
 
 private:
 
@@ -46,19 +36,11 @@ private:
 	Window window;
 	Sprite background;
 
-	Text_Box user_nick;
-	Secret_Text_Box user_pass;
-
-	Sprite mugshot_left;
-	Sprite mugshot_right;
-
 	//Loading_screen
 	Sprite loading_mask;
 	Animated_Sprite loading_icon;
 
 	Music background_music;
-
-	Button _register;
 
 	int status;
 
@@ -86,10 +68,6 @@ private:
 	 */
 	void setup_background();
 	/**
-	 * Inicializa los textboxes
-	 */
-	void setup_textboxes();
-	/**
 	 * Inicializa la pantalla de carga
 	 */
 	void setup_loadingscreen();
@@ -108,7 +86,7 @@ public:
 	/**
 	 * Constructor que recibe un Backend
 	 */
-	Login_Screen(Backend& back);
+	Game_Screen(Backend& back);
 
 	/**
 	 * Metodo para inicializar la app
@@ -139,4 +117,4 @@ public:
 
 };
 
-#endif /* LOGINSCREEN_H_ */
+#endif /* GAMES_CREEN_H_ */

@@ -19,13 +19,14 @@
 #ifndef CLIENT_APP_H_
 #define CLIENT_APP_H_
 
-#include <SDL.h>
+#include <SDL2/SDL.h>
 
 #include <vector>
 
 #include "login_screen.h"
 #include "backend/backend.h"
 #include "rooms_screen.h"
+#include "game_screen.h"
 
 class Client_App{
 
