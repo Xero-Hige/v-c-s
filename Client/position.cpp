@@ -1,5 +1,5 @@
 /*
- * physical_checker.h
+ * position.cpp
  *
  * Created on: Nov 17, 2013
  * 
@@ -19,21 +19,38 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses 
  */
 
-#ifndef PHYSICAL_CHECKER_H_
-#define PHYSICAL_CHECKER_H_
+#include "position.h"
 
-#include "../position.h"
+int Position::getX() {
+    return x;
+}
 
-class PhysicalChecker {
-private:
-    unsigned int board_width;
-    unsigned int board_height;
+int Position::getY() {
+    return y;
+}
 
-public:
-    PhysicalChecker(unsigned int board_width, unsigned int board_height)
-        : board_width(board_width), board_height(board_height) {}
-    bool isValidPosition(Position& pos);
-    bool checkSwap(Position& pos1, Position& pos2);
-};
+void Position::setX(int x) {
+    this->x = x;
+}
 
-#endif /* PHYSICAL_CHECKER_H_ */
+void Position::setY(int y) {
+    this->y = y;
+}
+
+int Position::operator[](int pos) {
+    if (pos == 0) {
+        return x;
+    } else if (pos == 1) {
+        return y;
+    }
+    return -1;
+}
+
+const int Position::operator[](int pos) const {
+    if (pos == 0) {
+        return x;
+    } else if (pos == 1) {
+        return y;
+    }
+    return -1;
+}

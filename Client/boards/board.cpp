@@ -23,6 +23,7 @@
 
 #include "tile.h"
 #include "product.h"
+#include "../position.h"
 
 #include <vector>
 #include <list>
@@ -94,15 +95,20 @@ bool Board::setProduct(Product* product, Position& pos) {
     return setProduct(product, pos.getX(), pos.getY());
 }
 
-void Board::rearrage(vector<int> column_numbers) {
+void Board::rearrangeColumn(vector<int> column_numbers) {
     vector<int>::iterator it;
     for (it = column_numbers.begin(); it != column_numbers.end(); ++it) {
-        // If not a valid value, it is ignored
-        if (0 < *it || *it >= columns) {
-            continue;
-        }
-
+        rearrangeColumn(*it);
     }
+}
+
+void Board::rearrangeColumn(int column_number) {
+    // If not a valid value, it is ignored
+    if (0 < column_number || column_number >= columns) {
+        return;
+    }
+    //TODO acomodar posta, ahora no hace nada
+
 }
 
 Board::~Board() {
