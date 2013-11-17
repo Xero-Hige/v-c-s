@@ -53,7 +53,7 @@ Animated_Sprite::Animated_Sprite(const string& file_path, Window& window,int fra
 	// cada frame esta 1/frames Seg
 	framerate = 1000 / frames;
 	max_frames = frames;
-	frame_height = image_height/frames;
+	frame_height = image_height;
 	frame_width = image_width/frames;
 	frame_increment = 1;
 	actual_frame = 0;

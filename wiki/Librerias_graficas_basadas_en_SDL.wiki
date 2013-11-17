@@ -9,8 +9,12 @@ Librerias para crear un framework grafico basado en SDL orientado a objetos y am
 == Requerimientos ==
 
  * *Libsdl2* (_SDL 2_)
- * *SDL Images 2*  (_SDL 2_)
- * *SDL TTF* (_SDL 2_)
+ * *SDL Images 2*  (_SDL 2_):
+ 	Requiere el paquete libsdl2-image-2.0-0 para usarlo
+ 	Requiere el paquete libsdl2-image-dev para compilarlo
+ * *SDL TTF* (_SDL 2_):
+  	Requiere el paquete libsdl2-ttf-2.0-0 para correrlo
+ 	Requiere el paquete libsdl2-ttf-dev para compilarlo
 
 == Archivos ==
 

@@ -49,9 +49,10 @@ private:
 
 private:
 	/**
-	 * Dibuja la pantalla de carga
+	 * Dibuja la pantalla de carga. Se muestra durante
+	 * 10 milisegundos * times
 	 */
-	void render_loadscreen();
+	void render_loadscreen(int times);
 
 	/**
 	 * Maneja los eventos de teclas

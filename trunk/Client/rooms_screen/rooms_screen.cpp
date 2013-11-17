@@ -22,12 +22,10 @@
 #define SCREEN_WIDTH 680
 #define SCREEN_HEIGHT 384
 #define WINDOW_FLAGS SDL_WINDOW_RESIZABLE
+#define LOADING_ICON_CORRECTION_FACTOR 2.5
 
 Rooms_Screen::Rooms_Screen(Backend& back) :
-		backend(back), status(STATUS_RUNNING) {
-}
-
-void Rooms_Screen::render_loadscreen() {
+backend(back), status(STATUS_RUNNING) {
 }
 
 void Rooms_Screen::key_press_event(SDL_Event& event) {
@@ -56,9 +54,11 @@ void Rooms_Screen::setup_loadingscreen() {
 	loading_mask = Sprite(*surface, window, SCREEN_WIDTH, SCREEN_HEIGHT);
 	loading_mask.set_transparency_level(128);
 
-	loading_icon = Animated_Sprite("resources/general/pika_loading.png", window, 4);
+	loading_icon = Animated_Sprite("resources/general/pika_loading.png", window,
+			4);
 
-	loading_icon.scale_with_widht(SCREEN_WIDTH/10);
+	loading_icon.scale_with_widht(SCREEN_WIDTH / 4);
+	loading_icon.scale_height(LOADING_ICON_CORRECTION_FACTOR);
 
 	loading_icon.set_oscillation(false);
 	loading_icon.set_fps(10);
@@ -111,8 +111,11 @@ void Rooms_Screen::handle_event(SDL_Event& event) {
 }
 
 void Rooms_Screen::loop() {
-	if (next_level_button.is_clicked())
-	{
+	if (next_level_button.is_clicked()) {
+		backend.async_get_room();
+		while (!backend.operation_ended() && status == STATUS_RUNNING) {
+			render_loadscreen(100);
+		}
 		status = STATUS_ENDED_OK;
 	}
 }
@@ -144,4 +147,28 @@ void Rooms_Screen::cleanup() {
 
 int Rooms_Screen::get_app_status() {
 	return status;
+}
+
+void Rooms_Screen::render_loadscreen(int times) {
+	for (int i = 0; i < times; i++) {
+		SDL_Event event;
+		SDL_PollEvent(&event);
+
+		if (event.type == SDL_QUIT) {
+			status = STATUS_ENDED_ERROR;
+			return;
+		}
+
+		loading_icon.animate();
+
+		window.clear();
+
+		background.draw(window);
+
+		loading_mask.draw(window);
+		loading_icon.draw(window);
+
+		window.render();
+		SDL_Delay(10);
+	}
 }

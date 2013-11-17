@@ -64,3 +64,6 @@ Backend::~Backend() {
 	// TODO Auto-generated destructor stub
 }
 
+void Backend::async_get_room() {
+	_operation_ended = false;
+}

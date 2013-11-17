@@ -73,13 +73,20 @@ public:
 	/**
 	 * Envia el comando de conexion con el servidor
 	 */
-	void async_connect(const std::string& ip,int port);
+	void async_connect(const std::string& ip, int port);
 
 	//Login
 	/**
 	 * Envia el comando de inicio de sesion
 	 */
-	void async_log_in(const std::string& user,const std::string& password,int auth_type=TYPE_LOGIN);
+	void async_log_in(const std::string& user, const std::string& password,
+			int auth_type = TYPE_LOGIN);
+
+	//Rooms
+	/**
+	 * Envia el comando para obtener una room para el nivel actual
+	 */
+	void async_get_room();
 
 };
 
