@@ -20,7 +20,9 @@
  */
 
 #include "board.h"
+
 #include "tile.h"
+#include "product.h"
 
 #include <vector>
 #include <list>
@@ -90,6 +92,17 @@ Product* Board::takeOutProduct(Position& pos) {
 
 bool Board::setProduct(Product* product, Position& pos) {
     return setProduct(product, pos.getX(), pos.getY());
+}
+
+void Board::rearrage(vector<int> column_numbers) {
+    vector<int>::iterator it;
+    for (it = column_numbers.begin(); it != column_numbers.end(); ++it) {
+        // If not a valid value, it is ignored
+        if (0 < *it || *it >= columns) {
+            continue;
+        }
+
+    }
 }
 
 Board::~Board() {

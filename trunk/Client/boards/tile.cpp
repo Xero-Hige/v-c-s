@@ -20,7 +20,8 @@
  */
 
 #include "tile.h"
-//#include "product.h"
+
+#include "product.h"
 //#include "position.h"
 
 void Tile::setType(int type) {
