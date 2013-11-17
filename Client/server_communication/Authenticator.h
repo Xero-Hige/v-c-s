@@ -16,7 +16,7 @@ class Authenticator {
 
 public:
 	Authenticator();
-	void authenticate(Server_Connector * c, string u, string passwd, string type);
+	bool authenticate(Server_Connector * c, string u, string passwd, string type);
 	virtual ~Authenticator();
 };
 

@@ -28,7 +28,7 @@ public:
 	void setPasswd(std::string s);
 	void setAuthType(std::string s);
 	AuthenticationService();
-	void authenticate();
+	bool authenticate();
 	virtual ~AuthenticationService();
 };
 

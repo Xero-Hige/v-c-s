@@ -93,10 +93,10 @@ int Server_Connector::makeConnection(string ip, int port){
 	return 0;
 }
 
-void Server_Connector::connectServer
+bool Server_Connector::connectServer
 (std::string username, std::string passwd, std::string a_type){
 	//Obtiene user y pass y si los quiere usar para logearse o registrarse
-	auth.authenticate(this, username, passwd, a_type);
+	return auth.authenticate(this, username, passwd, a_type);
 }
 
 void Server_Connector::useUserDefinedMatchmaking(){
