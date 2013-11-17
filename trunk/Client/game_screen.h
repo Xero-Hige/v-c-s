@@ -29,6 +29,12 @@
 
 class Game_Screen: public App {
 
+	static const std::string TITLE;
+	static const int SCREEN_WIDTH = 1600;
+	static const int SCREEN_HEIGHT = 900;
+	static const int WINDOW_FLAGS = SDL_WINDOW_RESIZABLE;
+	static const double LOADING_ICON_CORRECTION_FACTOR;
+
 private:
 
 	Backend& backend;
@@ -41,8 +47,6 @@ private:
 	Animated_Sprite loading_icon;
 
 	Music background_music;
-
-	int status;
 
 private:
 	/**
@@ -80,7 +84,6 @@ private:
 	 */
 	void setup_audio();
 
-
 public:
 
 	/**
@@ -110,10 +113,6 @@ public:
 	 * Metodo para limpiar el contenido de la app
 	 */
 	virtual void cleanup();
-	/**
-	 *
-	 */
-	virtual int get_app_status();
 
 };
 

@@ -31,6 +31,13 @@
 class Rooms_Screen: public App {
 
 private:
+	static const std::string TITLE;
+	static const int SCREEN_WIDTH = 683;
+	static const int SCREEN_HEIGHT = 384;
+	static const int WINDOW_FLAGS = SDL_WINDOW_RESIZABLE;
+	static const double LOADING_ICON_CORRECTION_FACTOR;
+
+private:
 	Backend& backend;
 
 	Window window;
@@ -44,8 +51,6 @@ private:
 	Button next_level_button;
 	Button make_room_button;
 	Button make_custom_room_button;
-
-	int status;
 
 private:
 	/**
@@ -113,11 +118,6 @@ public:
 	 * Metodo para limpiar el contenido de la app
 	 */
 	virtual void cleanup();
-	/**
-	 *
-	 */
-	virtual int get_app_status();
 };
-
 
 #endif /* ROOMSSCREEN_H_ */

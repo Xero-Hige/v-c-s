@@ -27,8 +27,14 @@
 
 class App {
 
+protected:
+	int status;
+
 public:
-	App(){};
+	App() :
+		status(STATUS_RUNNING) {
+	}
+	;
 
 	virtual ~App() {
 	}
@@ -62,7 +68,10 @@ public:
 	 * -STATUS_ENDED_OK
 	 * -STATUS_ENDED_ERROR
 	 */
-	virtual int get_app_status()=0;
+	int get_app_status() {
+		return status;
+	}
+	;
 
 };
 

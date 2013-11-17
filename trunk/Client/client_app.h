@@ -28,7 +28,7 @@
 #include "rooms_screen.h"
 #include "game_screen.h"
 
-class Client_App{
+class Client_App {
 
 private:
 	bool running;

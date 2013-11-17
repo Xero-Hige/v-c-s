@@ -50,8 +50,10 @@ public:
 	/**
 	 * Dummy
 	 */
-	Sprite() {}
-	virtual ~Sprite() {}
+	Sprite() {
+	}
+	virtual ~Sprite() {
+	}
 
 	/**
 	 * TODO:
