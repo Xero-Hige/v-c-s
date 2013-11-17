@@ -24,6 +24,7 @@
 
 #include "tile.h"
 #include "product.h"
+#include "../position.h"
 
 #include <vector>
 
@@ -38,17 +39,33 @@ public:
     // products tiene Product* para los Tile que son celda, y NULL para los Tile que son agujeros
     void setUp(std::list<Product*> products);
     // Product* getProduct(unsigned int x, unsigned int y);
+    /* Devuelve la altura del tablero */
     unsigned int getHeight();
+    /* Devuelve el ancho del tablero */
     unsigned int getLength();
+    /* Devuelve un int que representa el color del producto, según las *
+     * constantes de product_constants.h                               */
     int getProductColor(unsigned int x, unsigned int y);
     int getProductColor(Position& pos);
+    /* Devuelve un int que representa el tipo del producto, según las *
+     * constantes de product_constants.h                              */
     int getProductType(unsigned int x, unsigned int y);
     int getProductType(Position& pos);
+    /* Saca el producto del tablero y lo devuelve, dejando la celda vacía. *
+     * Si la celda estaba vacía, o es un agujero, devuelve NULL            */
     Product* takeOutProduct(unsigned int x, unsigned int y);
     Product* takeOutProduct(Position& pos);
+    /* Agrega un producto al tablero.                                        *
+     * Devuelve true si el producto se insertó correctamente. Si la celda ya *
+     * tiene un producto o es un agujero, devuelve false.                    */
     bool setProduct(Product* product, unsigned int x, unsigned int y);
     bool setProduct(Product* product, Position& pos);
-    void rearrage(std::vector<int> collumns);
+    /* Acomoda la columna. Hace que los productos bajen si tienen celdas *
+     * vacías debajo, dejando las celdas superiores libres.              *
+     * Si el número de columna es inválido, lo ignora                    */
+    void rearrangeColumn(int column_number);
+    /* Acomoda todas las columnas pasadas por parámetro */
+    void rearrangeColumn(std::vector<int> column_numbers);
     ~Board();
 
 private:
