@@ -22,10 +22,10 @@
 #ifndef TILE_H_
 #define TILE_H_
 
-#include <cstdlib>
-
-//#include "product.h"
+#include "product.h"
 //#include "position.h"
+
+#include <cstdlib>
 
 // Type constants
 #define HOLE 0

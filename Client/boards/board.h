@@ -23,6 +23,7 @@
 #define BOARD_H_
 
 #include "tile.h"
+#include "product.h"
 
 #include <vector>
 
@@ -47,6 +48,7 @@ public:
     Product* takeOutProduct(Position& pos);
     bool setProduct(Product* product, unsigned int x, unsigned int y);
     bool setProduct(Product* product, Position& pos);
+    void rearrage(std::vector<int> collumns);
     ~Board();
 
 private:
