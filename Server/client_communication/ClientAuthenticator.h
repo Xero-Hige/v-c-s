@@ -9,20 +9,20 @@
 #define CLIENTAUTHENTICATOR_H_
 
 #include "ClientHandler.h"
-
-namespace std {
+#include "../../libs/communication_protocol/FormattedSocket.h"
 
 class ClientAuthenticator {
-	ClientHandler * client;
+	FormattedSocket sock;
 
 	bool login();
 	bool registrate();
 
 public:
-	ClientAuthenticator(ClientHandler * ch);
+	ClientAuthenticator(int socket);
 	bool authenticate();
+	void sendIdsVerifMsg();
+	void getIds(std::string & user, std::string & passwd);
 	virtual ~ClientAuthenticator();
 };
 
-} /* namespace std */
 #endif /* CLIENTAUTHENTICATOR_H_ */

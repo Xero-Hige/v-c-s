@@ -10,7 +10,6 @@
 
 #include "../server_connector/server_connector.h"
 #include "AuthenticationService.h"
-namespace std {
 
 class Authenticator {
 	AuthenticationService as;
@@ -21,5 +20,4 @@ public:
 	virtual ~Authenticator();
 };
 
-} /* namespace std */
 #endif /* AUTHENTICATOR_H_ */

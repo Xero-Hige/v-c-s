@@ -12,8 +12,6 @@
 #include <unistd.h> //close
 #include <arpa/inet.h>
 
-namespace std {
-
 class Socket {
 	int socket;
 	int socketSend(char * buf, size_t length);
@@ -21,13 +19,12 @@ class Socket {
 
 public:
 	Socket(int sockfd);
-	int sendMsg(string msg);
-	int recvMsg(string & msg, size_t length);
+	int sendMsg(std::string msg);
+	int recvMsg(std::string & msg, size_t length);
 	int getSocket();
 	void socketShutdown();
 	void closeConnection();
 	virtual ~Socket();
 };
 
-} /* namespace std */
 #endif /* SOCKET_H_ */

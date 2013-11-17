@@ -8,14 +8,12 @@
 #include "Socket.h"
 #include <sys/socket.h>
 
-namespace std {
-
 Socket::Socket(int sockfd) {
 	// TODO Auto-generated constructor stub
 	this->socket = sockfd;
 }
 
-int Socket::sendMsg(string msg){
+int Socket::sendMsg(std::string msg){
 	char * msg_with_size = new char[msg.length()];
 	int r = socketSend(msg_with_size, msg.length());
 	delete[] msg_with_size;
@@ -30,7 +28,7 @@ int Socket::socketSend(char * buf, size_t length){
 	return bytes_enviados;
 }
 
-int Socket::recvMsg(string & msg, size_t length){
+int Socket::recvMsg(std::string & msg, size_t length){
 	char * c_msg = new char[length];
 	int r = socketRecv(c_msg, length);
 	msg.append(c_msg, length);
@@ -57,5 +55,3 @@ int Socket::socketRecv(char * buf, size_t length){
 Socket::~Socket() {
 	// TODO Auto-generated destructor stub
 }
-
-} /* namespace std */

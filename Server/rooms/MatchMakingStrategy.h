@@ -12,9 +12,7 @@
 #include "Lobby.h"
 #include "../../libs/wrappers/Thread.h"
 
-namespace std {
-
-typedef pair<unsigned long, Room*> map_pair;
+typedef std::pair<unsigned long, Room*> map_pair;
 
 class MatchMakingStrategy {
 	void addUserDefined(Lobby * lob, ClientHandler * ch);
@@ -26,5 +24,4 @@ public:
 	virtual ~MatchMakingStrategy();
 };
 
-} /* namespace std */
 #endif /* MATCHMAKINGSTRATEGY_H_ */

@@ -12,16 +12,13 @@
 #include "BigEndianProtocol.h"
 #include <string>
 
-namespace std {
-
 class FormattedSocket : public Socket {
 
 public:
 	FormattedSocket(int sockfd);
-	int sendMsg(string msg);
-	int recvMsg(string & msg);
+	int sendMsg(std::string msg);
+	int recvMsg(std::string & msg);
 	virtual ~FormattedSocket();
 };
 
-} /* namespace std */
 #endif /* FORMATTEDSOCKET_H_ */

@@ -9,16 +9,14 @@
 #include "../../libs/messages/MsgConstants.h"
 #include <cstring>
 
-namespace std {
 
-ClientAuthenticator::ClientAuthenticator(ClientHandler * ch) {
-	this->client = ch;
+ClientAuthenticator::ClientAuthenticator(int socket) : sock(socket) {
 }
 
 bool ClientAuthenticator::authenticate(){
 	//Determina si el cliente quiere registrarse o logearse
-	string s_auth_type;
-	this->client->recvMsg(s_auth_type);
+	std::string s_auth_type;
+	sock.recvMsg(s_auth_type);
 	int auth_type = atoi (s_auth_type.c_str());
 	if (auth_type == TYPE_LOGIN)
 		return login();
@@ -26,21 +24,32 @@ bool ClientAuthenticator::authenticate(){
 		return registrate();
 }
 
+void ClientAuthenticator::sendIdsVerifMsg(){
+	std::string msg(IDS_VERIF);
+	sock.sendMsg(msg);
+}
+
+void ClientAuthenticator::getIds(std::string & user, std::string & passwd){
+	sock.recvMsg(user);
+	sock.recvMsg(passwd);
+}
+
+
 bool ClientAuthenticator::registrate(){
 	//todo
-	string user, passwd;
-	client->getIds(user, passwd);
+	std::string user, passwd;
+	this->getIds(user, passwd);
 	//DO SHIT
-	client->sendIdsVerifMsg();
+	this->sendIdsVerifMsg();
 	return true;
 }
 
 bool ClientAuthenticator::login(){
-	string user, passwd;
-	client->getIds(user, passwd);
+	std::string user, passwd;
+	this->getIds(user, passwd);
 	//todo REALIZAR CHEQUEO DE IDS
 	//if (chequeoIds(ids))
-	client->sendIdsVerifMsg();
+	this->sendIdsVerifMsg();
 	return true;
 	//else
 	//return false;
@@ -51,4 +60,3 @@ ClientAuthenticator::~ClientAuthenticator() {
 	// TODO Auto-generated destructor stub
 }
 
-} /* namespace std */

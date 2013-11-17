@@ -14,7 +14,6 @@
 #include <sys/types.h> //accept
 #include <unistd.h> //close
 
-namespace std {
 /*
  * setListener configura el struct sockaddr_in adecuadamente.
  */
@@ -30,7 +29,7 @@ void setListener(struct sockaddr_in * cli_addr, int & server_port){
 
 Server::Server(){
 	// TODO Auto-generated constructor stub
-	sock_listeners = new vector<SocketHandler*>();
+	sock_listeners = new std::vector<SocketHandler*>();
 }
 
 /*
@@ -42,7 +41,7 @@ bool comparadorPuertos
 	return (sh1->getPort() == sh2->getPort());
 }
 
-void Server::createListeningPorts(vector<int> * list_puertos, Lobby * lob){
+void Server::createListeningPorts(std::vector<int> * list_puertos, Lobby * lob){
 	//Se recorre la lista de puertos.
 	for (unsigned i = 0; i < list_puertos->size(); i++){
 		int port_actual = list_puertos->at(i);
@@ -65,7 +64,7 @@ void Server::createListeningPorts(vector<int> * list_puertos, Lobby * lob){
  * serverListen crea una lista de sockets que escuchan en los puertos indicados
  * por 'list_puertos'. Luego los setea en modo escucha.
  */
-void Server::serverListen(vector<int> * list_puertos, Lobby * lob){
+void Server::serverListen(std::vector<int> * list_puertos, Lobby * lob){
 	//Se crean
 	this->createListeningPorts(list_puertos, lob);
 	for (unsigned i = 0; i < sock_listeners->size(); i++){
@@ -95,5 +94,3 @@ Server::~Server(){
 	}
 	delete sock_listeners;
 }
-
-} /* namespace std */

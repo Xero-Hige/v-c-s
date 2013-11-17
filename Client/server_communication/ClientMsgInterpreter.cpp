@@ -10,8 +10,6 @@
 #include <string>
 #include <stdio.h>
 
-namespace std {
-
 ClientMsgInterpreter::ClientMsgInterpreter(Server_Connector* c) {
 	this->client = c;
 }
@@ -27,5 +25,3 @@ void ClientMsgInterpreter::exitCharPressed(){
 ClientMsgInterpreter::~ClientMsgInterpreter() {
 	// TODO Auto-generated destructor stub
 }
-
-} /* namespace std */

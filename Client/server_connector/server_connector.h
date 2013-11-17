@@ -21,11 +21,15 @@ class Server_Connector {
 
 	bool exit_char_pressed;
 
+	bool logged;
+	bool auth_ended;
+
 	void getMatchmaking(std::string & mm);
 	void getRoomId(std::string & id);
 	void useUserDefinedMatchmaking();
 	void useDefaultMatchmaking();
-
+	void setLogged(bool b);
+	void setAuthEnded(bool b);
 public:
 	/*
 	 * ctor de cliente, se le pasa como param el ip al que se quiere conectar y el
@@ -38,6 +42,8 @@ public:
 	 */
 	void connectServer(std::string username, std::string passwd, std::string a_type);
 	int makeConnection(std::string ip, int port);
+	bool getAuthEnded();
+	bool getLogged();
 	void enterRoom();
 	void exitCharPressed();
 	void communicate();

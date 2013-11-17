@@ -5,10 +5,8 @@
  *      Author: juan
  */
 
-#include "server_RoomKiller.h"
+#include "RoomKiller.h"
 #include <iostream>
-
-namespace std {
 
 RoomKiller::RoomKiller() {
 	// TODO Auto-generated constructor stub
@@ -16,12 +14,12 @@ RoomKiller::RoomKiller() {
 	keep_running = true;
 }
 
-void RoomKiller::setRooms(map<unsigned long,Room*> * v){
+void RoomKiller::setRooms(std::map<unsigned long,Room*> * v){
 	rooms = v;
 }
 
 void RoomKiller::run() {
-	map<unsigned long, Room*>::iterator it = rooms->begin();
+	std::map<unsigned long, Room*>::iterator it = rooms->begin();
 	while (keep_running) {
 		Room* actual_room = it->second;
 		if (!(actual_room->isActive())) {
@@ -45,5 +43,3 @@ void RoomKiller::stop(){
 RoomKiller::~RoomKiller() {
 	// TODO Auto-generated destructor stub
 }
-
-} /* namespace std */

@@ -12,8 +12,6 @@
 #include "rooms/Lobby.h"
 #include <arpa/inet.h>
 
-namespace std {
-
 class SocketHandler: public Thread {
 	Lobby * lobby;
 	/*
@@ -53,5 +51,4 @@ public:
 	virtual ~SocketHandler();
 };
 
-} /* namespace std */
 #endif /* SOCKETLISTENERHANDLER_H_ */

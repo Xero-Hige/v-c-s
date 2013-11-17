@@ -10,8 +10,6 @@
 
 #include <pthread.h>
 
-namespace std {
-
 /*
  * La clase Thread contiene la funcionalidad aportada por pthread.h. Si una
  * clase desea utilizar multiples hilos, debe heredar de Thread.
@@ -29,5 +27,4 @@ public:
 	virtual ~Thread();
 };
 
-} /* namespace std */
 #endif /* THREAD_H_ */

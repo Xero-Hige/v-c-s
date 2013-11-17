@@ -8,8 +8,6 @@
 #include "Thread.h"
 #include <pthread.h>
 
-namespace std {
-
 Thread::Thread() {
 	// TODO Auto-generated constructor stub
 	myThread = 0;
@@ -53,4 +51,3 @@ void Thread::join(){
 Thread::~Thread() {
 	// TODO Auto-generated destructor stub
 }
-} /* namespace std */

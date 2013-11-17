@@ -9,14 +9,12 @@
 #include "../../libs/messages/MsgConstants.h"
 #include <iostream>
 
-namespace std {
-
 ServerMsgInterpreter::ServerMsgInterpreter(ClientHandler* c) {
 	this->client = c;
 }
 
 void ServerMsgInterpreter::exitRoom(){
-	cout << "Mensaje recibido: SALIR DEL ROOM" << endl;
+	std::cout << "Mensaje recibido: SALIR DEL ROOM" << std::endl;
 	client->exitRoom();
 }
 
@@ -27,5 +25,3 @@ void ServerMsgInterpreter::exitCharPressed(){
 ServerMsgInterpreter::~ServerMsgInterpreter() {
 	// TODO Auto-generated destructor stub
 }
-
-} /* namespace std */

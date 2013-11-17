@@ -12,8 +12,6 @@
 #include "../../libs/communication_protocol/FormattedSocket.h"
 #include "ClientMsgInterpreter.h"
 
-namespace std {
-
 class ServerListener : public Thread {
 	FormattedSocket * sock;
 	ClientMsgInterpreter * msg_int;
@@ -25,5 +23,4 @@ public:
 	virtual ~ServerListener();
 };
 
-} /* namespace std */
 #endif /* SERVERLISTENER_H_ */
