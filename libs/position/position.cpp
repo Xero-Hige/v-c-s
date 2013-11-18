@@ -54,3 +54,10 @@ const int Position::operator[](int pos) const {
     }
     return -1;
 }
+
+Position Position::operator+(Position rhs) {
+    Position res = Position(this->x, this->y);
+    res.x += rhs.x;
+    res.y += rhs.y;
+    return res;
+}

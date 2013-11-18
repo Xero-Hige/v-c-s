@@ -22,9 +22,9 @@
 #ifndef PRODUCT_CONSTANTS_H_
 #define PRODUCT_CONSTANTS_H_
 
-/* Constants of the product's colors and types */
+/* Constantes del color y tipo de los productos */
 
-// Color constants
+// Constantes de color
 #define NO_COLOR -1
 #define UNCOLORED 0
 #define RED      1
@@ -33,11 +33,15 @@
 #define BLUE     4
 #define VIOLET   5
 
-// Type constants
+#define N_COLORS 6  // Cantidad de colores, sin contar el inválido (NO_COLOR)
+
+// Constantes de tipo
 #define NO_TYPE -1
 #define BUTTON 0
 #define V_BAR 1
 #define H_BAR 2
 #define STAR 3
+
+#define N_TYPES 4   // Cantidad de tipos, sin contar el inválido (NO_TYPE)
 
 #endif /* PRODUCT_CONSTANTS_H_ */

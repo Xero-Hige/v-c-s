@@ -26,10 +26,10 @@
 bool PhysicalChecker::isValidPosition(Position& pos) {
     int x = pos.getX();
     int y = pos.getY();
-    if (x < 0 || x >= board_width) {
+    if (x < 0 || x >= (int)board_width) {
         return false;
     }
-    if (y < 0 || y >= board_height) {
+    if (y < 0 || y >= (int)board_height) {
         return false;
     }
     return true;

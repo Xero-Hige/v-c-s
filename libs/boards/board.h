@@ -31,6 +31,7 @@
 
 class Board {
 private:
+    //TODO esto hacerlo int, está trayendo más problemas que otra cosa
     unsigned int rows;
     unsigned int columns;
     std::vector<Tile> tiles;

@@ -43,6 +43,7 @@ public:
      * Otro índice se considerará inválido y se devolverá -1            */
     int operator[](int pos);
     const int operator[](int pos) const;
+    Position operator+(Position rhs);
 };
 
 
