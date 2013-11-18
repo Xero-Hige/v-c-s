@@ -65,5 +65,21 @@ Backend::~Backend() {
 }
 
 void Backend::async_get_room() {
-	_operation_ended = false;
+	_operation_ended = true;
+}
+
+std::vector< std::vector<int> > Backend::get_board_schema() {
+	//TODO:
+	std::vector<std::vector<int> > schema;
+	std::vector<int> column;
+	for (int x=0;x<10;x++)
+	{
+		column.push_back(1);
+	}
+	for (int x=0;x<10;x++)
+	{
+		schema.push_back(column);
+	}
+
+	return schema;
 }

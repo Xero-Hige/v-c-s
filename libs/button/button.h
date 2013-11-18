@@ -27,8 +27,8 @@
 class Button: public Sprite {
 
 private:
-	bool clicked;
 	bool active;
+	bool clicked;
 
 	void setup_button();
 

@@ -18,7 +18,14 @@
  */
 #include "../game_screen.h"
 
+//FIXME
+#define DIMENSION_X 36
+#define DIMENSION_Y 37
+#define INICIO_X 0
+#define INICIO_Y 0
+
 using std::string;
+using std::vector;
 
 const string Game_Screen::TITLE = "Level ";
 const double Game_Screen::LOADING_ICON_CORRECTION_FACTOR = 2.3;
@@ -36,10 +43,32 @@ void Game_Screen::mouse_button_event(SDL_Event& event) {
 }
 
 void Game_Screen::setup_background() {
-	background = Sprite("resources/game_board/backgrounds/Kabuto.jpg", window);
 
-	background.set_scaled_height(SCREEN_HEIGHT);
-	background.set_scaled_width(SCREEN_WIDTH);
+	Surface temporal_background = Surface(
+			"resources/game_board/backgrounds/Kabuto.jpg");
+	temporal_background.set_scaled_dimensions(SCREEN_WIDTH,SCREEN_HEIGHT);
+
+	//TODO: agregar soporte para multiples celdas
+	Surface temporal_cell = Surface("resources/game_board/cell/cell_A.png");
+	//FIXME
+	//temporal_cell.set_scaled_dimensions(DIMENSION_X, DIMENSION_Y);
+
+	vector<vector<int> > schema = backend.get_board_schema();
+
+	for (size_t i = 0; i < schema.size(); i++) {
+		for (size_t j = 0; j < schema[i].size(); j++) {
+			if (schema[i][j] != 0) {
+				int x = INICIO_X + (DIMENSION_X * i);
+				int y = INICIO_Y + (DIMENSION_Y * j);
+				temporal_background.draw_on(temporal_cell, x, y);
+			}
+		}
+	}
+
+	background = temporal_background.convert_to_sprite(window);
+
+	temporal_background.free();
+	temporal_cell.free();
 }
 
 void Game_Screen::setup_loadingscreen() {

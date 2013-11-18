@@ -28,12 +28,16 @@
 #include "../sprite/sprite.h"
 #include "../animated_sprite/animated_sprite.h"
 
-class Surface_Construction_Error: public std::exception
-{
-  virtual const char* what() const throw()
-  {
-    return "Ocurrio un error al crear la surface";
-  }
+class Surface_Construction_Error: public std::exception {
+	virtual const char* what() const throw () {
+		return "Ocurrio un error al crear la surface";
+	}
+};
+
+class Invalid_Surface_Error: public std::exception {
+	virtual const char* what() const throw () {
+		return "Surface no valida";
+	}
 };
 
 class Surface {
@@ -45,7 +49,9 @@ public:
 	/**
 	 * Dummy
 	 */
-	Surface() {}
+	Surface() :
+			_surface(NULL) {
+	}
 	/**
 	 * Construye un SDL_Surface en base al path pasado como parametro
 	 */
@@ -63,6 +69,11 @@ public:
 	 * Devuelve un sprite asociado a la ventana pasada como parametro con este
 	 * surface como textura
 	 */
+	Sprite convert_to_sprite(Window& window);
+	/**
+	 * Devuelve un sprite asociado a la ventana pasada como parametro con este
+	 * surface como textura
+	 */
 	Sprite convert_to_sprite(Window& window, int image_width, int image_height);
 	/**
 	 * Devuelve un animated sprite asociado a la ventana pasada como parametro con este
@@ -71,16 +82,29 @@ public:
 	Animated_Sprite convert_to_animated_sprite(Window& window, int image_width,
 			int image_height, int frames);
 	/**
+	 *
+	 */
+	void scale_with_widht(int new_widht);
+	/**
+	 *
+	 */
+	void scale_with_height(int new_height);
+	/**
+	 *
+	 */
+	void set_scaled_dimensions(int new_widht, int new_height);
+
+	/**
 	 * Libera la surface interna del objeto
 	 */
 	void free();
 	/**
-	* Obtiene el ancho de la surface
-	*/
+	 * Obtiene el ancho de la surface
+	 */
 	int get_width();
 	/**
-	* Obtiene el alto de la surface
-	*/
+	 * Obtiene el alto de la surface
+	 */
 	int get_height();
 };
 
