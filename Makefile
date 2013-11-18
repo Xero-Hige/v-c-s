@@ -71,6 +71,32 @@ HMAC.o:
 
 BigEndianProtocol.o:
 
+#Position
+
+POSITION = position.o
+
+position.o: libs/position/position.h libs/position/position.cpp
+	$(CC) $(CPPFLAGS) -c libs/position/position.cpp
+
+#Logic boards builder
+
+BOARDS_LIB = product.o tile.o board.o refiller.o replacements_board.o
+
+product.o: libs/boards/product.h libs/boards/product.cpp
+	$(CC) $(CPPFLAGS) -c libs/boards/product.cpp
+	
+tile.o: libs/boards/tile.h libs/boards/tile.cpp
+	$(CC) $(CPPFLAGS) -c libs/boards/tile.cpp
+	
+board.o: libs/boards/board.h libs/boards/board.cpp
+	$(CC) $(CPPFLAGS) -c libs/boards/board.cpp
+	
+refiller.o: libs/boards/refiller.h libs/boards/refiller.cpp
+	$(CC) $(CPPFLAGS) -c libs/boards/refiller.cpp
+	
+replacements_board.o: libs/boards/replacements_board.h libs/boards/replacements_board.cpp
+	$(CC) $(CPPFLAGS) -c libs/boards/replacements_board.cpp
+
 #Client
 
 CLIENT_OBJ = $(GRAPHIC_LIBS) $(SOUND_LIBS) login_screen.o client_app.o rooms_screen.o game_screen.o backend.o #server_connector.o
