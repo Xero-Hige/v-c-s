@@ -22,7 +22,7 @@
 #ifndef PHYSICAL_CHECKER_H_
 #define PHYSICAL_CHECKER_H_
 
-#include "../position.h"
+#include "../position/position.h"
 
 class PhysicalChecker {
 private:

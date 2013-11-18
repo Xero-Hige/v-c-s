@@ -22,7 +22,7 @@
 #include "tile.h"
 
 #include "product.h"
-#include "../position.h"
+#include "../position/position.h"
 
 void Tile::setType(int type) {
     this->type = type;

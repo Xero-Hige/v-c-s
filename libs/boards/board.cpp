@@ -23,7 +23,7 @@
 
 #include "tile.h"
 #include "product.h"
-#include "../position.h"
+#include "../position/position.h"
 
 #include <vector>
 #include <list>
@@ -104,7 +104,7 @@ void Board::rearrangeColumn(vector<int> column_numbers) {
 
 void Board::rearrangeColumn(int column_number) {
     // If not a valid value, it is ignored
-    if (0 < column_number || column_number >= columns) {
+    if (0 < column_number || column_number >= (int)columns) {
         return;
     }
     //TODO acomodar posta, ahora no hace nada

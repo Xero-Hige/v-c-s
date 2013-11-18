@@ -1,5 +1,5 @@
 /*
- * refiller.h
+ * replacements_board.h
  *
  * Created on: Nov 17, 2013
  * 
@@ -19,26 +19,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses 
  */
 
-#ifndef REFILLER_H_
-#define REFILLER_H_
+#ifndef REPLACEMENTS_BOARD_H_
+#define REPLACEMENTS_BOARD_H_
 
-#include <map>
+#include "board.h"
+
+#include "product.h"
+#include "refiller.h"
+
 #include <vector>
-#include <string>
+#include <list>
 
-class Refiller {
+class ReplacementsBoard : public Board {
 private:
-    static std::map<std::string, unsigned int> convertion_table;
-    std::map<std::string, int> probabilities;
-    int limit;
+    std::vector<Refiller*> refillers;
 
 public:
-    static void setConvertionTable(std::map<std::string, unsigned int>& colors);
-    Refiller(std::map<std::string, int>& probabilities);
-    Product* getNewProduct();
+    ReplacementsBoard(unsigned int n_rows, unsigned int n_columns, std::vector<Refiller*>& refillers);
+    std::list<Product*> getReplacements(int n, int column_number);
+    ~ReplacementsBoard();
 
 private:
-    int getRandomNumber();
+    void refill(int column_number, int n_extracted);
 };
 
-#endif /* REFILLER_H_ */
+#endif /* REPLACEMENTS_BOARD_H_ */

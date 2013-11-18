@@ -23,7 +23,7 @@
 #define TILE_H_
 
 #include "product.h"
-#include "../position.h"
+#include "../position/position.h"
 
 #include <cstdlib>
 
