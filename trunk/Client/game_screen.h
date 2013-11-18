@@ -48,6 +48,10 @@ private:
 
 	Music background_music;
 
+	std::vector<Animated_Sprite> sprites;
+
+	std::vector<std::vector<int> > board;
+
 private:
 	/**
 	 * Dibuja la pantalla de carga
@@ -78,7 +82,7 @@ private:
 	/**
 	 * Inicializa los mugshots
 	 */
-	void setup_mugshots();
+	void setup_sprites();
 	/**
 	 * Inicializa el audio de la ventana
 	 */

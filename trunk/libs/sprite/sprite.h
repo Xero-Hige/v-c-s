@@ -28,7 +28,9 @@
 
 class Sprite_Construction_Error: public std::exception {
 	virtual const char* what() const throw () {
-		return "Ocurrio un error al crear la surface";
+		std::string mensaje = "Ocurrio un error al crear la surface: ";
+		mensaje += SDL_GetError();
+		return mensaje.c_str();
 	}
 };
 

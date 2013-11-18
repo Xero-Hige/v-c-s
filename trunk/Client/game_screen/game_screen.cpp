@@ -21,8 +21,8 @@
 //FIXME
 #define DIMENSION_X 36
 #define DIMENSION_Y 37
-#define INICIO_X 0
-#define INICIO_Y 0
+#define INICIO_X 300
+#define INICIO_Y 100
 
 using std::string;
 using std::vector;
@@ -45,8 +45,8 @@ void Game_Screen::mouse_button_event(SDL_Event& event) {
 void Game_Screen::setup_background() {
 
 	Surface temporal_background = Surface(
-			"resources/game_board/backgrounds/Kabuto.jpg");
-	temporal_background.set_scaled_dimensions(SCREEN_WIDTH,SCREEN_HEIGHT);
+			"resources/game_board/backgrounds/Zangoose.jpg");
+	temporal_background.set_scaled_dimensions(SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	//TODO: agregar soporte para multiples celdas
 	Surface temporal_cell = Surface("resources/game_board/cell/cell_A.png");
@@ -90,7 +90,31 @@ void Game_Screen::setup_loadingscreen() {
 			SCREEN_HEIGHT - loading_icon.get_scaled_height());
 }
 
-void Game_Screen::setup_mugshots() {
+void Game_Screen::setup_sprites() {
+	vector<string> pokemon_codes = backend.get_board_pokemon_codes();
+
+	for (int i = 0; i < 5; i++) {
+		sprites.push_back(
+				Animated_Sprite(
+						"resources/game_board/pokemons/" + pokemon_codes[i]
+								+ "_button.png", window, 3));
+		sprites.back().set_scaled_height(DIMENSION_Y);
+		sprites.back().set_scaled_width(DIMENSION_X);
+
+		sprites.push_back(
+				Animated_Sprite(
+						"resources/game_board/pokemons/" + pokemon_codes[i]
+								+ "_minA.png", window, 4));
+		sprites.back().set_scaled_height(DIMENSION_Y);
+		sprites.back().set_scaled_width(DIMENSION_X);
+
+		sprites.push_back(
+				Animated_Sprite(
+						"resources/game_board/pokemons/" + pokemon_codes[i]
+								+ "_minB.png", window, 4));
+		sprites.back().set_scaled_height(DIMENSION_Y);
+		sprites.back().set_scaled_width(DIMENSION_X);
+	}
 }
 
 void Game_Screen::setup_audio() {
@@ -107,7 +131,8 @@ bool Game_Screen::initialize() {
 
 	setup_background();
 	setup_loadingscreen();
-	setup_mugshots();
+	setup_sprites();
+	board = backend.get_full_board();
 	setup_audio();
 	return true;
 }
@@ -120,12 +145,26 @@ void Game_Screen::handle_event(SDL_Event& event) {
 }
 
 void Game_Screen::loop() {
+	for (int i = 0; i < sprites.size(); i++) {
+		sprites[i].animate();
+	}
 }
 
 void Game_Screen::render() {
 	window.clear();
 
 	background.draw(window);
+
+	for (int i = 0; i < board.size(); i++) {
+		int board_size = board[0].size() / 2;
+		for (int j = board_size; j < board[0].size(); j++) {
+			if (board[i][j] == 0) continue;
+			int x = INICIO_X + (DIMENSION_X * i);
+			int y = INICIO_Y + (DIMENSION_Y * (j-board_size));
+
+			sprites[board[i][j]].draw(window,x,y);
+		}
+	}
 
 	window.render();
 }
