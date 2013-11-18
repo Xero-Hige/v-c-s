@@ -21,7 +21,7 @@
 
 #include "physical_checker.h"
 
-#include "../position.h"
+#include "../position/position.h"
 
 bool PhysicalChecker::isValidPosition(Position& pos) {
     int x = pos.getX();

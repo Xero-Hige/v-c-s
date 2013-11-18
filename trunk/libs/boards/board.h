@@ -24,9 +24,10 @@
 
 #include "tile.h"
 #include "product.h"
-#include "../position.h"
+#include "../position/position.h"
 
 #include <vector>
+#include <list>
 
 class Board {
 private:

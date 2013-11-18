@@ -30,6 +30,7 @@
 
 using std::vector;
 using std::list;
+using std::min;
 
 ReplacementsBoard::ReplacementsBoard(unsigned int n_rows, unsigned int n_columns, vector<Refiller*>& refillers)
     : Board(n_rows, n_columns){
@@ -41,7 +42,7 @@ list<Product*> ReplacementsBoard::getReplacements(int n, int column_number) {
     int x = column_number;
     int y = getHeight();
     list<Product*> ret_list = list<Product*>();
-    for (int c = min(n, getHeight()); c > 0; c--) {
+    for (int c = min(n, (int)getHeight()); c > 0; c--) {
         ret_list.push_back(takeOutProduct(x, y));
         y--;
     }
@@ -57,10 +58,10 @@ ReplacementsBoard::~ReplacementsBoard() {
 //TODO arreglar para agujeros
 void ReplacementsBoard::refill(int column_number, int n_extracted) {
     int x = column_number;
-    int y = min(n_extracted, getHeight()) - 1;
+    int y = min(n_extracted, (int)getHeight()) - 1;
     Refiller* refiller = refillers[column_number];
     while (y >= 0) {
-        Product* product = refiller.getNewProduct();
+        Product* product = refiller->getNewProduct();
         setProduct(product, x, y);
         y--;
     }

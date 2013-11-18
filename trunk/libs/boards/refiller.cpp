@@ -21,6 +21,9 @@
 
 #include "refiller.h"
 
+#include "../product_constants.h"
+#include "product.h"
+
 #include <map>
 #include <vector>
 #include <string>
@@ -36,7 +39,6 @@ void Refiller::setConvertionTable(map<string, unsigned int>& colors) {
     map<string, unsigned int>::iterator it;
     for (it = colors.begin(); it != colors.end(); ++it) {
         convertion_table[it->first] = it->second;
-        i++;
     }
 }
 
@@ -52,6 +54,7 @@ Refiller::Refiller(map<string, int>& probabilities) {
 
 Product* Refiller::getNewProduct() {
     int n = getRandomNumber();
+    int color = -1;
     map<string, int>::iterator it;
     for (it = probabilities.begin(); it != probabilities.end(); ++it) {
         if (n <= it->second) {
