@@ -20,3 +20,55 @@
  */
 
 #include "refiller.h"
+
+#include <map>
+#include <vector>
+#include <string>
+#include <cstdlib>
+
+using std::map;
+using std::vector;
+using std::string;
+
+map<string, unsigned int> Refiller::convertion_table = map<string, unsigned int>();
+
+void Refiller::setConvertionTable(map<string, unsigned int>& colors) {
+    map<string, unsigned int>::iterator it;
+    for (it = colors.begin(); it != colors.end(); ++it) {
+        convertion_table[it->first] = it->second;
+        i++;
+    }
+}
+
+Refiller::Refiller(map<string, int>& probabilities) {
+    limit = 0;
+    this->probabilities = map<string, int>();
+    map<string, int>::iterator it;
+    for (it = probabilities.begin(); it != probabilities.end(); ++it) {
+        limit+= it->second;
+        this->probabilities[it->first] = it->second;
+    }
+}
+
+Product* Refiller::getNewProduct() {
+    int n = getRandomNumber();
+    map<string, int>::iterator it;
+    for (it = probabilities.begin(); it != probabilities.end(); ++it) {
+        if (n <= it->second) {
+            color = convertion_table[it->first];
+            break;
+        }
+        n-= it->second;
+    }
+    return (new Product(color, BUTTON));
+}
+
+// Devuelve un número aleatorio entre 1 y el atributo limit (incluidos)
+int Refiller::getRandomNumber() {
+    int divisor = RAND_MAX/(limit+1);
+    int retval;
+    do {
+        retval = std::rand() / divisor;
+    } while (retval >= limit);
+    return retval+1;
+}

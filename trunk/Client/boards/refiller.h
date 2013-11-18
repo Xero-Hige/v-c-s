@@ -22,7 +22,23 @@
 #ifndef REFILLER_H_
 #define REFILLER_H_
 
+#include <map>
+#include <vector>
+#include <string>
 
+class Refiller {
+private:
+    static std::map<std::string, unsigned int> convertion_table;
+    std::map<std::string, int> probabilities;
+    int limit;
 
+public:
+    static void setConvertionTable(std::map<std::string, unsigned int>& colors);
+    Refiller(std::map<std::string, int>& probabilities);
+    Product* getNewProduct();
+
+private:
+    int getRandomNumber();
+};
 
 #endif /* REFILLER_H_ */
