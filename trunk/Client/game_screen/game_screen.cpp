@@ -121,6 +121,9 @@ void Game_Screen::setup_sprites() {
 }
 
 void Game_Screen::setup_audio() {
+	background_music.open_audio();
+	background_music.open_music("resources/game_board/background_music/000-Trainer.mp3");
+	background_music.play(-1);
 }
 
 Game_Screen::Game_Screen(Backend& back) :
