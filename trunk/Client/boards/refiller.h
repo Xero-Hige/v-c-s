@@ -1,5 +1,5 @@
 /*
- * position.h
+ * refiller.h
  *
  * Created on: Nov 17, 2013
  * 
@@ -19,31 +19,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses 
  */
 
-#ifndef POSITION_H_
-#define POSITION_H_
-
-/* Define un par ordenado para la ubicación de las cosas en los tableros *
- * usando coordenadas                                                    *
- * Se usará -1 como valor inválido para alguno de los miembros           */
-class Position {
-private:
-    int x;
-    int y;
-
-public:
-    Position()
-        : x(-1), y(-1) {}
-    Position(int x, int y)
-        : x(x), y(y) {}
-    int getX();
-    int getY();
-    void setX(int x);
-    void setY(int y);
-    /* El índice 0 se refiere a la coordenada x, el 1 a la coordenada y *
-     * Otro índice se considerará inválido y se devolverá -1            */
-    int operator[](int pos);
-    const int operator[](int pos) const;
-};
+#ifndef REFILLER_H_
+#define REFILLER_H_
 
 
-#endif /* POSITION_H_ */
+
+
+#endif /* REFILLER_H_ */
