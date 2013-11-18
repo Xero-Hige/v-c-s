@@ -100,6 +100,7 @@ void Game_Screen::setup_sprites() {
 								+ "_button.png", window, 3));
 		sprites.back().set_scaled_height(DIMENSION_Y);
 		sprites.back().set_scaled_width(DIMENSION_X);
+		sprites.back().set_fps(6);
 
 		sprites.push_back(
 				Animated_Sprite(
@@ -107,6 +108,7 @@ void Game_Screen::setup_sprites() {
 								+ "_minA.png", window, 4));
 		sprites.back().set_scaled_height(DIMENSION_Y);
 		sprites.back().set_scaled_width(DIMENSION_X);
+		sprites.back().set_fps(3);
 
 		sprites.push_back(
 				Animated_Sprite(
@@ -114,6 +116,7 @@ void Game_Screen::setup_sprites() {
 								+ "_minB.png", window, 4));
 		sprites.back().set_scaled_height(DIMENSION_Y);
 		sprites.back().set_scaled_width(DIMENSION_X);
+		sprites.back().set_fps(3);
 	}
 }
 
@@ -162,7 +165,7 @@ void Game_Screen::render() {
 			int x = INICIO_X + (DIMENSION_X * i);
 			int y = INICIO_Y + (DIMENSION_Y * (j-board_size));
 
-			sprites[board[i][j]].draw(window,x,y);
+			sprites[board[i][j]-1].draw(window,x,y);
 		}
 	}
 

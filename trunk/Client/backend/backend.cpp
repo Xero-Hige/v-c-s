@@ -70,10 +70,10 @@ Backend::~Backend() {
 vector<string> Backend::get_board_pokemon_codes() {
 	vector<string> codes;
 	codes.push_back("001");
-	codes.push_back("001");
-	codes.push_back("001");
-	codes.push_back("001");
-	codes.push_back("001");
+	codes.push_back("025");
+	codes.push_back("108");
+	codes.push_back("156");
+	codes.push_back("197");
 
 	return codes;
 }
@@ -81,12 +81,12 @@ vector<string> Backend::get_board_pokemon_codes() {
 std::vector<std::vector<int> > Backend::get_full_board() {
 	//TODO:
 	vector<vector<int> > schema;
-	for (int x=0;x<10;x++)
+	for (int x=0;x<30;x++)
 	{
 		vector<int> column;
-		for (int y=0;y<20;y++)
+		for (int y=0;y<40;y++)
 		{
-			column.push_back(rand()%4);
+			column.push_back(rand()%16);
 		}
 
 		schema.push_back(column);
