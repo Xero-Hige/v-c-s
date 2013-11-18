@@ -77,6 +77,17 @@ public:
 	 */
 	std::vector< std::vector<int> > get_board_schema();
 
+	/**
+	 * Devuelve la matriz de tablero completa (incluido el no visible)
+	 * en el cual se le asigno a cada ficha un numero.
+	 */
+	std::vector< std::vector<int> > get_full_board();
+
+	/**
+	 * Devuelve una lista con los codigos de los sprites que se
+	 * utilizaran para los pokemons de este nivel.
+	 */
+	std::vector<std::string> get_board_pokemon_codes();
 	//Connect
 	/**
 	 * Envia el comando de conexion con el servidor

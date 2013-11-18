@@ -18,7 +18,10 @@
  */
 #include "backend.h"
 
+#include <stdlib.h> //TODO sacar
+
 using std::string;
+using std::vector;
 
 Backend::Backend() {
 
@@ -64,19 +67,47 @@ Backend::~Backend() {
 	// TODO Auto-generated destructor stub
 }
 
+vector<string> Backend::get_board_pokemon_codes() {
+	vector<string> codes;
+	codes.push_back("001");
+	codes.push_back("001");
+	codes.push_back("001");
+	codes.push_back("001");
+	codes.push_back("001");
+
+	return codes;
+}
+
+std::vector<std::vector<int> > Backend::get_full_board() {
+	//TODO:
+	vector<vector<int> > schema;
+	for (int x=0;x<10;x++)
+	{
+		vector<int> column;
+		for (int y=0;y<20;y++)
+		{
+			column.push_back(rand()%4);
+		}
+
+		schema.push_back(column);
+	}
+
+	return schema;
+}
+
 void Backend::async_get_room() {
 	_operation_ended = true;
 }
 
-std::vector< std::vector<int> > Backend::get_board_schema() {
+vector< vector<int> > Backend::get_board_schema() {
 	//TODO:
-	std::vector<std::vector<int> > schema;
-	std::vector<int> column;
-	for (int x=0;x<10;x++)
+	vector<vector<int> > schema;
+	vector<int> column;
+	for (int x=0;x<20;x++)
 	{
 		column.push_back(1);
 	}
-	for (int x=0;x<10;x++)
+	for (int x=0;x<30;x++)
 	{
 		schema.push_back(column);
 	}
