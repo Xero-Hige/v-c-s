@@ -80,37 +80,41 @@ vector<string> Backend::get_board_pokemon_codes() {
 
 std::vector<std::vector<int> > Backend::get_full_board() {
 	//TODO:
-	vector<vector<int> > schema;
-	for (int x=0;x<30;x++)
+	vector<vector<int> > board;
+	for (int x=0;x<schema.size();x++)
 	{
 		vector<int> column;
-		for (int y=0;y<40;y++)
+		for (int y=0;y<(schema[0].size()*2);y++)
 		{
-			column.push_back(rand()%16);
+			if (schema[x][y%schema[0].size()] != 0){
+				column.push_back(rand()%15 + 1);
+			}
+			else
+			{
+				column.push_back(0);
+			}
 		}
 
-		schema.push_back(column);
+		board.push_back(column);
 	}
 
-	return schema;
+	return board;
 }
 
 void Backend::async_get_room() {
 	_operation_ended = true;
 }
 
-vector< vector<int> > Backend::get_board_schema() {
+vector<vector<int> > Backend::get_board_schema() {
 	//TODO:
-	vector<vector<int> > schema;
-	vector<int> column;
-	for (int x=0;x<20;x++)
-	{
-		column.push_back(1);
+	if (schema.size() == 0) {
+		vector<int> column;
+		for (int y = 0; y < 20; y++) {
+			column.push_back(rand()%2);
+		}
+		for (int x = 0; x < 30; x++) {
+			schema.push_back(column);
+		}
 	}
-	for (int x=0;x<30;x++)
-	{
-		schema.push_back(column);
-	}
-
 	return schema;
 }

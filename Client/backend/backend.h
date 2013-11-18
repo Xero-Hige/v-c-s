@@ -39,6 +39,8 @@ private:
 	std::string user_nick;
 	std::string user_pass;
 
+	std::vector<std::vector<int> > schema;
+
 	//Async info
 	bool _operation_ended;
 	std::string _operation_error;
