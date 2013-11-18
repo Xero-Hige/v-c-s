@@ -115,6 +115,11 @@ void Rooms_Screen::loop() {
 		while (!backend.operation_ended() && status == STATUS_RUNNING) {
 			render_loadscreen(100);
 		}
+		if (backend.operation_error() != "") {
+			window.show_message_box(0, "Error", backend.operation_error());
+		} else {
+			status = STATUS_ENDED_OK;
+		}
 	}
 }
 

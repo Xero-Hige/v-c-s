@@ -20,6 +20,7 @@
 #define BACKEND_H_
 
 #include <string>
+#include <vector>
 //#include "../server_connector/server_connector.h"
 #include "../../libs/messages/MsgConstants.h"
 
@@ -68,6 +69,13 @@ public:
 	 * Devuelve si el backend tiene una sesion iniciada
 	 */
 	bool logged_in();
+
+	/**
+	 * Devuelve un esquema del tablero, 0 si no hay celda
+	 * y otro numero si hay una celda (numero que se corresponde
+	 * con la imagen de la celda)
+	 */
+	std::vector< std::vector<int> > get_board_schema();
 
 	//Connect
 	/**

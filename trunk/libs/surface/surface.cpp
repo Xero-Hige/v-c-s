@@ -52,17 +52,26 @@ bool Surface::draw_on(Surface& source_surface, int source_x_pos,
 }
 
 void Surface::set_transparency(int red, int green, int blue) {
+	if (!_surface) {
+		throw Invalid_Surface_Error();
+	}
 	SDL_SetColorKey(_surface, SDL_TRUE | SDL_RLEACCEL,
 			SDL_MapRGB(this->_surface->format, red, green, blue));
 }
 
 Sprite Surface::convert_to_sprite(Window& window, int image_width,
 		int image_height) {
+	if (!_surface) {
+		throw Invalid_Surface_Error();
+	}
 	return Sprite(*this->_surface, window, image_width, image_height);
 }
 
 Animated_Sprite Surface::convert_to_animated_sprite(Window& window,
 		int image_width, int image_height, int frames) {
+	if (!_surface) {
+		throw Invalid_Surface_Error();
+	}
 	return Animated_Sprite(*this->_surface, window, image_width, image_height,
 			frames);
 }
@@ -71,12 +80,87 @@ void Surface::free() {
 	SDL_FreeSurface(_surface);
 }
 
-int Surface::get_width()
-{
+int Surface::get_width() {
+	if (!_surface) {
+		throw Invalid_Surface_Error();
+	}
 	return _surface->w;
 }
 
-int Surface::get_height()
-{
+Sprite Surface::convert_to_sprite(Window& window) {
+	if (!_surface) {
+		throw Invalid_Surface_Error();
+	}
+	return Sprite(*this->_surface, window);
+}
+
+int Surface::get_height() {
+	if (!_surface) {
+		throw Invalid_Surface_Error();
+	}
 	return _surface->h;
+}
+
+void Surface::scale_with_widht(int new_widht) {
+	if (!_surface) {
+		throw Invalid_Surface_Error();
+	}
+
+	int new_height = (_surface->h / _surface->w) * new_widht;
+
+	SDL_Surface* temp = SDL_CreateRGBSurface(_surface->flags, new_widht,
+			new_height, _surface->format->BitsPerPixel, _surface->format->Rmask,
+			_surface->format->Gmask, _surface->format->Bmask,
+			_surface->format->Amask);
+
+	if (!temp) {
+		throw Surface_Construction_Error();
+	}
+
+	SDL_BlitScaled(_surface, NULL, temp, NULL);
+
+	SDL_FreeSurface(_surface);
+	_surface = temp;
+}
+
+void Surface::scale_with_height(int new_height) {
+	if (!_surface) {
+		throw Invalid_Surface_Error();
+	}
+
+	int new_widht = (_surface->w / _surface->h) * new_height;
+
+	SDL_Surface* temp = SDL_CreateRGBSurface(_surface->flags, new_widht,
+			new_height, _surface->format->BitsPerPixel, _surface->format->Rmask,
+			_surface->format->Gmask, _surface->format->Bmask,
+			_surface->format->Amask);
+
+	if (!temp) {
+		throw Surface_Construction_Error();
+	}
+
+	SDL_BlitScaled(_surface, NULL, temp, NULL);
+
+	SDL_FreeSurface(_surface);
+	_surface = temp;
+}
+
+void Surface::set_scaled_dimensions(int new_widht, int new_height) {
+	if (!_surface) {
+		throw Invalid_Surface_Error();
+	}
+
+	SDL_Surface* temp = SDL_CreateRGBSurface(_surface->flags, new_widht,
+			new_height, _surface->format->BitsPerPixel, _surface->format->Rmask,
+			_surface->format->Gmask, _surface->format->Bmask,
+			_surface->format->Amask);
+
+	if (!temp) {
+		throw Surface_Construction_Error();
+	}
+
+	SDL_BlitScaled(_surface, NULL, temp, NULL);
+
+	SDL_FreeSurface(_surface);
+	_surface = temp;
 }
