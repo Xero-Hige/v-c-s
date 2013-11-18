@@ -108,7 +108,6 @@ void Board::rearrangeColumn(int column_number) {
         return;
     }
     //TODO acomodar posta, ahora no hace nada
-
 }
 
 Board::~Board() {
