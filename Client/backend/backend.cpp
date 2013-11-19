@@ -16,9 +16,11 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
+
 #include "backend.h"
 
-#include <stdlib.h> //TODO sacar
+#include <stddef.h>
+#include <cstdlib> //TODO sacar
 
 using std::string;
 using std::vector;
@@ -81,10 +83,10 @@ vector<string> Backend::get_board_pokemon_codes() {
 std::vector<std::vector<int> > Backend::get_full_board() {
 	//TODO:
 	vector<vector<int> > board;
-	for (int x=0;x<schema.size();x++)
+	for (size_t x=0;x<schema.size();x++)
 	{
 		vector<int> column;
-		for (int y=0;y<(schema[0].size()*2);y++)
+		for (size_t y=0;y<(schema[0].size()*2);y++)
 		{
 			if (schema[x][y%schema[0].size()] != 0){
 				column.push_back(rand()%15 + 1);
@@ -110,7 +112,8 @@ vector<vector<int> > Backend::get_board_schema() {
 	if (schema.size() == 0) {
 		vector<int> column;
 		for (int y = 0; y < 20; y++) {
-			column.push_back(rand()%2);
+			int a = rand()%7;
+			column.push_back(a<2 ? 0:1);
 		}
 		for (int x = 0; x < 30; x++) {
 			schema.push_back(column);

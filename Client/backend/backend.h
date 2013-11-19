@@ -21,13 +21,13 @@
 
 #include <string>
 #include <vector>
-//#include "../server_connector/server_connector.h"
-#include "../../libs/messages/MsgConstants.h"
-#include "../../libs/position/position.h"
+
 #include "../../libs/boards/board.h"
 #include "../../libs/boards/replacements_board.h"
-#include "../../libs/checkers/physical_checker.h"
 #include "../../libs/checkers/combination_checker.h"
+#include "../../libs/checkers/physical_checker.h"
+#include "../../libs/messages/MsgConstants.h"
+#include "../../libs/position/position.h"
 
 class Backend {
 
@@ -51,12 +51,16 @@ private:
 	std::string _operation_error;
 
 	// Tableros lógicos
-	Board board;
-	ReplacementsBoard replacements_board;
+	//Board board;
+	//TODO: constructor por defecto o inicializacion en el constructor del backend
+	//ReplacementsBoard replacements_board;
+	//TODO: constructor por defecto o inicializacion en el constructor del backend
 
 	// Checkers
-	PhysicalChecker physical_checker;
-	CombinationChecker combination_checker;
+	//PhysicalChecker physical_checker;
+	//TODO: constructor por defecto o inicializacion en el constructor del backend
+	//CombinationChecker combination_checker;
+	//TODO: constructor por defecto o inicializacion en el constructor del backend
 
 private:
 
@@ -97,13 +101,13 @@ public:
 	 * y otro numero si hay una celda (numero que se corresponde
 	 * con la imagen de la celda)
 	 */
-	std::vector< std::vector<int> > get_board_schema();
+	std::vector<std::vector<int> > get_board_schema();
 
 	/**
 	 * Devuelve la matriz de tablero completa (incluido el no visible)
 	 * en el cual se le asigno a cada ficha un numero.
 	 */
-	std::vector< std::vector<int> > get_full_board();
+	std::vector<std::vector<int> > get_full_board();
 
 	/**
 	 * Devuelve una lista con los codigos de los sprites que se

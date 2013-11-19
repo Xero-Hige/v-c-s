@@ -19,10 +19,13 @@
 #ifndef WINDOW_H_
 #define WINDOW_H_
 
-#include <SDL2/SDL.h>
+#include <SDL2/SDL_stdinc.h>
 #include <string>
 
-#include <iostream>
+struct SDL_Rect;
+struct SDL_Renderer;
+struct SDL_Texture;
+struct SDL_Window;
 
 class Window {
 
@@ -59,6 +62,10 @@ public:
 			SDL_Rect& dest_rect);
 	/**
 	 * Muestra un cuadro de dialogo asociado a la ventana
+	 * Flags:
+	 * SDL_MESSAGEBOX_ERROR
+	 * SDL_MESSAGEBOX_WARNING
+	 * SDL_MESSAGEBOX_INFORMATION
 	 */
 	void show_message_box(Uint32 flags, const std::string& title,
 			const std::string& message);

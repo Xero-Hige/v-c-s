@@ -63,5 +63,5 @@ Position Position::operator+(Position rhs) {
 }
 
 bool Position::is_valid() {
-	return (x > 0 and y > 0);
+	return (x >= 0 and y >= 0);
 }

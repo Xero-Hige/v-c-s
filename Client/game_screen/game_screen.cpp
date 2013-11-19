@@ -16,7 +16,16 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
+
 #include "../game_screen.h"
+
+#include <stddef.h>
+#include <SDL2/SDL_events.h>
+#include <SDL2/SDL_messagebox.h>
+#include <SDL2/SDL_surface.h>
+#include <stdlib.h>
+
+#include "../../libs/position/position.h"
 
 //FIXME
 #define DIMENSION_X 36
@@ -40,6 +49,13 @@ void Game_Screen::text_input_event(SDL_Event& event) {
 }
 
 void Game_Screen::mouse_button_event(SDL_Event& event) {
+	Position pos = grid.get_grid_position(event.button.x,event.button.y);
+	if (pos.is_valid())
+	{
+		char a [50];
+		sprintf(a,"%d-%d",pos[0],pos[1]);
+		window.show_message_box(SDL_MESSAGEBOX_INFORMATION,"ASD",string(a));
+	}
 }
 
 void Game_Screen::setup_background() {
@@ -131,6 +147,13 @@ Game_Screen::Game_Screen(Backend& back) :
 
 }
 
+void Game_Screen::setup_board() {
+	board = backend.get_full_board();
+	//FIXME Pasar a constantes de clase;
+	grid = Screen_Grid(INICIO_X, INICIO_Y, DIMENSION_Y, DIMENSION_X,
+			board.size(), board[0].size()/2);
+}
+
 bool Game_Screen::initialize() {
 	window = Window(TITLE, SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_FLAGS);
 	//TODO: excepciones
@@ -138,15 +161,19 @@ bool Game_Screen::initialize() {
 	setup_background();
 	setup_loadingscreen();
 	setup_sprites();
-	board = backend.get_full_board();
+	setup_board();
 	setup_audio();
 	return true;
 }
 
 void Game_Screen::handle_event(SDL_Event& event) {
-	if (event.type == SDL_QUIT) {
-		status = STATUS_ENDED_ERROR;
-		return;
+	switch(event.type){
+		case SDL_QUIT:
+			status = STATUS_ENDED_ERROR;
+			return;
+		case SDL_MOUSEBUTTONDOWN:
+			mouse_button_event(event);
+			return;
 	}
 }
 
@@ -156,21 +183,26 @@ void Game_Screen::loop() {
 	}
 }
 
+void Game_Screen::render_board() {
+	for (int i = 0; i < board.size(); i++) {
+		int board_size = board[0].size() / 2;
+		for (int j = board_size; j < board[0].size(); j++) {
+			if (board[i][j] < 1)
+				continue;
+			int x = INICIO_X + (DIMENSION_X * i);
+			int y = INICIO_Y + (DIMENSION_Y * (j - board_size));
+
+			sprites[board[i][j] - 1].draw(window, x, y);
+		}
+	}
+}
+
 void Game_Screen::render() {
 	window.clear();
 
 	background.draw(window);
 
-	for (int i = 0; i < board.size(); i++) {
-		int board_size = board[0].size() / 2;
-		for (int j = board_size; j < board[0].size(); j++) {
-			if (board[i][j] == 0) continue;
-			int x = INICIO_X + (DIMENSION_X * i);
-			int y = INICIO_Y + (DIMENSION_Y * (j-board_size));
-
-			sprites[board[i][j]-1].draw(window,x,y);
-		}
-	}
+	render_board();
 
 	window.render();
 }

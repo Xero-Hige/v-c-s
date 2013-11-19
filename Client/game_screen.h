@@ -19,13 +19,20 @@
 #ifndef GAMES_CREEN_H_
 #define GAMES_CREEN_H_
 
+#include <SDL2/SDL_video.h>
+#include <string>
+#include <vector>
+
+#include "../libs/animated_sprite/animated_sprite.h"
+#include "../libs/button/button.h"
+#include "../libs/music/music.h"
+#include "../libs/screen_grid/screen_grid.h"
+#include "../libs/surface/surface.h"
+#include "../libs/window/window.h"
 #include "app.h"
 #include "backend/backend.h"
-#include "../libs/window/window.h"
-#include "../libs/animated_sprite/animated_sprite.h"
-#include "../libs/surface/surface.h"
-#include "../libs/music/music.h"
-#include "../libs/button/button.h"
+
+class Backend;
 
 class Game_Screen: public App {
 
@@ -49,8 +56,9 @@ private:
 	Music background_music;
 
 	std::vector<Animated_Sprite> sprites;
-
 	std::vector<std::vector<int> > board;
+
+	Screen_Grid grid;
 
 private:
 	/**
@@ -87,6 +95,8 @@ private:
 	 * Inicializa el audio de la ventana
 	 */
 	void setup_audio();
+	void render_board();
+	void setup_board();
 
 public:
 

@@ -16,10 +16,13 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
+
 #include "screen_grid.h"
 
+#include <stddef.h>
+
 Screen_Grid::Screen_Grid(size_t x_pos, size_t y_pos, size_t grid_height,
-		size_t grid_widht, size_t columns = 1, size_t rows = 1) {
+		size_t grid_widht, size_t columns, size_t rows) {
 	this->columns = columns;
 	this->rows = rows;
 
@@ -32,8 +35,8 @@ Screen_Grid::Screen_Grid(size_t x_pos, size_t y_pos, size_t grid_height,
 
 Position Screen_Grid::get_grid_position(size_t x, size_t y) {
 	if (x >= x_pos and y >= y_pos) {
-		int x_reference = (x - x_pos) % grid_widht;
-		int y_reference = (y - y_pos) % grid_height;
+		int x_reference = (x - x_pos) / grid_widht;
+		int y_reference = (y - y_pos) / grid_height;
 
 		if (x_reference >= columns or y_reference >= rows) {
 			return Position();
