@@ -24,8 +24,8 @@
 
 #include "../../libs/boards/board.h"
 #include "../../libs/boards/replacements_board.h"
-//#include "../../libs/checkers/combination_checker.h"
-//#include "../../libs/checkers/physical_checker.h"
+#include "../../libs/checkers/combination_checker.h"
+#include "../../libs/checkers/physical_checker.h"
 #include "../../libs/messages/MsgConstants.h"
 #include "../../libs/position/position.h"
 
@@ -53,18 +53,13 @@ private:
 
 	// Tableros lógicos
 	Board board;
-	//TODO: constructor por defecto o inicializacion en el constructor del backend
 	ReplacementsBoard replacements_board;
-	//TODO: constructor por defecto o inicializacion en el constructor del backend
 
 	// Checkers
 //	PhysicalChecker physical_checker;
-	//TODO: constructor por defecto o inicializacion en el constructor del backend
 //	CombinationChecker combination_checker;
-	//TODO: constructor por defecto o inicializacion en el constructor del backend
 
-    Position l[2];
-
+	Position l[2];
 
 private:
 
@@ -150,7 +145,7 @@ public:
 	 * Hace un swap entre los elementos. Devuelve true en caso que se pueda
 	 * llegar a intercambiar, false en caso contrario.
 	 */
-	bool async_make_swap(Position pos_1,Position pos_2);
+	bool async_make_swap(Position pos1,Position pos2);
 };
 
 #endif /* BACKEND_H_ */
