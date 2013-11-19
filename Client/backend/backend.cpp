@@ -30,7 +30,7 @@
 using std::string;
 using std::vector;
 
-Backend::Backend() {
+Backend::Backend(): board(Board()) {
 
 	ip="";
 	port=0;
@@ -42,8 +42,7 @@ Backend::Backend() {
 	_operation_ended = true;
 	_operation_error = "";
 
-//	board = Board();
-//	replacements_board = ReplacementsBoard();
+	replacements_board = ReplacementsBoard();
 }
 
 void Backend::async_connect(const std::string& ip,int port){
@@ -112,14 +111,24 @@ std::vector<std::vector<int> > Backend::get_full_board() {
 }
 
 vector<Position> Backend::get_removed_pokemons() {
+
+	Position a=l[0];
+	Position b=l[1];
+
+	int x_a = a[0];
+	int x_b = b[0];
+
+	int y_a = a[1];
+	int y_b = b[1];
+
 	//TODO:
 	vector<Position> res;
-	res.push_back(Position(10,35));
-	res.push_back(Position(10,36));
-	res.push_back(Position(10,37));
-	res.push_back(Position(10,38));
-	res.push_back(Position(10,39));
-	res.push_back(Position(10,40));
+	res.push_back(Position(x_a,y_a));
+	res.push_back(Position(x_a,y_a+1));
+	res.push_back(Position(x_a,y_a-1));
+	res.push_back(Position(x_b,y_b));
+	res.push_back(Position(x_b,y_b+1));
+	res.push_back(Position(x_b,y_b-1));
 
 	return res;
 }
@@ -145,6 +154,8 @@ vector<vector<int> > Backend::get_board_schema() {
 
 bool Backend::async_make_swap(Position pos_1, Position pos_2) {
 	//TODO:
+    l[0]=pos_1;
+    l[1]=pos_2;
 	return true;
 }
 

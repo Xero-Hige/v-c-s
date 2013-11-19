@@ -68,7 +68,7 @@ public:
     bool setProduct(Product* product);
     // No se si hace falta
     void eliminateProduct();
-    ~Tile();
+    ~Tile(){};
 };
 
 #endif /* TILE_H_ */

@@ -53,6 +53,28 @@ void Game_Screen::animate_swap() {
 		Position pos = del[i];
 		board[pos[0]][pos[1]] = 0;
 	}
+
+	int height = board[0].size()/2;
+    while(del.size()>0)
+    {
+        Position p = del.front();
+        del.erase(del.begin());
+        int x_pos = p[0];
+        int y_pos = p[1];
+        for (int i=y_pos-1;i>=0;i--)
+        {
+            if (board[x_pos][i]>0)
+            {
+                Position change = Position(x_pos,i);
+                del.push_back(change);
+                //animate
+                board[x_pos][y_pos]=board[x_pos][i];
+
+                board[x_pos][i] = 0;
+                break;
+            }
+        }
+    }
 	render();
 }
 

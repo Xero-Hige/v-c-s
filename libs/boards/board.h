@@ -38,7 +38,7 @@ private:
 
 public:
     /* Solo se usa como dummy, el tablero no queda de forma válida ni usable */
-    Board();
+    Board(){};
     Board(unsigned int n_rows, unsigned int n_columns);
     /* Setea los casilleros (Tile) a celdas con productos o a agujeros      *
      * products tiene Product* para los Tile que son celda, y NULL para los *
@@ -73,7 +73,7 @@ public:
     void rearrangeColumn(int column_number);
     /* Acomoda todas las columnas pasadas por parámetro */
     void rearrangeColumn(std::vector<int> column_numbers);
-    ~Board();
+    ~Board(){};
 
 private:
     unsigned int getIndexFromPos(unsigned int x, unsigned int y);
