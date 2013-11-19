@@ -40,7 +40,6 @@ public:
     Board(unsigned int n_rows, unsigned int n_columns);
     // products tiene Product* para los Tile que son celda, y NULL para los Tile que son agujeros
     void setUp(std::list<Product*> products);
-    // Product* getProduct(unsigned int x, unsigned int y);
     /* Devuelve la altura del tablero */
     unsigned int getHeight();
     /* Devuelve el ancho del tablero */
@@ -62,6 +61,8 @@ public:
      * tiene un producto o es un agujero, devuelve false.                    */
     bool setProduct(Product* product, unsigned int x, unsigned int y);
     bool setProduct(Product* product, Position& pos);
+    /* Intercambia dos productos del tablero */
+    void swapProducts(Position& pos1, Position& pos2);
     /* Acomoda la columna. Hace que los productos bajen si tienen celdas *
      * vacías debajo, dejando las celdas superiores libres.              *
      * Si el número de columna es inválido, lo ignora                    */

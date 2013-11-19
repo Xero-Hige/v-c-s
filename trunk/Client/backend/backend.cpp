@@ -19,6 +19,11 @@
 
 #include "backend.h"
 
+//#include "../../libs/boards/board.h"
+//#include "../../libs/boards/replacements_board.h"
+//#include "../../libs/checkers/combination_checker.h"
+//#include "../../libs/checkers/physical_checker.h"
+
 #include <stddef.h>
 #include <cstdlib> //TODO sacar
 
@@ -139,3 +144,16 @@ bool Backend::async_make_swap(Position pos_1, Position pos_2) {
 	//TODO:
 	return true;
 }
+
+//bool Backend::checkSwap(Position pos1, Position pos2) {
+//    return physical_checker.checkSwap(pos1, pos2);
+//}
+//
+//bool Backend::checkCombination(Position pos1, Position pos2) {
+//    board.swapProducts(pos1, pos2);
+//    if (combination_checker.check(pos1) || combination_checker.check(pos2)) {
+//        return true;
+//    }
+//    board.swapProducts(pos1, pos2);
+//    return false;
+//}
