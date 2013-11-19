@@ -22,12 +22,13 @@
 #include <string>
 #include <vector>
 
-#include "../../libs/boards/board.h"
-#include "../../libs/boards/replacements_board.h"
-#include "../../libs/checkers/combination_checker.h"
-#include "../../libs/checkers/physical_checker.h"
+//#include "../../libs/boards/board.h"
+//#include "../../libs/boards/replacements_board.h"
+//#include "../../libs/checkers/combination_checker.h"
+//#include "../../libs/checkers/physical_checker.h"
 #include "../../libs/messages/MsgConstants.h"
 #include "../../libs/position/position.h"
+
 
 class Backend {
 
@@ -114,6 +115,14 @@ public:
 	 * utilizaran para los pokemons de este nivel.
 	 */
 	std::vector<std::string> get_board_pokemon_codes();
+
+	/**
+	 * Devuelve una lista de las posiciones que se
+	 * eliminan con el ultimo movimiento
+	 */
+	std::vector<Position> get_removed_pokemons();
+
+	//ASYNC
 	//Connect
 	/**
 	 * Envia el comando de conexion con el servidor
@@ -133,6 +142,12 @@ public:
 	 */
 	void async_get_room();
 
+	//Game
+	/**
+	 * Hace un swap entre los elementos. Devuelve true en caso que se pueda
+	 * llegar a intercambiar, false en caso contrario.
+	 */
+	bool async_make_swap(Position pos_1,Position pos_2);
 };
 
 #endif /* BACKEND_H_ */

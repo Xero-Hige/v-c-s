@@ -58,6 +58,8 @@ private:
 	std::vector<Animated_Sprite> sprites;
 	std::vector<std::vector<int> > board;
 
+	Position actual_cell;
+
 	Screen_Grid grid;
 
 private:
@@ -97,6 +99,7 @@ private:
 	void setup_audio();
 	void render_board();
 	void setup_board();
+	void animate_swap();
 
 public:
 
