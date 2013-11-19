@@ -2,9 +2,9 @@
  * position.h
  *
  * Created on: Nov 17, 2013
- * 
+ *
  * Copyright 2013 Bruno Merlo Schurmann <brunomerloschurmann@gmail.com>
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -16,7 +16,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses 
+ * along with this program.  If not, see <http://www.gnu.org/licenses
  */
 
 #ifndef POSITION_H_
@@ -44,6 +44,12 @@ public:
     int operator[](int pos);
     const int operator[](int pos) const;
     Position operator+(Position rhs);
+    /**
+     * Devuelve si la posicion actual es valida. Una
+     * posicion valida tiene en sus coordenadas valores
+     * mayores o iguales a 0
+     */
+    bool is_valid();
 };
 
 
