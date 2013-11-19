@@ -19,8 +19,8 @@
 
 #include "backend.h"
 
-//#include "../../libs/boards/board.h"
-//#include "../../libs/boards/replacements_board.h"
+#include "../../libs/boards/board.h"
+#include "../../libs/boards/replacements_board.h"
 //#include "../../libs/checkers/combination_checker.h"
 //#include "../../libs/checkers/physical_checker.h"
 
@@ -41,6 +41,9 @@ Backend::Backend() {
 
 	_operation_ended = true;
 	_operation_error = "";
+
+//	board = Board();
+//	replacements_board = ReplacementsBoard();
 }
 
 void Backend::async_connect(const std::string& ip,int port){

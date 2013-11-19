@@ -32,9 +32,18 @@ using std::vector;
 using std::list;
 using std::min;
 
+ReplacementsBoard::ReplacementsBoard()
+    : Board() {
+    refillers = vector<Refiller*>();
+}
+
 ReplacementsBoard::ReplacementsBoard(unsigned int n_rows, unsigned int n_columns, vector<Refiller*>& refillers)
     : Board(n_rows, n_columns){
-    this->refillers = refillers;
+    this->refillers = vector<Refiller*>();
+    vector<Refiller*>::iterator it;
+    for (it = refillers.begin(); it != refillers.end(); ++it) {
+        this->refillers.push_back(*it);
+    }
 }
 
 //TODO arreglar para agujeros

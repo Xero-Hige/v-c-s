@@ -22,8 +22,8 @@
 #include <string>
 #include <vector>
 
-//#include "../../libs/boards/board.h"
-//#include "../../libs/boards/replacements_board.h"
+#include "../../libs/boards/board.h"
+#include "../../libs/boards/replacements_board.h"
 //#include "../../libs/checkers/combination_checker.h"
 //#include "../../libs/checkers/physical_checker.h"
 #include "../../libs/messages/MsgConstants.h"
@@ -54,7 +54,7 @@ private:
 	// Tableros lógicos
 //	Board board;
 	//TODO: constructor por defecto o inicializacion en el constructor del backend
-	//ReplacementsBoard replacements_board;
+//	ReplacementsBoard replacements_board;
 	//TODO: constructor por defecto o inicializacion en el constructor del backend
 
 	// Checkers
