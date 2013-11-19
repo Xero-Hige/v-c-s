@@ -21,9 +21,7 @@
 
 #include <stddef.h>
 #include <SDL2/SDL_events.h>
-#include <SDL2/SDL_messagebox.h>
 #include <SDL2/SDL_surface.h>
-#include <stdlib.h>
 
 #include "../../libs/position/position.h"
 
@@ -48,14 +46,41 @@ void Game_Screen::key_press_event(SDL_Event& event) {
 void Game_Screen::text_input_event(SDL_Event& event) {
 }
 
-void Game_Screen::mouse_button_event(SDL_Event& event) {
-	Position pos = grid.get_grid_position(event.button.x,event.button.y);
-	if (pos.is_valid())
-	{
-		char a [50];
-		sprintf(a,"%d-%d",pos[0],pos[1]);
-		window.show_message_box(SDL_MESSAGEBOX_INFORMATION,"ASD",string(a));
+void Game_Screen::animate_swap() {
+	loop();
+	vector<Position> del = backend.get_removed_pokemons();
+	for (int i = 0; i < del.size(); i++) {
+		Position pos = del[i];
+		board[pos[0]][pos[1]] = 0;
 	}
+	render();
+}
+
+void Game_Screen::mouse_button_event(SDL_Event& event) {
+	Position pos = grid.get_grid_position(event.button.x, event.button.y);
+	if (pos.is_valid()) {
+		if (board[pos[0]][pos[1]] != 0) //TODO cambiar para que sea -1
+				{
+			if (!actual_cell.is_valid()) //sin setear
+			{
+				actual_cell = pos;
+				return;
+			}
+
+			pos.setY(pos.getY() + (board[0].size() / 2));
+			actual_cell.setY(actual_cell.getY() + (board[0].size() / 2));
+
+			if (backend.async_make_swap(pos, actual_cell)) {
+
+				int temp = board[actual_cell[0]][actual_cell[1]];
+				board[actual_cell[0]][actual_cell[1]] = board[pos[0]][pos[1]];
+				board[pos[0]][pos[1]] = temp;
+
+				animate_swap();
+			}
+		}
+	}
+	actual_cell = Position();
 }
 
 void Game_Screen::setup_background() {
@@ -138,12 +163,13 @@ void Game_Screen::setup_sprites() {
 
 void Game_Screen::setup_audio() {
 	background_music.open_audio();
-	background_music.open_music("resources/game_board/background_music/000-Trainer.mp3");
+	background_music.open_music(
+			"resources/game_board/background_music/000-Trainer.mp3");
 	background_music.play(-1);
 }
 
 Game_Screen::Game_Screen(Backend& back) :
-		App(), backend(back) {
+		App(), backend(back), actual_cell(Position()) {
 
 }
 
@@ -151,7 +177,7 @@ void Game_Screen::setup_board() {
 	board = backend.get_full_board();
 	//FIXME Pasar a constantes de clase;
 	grid = Screen_Grid(INICIO_X, INICIO_Y, DIMENSION_Y, DIMENSION_X,
-			board.size(), board[0].size()/2);
+			board.size(), board[0].size() / 2);
 }
 
 bool Game_Screen::initialize() {
@@ -167,13 +193,13 @@ bool Game_Screen::initialize() {
 }
 
 void Game_Screen::handle_event(SDL_Event& event) {
-	switch(event.type){
-		case SDL_QUIT:
-			status = STATUS_ENDED_ERROR;
-			return;
-		case SDL_MOUSEBUTTONDOWN:
-			mouse_button_event(event);
-			return;
+	switch (event.type) {
+	case SDL_QUIT:
+		status = STATUS_ENDED_ERROR;
+		return;
+	case SDL_MOUSEBUTTONDOWN:
+		mouse_button_event(event);
+		return;
 	}
 }
 

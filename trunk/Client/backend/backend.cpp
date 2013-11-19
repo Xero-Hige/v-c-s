@@ -103,6 +103,19 @@ std::vector<std::vector<int> > Backend::get_full_board() {
 	return board;
 }
 
+vector<Position> Backend::get_removed_pokemons() {
+	//TODO:
+	vector<Position> res;
+	res.push_back(Position(10,35));
+	res.push_back(Position(10,36));
+	res.push_back(Position(10,37));
+	res.push_back(Position(10,38));
+	res.push_back(Position(10,39));
+	res.push_back(Position(10,40));
+
+	return res;
+}
+
 void Backend::async_get_room() {
 	_operation_ended = true;
 }
@@ -120,4 +133,9 @@ vector<vector<int> > Backend::get_board_schema() {
 		}
 	}
 	return schema;
+}
+
+bool Backend::async_make_swap(Position pos_1, Position pos_2) {
+	//TODO:
+	return true;
 }

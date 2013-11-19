@@ -102,7 +102,7 @@ replacements_board.o: libs/boards/replacements_board.h libs/boards/replacements_
 
 #Client
 
-CLIENT_OBJ = $(GRAPHIC_LIBS) $(SOUND_LIBS) login_screen.o client_app.o rooms_screen.o game_screen.o backend.o #server_connector.o
+CLIENT_OBJ = $(GRAPHIC_LIBS) $(SOUND_LIBS) $(BOARD_LIBS) login_screen.o client_app.o rooms_screen.o game_screen.o backend.o #server_connector.o
 
 CLIENT_NAME = game-client
 
@@ -129,7 +129,7 @@ client: Client/client.cpp $(CLIENT_OBJ)
 		
 #Cleanup
 clean:
-	rm *.o *.save $(CLIENT_NAME)
+	rm *.o $(CLIENT_NAME)
 	
 #Run
 run-client: client
