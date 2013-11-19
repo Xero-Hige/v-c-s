@@ -49,8 +49,6 @@ void Board::setUp(list<Product*> products) {
     }
 }
 
-// Product* getProduct(unsigned int x, unsigned int y);
-
 unsigned int Board::getHeight() {
     return rows;
 }
@@ -93,6 +91,12 @@ Product* Board::takeOutProduct(Position& pos) {
 
 bool Board::setProduct(Product* product, Position& pos) {
     return setProduct(product, pos.getX(), pos.getY());
+}
+
+void Board::swapProducts(Position& pos1, Position& pos2) {
+    Product* swap_aux = takeOutProduct(pos1);
+    setProduct(takeOutProduct(pos2), pos1);
+    setProduct(swap_aux, pos2);
 }
 
 void Board::rearrangeColumn(vector<int> column_numbers) {
