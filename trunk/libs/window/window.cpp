@@ -16,8 +16,13 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
+
 #include "window.h"
-#include <string>
+
+#include <SDL2/SDL_hints.h>
+#include <SDL2/SDL_messagebox.h>
+#include <SDL2/SDL_render.h>
+#include <SDL2/SDL_video.h>
 
 using std::string;
 

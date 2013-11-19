@@ -19,7 +19,8 @@
 #ifndef SCREEN_ZONE_H_
 #define SCREEN_ZONE_H_
 
-#include <SDL2/SDL.h>
+#include <stddef.h>
+
 #include "../position/position.h"
 
 class Screen_Grid {
@@ -34,6 +35,11 @@ private:
 	size_t y_pos;
 
 public:
+
+	Screen_Grid() :
+			columns(0), rows(0), grid_height(0), grid_widht(0), x_pos(0), y_pos(
+					0) {
+	}
 	/**
 	 *
 	 */

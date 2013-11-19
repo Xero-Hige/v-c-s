@@ -12,7 +12,7 @@ SDL_CPPFLAGS = $(CPPFLAGS) `sdl2-config --cflags`
 
 SDL_LDFLAGS = `sdl2-config --libs` -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf $(CPPLDFLAGS)
 
-GRAPHIC_LIBS = surface.o sprite.o animated_sprite.o button.o window.o text_drawer.o text_box.o secret_text_box.o
+GRAPHIC_LIBS = $(POSITION) surface.o sprite.o animated_sprite.o button.o window.o text_drawer.o text_box.o secret_text_box.o screen_grid.o
 
 surface.o: libs/surface/surface.h libs/surface/surface.cpp
 	$(CC) $(SDL_CPPFLAGS) -c libs/surface/surface.cpp
@@ -37,6 +37,9 @@ text_box.o: libs/text_box/text_box.h libs/text_box/text_box.cpp
 	
 secret_text_box.o: libs/secret_text_box/secret_text_box.h libs/secret_text_box/secret_text_box.cpp
 	$(CC) $(SDL_CPPFLAGS) -c libs/secret_text_box/secret_text_box.cpp
+	
+screen_grid.o: libs/screen_grid/screen_grid.h libs/screen_grid/screen_grid.cpp
+	$(CC) $(SDL_CPPFLAGS) -c libs/screen_grid/screen_grid.cpp
 	
 #Sound libs builder
 
@@ -80,7 +83,7 @@ position.o: libs/position/position.h libs/position/position.cpp
 
 #Logic boards builder
 
-BOARDS_LIB = product.o tile.o board.o refiller.o replacements_board.o
+BOARDS_LIBS = product.o tile.o board.o refiller.o replacements_board.o
 
 product.o: libs/boards/product.h libs/boards/product.cpp
 	$(CC) $(CPPFLAGS) -c libs/boards/product.cpp
