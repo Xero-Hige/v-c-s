@@ -107,7 +107,22 @@ void Board::rearrangeColumn(int column_number) {
     if (0 < column_number || column_number >= (int)columns) {
         return;
     }
-    //TODO acomodar posta, ahora no hace nada
+    int x = column_number;
+    int y = rows;
+    while (y >= 0) {
+        Position initial_pos = Position(x,y);
+        int empty_tiles = countEmpty(initial_pos);
+        if (empty_tiles > 0) {
+            // No hay más productos para rellenar
+            if (empty_tiles >= y) {
+                return;
+            }
+            Position product_pos = Position(x, y-empty_tiles);
+            Product* product = takeOutProduct(product_pos);
+            setProduct(product, product_pos);
+        }
+        y--;
+    }
 }
 
 Board::~Board() {
@@ -125,4 +140,17 @@ void Board::initTiles() {
         Tile tile = Tile(CELL);
         tiles.push_back(tile);
     }
+}
+
+int Board::countEmpty(Position pos) {
+    int x = pos.getX();
+    int y = pos.getY();
+    if (y < 0) {
+        return 0;
+    }
+    int pos_index = getIndexFromPos(x, y);
+    if (! tiles[pos_index].isEmpty()) {
+        return 0;
+    }
+    return 1 + countEmpty(Position(x, y-1));
 }
