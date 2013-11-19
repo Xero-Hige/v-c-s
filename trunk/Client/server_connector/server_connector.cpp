@@ -142,10 +142,10 @@ void Server_Connector::getRoomId(string & id){
 }
 
 void Server_Connector::getMatchmaking(string & mm){
-	cout << "1 - User-defined room \n2 - Default\n";
-	char c[256];
-	scanf("%s", c);
-	mm.append(c);
+//	cout << "1 - User-defined room \n2 - Default\n";
+//	char c[256];
+//	scanf("%s", c);
+	mm.append(/*c*/ "2");
 	return;
 }
 

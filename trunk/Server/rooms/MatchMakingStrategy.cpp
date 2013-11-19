@@ -15,9 +15,9 @@ void MatchMakingStrategy::addClient(Lobby * lob, ClientHandler * ch){
 	std::string s;
 	ch->recvMsg(s);//matchmaking message
 	unsigned msg = atoi(s.c_str());
-	if (msg == MM_USER_DEF)
+	if (/*msg == MM_USER_DEF*/ false)
 		addUserDefined(lob, ch);
-	else if (msg == MM_DEFAULT)
+	else if (/*msg == MM_DEFAULT*/ true)
 		addDefault(lob, ch);
 }
 
