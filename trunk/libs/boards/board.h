@@ -73,6 +73,7 @@ public:
 private:
     unsigned int getIndexFromPos(unsigned int x, unsigned int y);
     void initTiles();
+    int countEmpty(Position pos);
 };
 
 
