@@ -1,7 +1,7 @@
 /*
- * replacements_board.h
+ * combiner.cpp
  *
- * Created on: Nov 17, 2013
+ * Created on: Nov 19, 2013
  * 
  * Copyright 2013 Bruno Merlo Schurmann <brunomerloschurmann@gmail.com>
  * 
@@ -19,30 +19,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses 
  */
 
-#ifndef REPLACEMENTS_BOARD_H_
-#define REPLACEMENTS_BOARD_H_
+#include "combiner.h"
 
-#include "board.h"
+int Combiner::activateCombination(Position pos1, Position pos2) {
+    return 0;
+}
 
-#include "product.h"
-#include "refiller.h"
-
-#include <vector>
-#include <list>
-
-class ReplacementsBoard : public Board {
-private:
-    std::vector<Refiller*> refillers;
-
-public:
-    /* Solo se usa como dummy, el tablero no queda de forma válida ni usable */
-    ReplacementsBoard();
-    ReplacementsBoard(unsigned int n_rows, unsigned int n_columns, std::vector<Refiller*>& refillers);
-    std::list<Product*> getReplacements(int n, int column_number);
-    ~ReplacementsBoard();
-
-private:
-    void refill(int column_number, int n_extracted);
-};
-
-#endif /* REPLACEMENTS_BOARD_H_ */
+int Combiner::makeCombination(Position pos) {
+    return 0;
+}

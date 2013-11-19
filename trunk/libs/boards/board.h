@@ -37,8 +37,12 @@ private:
     std::vector<Tile> tiles;
 
 public:
+    /* Solo se usa como dummy, el tablero no queda de forma válida ni usable */
+    Board();
     Board(unsigned int n_rows, unsigned int n_columns);
-    // products tiene Product* para los Tile que son celda, y NULL para los Tile que son agujeros
+    /* Setea los casilleros (Tile) a celdas con productos o a agujeros      *
+     * products tiene Product* para los Tile que son celda, y NULL para los *
+     * Tile que son agujeros                                                */
     void setUp(std::list<Product*> products);
     /* Devuelve la altura del tablero */
     unsigned int getHeight();

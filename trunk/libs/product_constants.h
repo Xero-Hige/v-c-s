@@ -22,7 +22,7 @@
 #ifndef PRODUCT_CONSTANTS_H_
 #define PRODUCT_CONSTANTS_H_
 
-/* Constantes del color y tipo de los productos */
+/* Constantes del color, tipo y puntaje de los productos */
 
 // Constantes de color
 #define NO_COLOR -1
@@ -43,5 +43,12 @@
 #define STAR 3
 
 #define N_TYPES 4   // Cantidad de tipos, sin contar el inválido (NO_TYPE)
+
+// Constantes de puntaje
+// Representa el puntaje por producto combinado, tomando el mayor involucrado
+#define THREE_COMB_SCORE 10
+#define FOUR_COMB_SCORE 20
+#define FIVE_COMB_SCORE 30
+#define STAR_COMB_SCORE 40
 
 #endif /* PRODUCT_CONSTANTS_H_ */

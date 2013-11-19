@@ -31,6 +31,9 @@
 using std::vector;
 using std::list;
 
+Board::Board()
+    : rows(-1), columns(-1), tiles(vector<Tile>()) {}
+
 Board::Board(unsigned int n_rows, unsigned int n_columns)
     : rows(n_rows), columns(n_columns), tiles(vector<Tile>()) {
     initTiles();
