@@ -23,6 +23,11 @@
 #include <vector>
 //#include "../server_connector/server_connector.h"
 #include "../../libs/messages/MsgConstants.h"
+#include "../../libs/position/position.h"
+#include "../../libs/boards/board.h"
+#include "../../libs/boards/replacements_board.h"
+#include "../../libs/checkers/physical_checker.h"
+#include "../../libs/checkers/combination_checker.h"
 
 class Backend {
 
@@ -45,6 +50,14 @@ private:
 	bool _operation_ended;
 	std::string _operation_error;
 
+	// Tableros lógicos
+	Board board;
+	ReplacementsBoard replacements_board;
+
+	// Checkers
+	PhysicalChecker physical_checker;
+	CombinationChecker combination_checker;
+
 private:
 
 	void setOperationEnded(bool b);
@@ -53,6 +66,13 @@ private:
 public:
 	Backend();
 	virtual ~Backend();
+
+	/* Verifica si el cambio entre esas posiciones es válido */
+	bool checkSwap(Position pos1, Position pos2);
+
+	/* Verifica si hay combinación con el cambio de las dos posiciones *
+	 * El cambio debe haberse efectuado                                */
+	bool checkCombination(Position pos1, Position pos2);
 
 	//Async control
 	/**
