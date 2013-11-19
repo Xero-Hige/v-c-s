@@ -52,9 +52,9 @@ private:
 	std::string _operation_error;
 
 	// Tableros lógicos
-//	Board board;
+	Board board;
 	//TODO: constructor por defecto o inicializacion en el constructor del backend
-//	ReplacementsBoard replacements_board;
+	ReplacementsBoard replacements_board;
 	//TODO: constructor por defecto o inicializacion en el constructor del backend
 
 	// Checkers
@@ -62,6 +62,9 @@ private:
 	//TODO: constructor por defecto o inicializacion en el constructor del backend
 //	CombinationChecker combination_checker;
 	//TODO: constructor por defecto o inicializacion en el constructor del backend
+
+    Position l[2];
+
 
 private:
 

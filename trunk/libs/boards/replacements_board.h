@@ -36,10 +36,10 @@ private:
 
 public:
     /* Solo se usa como dummy, el tablero no queda de forma válida ni usable */
-    ReplacementsBoard();
+    ReplacementsBoard(){};
     ReplacementsBoard(unsigned int n_rows, unsigned int n_columns, std::vector<Refiller*>& refillers);
     std::list<Product*> getReplacements(int n, int column_number);
-    ~ReplacementsBoard();
+    ~ReplacementsBoard(){};
 
 private:
     void refill(int column_number, int n_extracted);

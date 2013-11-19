@@ -1,7 +1,7 @@
 #Project Builder
 #General
 CC = gcc
-CPPFLAGS = -Wall -Wextra -g -pedantic 
+CPPFLAGS = -Wall -Wextra -g -pedantic
 CPPLDFLAGS = -lm -lstdc++
 
 all: run-client
