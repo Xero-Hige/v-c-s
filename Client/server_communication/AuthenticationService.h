@@ -10,6 +10,7 @@
 
 #include "../../libs/wrappers/Thread.h"
 #include "../backend/backend.h"
+#include "../server_connector/server_connector.h"
 #include <string>
 
 class AuthenticationService : public Thread{
