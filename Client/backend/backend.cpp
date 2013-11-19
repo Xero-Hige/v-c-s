@@ -21,8 +21,8 @@
 
 #include "../../libs/boards/board.h"
 #include "../../libs/boards/replacements_board.h"
-//#include "../../libs/checkers/combination_checker.h"
-//#include "../../libs/checkers/physical_checker.h"
+#include "../../libs/checkers/combination_checker.h"
+#include "../../libs/checkers/physical_checker.h"
 
 #include <stddef.h>
 #include <cstdlib> //TODO sacar
@@ -30,7 +30,7 @@
 using std::string;
 using std::vector;
 
-Backend::Backend(): board(Board()) {
+Backend::Backend() {
 
 	ip="";
 	port=0;
@@ -42,7 +42,11 @@ Backend::Backend(): board(Board()) {
 	_operation_ended = true;
 	_operation_error = "";
 
+	board = Board();
 	replacements_board = ReplacementsBoard();
+
+//	physical_checker = PhysicalChecker(board.getLength(), board.getHeight());
+//	combination_checker = CombinationChecker(board);
 }
 
 void Backend::async_connect(const std::string& ip,int port){
@@ -96,7 +100,9 @@ std::vector<std::vector<int> > Backend::get_full_board() {
 		for (size_t y=0;y<(schema[0].size()*2);y++)
 		{
 			if (schema[x][y%schema[0].size()] != 0){
-				column.push_back(rand()%15 + 1);
+//				column.push_back(rand()%15 + 1);
+				//FIXME
+				column.push_back(((y%5)*3)+1);
 			}
 			else
 			{
@@ -142,8 +148,10 @@ vector<vector<int> > Backend::get_board_schema() {
 	if (schema.size() == 0) {
 		vector<int> column;
 		for (int y = 0; y < 20; y++) {
-			int a = rand()%7;
-			column.push_back(a<2 ? 0:1);
+		    //FIXME
+//			int a = rand()%7;
+//			column.push_back(a<2 ? 0:1);
+			column.push_back(1);
 		}
 		for (int x = 0; x < 30; x++) {
 			schema.push_back(column);
@@ -152,11 +160,21 @@ vector<vector<int> > Backend::get_board_schema() {
 	return schema;
 }
 
-bool Backend::async_make_swap(Position pos_1, Position pos_2) {
-	//TODO:
-    l[0]=pos_1;
-    l[1]=pos_2;
-	return true;
+bool Backend::async_make_swap(Position pos1, Position pos2) {
+    l[0] = pos1;
+    l[1] = pos2;
+    int x_difference = pos1.getX() - pos2.getX();
+    int y_difference = pos1.getY() - pos2.getY();
+    if (x_difference == 0) {
+        if (y_difference == 1 || y_difference == -1) {
+            return true;
+        }
+    } else if (y_difference == 0) {
+        if (x_difference == 1 || x_difference == -1) {
+            return true;
+        }
+    }
+    return false;
 }
 
 //bool Backend::checkSwap(Position pos1, Position pos2) {
