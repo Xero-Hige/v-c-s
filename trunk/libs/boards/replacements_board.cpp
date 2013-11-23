@@ -32,11 +32,6 @@ using std::vector;
 using std::list;
 using std::min;
 
-ReplacementsBoard::ReplacementsBoard()
-    : Board() {
-    refillers = vector<Refiller*>();
-}
-
 ReplacementsBoard::ReplacementsBoard(unsigned int n_rows, unsigned int n_columns, vector<Refiller*>& refillers)
     : Board(n_rows, n_columns){
     this->refillers = vector<Refiller*>();

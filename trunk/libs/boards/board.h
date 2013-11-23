@@ -38,12 +38,17 @@ private:
 
 public:
     /* Solo se usa como dummy, el tablero no queda de forma válida ni usable */
-    Board(){};
+    Board()
+        : rows(-1), columns(-1) {};
     Board(unsigned int n_rows, unsigned int n_columns);
-    /* Setea los casilleros (Tile) a celdas con productos o a agujeros      *
-     * products tiene Product* para los Tile que son celda, y NULL para los *
-     * Tile que son agujeros                                                */
-    void setUp(std::list<Product*> products);
+    /* Setea los casilleros (Tile) a celdas o a agujeros                   *
+     * schema es un vector que tiene las constantes HOLE o EMPTY_CELL de   *
+     * Tile. Es de largo n_filas*n_columnas, y está ordenado como una fila *
+     * a continuación de la otra                                           */
+    void setSchema(std::vector<int>& schema);
+    /* Setea los productos contenidos en products en las celdas tablero  *
+     * La cantidad de productos debe coincidir con la cantidad de celdas */
+    void setUp(std::vector<Product*> products);
     /* Devuelve la altura del tablero */
     unsigned int getHeight();
     /* Devuelve el ancho del tablero */
@@ -73,7 +78,7 @@ public:
     void rearrangeColumn(int column_number);
     /* Acomoda todas las columnas pasadas por parámetro */
     void rearrangeColumn(std::vector<int> column_numbers);
-    ~Board(){};
+    ~Board();
 
 private:
     unsigned int getIndexFromPos(unsigned int x, unsigned int y);

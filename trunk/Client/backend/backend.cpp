@@ -23,9 +23,12 @@
 #include "../../libs/boards/replacements_board.h"
 #include "../../libs/checkers/combination_checker.h"
 #include "../../libs/checkers/physical_checker.h"
+#include "../../libs/level_reader/level_reader.h"
 
 #include <stddef.h>
 #include <cstdlib> //TODO sacar
+
+#include <iostream> // FIXME borrame
 
 using std::string;
 using std::vector;
@@ -41,12 +44,6 @@ Backend::Backend() {
 
 	_operation_ended = true;
 	_operation_error = "";
-
-	board = Board();
-	replacements_board = ReplacementsBoard();
-
-//	physical_checker = PhysicalChecker(board.getLength(), board.getHeight());
-//	combination_checker = CombinationChecker(board);
 }
 
 void Backend::async_connect(const std::string& ip,int port){
@@ -92,7 +89,7 @@ vector<string> Backend::get_board_pokemon_codes() {
 }
 
 std::vector<std::vector<int> > Backend::get_full_board() {
-	//TODO:
+	//TODO: Esto hay que pedirlo al servidor
 	vector<vector<int> > board;
 	for (size_t x=0;x<schema.size();x++)
 	{
@@ -144,8 +141,10 @@ void Backend::async_get_room() {
 }
 
 vector<vector<int> > Backend::get_board_schema() {
-	//TODO:
+    schema = level_reader.getBoardSchema();
+	//TODO: Esto lo levantamos del Json en el cliente (no necesita conexión con el server)
 	if (schema.size() == 0) {
+	    std::cout << "Construyendo el schema a manopla" << std::endl;
 		vector<int> column;
 		for (int y = 0; y < 20; y++) {
 		    //FIXME
