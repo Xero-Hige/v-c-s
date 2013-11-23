@@ -22,7 +22,6 @@
 #ifndef REFILLER_H_
 #define REFILLER_H_
 
-#include "../product_constants.h"
 #include "product.h"
 
 #include <map>

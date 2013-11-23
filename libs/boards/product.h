@@ -23,6 +23,26 @@
 #define PRODUCT_H_
 
 class Product {
+public:
+    // Constantes de color
+    static const int NO_COLOR = -1;
+    static const int RED = 0;
+    static const int YELLOW = 1;
+    static const int GREEN = 2;
+    static const int BLUE = 3;
+    static const int VIOLET = 4;
+
+    static const int N_COLORS = 6; // Cantidad de colores, sin contar el inválido (NO_COLOR)
+
+    // Constantes de tipo
+    static const int NO_TYPE = -1;
+    static const int BUTTON = 0;
+    static const int V_BAR = 1;
+    static const int H_BAR = 2;
+    static const int STAR = 3;
+
+    static const int N_TYPES = 4;   // Cantidad de tipos, sin contar el inválido (NO_TYPE)
+
 private:
     int color;
     int type;

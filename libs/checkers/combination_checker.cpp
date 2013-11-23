@@ -21,7 +21,6 @@
 
 #include "combination_checker.h"
 
-#include "../product_constants.h"
 #include "../boards/product.h"
 #include "../boards/board.h"
 #include "../position/position.h"
