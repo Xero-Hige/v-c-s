@@ -100,9 +100,14 @@ refiller.o: libs/boards/refiller.h libs/boards/refiller.cpp
 replacements_board.o: libs/boards/replacements_board.h libs/boards/replacements_board.cpp
 	$(CC) $(CPPFLAGS) -c libs/boards/replacements_board.cpp
 
+#Level reader builder
+
+level_reader.o: libs/level_reader/level_reader.h libs/level_reader/level_reader.cpp libs/boards/tile.h
+	$(CC) $(CPPFLAGS) -c libs/level_reader/level_reader.cpp
+
 #Client
 
-CLIENT_OBJ = $(GRAPHIC_LIBS) $(SOUND_LIBS) $(BOARD_LIBS) login_screen.o client_app.o rooms_screen.o game_screen.o backend.o #server_connector.o
+CLIENT_OBJ = $(GRAPHIC_LIBS) $(SOUND_LIBS) $(BOARDS_LIBS) level_reader.o login_screen.o client_app.o rooms_screen.o game_screen.o backend.o #server_connector.o
 
 CLIENT_NAME = game-client
 
@@ -125,7 +130,7 @@ client_app.o: Client/client_app.cpp Client/client_app.h
 	$(CC) $(SDL_CPPFLAGS) -c Client/client_app.cpp
 
 client: Client/client.cpp $(CLIENT_OBJ)
-	$(CC) $(SDL_CPPFLAGS) $(CLIENT_OBJ) Client/client.cpp -o $(CLIENT_NAME) $(SDL_LDFLAGS)
+	$(CC) $(SDL_CPPFLAGS) $(CLIENT_OBJ) Client/client.cpp -o $(CLIENT_NAME) $(SDL_LDFLAGS) -ljsoncpp
 		
 #Cleanup
 clean:
