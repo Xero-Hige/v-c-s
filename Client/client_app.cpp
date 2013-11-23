@@ -34,9 +34,10 @@ Client_App::Client_App() {
 }
 
 Client_App::~Client_App() {
-	delete apps[0];
-	delete apps[1];
-	delete apps[2];
+    apps.clear();  //TODO Modifiqué esto para que sea menos negro =P pero me agarró la duda (Bruno)
+//	delete apps[0];
+//	delete apps[1];
+//	delete apps[2];
 
 	SDL_Quit();
 }

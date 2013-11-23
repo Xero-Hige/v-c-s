@@ -28,7 +28,7 @@
 #include "../../libs/checkers/physical_checker.h"
 #include "../../libs/messages/MsgConstants.h"
 #include "../../libs/position/position.h"
-
+#include "../../libs/level_reader/level_reader.h"
 
 class Backend {
 
@@ -58,6 +58,8 @@ private:
 	// Checkers
 //	PhysicalChecker physical_checker;
 //	CombinationChecker combination_checker;
+
+	LevelReader level_reader;
 
 	Position l[2];
 

@@ -22,23 +22,29 @@
 #ifndef LEVEL_READER_H_
 #define LEVEL_READER_H_
 
+#include "../boards/tile.h"
+
 #include <jsoncpp/json.h>
-#include <fstream>
 #include <string>
+#include <vector>
 
 class LevelReader {
 private:
-    Json::Reader reader;
-    ifstream input_file;
+    Json::Value level_data;
 
 public:
-    LevelReader(std::string file_name);
+    /* Solo se usa como dummy, no queda de forma válida ni usable         *
+     * Si se usa, todos los métodos devolveran valores inválidos según el *
+     * campo, o tendrán valores inesperados                               */
+    LevelReader() { level_data["valid"] = false; }
+    explicit LevelReader(std::string& input_data);
     int getLevelNumber();
     int getGoalScore();
     int getNumberOfPlayers();
 
     int getBoardWidth();
     int getBoardHeight();
+    std::vector<std::vector<int> > getBoardSchema();
 
 };
 

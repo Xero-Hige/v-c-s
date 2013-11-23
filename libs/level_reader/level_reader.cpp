@@ -21,5 +21,80 @@
 
 #include "level_reader.h"
 
+#include "../boards/tile.h"
+
 #include <jsoncpp/json.h>
-#include <fstream>
+#include <string>
+#include <vector>
+
+using std::string;
+using std::vector;
+
+LevelReader::LevelReader(string& input_data) {
+    Json::Reader reader;
+    bool parsed = reader.parse(input_data, level_data, false);
+    // TODO Chequear si hubo error en el parseo y hacer algo (tirar una excepción?)
+    level_data["valid"] = true;
+}
+
+int LevelReader::getLevelNumber() {
+    if (! level_data["valid"].asBool()) {
+        return 0;
+    }
+    return level_data["level_number"].asInt();
+}
+
+int LevelReader::getGoalScore() {
+    if (! level_data["valid"].asBool()) {
+        return 0;
+    }
+    return level_data["goal_score"].asInt();
+}
+
+int LevelReader::getNumberOfPlayers() {
+    if (! level_data["valid"].asBool()) {
+        return 0;
+    }
+    return level_data["number_players"].asInt();
+}
+
+int LevelReader::getBoardWidth() {
+    if (! level_data["valid"].asBool()) {
+        return -1;
+    }
+    return level_data["board_width"].asInt();
+}
+
+int LevelReader::getBoardHeight() {
+    if (! level_data["valid"].asBool()) {
+        return -1;
+    }
+    return level_data["board_height"].asInt();
+}
+
+vector<vector<int> > LevelReader::getBoardSchema() {
+    if (! level_data["valid"].asBool()) {
+        return vector<vector<int> >();
+    }
+    int width = getBoardWidth();
+    int height = getBoardHeight();
+    vector<vector<int> > schema;
+    Json::Value tiles = level_data["tiles"];
+    for (int x = 0; x < width; x++) {
+        schema.push_back(vector<int>());
+    }
+    int index = 0;
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
+            Json::Value tile = tiles[index];
+            if (tile["type"].asString() == "hole") {
+                schema[x].push_back(+Tile::HOLE);
+            } else {
+                schema[x].push_back(+Tile::EMPTY_CELL);
+            }
+            index++;
+        }
+    }
+    return schema;
+}
+

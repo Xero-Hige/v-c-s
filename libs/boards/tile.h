@@ -27,11 +27,13 @@
 
 #include <cstdlib>
 
-// Type constants
-#define HOLE 0
-#define CELL 1
-
 class Tile {
+public:
+    static const int HOLE;
+    static const int EMPTY_CELL;
+    static const int USED_CELL;
+
+private:
     int type;
     Product* product;
     // TODO la posición no seria necesaria para nada
@@ -47,7 +49,7 @@ public:
     Tile(int type, Product* product)
         : type(type), product(product), pos(Position(-1, -1)) {}
     explicit Tile(Product* product)
-        : type((product==NULL)?HOLE:CELL), product(product), pos(Position(-1, -1)) {}
+        : type((product==NULL)?HOLE:USED_CELL), product(product), pos(Position(-1, -1)) {}
 //    explicit Tile(Tile& tile)
 //        : type(tile.type), product(tile.product), x(tile.x), y(tile.y) {}
 //    explicit Tile(const Tile& tile)
@@ -68,7 +70,7 @@ public:
     bool setProduct(Product* product);
     // No se si hace falta
     void eliminateProduct();
-    ~Tile(){};
+    ~Tile();
 };
 
 #endif /* TILE_H_ */

@@ -31,25 +31,24 @@
 using std::vector;
 using std::list;
 
-Board::Board()
-    : rows(-1), columns(-1), tiles(vector<Tile>()) {}
-
 Board::Board(unsigned int n_rows, unsigned int n_columns)
     : rows(n_rows), columns(n_columns), tiles(vector<Tile>()) {
     initTiles();
 }
 
-void Board::setUp(list<Product*> products) {
+void Board::setSchema(std::vector<int>& schema) {
     unsigned int length = rows * columns;
     for (unsigned int i = 0; i < length; i++) {
-        Product* product = products.front();
-        products.pop_front();
-        if (product != NULL) {
-            tiles[i].setProduct(product);
-        } else {
-            tiles[i].setType(HOLE);
+        int tile_type = schema[i];
+        // Se inicializa en EMPTY_CELL, por lo que solo hay que chequear HOLE
+        if (tile_type == Tile::HOLE) {
+            tiles[i].setType(Tile::HOLE);
         }
     }
+}
+
+void Board::setUp(vector<Product*> products) {
+
 }
 
 unsigned int Board::getHeight() {
@@ -144,7 +143,7 @@ void Board::initTiles() {
     unsigned int length = rows * columns;
     tiles.reserve(length);
     for (unsigned int i = 0; i < length; i++) {
-        Tile tile = Tile(CELL);
+        Tile tile = Tile(Tile::EMPTY_CELL);
         tiles.push_back(tile);
     }
 }

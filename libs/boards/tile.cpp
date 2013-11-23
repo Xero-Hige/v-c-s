@@ -24,6 +24,10 @@
 #include "product.h"
 #include "../position/position.h"
 
+const int Tile::HOLE = -1;
+const int Tile::EMPTY_CELL = 0;
+const int Tile::USED_CELL = 1;
+
 void Tile::setType(int type) {
     this->type = type;
 }
@@ -41,11 +45,11 @@ bool Tile::isHole() {
 }
 
 bool Tile::isCell() {
-    return type == CELL;
+    return type != HOLE;
 }
 
 bool Tile::isEmpty() {
-    return (type == HOLE || product == NULL);
+    return type == EMPTY_CELL;
 }
 
 int Tile::getProductColor() {
@@ -57,21 +61,24 @@ int Tile::getProductType() {
 }
 
 Product* Tile::popProduct(){
-    Product* product = this->product;
-    this->product = NULL;
-    return product;
+    Product* ret_product = product;
+    product = NULL;
+    type = EMPTY_CELL;
+    return ret_product;
 }
 
 bool Tile::setProduct(Product* product) {
-    if (type == HOLE || this->product != NULL) {
+    if (type == HOLE || type == USED_CELL) {
         return false;
     }
     this->product = product;
+    type = USED_CELL;
     return true;
 }
 
 void Tile::eliminateProduct() {
-    delete(product);
+    Product* del_product = popProduct();
+    delete(del_product);
 }
 
 Tile::~Tile() {
