@@ -8,7 +8,6 @@
 #include "BigEndianProtocol.h"
 #include <inttypes.h>
 #include <arpa/inet.h>
-#include <iostream>
 #include <string>
 #include <sstream>
 

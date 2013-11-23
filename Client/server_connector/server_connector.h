@@ -5,25 +5,21 @@
  *      Author: juan
  */
 
-#ifndef CLIENT_H_
-#define CLIENT_H_
+#ifndef SERVER_CONNECTOR_H_
+#define SERVER_CONNECTOR_H_
 #include <stdlib.h>
 #include <string>
-#include <inttypes.h>
 #include "../../libs/communication_protocol/FormattedSocket.h"
 #include "../server_communication/Authenticator.h"
 
 
 class Server_Connector {
-	friend class AuthenticationService;
+	friend class Authenticator;
 
 	Authenticator auth;
-	FormattedSocket * sock;//socket file descriptor
+	FormattedSocket * sock; //socket file descriptor
 
 	bool exit_char_pressed;
-
-	bool logged;
-	bool auth_ended;
 
 	void getMatchmaking(std::string & mm);
 	void getRoomId(std::string & id);
@@ -56,4 +52,4 @@ public:
 	virtual ~Server_Connector();
 };
 
-#endif /* CLIENT_H_ */
+#endif /* SERVER_CONNECTOR_H */

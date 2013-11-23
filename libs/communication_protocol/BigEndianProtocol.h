@@ -22,7 +22,7 @@ void insertSize(char * buf, uint32_t nro);
  * readSize lee los primeros 4 bytes del buffer, e inserta esos valores en
  * una variable con el byte-ordering del procesador en uso.
  */
-uint32_t readSize(char * buf);
+uint32_t readSize(const char * buf);
 
 /*
  * darFormato inserta 'msg' en el buffer 'msg_con_size', usando los primeros
