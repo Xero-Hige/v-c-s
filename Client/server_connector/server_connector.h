@@ -13,6 +13,7 @@
 #include "../../libs/communication_protocol/FormattedSocket.h"
 #include "../server_communication/Authenticator.h"
 
+
 class Server_Connector {
 	friend class AuthenticationService;
 

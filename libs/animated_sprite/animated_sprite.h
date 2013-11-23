@@ -29,7 +29,7 @@ private:
 	int max_frames;
 	int framerate;
 
-	long time;
+	unsigned long time;
 
 	int frame_increment;
 	int frame_height;
@@ -41,11 +41,14 @@ public:
 	/**
 	 * Dummy
 	 */
-	Animated_Sprite() {}
+	Animated_Sprite() :
+			actual_frame(0), max_frames(0), framerate(0), time(
+					0), frame_increment(0), frame_height(0), frame_width(0), oscillate(false) {
+	}
 	/**
 	 * TODO
 	 */
-	Animated_Sprite(const std::string& file_path, Window& window,int frames);
+	Animated_Sprite(const std::string& file_path, Window& window, int frames);
 	/**
 	 * TODO
 	 */
