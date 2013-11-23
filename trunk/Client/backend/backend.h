@@ -28,13 +28,14 @@
 #include "../../libs/checkers/physical_checker.h"
 #include "../../libs/messages/MsgConstants.h"
 #include "../../libs/position/position.h"
+#include "../server_connector/server_connector.h"
 #include "../../libs/level_reader/level_reader.h"
 
 class Backend {
 
 private:
 
-	//Server_Connector server_connector;
+	Server_Connector server_connector;
 
 	//Connection info
 	std::string ip;
