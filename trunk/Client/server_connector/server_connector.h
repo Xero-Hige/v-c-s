@@ -14,8 +14,6 @@
 
 
 class Server_Connector {
-	friend class Authenticator;
-
 	Authenticator auth;
 	FormattedSocket * sock; //socket file descriptor
 
