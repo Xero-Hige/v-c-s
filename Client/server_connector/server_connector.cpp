@@ -24,6 +24,7 @@ using std::endl;
 
 struct sockaddr_in server_addr;
 
+
 /*
  * setServerAddr configura una estructura sockaddr_in para poder utilizar el
  * puerto deseado.
@@ -81,11 +82,9 @@ int Server_Connector::makeConnection(std::string ip, int port){
 	return 0;
 }
 
-bool Server_Connector::connectServer
-(std::string username, std::string passwd, std::string a_type){
+bool Server_Connector::connectServer(std::string username, std::string passwd, std::string a_type){
 	//Obtiene user y pass y si los quiere usar para logearse o registrarse
-//	return auth.authenticate(this, username, passwd, a_type);
-	return true;
+	return auth.authenticate(username, passwd, a_type);
 }
 
 void Server_Connector::useUserDefinedMatchmaking(){
