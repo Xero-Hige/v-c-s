@@ -26,444 +26,444 @@
 
 std::string getLevelData() {
     std::string ret = "{\
-        \"number\": 1,\
-        \"width\": 6,\
-        \"height\": 6,\
-        \"goalScore\": 3,\
-        \"players\": 2,\
+        \"level_number\": 1,\
+        \"board_width\": 12,\
+        \"board_height\": 12,\
+        \"goal_score\": 3,\
+        \"number_players\": 2,\
         \"tiles\": [\
             {\
-                \"type\": \"cell\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"hole\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"cell\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"hole\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"cell\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"hole\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"cell\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"hole\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"cell\",\
-            },\
-    {\
-                    \"type\": \"cell\",\
-                },\
-                {\
-                    \"type\": \"hole\",\
-                },\
-                {\
-                    \"type\": \"cell\",\
-                },\
-                {\
-                    \"type\": \"hole\",\
-                },\
-                {\
-                    \"type\": \"cell\",\
-                },\
-                {\
-                    \"type\": \"hole\",\
-                },\
-                {\
-                    \"type\": \"cell\",\
-                },\
-                {\
-                    \"type\": \"hole\",\
-                },\
-                {\
-                    \"type\": \"cell\",\
-                },\
-            {\
-                \"type\": \"cell\",\
-            },\
-            {\
-                \"type\": \"hole\",\
-            },\
-            {\
-                \"type\": \"cell\",\
-            },\
-            {\
-                \"type\": \"hole\",\
-            },\
-            {\
-                \"type\": \"cell\",\
-            },\
-            {\
-                \"type\": \"hole\",\
-            },\
-            {\
-                \"type\": \"cell\",\
-            },\
-            {\
-                \"type\": \"hole\",\
-            },\
-            {\
-                \"type\": \"cell\",\
-            },\
-            {\
-                \"type\": \"cell\",\
-            },\
-            {\
-                \"type\": \"hole\",\
-            },\
-            {\
-                \"type\": \"cell\",\
-            },\
-            {\
-                \"type\": \"hole\",\
-            },\
-            {\
-                \"type\": \"cell\",\
-            },\
-            {\
-                \"type\": \"hole\",\
-            },\
-            {\
-                \"type\": \"cell\",\
-            },\
-            {\
-                \"type\": \"hole\",\
-            },\
-            {\
-                \"type\": \"cell\",\
-            },\
-            {\
-                \"type\": \"cell\",\
-            },\
-            {\
-                \"type\": \"hole\",\
-            },\
-            {\
-                \"type\": \"cell\",\
-            },\
-            {\
-                \"type\": \"hole\",\
-            },\
-            {\
-                \"type\": \"cell\",\
-            },\
-            {\
-                \"type\": \"hole\",\
-            },\
-            {\
-                \"type\": \"cell\",\
-            },\
-            {\
-                \"type\": \"hole\",\
-            },\
-            {\
-                \"type\": \"cell\",\
+                \"type\": \"cell\"\
             },\
     {\
-                    \"type\": \"cell\",\
+                    \"type\": \"cell\"\
                 },\
                 {\
-                    \"type\": \"hole\",\
+                    \"type\": \"cell\"\
                 },\
                 {\
-                    \"type\": \"cell\",\
+                    \"type\": \"cell\"\
                 },\
                 {\
-                    \"type\": \"hole\",\
+                    \"type\": \"cell\"\
                 },\
                 {\
-                    \"type\": \"cell\",\
+                    \"type\": \"cell\"\
                 },\
                 {\
-                    \"type\": \"hole\",\
+                    \"type\": \"cell\"\
                 },\
                 {\
-                    \"type\": \"cell\",\
+                    \"type\": \"cell\"\
                 },\
                 {\
-                    \"type\": \"hole\",\
+                    \"type\": \"cell\"\
                 },\
                 {\
-                    \"type\": \"cell\",\
+                    \"type\": \"cell\"\
                 },\
             {\
-                \"type\": \"cell\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"hole\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"cell\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"hole\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"cell\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"hole\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"cell\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"hole\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"cell\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"cell\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"hole\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"cell\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"hole\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"cell\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"hole\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"cell\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"hole\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"cell\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"cell\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"hole\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"cell\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"hole\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"cell\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"hole\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"cell\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"hole\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"cell\",\
+                \"type\": \"cell\"\
             },\
     {\
-                    \"type\": \"cell\",\
+                    \"type\": \"cell\"\
                 },\
                 {\
-                    \"type\": \"hole\",\
+                    \"type\": \"cell\"\
                 },\
                 {\
-                    \"type\": \"cell\",\
+                    \"type\": \"cell\"\
                 },\
                 {\
-                    \"type\": \"hole\",\
+                    \"type\": \"cell\"\
                 },\
                 {\
-                    \"type\": \"cell\",\
+                    \"type\": \"cell\"\
                 },\
                 {\
-                    \"type\": \"hole\",\
+                    \"type\": \"cell\"\
                 },\
                 {\
-                    \"type\": \"cell\",\
+                    \"type\": \"cell\"\
                 },\
                 {\
-                    \"type\": \"hole\",\
+                    \"type\": \"cell\"\
                 },\
                 {\
-                    \"type\": \"cell\",\
+                    \"type\": \"cell\"\
                 },\
             {\
-                \"type\": \"cell\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"hole\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"cell\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"hole\",\
+                \"type\": \"hole\"\
             },\
             {\
-                \"type\": \"cell\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"hole\",\
+                \"type\": \"hole\"\
             },\
             {\
-                \"type\": \"cell\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"hole\",\
+                \"type\": \"hole\"\
             },\
             {\
-                \"type\": \"cell\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"cell\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"hole\",\
+                \"type\": \"hole\"\
             },\
             {\
-                \"type\": \"cell\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"hole\",\
+                \"type\": \"hole\"\
             },\
             {\
-                \"type\": \"cell\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"hole\",\
+                \"type\": \"hole\"\
             },\
             {\
-                \"type\": \"cell\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"hole\",\
+                \"type\": \"hole\"\
             },\
             {\
-                \"type\": \"cell\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"cell\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"hole\",\
+                \"type\": \"hole\"\
             },\
             {\
-                \"type\": \"cell\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"hole\",\
+                \"type\": \"hole\"\
             },\
             {\
-                \"type\": \"cell\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"hole\",\
+                \"type\": \"hole\"\
             },\
             {\
-                \"type\": \"cell\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"hole\",\
+                \"type\": \"hole\"\
             },\
             {\
-                \"type\": \"cell\",\
+                \"type\": \"cell\"\
             },\
     {\
-                    \"type\": \"cell\",\
+                    \"type\": \"cell\"\
                 },\
                 {\
-                    \"type\": \"hole\",\
+                    \"type\": \"hole\"\
                 },\
                 {\
-                    \"type\": \"cell\",\
+                    \"type\": \"cell\"\
                 },\
                 {\
-                    \"type\": \"hole\",\
+                    \"type\": \"hole\"\
                 },\
                 {\
-                    \"type\": \"cell\",\
+                    \"type\": \"cell\"\
                 },\
                 {\
-                    \"type\": \"hole\",\
+                    \"type\": \"hole\"\
                 },\
                 {\
-                    \"type\": \"cell\",\
+                    \"type\": \"cell\"\
                 },\
                 {\
-                    \"type\": \"hole\",\
+                    \"type\": \"hole\"\
                 },\
                 {\
-                    \"type\": \"cell\",\
+                    \"type\": \"cell\"\
+                },\
+              {\
+                \"type\": \"cell\"\
+            },\
+            {\
+                \"type\": \"cell\"\
+            },\
+            {\
+                \"type\": \"cell\"\
+            },\
+            {\
+                \"type\": \"cell\"\
+            },\
+            {\
+                \"type\": \"cell\"\
+            },\
+            {\
+                \"type\": \"cell\"\
+            },\
+            {\
+                \"type\": \"cell\"\
+            },\
+            {\
+                \"type\": \"cell\"\
+            },\
+            {\
+                \"type\": \"cell\"\
+            },\
+    {\
+                    \"type\": \"cell\"\
+                },\
+                {\
+                    \"type\": \"cell\"\
+                },\
+                {\
+                    \"type\": \"cell\"\
+                },\
+                {\
+                    \"type\": \"cell\"\
+                },\
+                {\
+                    \"type\": \"cell\"\
+                },\
+                {\
+                    \"type\": \"cell\"\
+                },\
+                {\
+                    \"type\": \"cell\"\
+                },\
+                {\
+                    \"type\": \"cell\"\
+                },\
+                {\
+                    \"type\": \"cell\"\
                 },\
             {\
-                \"type\": \"cell\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"hole\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"cell\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"hole\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"cell\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"hole\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"cell\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"hole\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"cell\",\
+                \"type\": \"cell\"\
+            },\
+    {\
+                    \"type\": \"cell\"\
+                },\
+                {\
+                    \"type\": \"cell\"\
+                },\
+                {\
+                    \"type\": \"cell\"\
+                },\
+                {\
+                    \"type\": \"cell\"\
+                },\
+                {\
+                    \"type\": \"cell\"\
+                },\
+                {\
+                    \"type\": \"cell\"\
+                },\
+                {\
+                    \"type\": \"cell\"\
+                },\
+                {\
+                    \"type\": \"cell\"\
+                },\
+                {\
+                    \"type\": \"cell\"\
+                },\
+            {\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"cell\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"hole\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"cell\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"hole\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"cell\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"hole\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"cell\",\
+                \"type\": \"cell\"\
             },\
             {\
-                \"type\": \"hole\",\
+                \"type\": \"cell\"\
             },\
-            {\
-                \"type\": \"cell\",\
-            }\
+    {\
+                    \"type\": \"cell\"\
+                },\
+                {\
+                    \"type\": \"cell\"\
+                },\
+                {\
+                    \"type\": \"cell\"\
+                },\
+                {\
+                    \"type\": \"cell\"\
+                },\
+                {\
+                    \"type\": \"cell\"\
+                },\
+                {\
+                    \"type\": \"cell\"\
+                },\
+                {\
+                    \"type\": \"cell\"\
+                },\
+                {\
+                    \"type\": \"cell\"\
+                },\
+                {\
+                    \"type\": \"cell\"\
+                }\
         ]\
     }";
     return ret;

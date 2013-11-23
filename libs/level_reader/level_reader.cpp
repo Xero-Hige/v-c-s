@@ -27,6 +27,8 @@
 #include <string>
 #include <vector>
 
+#include <iostream> //FIXME
+
 using std::string;
 using std::vector;
 
@@ -94,7 +96,7 @@ vector<vector<int> > LevelReader::getBoardSchema() {
             if (tile["type"].asString() == "hole") {
                 schema[x].push_back(+Tile::HOLE);
             } else {
-                schema[x].push_back(+Tile::EMPTY_CELL);
+                schema[x].push_back(+Tile::CELL);
             }
             index++;
         }

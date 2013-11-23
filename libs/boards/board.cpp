@@ -40,7 +40,7 @@ void Board::setSchema(std::vector<int>& schema) {
     unsigned int length = rows * columns;
     for (unsigned int i = 0; i < length; i++) {
         int tile_type = schema[i];
-        // Se inicializa en EMPTY_CELL, por lo que solo hay que chequear HOLE
+        // Se inicializa en CELL, por lo que solo hay que chequear HOLE
         if (tile_type == Tile::HOLE) {
             tiles[i].setType(Tile::HOLE);
         }
@@ -143,7 +143,7 @@ void Board::initTiles() {
     unsigned int length = rows * columns;
     tiles.reserve(length);
     for (unsigned int i = 0; i < length; i++) {
-        Tile tile = Tile(Tile::EMPTY_CELL);
+        Tile tile = Tile(Tile::CELL);
         tiles.push_back(tile);
     }
 }

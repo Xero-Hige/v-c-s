@@ -23,7 +23,6 @@
 #include <vector>
 
 #include "../../libs/boards/board.h"
-#include "../../libs/boards/replacements_board.h"
 #include "../../libs/checkers/combination_checker.h"
 #include "../../libs/checkers/physical_checker.h"
 #include "../../libs/messages/MsgConstants.h"
@@ -54,7 +53,7 @@ private:
 
 	// Tableros lógicos
 	Board board;
-	ReplacementsBoard replacements_board;
+	Board replacements_board;
 
 	// Checkers
 //	PhysicalChecker physical_checker;
@@ -97,6 +96,9 @@ public:
 	 * Devuelve si el backend tiene una sesion iniciada
 	 */
 	bool logged_in();
+
+	/* Setea el tablero según las especificaciones del nivel */
+	void configureBoard();
 
 	/**
 	 * Devuelve un esquema del tablero, 0 si no hay celda
