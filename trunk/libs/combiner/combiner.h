@@ -22,10 +22,17 @@
 #ifndef COMBINER_H_
 #define COMBINER_H_
 
-#include "../product_constants.h"
 #include "../position/position.h"
 #include "../boards/board.h"
+#include "../boards/product.h"
 #include "../checkers/combination_checker.h"
+
+// Constantes de puntaje
+// Representa el puntaje por producto combinado, tomando el mayor involucrado
+#define THREE_COMB_SCORE 10
+#define FOUR_COMB_SCORE 20
+#define FIVE_COMB_SCORE 30
+#define STAR_COMB_SCORE 40
 
 class Combiner {
 private:

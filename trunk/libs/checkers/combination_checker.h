@@ -22,7 +22,6 @@
 #ifndef COMBINATION_CHECKER_H_
 #define COMBINATION_CHECKER_H_
 
-#include "../product_constants.h"
 #include "../boards/product.h"
 #include "../boards/board.h"
 #include "../position/position.h"

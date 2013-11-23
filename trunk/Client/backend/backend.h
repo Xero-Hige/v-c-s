@@ -142,6 +142,13 @@ public:
 	 */
 	void async_get_room();
 
+	//Construccion del nivel
+	/**
+	 * Envia el comando al servidor, recibe los datos del nivel, y configura
+	 * los miembros del backend según las especificaciones del nivel
+	 */
+	void asyncGetLevelSpecification();
+
 	//Game
 	/**
 	 * Hace un swap entre los elementos. Devuelve true en caso que se pueda

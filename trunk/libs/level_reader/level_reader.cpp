@@ -31,6 +31,10 @@ using std::string;
 using std::vector;
 
 LevelReader::LevelReader(string& input_data) {
+    this->changeLevelData(input_data);
+}
+
+void LevelReader::changeLevelData(string& input_data) {
     Json::Reader reader;
     bool parsed = reader.parse(input_data, level_data, false);
     // TODO Chequear si hubo error en el parseo y hacer algo (tirar una excepción?)

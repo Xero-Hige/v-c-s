@@ -21,7 +21,6 @@
 
 #include "refiller.h"
 
-#include "../product_constants.h"
 #include "product.h"
 
 #include <map>
@@ -63,7 +62,7 @@ Product* Refiller::getNewProduct() {
         }
         n-= it->second;
     }
-    return (new Product(color, BUTTON));
+    return (new Product(color, Product::BUTTON));
 }
 
 // Devuelve un número aleatorio entre 1 y el atributo limit (incluidos)

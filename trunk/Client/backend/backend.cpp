@@ -29,6 +29,7 @@
 #include <cstdlib> //TODO sacar
 
 #include <iostream> // FIXME borrame
+#include "info_nivel.h" // FIXME borrame
 
 using std::string;
 using std::vector;
@@ -141,6 +142,9 @@ void Backend::async_get_room() {
 }
 
 vector<vector<int> > Backend::get_board_schema() {
+    // FIXME Esto no va acá, hay que llamarlo al final de la screen de room o al princio del screen de level
+    asyncGetLevelSpecification();
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
     schema = level_reader.getBoardSchema();
 	//TODO: Esto lo levantamos del Json en el cliente (no necesita conexión con el server)
 	if (schema.size() == 0) {
@@ -174,6 +178,12 @@ bool Backend::async_make_swap(Position pos1, Position pos2) {
         }
     }
     return false;
+}
+
+void Backend::asyncGetLevelSpecification() {
+    //TODO Que ande en serio
+    string level_data = getLevelData();
+    level_reader.changeLevelData(level_data);
 }
 
 //bool Backend::checkSwap(Position pos1, Position pos2) {

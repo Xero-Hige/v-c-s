@@ -38,6 +38,7 @@ public:
      * campo, o tendrán valores inesperados                               */
     LevelReader() { level_data["valid"] = false; }
     explicit LevelReader(std::string& input_data);
+    void changeLevelData(std::string& input_data);
     int getLevelNumber();
     int getGoalScore();
     int getNumberOfPlayers();
