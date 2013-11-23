@@ -19,7 +19,6 @@
 #include <string>
 #include "../../libs/communication_protocol/BigEndianProtocol.h"
 #include "../../libs/messages/MsgConstants.h"
-#include "../server_communication/Authenticator.h"
 #include "../server_communication/ClientMsgInterpreter.h"
 
 using std::cerr;
