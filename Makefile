@@ -62,17 +62,24 @@ Mutex.o:
 
 SOCKET_LIBS = Socket.o
 
+Socket.o: libs/wrappers/Socket.h libs/wrappers/Socket.cpp
+	$(CC) $(CPPFLAGS) -c libs/wrappers/Socket.cpp
+
 #Messages libs builder
 
 MESSAGES_LIBS = MsgInterpreter.o
 
 #Protocol libs builder
 
-COMUMINICATION_PROTOCOL_LIBS = HMAC.o BigEndianProtocol.o
+COMMUNICATION_PROTOCOL_LIBS = BigEndianProtocol.o FormattedSocket.o #HMAC.o
 
-HMAC.o:
+FormattedSocket.o: Socket.o libs/communication_protocol/FormattedSocket.h libs/communication_protocol/FormattedSocket.cpp
+		$(CC) $(CPPFLAGS) -c libs/communication_protocol/FormattedSocket.cpp
 
-BigEndianProtocol.o:
+#HMAC.o:
+
+BigEndianProtocol.o: libs/communication_protocol/BigEndianProtocol.h libs/communication_protocol/BigEndianProtocol.cpp
+		$(CC) $(CPPFLAGS) -c libs/communication_protocol/BigEndianProtocol.cpp
 
 #Position
 
@@ -107,7 +114,7 @@ level_reader.o: libs/level_reader/level_reader.h libs/level_reader/level_reader.
 
 #Client
 
-CLIENT_OBJ = $(GRAPHIC_LIBS) $(SOUND_LIBS) $(BOARDS_LIBS) level_reader.o login_screen.o client_app.o rooms_screen.o game_screen.o backend.o #server_connector.o
+CLIENT_OBJ = $(GRAPHIC_LIBS) $(SOUND_LIBS) $(BOARDS_LIBS) $(SOCKET_LIBS) $(COMMUNICATION_PROTOCOL_LIBS) level_reader.o login_screen.o client_app.o rooms_screen.o game_screen.o server_connector.o Authenticator.o backend.o 
 
 CLIENT_NAME = game-client
 
@@ -122,6 +129,9 @@ game_screen.o: Client/game_screen/game_screen.cpp Client/game_screen.h Client/ap
 
 backend.o: Client/backend/backend.cpp Client/backend/backend.h
 	$(CC) $(SDL_CPPFLAGS) -c Client/backend/backend.cpp
+
+Authenticator.o: Client/server_communication/Authenticator.h Client/server_communication/Authenticator.cpp
+		$(CC) $(SDL_CPPFLAGS) -c Client/server_communication/Authenticator.cpp
 	
 server_connector.o: Client/server_connector/server_connector.cpp Client/server_connector/server_connector.h
 	$(CC) $(SDL_CPPFLAGS) -c Client/server_connector/server_connector.cpp
