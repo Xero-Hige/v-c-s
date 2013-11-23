@@ -20,7 +20,7 @@
 #include "backend.h"
 
 #include "../../libs/boards/board.h"
-#include "../../libs/boards/replacements_board.h"
+#include "../../libs/boards/tile.h"
 #include "../../libs/checkers/combination_checker.h"
 #include "../../libs/checkers/physical_checker.h"
 #include "../../libs/level_reader/level_reader.h"
@@ -78,6 +78,11 @@ Backend::~Backend() {
 	// TODO Auto-generated destructor stub
 }
 
+void Backend::configureBoard() {
+    board = Board(level_reader.getBoardHeight(), level_reader.getBoardWidth());
+    replacements_board = Board(level_reader.getBoardHeight(), level_reader.getBoardWidth());
+}
+
 vector<string> Backend::get_board_pokemon_codes() {
 	vector<string> codes;
 	codes.push_back("001");
@@ -97,14 +102,14 @@ std::vector<std::vector<int> > Backend::get_full_board() {
 		vector<int> column;
 		for (size_t y=0;y<(schema[0].size()*2);y++)
 		{
-			if (schema[x][y%schema[0].size()] != 0){
+			if (schema[x][y%schema[0].size()] == Tile::CELL){
 //				column.push_back(rand()%15 + 1);
 				//FIXME
 				column.push_back(((y%5)*3)+1);
 			}
 			else
 			{
-				column.push_back(0);
+				column.push_back(-1);
 			}
 		}
 
@@ -146,20 +151,6 @@ vector<vector<int> > Backend::get_board_schema() {
     asyncGetLevelSpecification();
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     schema = level_reader.getBoardSchema();
-	//TODO: Esto lo levantamos del Json en el cliente (no necesita conexión con el server)
-	if (schema.size() == 0) {
-	    std::cout << "Construyendo el schema a manopla" << std::endl;
-		vector<int> column;
-		for (int y = 0; y < 20; y++) {
-		    //FIXME
-//			int a = rand()%7;
-//			column.push_back(a<2 ? 0:1);
-			column.push_back(1);
-		}
-		for (int x = 0; x < 30; x++) {
-			schema.push_back(column);
-		}
-	}
 	return schema;
 }
 

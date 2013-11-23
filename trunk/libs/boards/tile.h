@@ -29,9 +29,8 @@
 
 class Tile {
 public:
-    static const int HOLE;
-    static const int EMPTY_CELL;
-    static const int USED_CELL;
+    static const int HOLE = 0;
+    static const int CELL = 1;
 
 private:
     int type;
@@ -49,7 +48,7 @@ public:
     Tile(int type, Product* product)
         : type(type), product(product), pos(Position(-1, -1)) {}
     explicit Tile(Product* product)
-        : type((product==NULL)?HOLE:USED_CELL), product(product), pos(Position(-1, -1)) {}
+        : type((product==NULL)?HOLE:CELL), product(product), pos(Position(-1, -1)) {}
 //    explicit Tile(Tile& tile)
 //        : type(tile.type), product(tile.product), x(tile.x), y(tile.y) {}
 //    explicit Tile(const Tile& tile)
