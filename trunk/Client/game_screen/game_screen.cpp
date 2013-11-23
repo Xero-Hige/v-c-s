@@ -51,12 +51,11 @@ void Game_Screen::animate_swap() {
 	vector<Position> del = backend.get_removed_pokemons();
 	for (int i = 0; i < del.size(); i++) {
 	    Position grid_pos = del[i];
-	    int sprite_reference()
-	    Screen_Sprite_Animator(del[i],)
-	    animations.push_back();
+	    int sprite_reference = board[grid_pos[0]][grid_pos[1]];
+	    //Screen_Sprite_Animator(del[i],)
+	    //animations.push_back();
 
-	    Position pos = del[i];
-		board[pos[0]][pos[1]] = 0;
+	    board[grid_pos[0]][grid_pos[1]] = 0;
 	}
 
 	int height = board[0].size()/2;

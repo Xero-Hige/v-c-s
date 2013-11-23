@@ -31,6 +31,7 @@
 #include "../libs/window/window.h"
 #include "app.h"
 #include "backend/backend.h"
+#include "screen_sprite_animator/screen_sprite_animator.h"
 
 class Backend;
 
@@ -56,6 +57,7 @@ private:
 	Music background_music;
 
 	std::vector<Animated_Sprite> sprites;
+	std::vector<Screen_Sprite_Animator> animations;
 	std::vector<std::vector<int> > board;
 
 	Position actual_cell;
