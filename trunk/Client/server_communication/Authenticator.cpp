@@ -11,16 +11,38 @@
 #include <cstring>
 
 Authenticator::Authenticator() {
+	this->sock = NULL;
+}
+
+bool Authenticator::receiveAuthVerif(){
+	std::string s(IDS_VERIF);
+	return verificateMessage(s);
+}
+
+void Authenticator::setSocket(FormattedSocket * s){
+	this->sock = s;
+}
+
+bool Authenticator::verificateMessage(std::string msg){
+	//Compara si el mensaje que envio el server coincide con 'msg'
+	std::string recvd_msg;
+	sock->recvMsg(recvd_msg);
+	if (recvd_msg.compare(msg) == 0) {
+		return true;
+	}
+	return false;
 }
 
 bool Authenticator::authenticate
-(Server_Connector * c, string user, string passwd, string auth_type){
-	as.setServerConnector(c);
-	as.setAuthType(auth_type);
-	as.setUser(user);
-	as.setPasswd(passwd);
-	//as.start();
-	return as.authenticate();
+(std::string user, std::string passwd, std::string auth_type){
+	sock->sendMsg(auth_type);
+	sock->sendMsg(user);
+	sock->sendMsg(passwd);
+	if (this->receiveAuthVerif())
+		//se autentico
+		return true;
+	else
+		return false;
 }
 
 Authenticator::~Authenticator() {

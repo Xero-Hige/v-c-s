@@ -14,7 +14,7 @@
 class MsgInterpreter {
 	virtual void exitRoom() = 0;
 	virtual void exitCharPressed() = 0;
-	void interpretParticularMsg(std::string s) = 0;
+	virtual void interpretParticularMsg(std::string s) = 0;
 public:
 	MsgInterpreter();
 	bool interpret(std::string s);
