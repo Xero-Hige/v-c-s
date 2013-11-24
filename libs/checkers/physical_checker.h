@@ -23,6 +23,7 @@
 #define PHYSICAL_CHECKER_H_
 
 #include "../position/position.h"
+#include "../boards/board.h"
 
 class PhysicalChecker {
 private:
@@ -30,8 +31,11 @@ private:
     unsigned int board_height;
 
 public:
-    PhysicalChecker(unsigned int board_width, unsigned int board_height)
-        : board_width(board_width), board_height(board_height) {}
+    /* Solo se usa como dummy, no queda de forma válida ni usable */
+    PhysicalChecker()
+        : board_width(-1), board_height(-1) {}
+    explicit PhysicalChecker(Board& board)
+        : board_width(board.getWidth()), board_height(board.getHeight()) {}
     bool isValidPosition(Position& pos);
     bool checkSwap(Position& pos1, Position& pos2);
 };

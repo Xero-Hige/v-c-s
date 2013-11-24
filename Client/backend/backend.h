@@ -45,7 +45,7 @@ private:
 	std::string user_nick;
 	std::string user_pass;
 
-	std::vector<std::vector<int> > schema;
+//	std::vector<std::vector<int> > schema;
 
 	//Async info
 	bool _operation_ended;
@@ -56,8 +56,8 @@ private:
 	Board replacements_board;
 
 	// Checkers
-//	PhysicalChecker physical_checker;
-//	CombinationChecker combination_checker;
+	PhysicalChecker physical_checker;
+	CombinationChecker combination_checker;
 
 	LevelReader level_reader;
 
@@ -97,8 +97,9 @@ public:
 	 */
 	bool logged_in();
 
-	/* Setea el tablero según las especificaciones del nivel */
-	void configureBoard();
+	/* Setea el tablero según las especificaciones del nivel y configura los *
+	 * checkers según el tablero                                             */
+	void configureBoards();
 
 	/**
 	 * Devuelve un esquema del tablero, 0 si no hay celda

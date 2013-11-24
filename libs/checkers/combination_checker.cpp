@@ -40,7 +40,7 @@ bool CombinationChecker::check(Position& pos) {
     if (! isValidPosition(pos)) {
         return false;
     }
-    int product_color = board.getProductColor(pos);
+    int product_color = board->getProductColor(pos);
     int combination_count;
     combination_count = checkCombination(UP, pos, product_color, NULL);
     combination_count += checkCombination(DOWN, pos, product_color, NULL);
@@ -56,7 +56,7 @@ bool CombinationChecker::check(Position& pos) {
 }
 
 bool CombinationChecker::getVerticalCombination(Position& pos, list<Position>& combination_list) {
-    int product_color = board.getProductColor(pos);
+    int product_color = board->getProductColor(pos);
     int n_combination = checkCombination(UP, pos, product_color, &combination_list);
     n_combination = checkCombination(DOWN, pos, product_color, &combination_list);
     if (n_combination >= 2) {
@@ -66,7 +66,7 @@ bool CombinationChecker::getVerticalCombination(Position& pos, list<Position>& c
 }
 
 bool CombinationChecker::getHorizontalCombination(Position& pos, list<Position>& combination_list) {
-    int product_color = board.getProductColor(pos);
+    int product_color = board->getProductColor(pos);
     int n_combination = checkCombination(RIGHT, pos, product_color, &combination_list);
     n_combination = checkCombination(LEFT, pos, product_color, &combination_list);
     if (n_combination >= 2) {
@@ -81,11 +81,11 @@ bool CombinationChecker::checkPosible() {
 }
 
 bool CombinationChecker::isValidPosition(Position& pos) {
-    unsigned int x = pos.getX();
-    unsigned int y = pos.getY();
-    if ((int)x || x >= board.getLength()) {
+    int x = pos.getX();
+    int y = pos.getY();
+    if (x || x >= board->getWidth()) {
         return false;
-    } else if ((int)y < 0 || y >= board.getHeight()) {
+    } else if (y < 0 || y >= board->getHeight()) {
         return false;
     }
     return true;
@@ -104,7 +104,7 @@ int CombinationChecker::checkCombination(Position direction, Position& pos, int 
     if (! isValidPosition(neighbour_pos)) {
         return 0;
     }
-    if (board.getProductColor(neighbour_pos) != color) {
+    if (board->getProductColor(neighbour_pos) != color) {
         return 0;
     }
     if (combination_list != NULL) {

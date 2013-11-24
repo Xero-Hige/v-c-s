@@ -31,10 +31,13 @@
 
 class CombinationChecker {
 private:
-    Board& board;
+    Board* board;
 
 public:
-    CombinationChecker(Board& board)
+    /* Solo se usa como dummy, no queda de forma válida ni usable */
+    CombinationChecker()
+        : board(NULL) {}
+    explicit CombinationChecker(Board* board)
         : board(board) {}
     bool check(Position& pos);
     bool getVerticalCombination(Position& pos, std::list<Position>& combination_list);
