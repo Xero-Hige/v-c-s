@@ -9,6 +9,9 @@
 #include <sstream>
 #include <stdlib.h>
 
+/*
+ * Constantes referidas a las palabras reservadas de SQL
+ */
 #define DB_CREATE_TABLE "CREATE TABLE "
 #define DB_INSERT "INSERT INTO "
 #define DB_VALUES " VALUES "
@@ -17,7 +20,15 @@
 #define DB_SET " SET "
 #define DB_SELECT "SELECT "
 #define DB_FROM " FROM "
+/*
+ * path de la base de datos a crear
+ */
+#define DB_PATH "test.db"
 
+/*
+ * constantes que indican como va a ser la base de datos que se va a usar en nuestra
+ * aplicacion
+ */
 #define TABLE_NAME "USERS"
 #define COLUMNS "(ID       TEXT    PRIMARY KEY  NOT NULL," \
 				"PASSWD    TEXT    NOT NULL," \
@@ -34,27 +45,35 @@
 #define EQUALS "="
 #define APHOSTROPHE "'"
 #define POS_BEGGINING 0
-#define DB_PATH "test.db"
 
 MyDatabase::MyDatabase() {
 	// TODO Auto-generated constructor stub
 
 }
 
+/*
+ * insertAphostrophes agrega apostrofes al principio y final de un string.
+ */
 void insertAphostrophes(std::string & arg0){
 	arg0.insert(POS_BEGGINING, APHOSTROPHE);
 	arg0.append(APHOSTROPHE);
 }
 
+/*
+ * itostring transforma un integer en un string.
+ */
 std::string itostring(int arg0){
 	std::stringstream ss;
 	ss << arg0;
 	return ss.str();
 }
 
+/*
+ * valuesConcatenation formatea los argumentos para que concuerde con el formato de
+ * una query de una base de datos
+ * Por ejemplo, en este caso: ('arg0', 'arg1', arg2)
+ */
 std::string valuesConcatenation(std::string arg0, std::string arg1, int arg2){
-	//Tiene que devolver los valores en un string como si fuera una query de base
-	//de datos, es decir, ('arg0', 'arg1', arg2);
 	std::stringstream ss;
 	ss << "(";
 	insertAphostrophes(arg0);
@@ -68,7 +87,8 @@ std::string valuesConcatenation(std::string arg0, std::string arg1, int arg2){
 	return ss.str();
 }
 
-int MyDatabase::insertValues(std::string user, std::string passwd, int level){
+int MyDatabase::registerUser(std::string user, std::string passwd, int level){
+	if (userAlreadyRegistered(user)) return -1;
 	std::string query (DB_INSERT);
 	query = query + TABLE_NAME + DB_VALUES +
 				valuesConcatenation(user, passwd, level) + SEMICOLON;
@@ -81,6 +101,10 @@ int MyDatabase::createTable(){
 	return Database::exec(query);
 }
 
+/*
+ * concatenateLevelValue formatea el nivel indicado para que concuerde con el
+ * formato de una base de datos, por ejemplo: LEVEL=arg0
+ */
 std::string concatenateLevelValue(int arg0){
 	std::string s (COLUMN_LEVEL);
 	s.append(EQUALS);
@@ -88,6 +112,10 @@ std::string concatenateLevelValue(int arg0){
 	return s;
 }
 
+/*
+ * concatenateUserValue formatea el usuario indicado para que concuerde con el
+ * formato de una base de datos, por ejemplo: USER='arg0'
+ */
 std::string concatenateUserValue(std::string arg0){
 	std::string s (COLUMN_ID);
 	s.append(EQUALS);
@@ -118,6 +146,23 @@ int MyDatabase::requestPasswd(std::string user, std::string & passwd){
 	query = query + COLUMN_ALL + DB_FROM + TABLE_NAME + DB_WHERE
 		+ concatenateUserValue(user);
 	return Database::exec(query, callback_reqPass, (void*)&passwd);
+}
+
+int callback_alreadyRegistered
+(void * data, int cols ,char** row_values,char** cols_name){
+	//Si se llama esta funcion significa que hay un user con ese nombre.
+	bool * b = (bool*)data;
+	*b = true;
+	return 0;
+}
+
+bool MyDatabase::userAlreadyRegistered(std::string user){
+	std::string query (DB_SELECT);
+	query = query + COLUMN_ID + DB_FROM + TABLE_NAME + DB_WHERE
+		+ concatenateUserValue(user);
+	bool b = false;
+	Database::exec(query, callback_alreadyRegistered, (void*)&b);
+	return b;
 }
 
 int callback_reqLevel(void * data, int cols ,char** row_values,char** cols_name){
