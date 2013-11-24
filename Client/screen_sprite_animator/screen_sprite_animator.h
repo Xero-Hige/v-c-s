@@ -20,6 +20,8 @@
 #ifndef SCREEN_SPRITE_ANIMATOR_H_
 #define SCREEN_SPRITE_ANIMATOR_H_
 
+#include <cstddef>
+
 #include "../../libs/position/position.h"
 
 class Screen_Sprite_Animator {
@@ -32,6 +34,11 @@ class Screen_Sprite_Animator {
 
 	size_t cell_height;
 	size_t cell_width;
+
+	size_t step_cells;
+
+	size_t moved_x;
+	size_t moved_y;
 
 public:
 	/**
@@ -46,11 +53,19 @@ public:
 	/**
 	 *
 	 */
+	bool animation_ended();
+	/**
+	 *
+	 */
 	const Position get_position();
 	/**
 	 * Devuelve la referencia asociada al animator
 	 */
 	int get_reference();
+	/**
+	 *
+	 */
+	void set_step_cells(size_t cells);
 	/**
 	 *
 	 */

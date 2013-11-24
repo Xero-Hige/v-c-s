@@ -114,7 +114,9 @@ level_reader.o: libs/level_reader/level_reader.h libs/level_reader/level_reader.
 
 #Client
 
-CLIENT_OBJ = $(GRAPHIC_LIBS) $(SOUND_LIBS) $(BOARDS_LIBS) $(SOCKET_LIBS) $(COMMUNICATION_PROTOCOL_LIBS) level_reader.o login_screen.o client_app.o rooms_screen.o game_screen.o server_connector.o Authenticator.o backend.o 
+CLIENT_EXTERN = $(GRAPHIC_LIBS) $(SOUND_LIBS) $(BOARDS_LIBS) $(SOCKET_LIBS) $(COMMUNICATION_PROTOCOL_LIBS)
+
+CLIENT_OBJ = $(CLIENT_EXTERN) level_reader.o login_screen.o client_app.o rooms_screen.o game_screen.o server_connector.o Authenticator.o backend.o screen_sprite_animator.o
 
 CLIENT_NAME = game-client
 
@@ -123,6 +125,9 @@ login_screen.o: Client/login_screen/login_screen.cpp Client/login_screen/login_s
 
 rooms_screen.o: Client/rooms_screen/rooms_screen.cpp Client/rooms_screen.h Client/app.h
 	$(CC) $(SDL_CPPFLAGS) -c Client/rooms_screen/rooms_screen.cpp
+	
+screen_sprite_animator.o: Client/screen_sprite_animator/screen_sprite_animator.cpp Client/screen_sprite_animator/screen_sprite_animator.h
+	$(CC) $(SDL_CPPFLAGS) -c Client/screen_sprite_animator/screen_sprite_animator.cpp
 	
 game_screen.o: Client/game_screen/game_screen.cpp Client/game_screen.h Client/app.h
 	$(CC) $(SDL_CPPFLAGS) -c Client/game_screen/game_screen.cpp
