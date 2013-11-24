@@ -68,6 +68,14 @@ private:
 	void setOperationEnded(bool b);
 	void setLogged(bool b);
 
+	/* Recibe una posición con coordenadas según la interfaz gráfica, y *
+	 * devuelve su equivalente según la lógica                          */
+	Position graphicToLogicPos(Position& pos_graphic);
+
+	/* TODO Sería la inversa de la anterior, pero habría que indicar si es tablero de juego
+	 * o de reemplazos. No sé si se va a usar, si se necesita lo hago */
+//	Position logicToGraphicPos(Position& pos_logic);
+
 public:
 	Backend();
 	virtual ~Backend();
