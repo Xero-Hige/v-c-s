@@ -47,8 +47,8 @@ public:
         : type(type), product(NULL), pos(Position(-1, -1)) {}
     Tile(int type, Product* product)
         : type(type), product(product), pos(Position(-1, -1)) {}
-    explicit Tile(Product* product)
-        : type((product==NULL)?HOLE:CELL), product(product), pos(Position(-1, -1)) {}
+//    explicit Tile(Product* product)
+//        : type((product==NULL)?HOLE:CELL), product(product), pos(Position(-1, -1)) {}
 //    explicit Tile(Tile& tile)
 //        : type(tile.type), product(tile.product), x(tile.x), y(tile.y) {}
 //    explicit Tile(const Tile& tile)

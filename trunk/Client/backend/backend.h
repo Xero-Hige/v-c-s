@@ -76,16 +76,20 @@ private:
 	 * o de reemplazos. No sé si se va a usar, si se necesita lo hago */
 //	Position logicToGraphicPos(Position& pos_logic);
 
+	/* Devuelve el código de producto para la interfaz gráfica ubicado en la *
+	 * posición lógica (x,y) del tablero board                               */
+	int getProductCode(Board& board, int x, int y);
+
 public:
 	Backend();
 	virtual ~Backend();
 
 	/* Verifica si el cambio entre esas posiciones es válido */
-	bool checkSwap(Position pos1, Position pos2);
+	bool checkSwap(Position pos1_logic, Position pos2_logic);
 
 	/* Verifica si hay combinación con el cambio de las dos posiciones *
 	 * El cambio debe haberse efectuado                                */
-	bool checkCombination(Position pos1, Position pos2);
+	bool checkCombination(Position pos1_logic, Position pos2_logic);
 
 	//Async control
 	/**
@@ -155,11 +159,13 @@ public:
 	void async_get_room();
 
 	//Construccion del nivel
-	/**
-	 * Envia el comando al servidor, recibe los datos del nivel, y configura
-	 * los miembros del backend según las especificaciones del nivel
-	 */
+	/* Envía el comando al servidor, recibe los datos del nivel, y configura *
+	 * los miembros del backend según las especificaciones                   */
 	void asyncGetLevelSpecification();
+
+	/* Envía el comando al servidor, recibe los productos tanto del tablero *
+	 * de juego como del de reemplazos, y los acomoda en dichos tableros    */
+	void asyncSetUpInitialProducts();
 
 	//Game
 	/**

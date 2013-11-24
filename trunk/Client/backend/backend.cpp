@@ -21,6 +21,7 @@
 
 #include "../../libs/boards/board.h"
 #include "../../libs/boards/tile.h"
+#include "../../libs/boards/product.h"
 #include "../../libs/checkers/combination_checker.h"
 #include "../../libs/checkers/physical_checker.h"
 #include "../../libs/level_reader/level_reader.h"
@@ -97,24 +98,28 @@ vector<string> Backend::get_board_pokemon_codes() {
 }
 
 std::vector<std::vector<int> > Backend::get_full_board() {
+    //TODO esto no va acá, hay que acomodarlo donde corresponda
+    asyncSetUpInitialProducts();
+    ///////////////////////////////////////////////////////////
+    // Los tableros tienen el mismo esquema, así que las cosas físicas se
+    // toman y chequean de uno, pero también es válido para el otro
 	vector<vector<int> > products;
 	for (int x = 0; x < board.getWidth(); x++) {
 		vector<int> column;
 		column.resize(board.getHeight()*2);
 		for (int y = 0; y < board.getHeight(); y++) {
 		    int product_code;
-		    //TODO Pedirlo a board y a replacements_board en lugar de inventarlo acá
+		    int replacement_code;
 			if (board.getTileType(x, y) == Tile::CELL){
-//				product_code = rand()%15+1;
-				//FIXME
-				product_code = ((y%5)*3)+1;
+				product_code = getProductCode(board, x, y);
+				replacement_code = getProductCode(replacements_board, x, y);
 			}
 			else
 			{
-				product_code = -1;
+				product_code = replacement_code = -1;
 			}
 	        // Tablero de reemplazos
-			column[y] = product_code;
+			column[y] = replacement_code;
 	        // Tablero de juego
 			column[y+board.getHeight()] = product_code;
 		}
@@ -157,6 +162,7 @@ vector<vector<int> > Backend::get_board_schema() {
     configureBoards();
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     vector<vector<int> > schema = level_reader.getBoardSchema();
+    // TODO Esto no me gusta acá, habría que ver donde/como se puede poner. Dónde se configuran los tableros (configureBoards)??
     board.setSchema(schema);
     replacements_board.setSchema(schema);
     return schema;
@@ -177,21 +183,51 @@ void Backend::asyncGetLevelSpecification() {
     level_reader.changeLevelData(level_data);
 }
 
-bool Backend::checkSwap(Position pos1, Position pos2) {
-    return physical_checker.checkSwap(pos1, pos2);
+void Backend::asyncSetUpInitialProducts() {
+    //TODO que en serio lo pida al server, no que lo invente acá
+    for (int x = 0; x < board.getWidth(); x++) {
+        for (int y = 0; y < board.getHeight(); y++) {
+            //TODO Pedirlo a board y a replacements_board en lugar de inventarlo acá
+            if (board.getTileType(x, y) == Tile::CELL){
+//                int color = rand()%5;
+//                int type = rand()%3;
+//                Product* product = new Product(color, type);
+//                Product* replacement = new Product(color, type);
+                //FIXME
+                int color = y%5;
+                Product* product = new Product(color, Product::BUTTON);
+                board.setProduct(product, x, y);
+                Product* replacement = new Product(color, Product::BUTTON);
+                replacements_board.setProduct(replacement, x, y);
+            }
+        }
+    }
 }
 
-//bool Backend::checkCombination(Position pos1, Position pos2) {
-//    board.swapProducts(pos1, pos2);
-//    if (combination_checker.check(pos1) || combination_checker.check(pos2)) {
-//        return true;
-//    }
-//    board.swapProducts(pos1, pos2);
-//    return false;
-//}
+bool Backend::checkSwap(Position pos1_logic, Position pos2_logic) {
+    return physical_checker.checkSwap(pos1_logic, pos2_logic);
+}
+
+bool Backend::checkCombination(Position pos1_logic, Position pos2_logic) {
+    board.swapProducts(pos1_logic, pos2_logic);
+    if (combination_checker.check(pos1_logic) || combination_checker.check(pos2_logic)) {
+        return true;
+    }
+    board.swapProducts(pos1_logic, pos2_logic);
+    return false;
+}
 
 Position Backend::graphicToLogicPos(Position& pos_graphic) {
     int x = pos_graphic.getX();
     int y = pos_graphic.getY() % board.getHeight();
     return Position(x, y);
+}
+
+int Backend::getProductCode(Board& board, int x, int y) {
+    int color = board.getProductColor(x, y);
+    int type = board.getProductType(x, y);
+    if (type == Product::STAR) {
+        return (Product::N_COLORS * (Product::N_TYPES-1) + 1);
+    }
+    return (color*(Product::N_TYPES-1) + type + 1);
 }
