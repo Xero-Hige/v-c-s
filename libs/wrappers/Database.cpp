@@ -33,17 +33,18 @@ int Database::query(std::string query){
 }
 
 
-static int callback(void *NotUsed, int argc, char **argv, char **azColName){
-   int i;
-   for(i=0; i<argc; i++){
-      printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
-   }
-   printf("\n");
-   return 0;
-}
+//static int callback(void *NotUsed, int argc, char **argv, char **azColName){
+//   int i;
+//   for(i=0; i<argc; i++){
+//      printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
+//   }
+//   printf("\n");
+//   return 0;
+//}
 
-int Database::exec(std::string query){
-	return sqlite3_exec(db, query.c_str(), callback, NULL, NULL);
+int Database::exec(std::string query,int(*callback)(void*,int,char**,char**),
+		void * callback_data){
+	return sqlite3_exec(db, query.c_str(), callback, callback_data, NULL);
 }
 
 int Database::step(sqlite3_stmt * stmt){
@@ -57,3 +58,4 @@ int Database::close(){
 Database::~Database() {
 	// TODO Auto-generated destructor stub
 }
+
