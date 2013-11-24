@@ -7,6 +7,7 @@
 
 #include "MyDatabase.h"
 #include <sstream>
+#include <stdlib.h>
 
 #define DB_CREATE_TABLE "CREATE TABLE "
 #define DB_INSERT "INSERT INTO "
@@ -14,15 +15,21 @@
 #define DB_UPDATE "UPDATE "
 #define DB_WHERE " WHERE "
 #define DB_SET " SET "
+#define DB_SELECT "SELECT "
+#define DB_FROM " FROM "
 
 #define TABLE_NAME "USERS"
 #define COLUMNS "(ID       TEXT    PRIMARY KEY  NOT NULL," \
 				"PASSWD    TEXT    NOT NULL," \
 				"LEVEL     INT     NOT NULL);"
 
+#define COLUMN_ALL "*"
 #define COLUMN_ID "ID"
 #define COLUMN_PASS "PASSWD"
 #define COLUMN_LEVEL "LEVEL"
+#define COLUMN_ID_NUMBER 0
+#define COLUMN_PASS_NUMBER 1
+#define COLUMN_LEVEL_NUMBER 2
 #define SEMICOLON ";"
 #define EQUALS "="
 #define APHOSTROPHE "'"
@@ -62,8 +69,16 @@ std::string valuesConcatenation(std::string arg0, std::string arg1, int arg2){
 }
 
 int MyDatabase::insertValues(std::string user, std::string passwd, int level){
-	return Database::exec(std::string(DB_INSERT) + TABLE_NAME + DB_VALUES +
-			valuesConcatenation(user, passwd, level) + SEMICOLON);
+	std::string query (DB_INSERT);
+	query = query + TABLE_NAME + DB_VALUES +
+				valuesConcatenation(user, passwd, level) + SEMICOLON;
+	return Database::exec(query);
+}
+
+int MyDatabase::createTable(){
+	std::string query(DB_CREATE_TABLE);
+	query = query + TABLE_NAME + COLUMNS;
+	return Database::exec(query);
 }
 
 std::string concatenateLevelValue(int arg0){
@@ -82,13 +97,46 @@ std::string concatenateUserValue(std::string arg0){
 }
 
 int MyDatabase::updateLevel(std::string user, int new_level){
-	return Database::exec(std::string(DB_UPDATE) + TABLE_NAME + DB_SET +
-			concatenateLevelValue(new_level) + DB_WHERE + concatenateUserValue(user)
-			+ SEMICOLON);
+	std::string query (DB_UPDATE);
+	query = query + TABLE_NAME + DB_SET + concatenateLevelValue(new_level) + DB_WHERE +
+			concatenateUserValue(user) + SEMICOLON;
+	return Database::exec(query);
 }
 
-int MyDatabase::createTable(){
-	return Database::exec(std::string(DB_CREATE_TABLE) + TABLE_NAME + COLUMNS);
+int callback_reqPass(void * data, int cols ,char** row_values,char** cols_name){
+	//data es el valor que se le pasa a la funcion exc en el 4to parametro, en este
+	//caso le paso un string porque quiero conseguir el passwd del user.
+	//casteo el puntero
+	std::string * s_ptr = (std::string*)data;
+	s_ptr->clear();
+	s_ptr->append(row_values[COLUMN_PASS_NUMBER]);
+	return 0;
+}
+
+int MyDatabase::requestPasswd(std::string user, std::string & passwd){
+	std::string query(DB_SELECT);
+	query = query + COLUMN_ALL + DB_FROM + TABLE_NAME + DB_WHERE
+		+ concatenateUserValue(user);
+	return Database::exec(query, callback_reqPass, (void*)&passwd);
+}
+
+int callback_reqLevel(void * data, int cols ,char** row_values,char** cols_name){
+	//Idem callback_reqPass(). Uso strings y despues lo convierto en int
+	std::string * s_ptr = (std::string*)data;
+	s_ptr->clear();
+	s_ptr->append(row_values[COLUMN_LEVEL_NUMBER]);
+	return 0;
+}
+
+int MyDatabase::requestLevel(std::string user, int & level){
+	std::string query(DB_SELECT);
+	query = query + COLUMN_ALL + DB_FROM + TABLE_NAME + DB_WHERE
+			+ concatenateUserValue(user);
+	std::string s_level;
+	int r = Database::exec(query, callback_reqLevel, (void*)&s_level);
+	level = atoi(s_level.c_str());
+	return r;
+
 }
 
 int MyDatabase::open() {

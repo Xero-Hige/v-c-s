@@ -19,7 +19,8 @@ class Database {
 public:
 	Database();
 	int initialize();
-	int exec(std::string query);
+	int exec(std::string query, int(*callback)(void*,int,char**,char**) = NULL
+			, void * callback_data = NULL);
 	int open(std::string path);
 	int query(std::string query);
 	int close();
