@@ -162,21 +162,13 @@ vector<vector<int> > Backend::get_board_schema() {
     return schema;
 }
 
-bool Backend::async_make_swap(Position pos1, Position pos2) {
-    l[0] = pos1;
-    l[1] = pos2;
-    int x_difference = pos1.getX() - pos2.getX();
-    int y_difference = pos1.getY() - pos2.getY();
-    if (x_difference == 0) {
-        if (y_difference == 1 || y_difference == -1) {
-            return true;
-        }
-    } else if (y_difference == 0) {
-        if (x_difference == 1 || x_difference == -1) {
-            return true;
-        }
-    }
-    return false;
+bool Backend::async_make_swap(Position pos1_graphic, Position pos2_graphic) {
+    l[0] = pos1_graphic;
+    l[1] = pos2_graphic;
+    Position pos1_logic = graphicToLogicPos(pos1_graphic);
+    Position pos2_logic = graphicToLogicPos(pos2_graphic);
+    bool physical_check = checkSwap(pos1_logic, pos2_logic);
+    return physical_check;
 }
 
 void Backend::asyncGetLevelSpecification() {
@@ -185,10 +177,10 @@ void Backend::asyncGetLevelSpecification() {
     level_reader.changeLevelData(level_data);
 }
 
-//bool Backend::checkSwap(Position pos1, Position pos2) {
-//    return physical_checker.checkSwap(pos1, pos2);
-//}
-//
+bool Backend::checkSwap(Position pos1, Position pos2) {
+    return physical_checker.checkSwap(pos1, pos2);
+}
+
 //bool Backend::checkCombination(Position pos1, Position pos2) {
 //    board.swapProducts(pos1, pos2);
 //    if (combination_checker.check(pos1) || combination_checker.check(pos2)) {
@@ -197,3 +189,9 @@ void Backend::asyncGetLevelSpecification() {
 //    board.swapProducts(pos1, pos2);
 //    return false;
 //}
+
+Position Backend::graphicToLogicPos(Position& pos_graphic) {
+    int x = pos_graphic.getX();
+    int y = pos_graphic.getY() % board.getHeight();
+    return Position(x, y);
+}
