@@ -67,7 +67,7 @@ Product* Tile::popProduct(){
 }
 
 bool Tile::setProduct(Product* product) {
-    if (type == HOLE || product != NULL) {
+    if (type == HOLE || this->product != NULL) {
         return false;
     }
     this->product = product;

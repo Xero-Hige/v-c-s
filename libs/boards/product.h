@@ -32,7 +32,7 @@ public:
     static const int BLUE = 3;
     static const int VIOLET = 4;
 
-    static const int N_COLORS = 6; // Cantidad de colores, sin contar el inválido (NO_COLOR)
+    static const int N_COLORS = 5; // Cantidad de colores, sin contar el inválido (NO_COLOR)
 
     // Constantes de tipo
     static const int NO_TYPE = -1;
