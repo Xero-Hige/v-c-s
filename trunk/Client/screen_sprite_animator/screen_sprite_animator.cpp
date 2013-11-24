@@ -23,19 +23,38 @@ Screen_Sprite_Animator::Screen_Sprite_Animator(int reference,
 		const Position& position, const Position& direction, size_t cell_height,
 		size_t cell_width) :
 		position(position), reference(reference), direction(direction), cell_height(
-				cell_height), cell_width(cell_width), speed(1) {
+				cell_height), cell_width(cell_width), speed(1), step_cells(0), moved_x(
+						0), moved_y(0) {
 }
 
 void Screen_Sprite_Animator::animate() {
-
+	if (direction[0] == 0) //movimiento en y
+	{
+		moved_y = direction[1] * (++speed);
+		if (moved_y >= (step_cells * cell_height)) {
+			moved_y = (step_cells * cell_height);
+			return;
+		}
+	} else //movimiento en x
+	{
+	}
 }
 
 const Position Screen_Sprite_Animator::get_position() {
-	return position;
+	return Position(position[0] + moved_x, position[1] + moved_y);
 }
 
 int Screen_Sprite_Animator::get_reference() {
-	return 0;
+	return reference;
+}
+
+void Screen_Sprite_Animator::set_step_cells(size_t cells) {
+	step_cells = cells;
+}
+
+bool Screen_Sprite_Animator::animation_ended() {
+	return ((moved_x >= step_cells * cell_width)
+			|| (moved_y >= step_cells * cell_height));
 }
 
 Screen_Sprite_Animator::~Screen_Sprite_Animator() {

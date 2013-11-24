@@ -49,43 +49,76 @@ void Game_Screen::text_input_event(SDL_Event& event) {
 void Game_Screen::animate_swap() {
 	loop();
 	vector<Position> del = backend.get_removed_pokemons();
-	for (int i = 0; i < del.size(); i++) {
-	    Position grid_pos = del[i];
-	    int sprite_reference = board[grid_pos[0]][grid_pos[1]];
-	    //Screen_Sprite_Animator(del[i],)
-	    //animations.push_back();
+	for (size_t i = 0; i < del.size(); i++) {
 
+	    Position grid_pos = del[i];
 	    board[grid_pos[0]][grid_pos[1]] = 0;
 	}
 
-	int height = board[0].size()/2;
     while(del.size()>0)
     {
         Position p = del.front();
         del.erase(del.begin());
         int x_pos = p[0];
         int y_pos = p[1];
+
+        int y_init = INICIO_Y - ((board[0].size()/2)*DIMENSION_Y);
+
         for (int i=y_pos-1;i>=0;i--)
         {
             if (board[x_pos][i]>0)
             {
                 Position change = Position(x_pos,i);
                 del.push_back(change);
-                //animate
-                board[x_pos][y_pos]=board[x_pos][i];
+
+                Position screen_position = Position(change[0]*DIMENSION_X+INICIO_X,change[1]*DIMENSION_Y+y_init);
+                Position direction = Position(0,1);
+
+                Screen_Sprite_Animator animator = Screen_Sprite_Animator(board[x_pos][i],screen_position,direction,DIMENSION_X,DIMENSION_Y);
+                animator.set_step_cells(y_pos-i);
+
+                animations.push_back(animator);
 
                 board[x_pos][i] = 0;
                 break;
             }
         }
     }
-	render();
+
+    while (true)
+    {
+    	loop();
+    	render_board();
+    	for(size_t i=0;i<animations.size();i++)
+    	{
+    		Screen_Sprite_Animator& s = animations[i];
+    		s.animate();
+    		Position p = s.get_position();
+    		int reference = s.get_reference()-1;
+
+    		sprites[reference].draw(window, p[0], p[1]);// - (DIMENSION_Y * board[0].size()) );
+    	}
+
+    	window.render();
+
+    	bool ended = true;
+
+    	for(size_t i=0;i<animations.size();i++)
+    	{
+    		Screen_Sprite_Animator& s = animations[i];
+    		ended &= s.animation_ended();
+    	}
+
+    	if (ended) break;
+    	SDL_Delay(10);
+    }
 }
 
 void Game_Screen::mouse_button_event(SDL_Event& event) {
 	Position pos = grid.get_grid_position(event.button.x, event.button.y);
+	int correction = board[0].size()/2;
 	if (pos.is_valid()) {
-		if (board[pos[0]][pos[1]] != 0) //TODO cambiar para que sea -1
+		if (board[pos[0]][pos[1]+correction] > 0) //TODO cambiar para que sea -1
 				{
 			if (!actual_cell.is_valid()) //sin setear
 			{
@@ -230,12 +263,14 @@ void Game_Screen::handle_event(SDL_Event& event) {
 }
 
 void Game_Screen::loop() {
-	for (int i = 0; i < sprites.size(); i++) {
+	for (size_t i = 0; i < sprites.size(); i++) {
 		sprites[i].animate();
 	}
 }
 
 void Game_Screen::render_board() {
+	background.draw(window);
+
 	for (int i = 0; i < board.size(); i++) {
 		int board_size = board[0].size() / 2;
 		for (int j = board_size; j < board[0].size(); j++) {
@@ -252,9 +287,18 @@ void Game_Screen::render_board() {
 void Game_Screen::render() {
 	window.clear();
 
-	background.draw(window);
-
 	render_board();
+
+	//TODO: SACAR
+	for(size_t i=0;i<animations.size();i++)
+	{
+		Screen_Sprite_Animator& s = animations[i];
+		Position p = s.get_position();
+		int reference = s.get_reference()-1;
+
+		sprites[reference].draw(window, p[0], p[1]);// - (DIMENSION_Y * board[0].size()) );
+	}
+	//TODO: SACAR
 
 	window.render();
 }
