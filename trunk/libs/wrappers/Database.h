@@ -10,6 +10,7 @@
 
 #include <sqlite3.h>
 #include <stdio.h>
+#include <string>
 
 class Database {
 	sqlite3 * db;
@@ -17,6 +18,8 @@ class Database {
 	int step(sqlite3_stmt * stmt);
 public:
 	Database();
+	int initialize();
+	int exec(std::string query);
 	int open(std::string path);
 	int query(std::string query);
 	int close();
