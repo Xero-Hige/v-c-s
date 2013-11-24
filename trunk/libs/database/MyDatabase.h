@@ -15,6 +15,7 @@ public:
 	MyDatabase();
 	int open();
 	int createTable();
+	int updateLevel(std::string user, int new_level);
 	int insertValues(std::string user, std::string passwd, int level);
 	virtual ~MyDatabase();
 };
