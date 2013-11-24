@@ -10,9 +10,12 @@
 
 #include "../../libs/wrappers/Thread.h"
 #include "rooms/Lobby.h"
+#include "../libs/database/MyDatabase.h"
 #include <arpa/inet.h>
 
 class SocketHandler: public Thread {
+	MyDatabase * db;
+
 	Lobby * lobby;
 	/*
 	 * port es el puerto del que se escucha.
@@ -41,7 +44,7 @@ class SocketHandler: public Thread {
 	void addClient(int & new_client);
 
 public:
-	SocketHandler(struct sockaddr_in * addr, Lobby * lob);
+	SocketHandler(struct sockaddr_in * addr, Lobby * lob, MyDatabase * data);
 	uint16_t getPort();
 	void setListeningMode();
 	/*

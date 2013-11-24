@@ -25,7 +25,9 @@ int* crearSocket(){
 	return sockfd;
 }
 
-SocketHandler::SocketHandler (struct sockaddr_in * addr, Lobby * lob){
+SocketHandler::SocketHandler
+(struct sockaddr_in * addr, Lobby * lob, MyDatabase * data){
+	this->db = data;
 	this->lobby = lob;
 	//Se crea el socket
 	int * sck = crearSocket();
@@ -52,7 +54,7 @@ void SocketHandler::run(){
 
 void SocketHandler::addClient(int & new_client){
 	ClientHandler * ch = new ClientHandler(new_client, this->lobby);
-	ClientAuthenticator ca(new_client);
+	ClientAuthenticator ca(new_client, this->db);
 	if (ca.authenticate()) this->lobby->addNewClient(ch);
 	else {
 		close(new_client);

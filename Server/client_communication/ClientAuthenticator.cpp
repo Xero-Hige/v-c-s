@@ -10,7 +10,9 @@
 #include <cstring>
 
 
-ClientAuthenticator::ClientAuthenticator(int socket) : sock(socket) {
+ClientAuthenticator::ClientAuthenticator(int socket, MyDatabase* data) :
+sock(socket) {
+	this->db = data;
 }
 
 bool ClientAuthenticator::authenticate(){
@@ -36,23 +38,29 @@ void ClientAuthenticator::getIds(std::string & user, std::string & passwd){
 
 
 bool ClientAuthenticator::registrate(){
-	//todo
 	std::string user, passwd;
 	this->getIds(user, passwd);
-	//DO SHIT
-	this->sendIdsVerifMsg();
-	return true;
+	int i = db->registerUser(user, passwd, 0); //0 es el nivel inicial
+	if (i >= 0){
+		this->sendIdsVerifMsg();
+		return true;
+	} else {
+		return false;
+	}
 }
 
 bool ClientAuthenticator::login(){
 	std::string user, passwd;
 	this->getIds(user, passwd);
-	//todo REALIZAR CHEQUEO DE IDS
-	//if (chequeoIds(ids))
-	this->sendIdsVerifMsg();
-	return true;
-	//else
-	//return false;
+	//Realizo el chequeo de ids
+	std::string real_passwd;
+	db->requestPasswd(user, real_passwd);
+	if (real_passwd.compare(passwd) == 0){
+		this->sendIdsVerifMsg();
+		return true;
+	} else {
+		return false;
+	}
 }
 
 
