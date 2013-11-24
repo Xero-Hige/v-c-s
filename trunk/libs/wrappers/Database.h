@@ -11,9 +11,11 @@
 #include <sqlite3.h>
 #include <stdio.h>
 #include <string>
+#include "Mutex.h"
 
 class Database {
 	sqlite3 * db;
+	Mutex mutx;
 public:
 	Database();
 	int exec(std::string query, int(*callback)(void*,int,char**,char**) = NULL

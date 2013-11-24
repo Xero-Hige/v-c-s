@@ -18,7 +18,10 @@ int Database::open(std::string path){
 
 int Database::exec(std::string query,int(*callback)(void*,int,char**,char**),
 		void * callback_data){
-	return sqlite3_exec(db, query.c_str(), callback, callback_data, NULL);
+	mutx.lock();
+	int r = sqlite3_exec(db, query.c_str(), callback, callback_data, NULL);
+	mutx.unlock();
+	return r;
 }
 
 int Database::close(){

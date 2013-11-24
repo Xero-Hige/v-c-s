@@ -30,6 +30,7 @@ void setListener(struct sockaddr_in * cli_addr, int & server_port){
 Server::Server(){
 	// TODO Auto-generated constructor stub
 	sock_listeners = new std::vector<SocketHandler*>();
+	this->db.open();
 }
 
 /*
@@ -51,7 +52,7 @@ void Server::createListeningPorts(std::vector<int> * list_puertos, Lobby * lob){
 		//Se le indica que puerto va a escuchar
 		setListener(caddr, port_actual);
 		//Se agrega a la lista
-		SocketHandler * sh = new SocketHandler(caddr, lob);
+		SocketHandler * sh = new SocketHandler(caddr, lob, &db);
 		if (contiene(sock_listeners, sh, comparadorPuertos)){
 			delete sh;
 		} else {
@@ -92,5 +93,6 @@ Server::~Server(){
 	for (unsigned i = 0; i < sock_listeners->size(); i++){
 		delete sock_listeners->at(i);
 	}
+	this->db.close();
 	delete sock_listeners;
 }

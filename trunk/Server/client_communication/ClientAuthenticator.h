@@ -10,15 +10,16 @@
 
 #include "ClientHandler.h"
 #include "../../libs/communication_protocol/FormattedSocket.h"
+#include "../../libs/database/MyDatabase.h"
 
 class ClientAuthenticator {
 	FormattedSocket sock;
-
+	MyDatabase * db;
 	bool login();
 	bool registrate();
 
 public:
-	ClientAuthenticator(int socket);
+	ClientAuthenticator(int socket, MyDatabase * data);
 	bool authenticate();
 	void sendIdsVerifMsg();
 	void getIds(std::string & user, std::string & passwd);
