@@ -32,43 +32,47 @@
 class Board {
 private:
     //TODO esto hacerlo int, está trayendo más problemas que otra cosa
-    unsigned int rows;
-    unsigned int columns;
-    std::vector<Tile> tiles;
+    int rows;
+    int columns;
 
 public:
     /* Solo se usa como dummy, el tablero no queda de forma válida ni usable */
+    std::vector<Tile> tiles;
     Board()
         : rows(-1), columns(-1) {};
-    Board(unsigned int n_rows, unsigned int n_columns);
+    Board(int n_rows, int n_columns);
     /* Setea los casilleros (Tile) a celdas o a agujeros                   *
      * schema es un vector que tiene las constantes HOLE o EMPTY_CELL de   *
      * Tile. Es de largo n_filas*n_columnas, y está ordenado como una fila *
      * a continuación de la otra                                           */
-    void setSchema(std::vector<int>& schema);
+    void setSchema(std::vector<std::vector<int> >& schema);
     /* Setea los productos contenidos en products en las celdas tablero  *
      * La cantidad de productos debe coincidir con la cantidad de celdas */
     void setUp(std::vector<Product*> products);
     /* Devuelve la altura del tablero */
     unsigned int getHeight();
     /* Devuelve el ancho del tablero */
-    unsigned int getLength();
+    unsigned int getWidth();
+    /* Devuelve si un casillero es celda o agujero, según las contantes de *
+     * la clase Tile                                                       */
+    int getTileType(int x, int y);
+    int getTileType(Position& pos);
     /* Devuelve un int que representa el color del producto, según las *
      * constantes de product_constants.h                               */
-    int getProductColor(unsigned int x, unsigned int y);
+    int getProductColor(int x, int y);
     int getProductColor(Position& pos);
     /* Devuelve un int que representa el tipo del producto, según las *
      * constantes de product_constants.h                              */
-    int getProductType(unsigned int x, unsigned int y);
+    int getProductType(int x, int y);
     int getProductType(Position& pos);
     /* Saca el producto del tablero y lo devuelve, dejando la celda vacía. *
      * Si la celda estaba vacía, o es un agujero, devuelve NULL            */
-    Product* takeOutProduct(unsigned int x, unsigned int y);
+    Product* takeOutProduct(int x, int y);
     Product* takeOutProduct(Position& pos);
     /* Agrega un producto al tablero.                                        *
      * Devuelve true si el producto se insertó correctamente. Si la celda ya *
      * tiene un producto o es un agujero, devuelve false.                    */
-    bool setProduct(Product* product, unsigned int x, unsigned int y);
+    bool setProduct(Product* product, int x, int y);
     bool setProduct(Product* product, Position& pos);
     /* Intercambia dos productos del tablero */
     void swapProducts(Position& pos1, Position& pos2);
@@ -81,7 +85,7 @@ public:
     ~Board();
 
 private:
-    unsigned int getIndexFromPos(unsigned int x, unsigned int y);
+    int getIndexFromPos(int x, int y);
     void initTiles();
     int countEmpty(Position pos);
 };

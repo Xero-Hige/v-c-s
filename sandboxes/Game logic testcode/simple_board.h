@@ -42,7 +42,7 @@ public:
     void setUp(std::list<Product*> products);
     // Product* getProduct(unsigned int x, unsigned int y);
     unsigned int getHeight();
-    unsigned int getLength();
+    unsigned int getWidth();
     int getProductColor(unsigned int x, unsigned int y);
     int getProductType(unsigned int x, unsigned int y);
     Effect& getProductEffect(unsigned int x, unsigned int y);

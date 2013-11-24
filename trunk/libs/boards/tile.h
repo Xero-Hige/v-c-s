@@ -56,10 +56,11 @@ public:
 //    explicit Tile(const Tile& tile)
 //        : type(tile.type), product(tile.product), pos(Position(tile.pos)) {}
     // Esto creo que no vale la pena tenerlo, no se usa
-    unsigned int getX();
-    unsigned int getY();
+    int getX();
+    int getY();
     ////////////////////
     void setType(int type);
+    int getType();
     bool isHole();
     bool isCell();
     bool isEmpty();

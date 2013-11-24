@@ -106,7 +106,7 @@ vector<int> CombinationChecker::getHorizontalCombinationTypes(Position& pos) {
 bool CombinationChecker::isValidPosition(Position& pos) {
     unsigned int x = pos.getX();
     unsigned int y = pos.getY();
-    if (x < 0 || x >= board.getLength()) {
+    if (x < 0 || x >= board.getWidth()) {
         return false;
     } else if (y < 0 || y >= board.getHeight()) {
         return false;
@@ -142,7 +142,7 @@ Position CombinationChecker::getNeighbourDown(Position& pos) {
 
 Position CombinationChecker::getNeighbourRight(Position& pos) {
     unsigned int x = pos.getX() + 1;
-    if (x >= board.getLength()) {
+    if (x >= board.getWidth()) {
         return Position(-1, -1);
     }
     return Position(x, pos.getY());

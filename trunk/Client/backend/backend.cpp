@@ -78,9 +78,11 @@ Backend::~Backend() {
 	// TODO Auto-generated destructor stub
 }
 
-void Backend::configureBoard() {
+void Backend::configureBoards() {
     board = Board(level_reader.getBoardHeight(), level_reader.getBoardWidth());
     replacements_board = Board(level_reader.getBoardHeight(), level_reader.getBoardWidth());
+    physical_checker = PhysicalChecker(board);
+    combination_checker = CombinationChecker(&board);
 }
 
 vector<string> Backend::get_board_pokemon_codes() {
@@ -95,28 +97,31 @@ vector<string> Backend::get_board_pokemon_codes() {
 }
 
 std::vector<std::vector<int> > Backend::get_full_board() {
-	//TODO: Esto hay que pedirlo al servidor
-	vector<vector<int> > board;
-	for (size_t x=0;x<schema.size();x++)
-	{
+	vector<vector<int> > products;
+	for (int x = 0; x < board.getWidth(); x++) {
 		vector<int> column;
-		for (size_t y=0;y<(schema[0].size()*2);y++)
-		{
-			if (schema[x][y%schema[0].size()] == Tile::CELL){
-//				column.push_back(rand()%15 + 1);
+		column.resize(board.getHeight()*2);
+		for (int y = 0; y < board.getHeight(); y++) {
+		    int product_code;
+		    //TODO Pedirlo a board y a replacements_board en lugar de inventarlo acá
+			if (board.getTileType(x, y) == Tile::CELL){
+//				product_code = rand()%15+1;
 				//FIXME
-				column.push_back(((y%5)*3)+1);
+				product_code = ((y%5)*3)+1;
 			}
 			else
 			{
-				column.push_back(-1);
+				product_code = -1;
 			}
+	        // Tablero de reemplazos
+			column[y] = product_code;
+	        // Tablero de juego
+			column[y+board.getHeight()] = product_code;
 		}
-
-		board.push_back(column);
+		products.push_back(column);
 	}
 
-	return board;
+	return products;
 }
 
 vector<Position> Backend::get_removed_pokemons() {
@@ -149,9 +154,12 @@ void Backend::async_get_room() {
 vector<vector<int> > Backend::get_board_schema() {
     // FIXME Esto no va acá, hay que llamarlo al final de la screen de room o al princio del screen de level
     asyncGetLevelSpecification();
+    configureBoards();
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    schema = level_reader.getBoardSchema();
-	return schema;
+    vector<vector<int> > schema = level_reader.getBoardSchema();
+    board.setSchema(schema);
+    replacements_board.setSchema(schema);
+    return schema;
 }
 
 bool Backend::async_make_swap(Position pos1, Position pos2) {

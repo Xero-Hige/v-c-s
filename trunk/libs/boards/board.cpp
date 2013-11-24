@@ -31,52 +31,62 @@
 using std::vector;
 using std::list;
 
-Board::Board(unsigned int n_rows, unsigned int n_columns)
+Board::Board(int n_rows, int n_columns)
     : rows(n_rows), columns(n_columns), tiles(vector<Tile>()) {
     initTiles();
 }
 
-void Board::setSchema(std::vector<int>& schema) {
-    unsigned int length = rows * columns;
-    for (unsigned int i = 0; i < length; i++) {
-        int tile_type = schema[i];
-        // Se inicializa en CELL, por lo que solo hay que chequear HOLE
-        if (tile_type == Tile::HOLE) {
-            tiles[i].setType(Tile::HOLE);
+void Board::setSchema(vector<vector<int> >& schema) {
+    for (int x = 0; x < columns; x++) {
+        for (int y = 0; y < rows; y++) {
+            int tile_type = schema[x][y];
+            // Se inicializa en CELL, por lo que solo hay que chequear HOLE
+            if (tile_type == Tile::HOLE) {
+                tiles[getIndexFromPos(x, y)].setType(Tile::HOLE);
+            }
         }
     }
 }
 
 void Board::setUp(vector<Product*> products) {
-
+    //TODO
 }
 
 unsigned int Board::getHeight() {
     return rows;
 }
 
-unsigned int Board::getLength() {
+unsigned int Board::getWidth() {
     return columns;
 }
 
-int Board::getProductColor(unsigned int x, unsigned int y) {
-    unsigned int pos = getIndexFromPos(x, y);
+int Board::getTileType(int x, int y) {
+    int pos = getIndexFromPos(x, y);
+    return tiles[pos].getType();
+}
+
+int Board::getProductColor(int x, int y) {
+    int pos = getIndexFromPos(x, y);
     return tiles[pos].getProductColor();
 }
 
-int Board::getProductType(unsigned int x, unsigned int y) {
-    unsigned int pos = getIndexFromPos(x, y);
+int Board::getProductType(int x, int y) {
+    int pos = getIndexFromPos(x, y);
     return tiles[pos].getProductType();
 }
 
-Product* Board::takeOutProduct(unsigned int x, unsigned int y) {
-    unsigned int pos = getIndexFromPos(x, y);
+Product* Board::takeOutProduct(int x, int y) {
+    int pos = getIndexFromPos(x, y);
     return tiles[pos].popProduct();
 }
 
-bool Board::setProduct(Product* product, unsigned int x, unsigned int y) {
-    unsigned int pos = getIndexFromPos(x, y);
+bool Board::setProduct(Product* product, int x, int y) {
+    int pos = getIndexFromPos(x, y);
     return tiles[pos].setProduct(product);
+}
+
+int Board::getTileType(Position& pos) {
+    return getTileType(pos.getX(), pos.getY());
 }
 
 int Board::getProductColor(Position& pos) {
@@ -135,14 +145,14 @@ Board::~Board() {
     tiles.clear();
 }
 
-unsigned int Board::getIndexFromPos(unsigned int x, unsigned int y) {
+int Board::getIndexFromPos(int x, int y) {
     return (x + (y*columns));
 }
 
 void Board::initTiles() {
-    unsigned int length = rows * columns;
+    int length = rows * columns;
     tiles.reserve(length);
-    for (unsigned int i = 0; i < length; i++) {
+    for (int i = 0; i < length; i++) {
         Tile tile = Tile(Tile::CELL);
         tiles.push_back(tile);
     }

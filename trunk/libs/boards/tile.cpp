@@ -24,16 +24,20 @@
 #include "product.h"
 #include "../position/position.h"
 
+int Tile::getX() {
+    return pos.getX();
+}
+
+int Tile::getY() {
+    return pos.getY();
+}
+
 void Tile::setType(int type) {
     this->type = type;
 }
 
-unsigned int Tile::getX() {
-    return pos.getX();
-}
-
-unsigned int Tile::getY() {
-    return pos.getY();
+int Tile::getType() {
+    return type;
 }
 
 bool Tile::isHole() {

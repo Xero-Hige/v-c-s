@@ -58,7 +58,7 @@ unsigned int Board::getHeight() {
     return rows;
 }
 
-unsigned int Board::getLength() {
+unsigned int Board::getWidth() {
     return columns;
 }
 
