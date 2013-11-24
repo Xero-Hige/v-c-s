@@ -8,14 +8,14 @@
 #ifndef MYDATABASE_H_
 #define MYDATABASE_H_
 
-#define DB_PATH "test.db"
-
-#include "../wrappers/Database.h"
+#include "Database.h"
 
 class MyDatabase : public Database{
 public:
 	MyDatabase();
 	int open();
+	int createTable();
+	int insertValues(std::string user, std::string passwd, int level);
 	virtual ~MyDatabase();
 };
 
