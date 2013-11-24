@@ -14,15 +14,11 @@
 
 class Database {
 	sqlite3 * db;
-	int prepare(std::string query, sqlite3_stmt * stmt);
-	int step(sqlite3_stmt * stmt);
 public:
 	Database();
-	int initialize();
 	int exec(std::string query, int(*callback)(void*,int,char**,char**) = NULL
 			, void * callback_data = NULL);
 	int open(std::string path);
-	int query(std::string query);
 	int close();
 	virtual ~Database();
 };
