@@ -7,6 +7,8 @@
 
 #include "Room.h"
 #include <iostream>
+#include <vector>
+#include <string>
 
 unsigned long Room::id_counter = 0;
 
@@ -34,7 +36,9 @@ bool Room::addClient(ClientHandler* ch){
 }
 
 bool Room::exitRoom(ClientHandler* ch){
-	for (std::vector<ClientHandler*>::iterator it = clients.begin(); it < clients.end(); it++){
+	for (std::vector<ClientHandler*>::iterator it = clients.begin();
+			it < clients.end();
+			it++){
 		ClientHandler* actual_ch = *it;
 		if (ch == actual_ch){//si los ptrs son iguales
 			clients.erase(it);

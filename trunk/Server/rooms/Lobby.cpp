@@ -16,8 +16,8 @@ Lobby::Lobby(){
 	room_killer.start();
 }
 
-//Utilizo pthreads sin usar la clase Thread que construimos porque necesito pasar
-//parametros a lo que seria el metodo run().
+//Utilizo pthreads sin usar la clase Thread que construimos
+//porque necesito pasar parametros a lo que seria el metodo run().
 //thread_data contiene los params que necesito
 struct thread_data {
 	Lobby * lobby;

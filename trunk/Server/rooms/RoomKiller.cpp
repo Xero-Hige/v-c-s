@@ -7,6 +7,7 @@
 
 #include "RoomKiller.h"
 #include <iostream>
+#include <map>
 
 RoomKiller::RoomKiller() {
 	// TODO Auto-generated constructor stub

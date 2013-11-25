@@ -15,7 +15,10 @@
 class RoomKiller : public Thread{
 	std::map<unsigned long,Room*> * rooms;
 	bool keep_running;
-
+	/*
+	 * run itera permanentemente el mapa de rooms preguntandole a cada room
+	 * si esta activo o no. Si no lo esta lo elimina.
+	 */
 	void run();
 
 public:
