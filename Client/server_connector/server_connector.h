@@ -17,32 +17,58 @@ class Server_Connector {
 	std::string password;
 	Authenticator auth;
 	FormattedSocket * sock; //socket file descriptor
-
 	bool exit_char_pressed;
 
-	void getMatchmaking(std::string & mm);
-	void getRoomId(std::string & id);
-	void useUserDefinedMatchmaking();
-	void useDefaultMatchmaking();
-	void setLogged(bool b);
-	void setAuthEnded(bool b);
-public:
 	/*
-	 * ctor de cliente, se le pasa como param el ip al que se quiere conectar y el
-	 * puerto.
+	 * getMatchmaking le pide al usuario de que modo quiere obtener su room.
 	 */
+	void getMatchmaking(std::string & mm);
+	/*
+	 * getRoomId le pide al usuario el room al que se quiere conectar.
+	 */
+	void getRoomId(std::string & id);
+	/*
+	 * useUserDefinedMatchmaking envia al servidor el room al que se quiere conectar
+	 */
+	void useUserDefinedMatchmaking();
+	/*
+	 * useDefaultMatchmaking se conecta a un room aleatorio.
+	 */
+	void useDefaultMatchmaking();
+
+public:
 	Server_Connector();
 	/*
-	 * connectServer intenta conectar el cliente al servidor.
+	 * connectServer intenta autenticar el cliente en el servidor. a_type es el modo
+	 * de autenticacion que se requiere (login/register).
 	 */
-	bool connectServer(std::string username, std::string passwd, std::string a_type);
+	bool connectServer(std::string user, std::string passwd, std::string a_type);
+	/*
+	 * makeConnection se conecta con el ip y puerto indicado.
+	 */
 	int makeConnection(std::string ip, int port);
-	bool getAuthEnded();
+	/*
+	 * sendMsg envia el mensaje 'msg' firmado por HMAC.
+	 */
 	int sendMsg(std::string msg);
+	/*
+	 * recvMsg recibe un mensaje del servidor.
+	 */
 	int recvMsg(std::string & msg);
-	bool getLogged();
+	/*
+	 * enterRoom le pide al usuario el modo de conectarse a un room y lo envia al
+	 * server.
+	 */
 	void enterRoom();
+	/*
+	 * exitCharPressed setea que se presiono al caracter de salida. communicate()
+	 * lo utiliza.
+	 */
 	void exitCharPressed();
+	/*
+	 * DEBUG: communicate se usa para debuggear. Le pide al usuario la cadena de
+	 * caracteres que quiere enviar al servidor y la envia.
+	 */
 	void communicate();
 	/*
 	 * closeConnection cierra el socket utilizado para la conex.

@@ -76,13 +76,15 @@ int Server_Connector::makeConnection(std::string ip, int port){
 	if (r < 0)
 		return 1;
 	int actual_sock = this->sock->getSocket();
-	r += connect(actual_sock, (struct sockaddr*) & s_addr, sizeof(struct sockaddr));
+	r += connect(actual_sock, (struct sockaddr*) & s_addr,
+			sizeof(struct sockaddr));
 	memset(&(server_addr.sin_zero), 0, sizeof(s_addr.sin_zero));
 	if (r < 0) return 1;
 	return 0;
 }
 
-bool Server_Connector::connectServer(std::string username, std::string passwd, std::string a_type){
+bool Server_Connector::connectServer
+(std::string username, std::string passwd, std::string a_type){
 	//Obtiene user y pass y si los quiere usar para logearse o registrarse
 	this->password = passwd;
 	return auth.authenticate(username, passwd, a_type);
@@ -102,7 +104,7 @@ void Server_Connector::enterRoom(){
 	std::string mm;
 	getMatchmaking(mm);
 	this->sendMsg(mm);//envia modo de matchmaking
-	int i_mm = atoi (mm.c_str());
+	int i_mm = atoi(mm.c_str());
 	if (i_mm == MM_USER_DEF){
 		useUserDefinedMatchmaking();
 	} else if (i_mm == MM_DEFAULT){
