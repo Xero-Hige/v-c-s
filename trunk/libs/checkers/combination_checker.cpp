@@ -33,8 +33,8 @@ using std::vector;
 
 #define UP Position(0,-1)
 #define DOWN Position(0,1)
-#define RIGHT Position(0,1)
-#define LEFT Position(0,-1)
+#define RIGHT Position(1,0)
+#define LEFT Position(-1,0)
 
 bool CombinationChecker::check(Position& pos) {
     if (! isValidPosition(pos)) {
@@ -58,7 +58,7 @@ bool CombinationChecker::check(Position& pos) {
 bool CombinationChecker::getVerticalCombination(Position& pos, list<Position>& combination_list) {
     int product_color = board->getProductColor(pos);
     int n_combination = checkCombination(UP, pos, product_color, &combination_list);
-    n_combination = checkCombination(DOWN, pos, product_color, &combination_list);
+    n_combination += checkCombination(DOWN, pos, product_color, &combination_list);
     if (n_combination >= 2) {
         return true;
     }
@@ -68,7 +68,7 @@ bool CombinationChecker::getVerticalCombination(Position& pos, list<Position>& c
 bool CombinationChecker::getHorizontalCombination(Position& pos, list<Position>& combination_list) {
     int product_color = board->getProductColor(pos);
     int n_combination = checkCombination(RIGHT, pos, product_color, &combination_list);
-    n_combination = checkCombination(LEFT, pos, product_color, &combination_list);
+    n_combination += checkCombination(LEFT, pos, product_color, &combination_list);
     if (n_combination >= 2) {
         return true;
     }
@@ -83,7 +83,7 @@ bool CombinationChecker::checkPosible() {
 bool CombinationChecker::isValidPosition(Position& pos) {
     int x = pos.getX();
     int y = pos.getY();
-    if (x || x >= board->getWidth()) {
+    if (x < 0 || x >= board->getWidth()) {
         return false;
     } else if (y < 0 || y >= board->getHeight()) {
         return false;
