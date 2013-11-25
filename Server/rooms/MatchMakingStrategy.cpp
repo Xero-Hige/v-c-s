@@ -7,6 +7,8 @@
 
 #include "MatchMakingStrategy.h"
 #include <iostream>
+#include <map>
+#include <string>
 
 MatchMakingStrategy::MatchMakingStrategy() {
 }
@@ -30,11 +32,12 @@ void MatchMakingStrategy::addUserDefined(Lobby * lob, ClientHandler * ch){
 	if (it == lob->rooms.end()){//Si no la encontro no existe un room con ese id...
 		return addDefault(lob, ch);
 		//todo notificar al client
+	}else if (it->second->isFull() || it->second->isPlaying()){
+		//Si lo encontro...
+		return addDefault(lob, ch);
+	}else{
+		it->second->addClient(ch);
 	}
-	//Si lo encontro...
-	else if (it->second->isFull() || it->second->isPlaying())
-				return addDefault(lob, ch);
-	else it->second->addClient(ch);
 }
 
 void MatchMakingStrategy::addDefault(Lobby * lob, ClientHandler * ch){
@@ -52,7 +55,7 @@ void MatchMakingStrategy::addDefault(Lobby * lob, ClientHandler * ch){
 	//Si no hay uno creado o si no pudo insertar en uno vacio crea uno nuevo
 	Room * new_room = new Room(lob, 2);
 	new_room->addClient(ch);
-	lob->rooms.insert( map_pair(new_room->id,new_room));
+	lob->rooms.insert(map_pair(new_room->id,new_room));
 }
 
 MatchMakingStrategy::~MatchMakingStrategy() {

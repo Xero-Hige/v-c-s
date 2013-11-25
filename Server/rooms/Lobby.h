@@ -19,9 +19,17 @@ class Lobby{
 
 public:
 	Lobby();
+	/*
+	 * addClient agrega a un room el cliente indicado, haciendo uso de
+	 * MatchMakingStrategy
+	 */
 	void addClient(ClientHandler * ch); //usar solo cuando es un cliente viejo, que
 										//viene de otro room, ya que no inicia el
 										//thread
+	/*
+	 * addNewClient agrega un nuevo cliente a un room, iniciando previamente el
+	 * hilo del cliente.
+	 */
 	void addNewClient(ClientHandler * ch); //Usar solo cuando es un nuevo cliente
 	virtual ~Lobby();
 };

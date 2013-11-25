@@ -10,6 +10,7 @@
 
 #include "../client_communication/ClientHandler.h"
 #include <vector>
+#include <string>
 
 class Room {
 	unsigned limit; //max clients
@@ -23,12 +24,33 @@ public:
 	unsigned long id; //room id
 
 	Room(Lobby * lob, unsigned limit, unsigned long r_id = 0);
+	/*
+	 * addClient agrega el cliente al room.
+	 */
 	bool addClient(ClientHandler* ch);
+	/*
+	 * exitRoom saca al cliente del room.
+	 */
 	bool exitRoom(ClientHandler* ch);
+	/*
+	 * notifyClients envia el mensaje 'msg' a todos los clientes del room.
+	 */
 	void notifyClients(std::string msg);
-	bool isPlaying();
+	/*
+	 * isFull indica si el room esta a su limite de jugadores.
+	 */
 	bool isFull();
+	/*
+	 * isActive indica si el room esta activo (independientemente si se esta
+	 * jugando o no). isActive se utiliza cuando un room recien se crea, ya que el
+	 * mismo no va a tener jugadores, y no va a haber nadie jugando, pero como
+	 * esta activo el RoomKiller no lo va a eliminar.
+	 */
 	bool isActive();
+	/*
+	 * isPlaying devuelve si el room esta activo.
+	 */
+	bool isPlaying();
 	virtual ~Room();
 };
 
