@@ -14,6 +14,7 @@
 
 
 class Server_Connector {
+	std::string password;
 	Authenticator auth;
 	FormattedSocket * sock; //socket file descriptor
 

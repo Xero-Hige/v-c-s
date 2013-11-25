@@ -6,7 +6,7 @@
  */
 
 #include "FormattedSocket.h"
-
+#include "HMAC.h"
 FormattedSocket::FormattedSocket(int sockfd) : Socket(sockfd) {
 
 }
@@ -19,6 +19,23 @@ int FormattedSocket::sendMsg(std::string msg){
 	int r = Socket::sendMsg(s_msg);
 	delete[] msg_with_size;
 	return r;
+}
+
+int FormattedSocket::sendSignedMsg(std::string msg, std::string key){
+	HMACSignedMsg(msg, key);
+	return sendMsg(msg);
+}
+
+bool FormattedSocket::recvSignedMsg
+(std::string & msg, std::string key, int & recvd_bytes){
+	std::string signed_msg;
+	recvd_bytes = recvMsg(signed_msg);
+	if (checkSignedMsg(signed_msg, key)){
+		msg.clear();
+		msg.append(signed_msg.substr(0, signed_msg.size() - SHA_DIGEST_SIZE));
+		return true;
+	}
+	return false;
 }
 
 int FormattedSocket::recvMsg(std::string & msg){

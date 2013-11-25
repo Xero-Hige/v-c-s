@@ -16,7 +16,7 @@ ServerListener::ServerListener(FormattedSocket * s, ClientMsgInterpreter * c) {
 
 void ServerListener::run(){
 	while (keep_listening){
-		string rcvd_msg;
+		std::string rcvd_msg;
 		sock->recvMsg(rcvd_msg);
 		if (msg_int->interpret(rcvd_msg)) keep_listening = false;
 	}

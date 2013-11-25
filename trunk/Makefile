@@ -2,7 +2,7 @@
 #General
 CC = gcc
 CPPFLAGS = -Wall -Wextra -g -pedantic
-CPPLDFLAGS = -lm -lstdc++
+CPPLDFLAGS = -lm -lstdc++ -lcrypto -lssl
 
 all: run-client
 
@@ -71,12 +71,13 @@ MESSAGES_LIBS = MsgInterpreter.o
 
 #Protocol libs builder
 
-COMMUNICATION_PROTOCOL_LIBS = BigEndianProtocol.o FormattedSocket.o #HMAC.o
+COMMUNICATION_PROTOCOL_LIBS = HMAC.o BigEndianProtocol.o FormattedSocket.o 
 
 FormattedSocket.o: Socket.o libs/communication_protocol/FormattedSocket.h libs/communication_protocol/FormattedSocket.cpp
 		$(CC) $(CPPFLAGS) -c libs/communication_protocol/FormattedSocket.cpp
 
-#HMAC.o:
+HMAC.o: libs/communication_protocol/HMAC.h libs/communication_protocol/HMAC.cpp
+		$(CC) $(CPPFLAGS) -c libs/communication_protocol/HMAC.cpp
 
 BigEndianProtocol.o: libs/communication_protocol/BigEndianProtocol.h libs/communication_protocol/BigEndianProtocol.cpp
 		$(CC) $(CPPFLAGS) -c libs/communication_protocol/BigEndianProtocol.cpp
@@ -87,6 +88,16 @@ POSITION = position.o
 
 position.o: libs/position/position.h libs/position/position.cpp
 	$(CC) $(CPPFLAGS) -c libs/position/position.cpp
+	
+#Database builder
+
+DATABASE = database.o mydatabase.o
+
+database.o: libs/wrappers/Database.h libs/wrappers/Database.cpp
+	$(CC) $(CPPFLAGS) -c libs/wrappers/Database.cpp
+	
+mydatabase.o: libs/database/MyDatabase.h libs/database/MyDatabase.cpp
+	$(CC) $(CPPFLAGS) -c libs/database/MyDatabase.cpp
 
 #Logic boards builder
 
