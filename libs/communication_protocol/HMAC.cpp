@@ -16,7 +16,6 @@
 // unsigned char *SHA1(const unsigned char *d, unsigned long n,
 //                 unsigned char *md);
 
-#define SHA_DIGEST_SIZE 20 //160bits
 #define IPAD 0x36
 #define OPAD 0x5c
 
@@ -56,5 +55,22 @@ void HMAC(std::string key, std::string msg, unsigned char * digest){
 	ss.write((char *)SHA1_digest, SHA_DIGEST_SIZE);
 	//hashea outer key + msg
 	mySHA1(ss.str(), digest);
+}
+
+void HMACSignedMsg(std::string & msg, std::string key){
+	unsigned char digest[SHA_DIGEST_SIZE];
+	HMAC(key, msg, digest);
+	char * signed_digest = (char*) digest;
+	msg.append(signed_digest, SHA_DIGEST_SIZE);
+}
+
+bool checkSignedMsg(std::string signed_msg, std::string key){
+	if (signed_msg.size() < SHA_DIGEST_SIZE) return false;
+	std::string msg = signed_msg.substr(0, signed_msg.size() - SHA_DIGEST_SIZE);
+	//digest va desde signed_msg.size() - SHA_DIGEST_SIZE hasta el final
+	std::string digest = signed_msg.substr(signed_msg.size() - SHA_DIGEST_SIZE);
+	HMACSignedMsg(msg, key);
+	std::string new_digest = msg.substr(msg.size() - SHA_DIGEST_SIZE);
+	return (digest.compare(new_digest) == 0);
 }
 
