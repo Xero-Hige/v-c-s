@@ -115,7 +115,7 @@ board.o: libs/boards/board.h libs/boards/board.cpp
 refiller.o: libs/boards/refiller.h libs/boards/refiller.cpp
 	$(CC) $(CPPFLAGS) -c libs/boards/refiller.cpp
 	
-replacements_board.o: libs/boards/replacements_board.h libs/boards/replacements_board.cpp
+replacements_board.o: libs/boards/board.h libs/boards/replacements_board.h libs/boards/replacements_board.cpp
 	$(CC) $(CPPFLAGS) -c libs/boards/replacements_board.cpp
 
 #Checkers builder
