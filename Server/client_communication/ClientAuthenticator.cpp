@@ -8,7 +8,7 @@
 #include "ClientAuthenticator.h"
 #include "../../libs/messages/MsgConstants.h"
 #include <cstring>
-
+#include <string>
 
 ClientAuthenticator::ClientAuthenticator(int socket, MyDatabase* data) :
 sock(socket) {
@@ -19,16 +19,21 @@ bool ClientAuthenticator::authenticate(){
 	//Determina si el cliente quiere registrarse o logearse
 	std::string s_auth_type;
 	sock.recvMsg(s_auth_type);
-	int auth_type = atoi (s_auth_type.c_str());
-	if (auth_type == TYPE_LOGIN)
+	int auth_type = atoi(s_auth_type.c_str());
+	if(auth_type == TYPE_LOGIN)
 		return login();
 	else /*if (auth_type == TYPE_REGISTER)*/
-		return registrate();
+		return registerUser();
 }
 
-void ClientAuthenticator::sendIdsVerifMsg(){
-	std::string msg(IDS_VERIF);
-	sock.sendMsg(msg);
+void ClientAuthenticator::sendIdsVerifMsg(bool success){
+	if (success){
+		std::string msg(IDS_VERIF);
+		sock.sendMsg(msg);
+	} else {
+		std::string msg(IDS_FAIL);
+		sock.sendMsg(msg);
+	}
 }
 
 void ClientAuthenticator::getIds(std::string & user, std::string & passwd){
@@ -38,14 +43,15 @@ void ClientAuthenticator::getIds(std::string & user, std::string & passwd){
 }
 
 
-bool ClientAuthenticator::registrate(){
+bool ClientAuthenticator::registerUser(){
 	std::string user, passwd;
 	this->getIds(user, passwd);
 	int i = db->registerUser(user, passwd, 0); //0 es el nivel inicial
 	if (i >= 0){
-		this->sendIdsVerifMsg();
+		this->sendIdsVerifMsg(true);
 		return true;
 	} else {
+		this->sendIdsVerifMsg(false);
 		return false;
 	}
 }
@@ -57,9 +63,10 @@ bool ClientAuthenticator::login(){
 	std::string real_passwd;
 	db->requestPasswd(user, real_passwd);
 	if (real_passwd.compare(passwd) == 0){
-		this->sendIdsVerifMsg();
+		this->sendIdsVerifMsg(true);
 		return true;
 	} else {
+		this->sendIdsVerifMsg(false)
 		return false;
 	}
 }
