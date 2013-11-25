@@ -27,10 +27,17 @@ public:
 	explicit ClientHandler(int sock);
 	void setPassword(std::string pass);
 	void setRoom(Room * r);
+	/*
+	 * sendMsg envia el mensaje 's' a traves del socket.
+	 */
 	void sendMsg(std::string s);
+	/*
+	 * recvMsg recibe un mensaje enviado por el cliente y chequea si su funcion de
+	 * hash concuerda con la del mensaje recibido. Si no concuerda cierra la
+	 * conexion.
+	 */
 	void recvMsg(std::string & s);
 	void exitRoom();
-
 	virtual ~ClientHandler();
 };
 

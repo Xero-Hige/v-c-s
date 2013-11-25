@@ -14,11 +14,14 @@
 
 class ServerMsgInterpreter : public MsgInterpreter {
 	ClientHandler * client;
+	/*
+	 * exitRoom y exitCharPressed llaman a los respectivos metodos del ClientHandler
+	 */
 	void exitRoom();
 	void exitCharPressed();
 	void interpretParticularMsg(std::string s);
 public:
-	ServerMsgInterpreter(ClientHandler* c);
+	explicit ServerMsgInterpreter(ClientHandler* c);
 	virtual ~ServerMsgInterpreter();
 };
 

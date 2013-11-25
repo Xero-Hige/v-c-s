@@ -7,14 +7,13 @@
 
 #include "ServerMsgInterpreter.h"
 #include "../../libs/messages/MsgConstants.h"
-#include <iostream>
+#include <string>
 
 ServerMsgInterpreter::ServerMsgInterpreter(ClientHandler* c) {
 	this->client = c;
 }
 
 void ServerMsgInterpreter::exitRoom(){
-	std::cout << "Mensaje recibido: SALIR DEL ROOM" << std::endl;
 	client->exitRoom();
 }
 
@@ -23,7 +22,6 @@ void ServerMsgInterpreter::exitCharPressed(){
 }
 
 void ServerMsgInterpreter::interpretParticularMsg(std::string msg){
-
 }
 
 ServerMsgInterpreter::~ServerMsgInterpreter() {
