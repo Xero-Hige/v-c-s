@@ -107,6 +107,16 @@ refiller.o: libs/boards/refiller.h libs/boards/refiller.cpp
 replacements_board.o: libs/boards/replacements_board.h libs/boards/replacements_board.cpp
 	$(CC) $(CPPFLAGS) -c libs/boards/replacements_board.cpp
 
+#Checkers builder
+
+CHECKERS_LIBS = physical_checker.o combination_checker.o
+
+physical_checker.o: libs/checkers/physical_checker.h libs/checkers/physical_checker.cpp
+	$(CC) $(CPPFLAGS) -c libs/checkers/physical_checker.cpp
+
+combination_checker.o: libs/checkers/combination_checker.h libs/checkers/combination_checker.cpp
+	$(CC) $(CPPFLAGS) -c libs/checkers/combination_checker.cpp
+
 #Level reader builder
 
 level_reader.o: libs/level_reader/level_reader.h libs/level_reader/level_reader.cpp libs/boards/tile.h
@@ -114,7 +124,7 @@ level_reader.o: libs/level_reader/level_reader.h libs/level_reader/level_reader.
 
 #Client
 
-CLIENT_EXTERN = $(GRAPHIC_LIBS) $(SOUND_LIBS) $(BOARDS_LIBS) $(SOCKET_LIBS) $(COMMUNICATION_PROTOCOL_LIBS)
+CLIENT_EXTERN = $(GRAPHIC_LIBS) $(SOUND_LIBS) $(BOARDS_LIBS) $(CHECKERS_LIBS) $(SOCKET_LIBS) $(COMMUNICATION_PROTOCOL_LIBS)
 
 CLIENT_OBJ = $(CLIENT_EXTERN) level_reader.o login_screen.o client_app.o rooms_screen.o game_screen.o server_connector.o Authenticator.o backend.o screen_sprite_animator.o
 
