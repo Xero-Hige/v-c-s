@@ -26,6 +26,13 @@
 #include "../boards/board.h"
 #include "../boards/product.h"
 #include "../checkers/combination_checker.h"
+#include "../combination_effects/combination_effect.h"
+#include "../combination_effects/change_product_effect.h"
+#include "../combination_effects/clean_board_effect.h"
+#include "../combination_effects/take_out_column_effect.h"
+#include "../combination_effects/take_out_row_effect.h"
+
+#include <list>
 
 // Constantes de puntaje
 // Representa el puntaje por producto combinado, tomando el mayor involucrado
@@ -38,14 +45,21 @@ class Combiner {
 private:
     Board& board;
     CombinationChecker checker;
+    int last_combination_points;
+    int multiplier;
 
 public:
     Combiner(Board& board)
-        : board(board), checker(CombinationChecker(board)) {}
-    int activateCombination(Position pos1, Position pos2);
+        : board(board), checker(CombinationChecker(board)), last_combination_points(0), multiplier(1) {}
+    //TODO devuelve los puntos y tiene un efecto adentro? devuelve el efecto? HACE EXPLOTAR EL MUNDO?
+    std::list<CombinationEffect> makeCombinations(Position pos1, Position pos2, bool chained = false);
 
 private:
-    int makeCombination(Position pos);
+    int makeStarCombination(Position star_pos, Position product_pos, std::list<CombinationEffect>& result_list);
+    int makeCombination(Position pos, std::list<CombinationEffect>& result_list);
+    int activateCombination(Position initial_pos, Position ending_pos, std::list<CombinationEffect>& result_list);
+    int activateProduct(Position product_pos, std::list<CombinationEffect>& result_list);
+    int getPointsPerProduct(int longest_combination_size);
 //    getCombinationTypes();
 };
 
