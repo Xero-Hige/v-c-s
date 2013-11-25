@@ -40,7 +40,10 @@ class SocketHandler: public Thread {
 	 * conexion.
 	 */
 	void run();
-
+	/*
+	 * addClient crea un nuevo FormattedSocket y ClientHandler por cada cliente
+	 * que intenta conectarse por el server, identificandolo previamente.
+	 */
 	void addClient(int & new_client);
 
 public:
