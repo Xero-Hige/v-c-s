@@ -9,28 +9,21 @@
 #include "../../libs/messages/MsgConstants.h"
 #include "../../libs/communication_protocol/BigEndianProtocol.h"
 #include <cstring>
+#include <string>
 
 Authenticator::Authenticator() {
 	this->sock = NULL;
 }
 
 bool Authenticator::receiveAuthVerif(){
-	std::string s(IDS_VERIF);
-	return verificateMessage(s);
+	std::string verif_msg(IDS_VERIF);
+	std::string server_msg;
+	sock->recvMsg(server_msg);
+	return (server_msg.compare(verif_msg) == 0);
 }
 
 void Authenticator::setSocket(FormattedSocket * s){
 	this->sock = s;
-}
-
-bool Authenticator::verificateMessage(std::string msg){
-	//Compara si el mensaje que envio el server coincide con 'msg'
-	std::string recvd_msg;
-	sock->recvMsg(recvd_msg);
-	if (recvd_msg.compare(msg) == 0) {
-		return true;
-	}
-	return false;
 }
 
 bool Authenticator::authenticate
@@ -38,11 +31,7 @@ bool Authenticator::authenticate
 	sock->sendMsg(auth_type);
 	sock->sendMsg(user);
 	sock->sendMsg(passwd);
-	if (this->receiveAuthVerif())
-		//se autentico
-		return true;
-	else
-		return false;
+	return (this->receiveAuthVerif());
 }
 
 Authenticator::~Authenticator() {

@@ -10,14 +10,20 @@
 
 #include "../../libs/messages/MsgInterpreter.h"
 #include "../server_connector/server_connector.h"
+#include <string>
 
 class ClientMsgInterpreter : public MsgInterpreter{
 	Server_Connector* client;
+
+	/*
+	 * Los metodos de esta clase interpretan el mensaje devuelto por el servidor
+	 * y llaman a los metodos que correspondan.
+	 */
+
 	void exitRoom();
-	void exitCharPressed();
 	void interpretParticularMsg(std::string s);
 public:
-	ClientMsgInterpreter(Server_Connector * c);
+	explicit ClientMsgInterpreter(Server_Connector * c);
 	virtual ~ClientMsgInterpreter();
 };
 
