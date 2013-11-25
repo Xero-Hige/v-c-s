@@ -169,12 +169,22 @@ vector<vector<int> > Backend::get_board_schema() {
 }
 
 bool Backend::async_make_swap(Position pos1_graphic, Position pos2_graphic) {
+    //TODO lo que sea lanzar thread y/o comunicarse con el server
     l[0] = pos1_graphic;
     l[1] = pos2_graphic;
     Position pos1_logic = graphicToLogicPos(pos1_graphic);
     Position pos2_logic = graphicToLogicPos(pos2_graphic);
-    bool physical_check = checkSwap(pos1_logic, pos2_logic);
-    return physical_check;
+    // Chequeo físico
+    if (! checkSwap(pos1_logic, pos2_logic)) {
+        return false;
+    }
+    // Chequeo de combinación
+    if (! checkCombination(pos1_logic, pos2_logic)) {
+        std::cout << "No hay combinación en las posiciones (" << pos1_logic.getX() << "," << pos1_logic.getY();
+        std::cout << ") y (" << pos2_logic.getX() << "," << pos2_logic.getY() << ")" << std::endl;
+        return false;
+    }
+    return true;
 }
 
 void Backend::asyncGetLevelSpecification() {
