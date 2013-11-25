@@ -16,6 +16,10 @@ class ServerListener : public Thread {
 	FormattedSocket * sock;
 	ClientMsgInterpreter * msg_int;
 	bool keep_listening;
+	/*
+	 * run escucha los mensajes que envia el servidor y se los entrega a
+	 * ClientMsgInterpreter para que decida que hacer.
+	 */
 	void run();
 
 public:
