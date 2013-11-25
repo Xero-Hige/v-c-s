@@ -49,7 +49,7 @@ Backend::Backend() {
 }
 
 void Backend::async_connect(const std::string& ip,int port){
-	//this->server_connector.makeConnection(ip, port);
+	this->server_connector.makeConnection(ip, port);
 }
 
 bool Backend::logged_in(){
@@ -73,7 +73,7 @@ string Backend::operation_error() {
 
 void Backend::async_log_in
 (const std::string& user,const std::string& password,int auth_type){
-	//this->server_connector.connectServer(user, password, "1");
+	this->server_connector.connectServer(user, password, "1");
 }
 Backend::~Backend() {
 	// TODO Auto-generated destructor stub
