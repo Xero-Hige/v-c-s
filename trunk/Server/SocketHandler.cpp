@@ -58,8 +58,7 @@ void SocketHandler::addClient(int & new_client){
 	if (ca.authenticate()){
 		ca.setPasswordTo(ch); //setea el password que recibio el CA al client
 		this->lobby->addNewClient(ch);
-	}
-	else {
+	}else{
 		close(new_client);
 		delete ch;
 	}

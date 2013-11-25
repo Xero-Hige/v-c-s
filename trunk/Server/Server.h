@@ -16,7 +16,6 @@
 #include "../libs/database/MyDatabase.h"
 
 class Server {
-
 	MyDatabase db;
 	/*
 	 * sock_listeners contiene todos threads de cada socket que escucha el serv.
