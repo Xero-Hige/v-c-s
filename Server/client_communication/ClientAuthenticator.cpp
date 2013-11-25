@@ -34,6 +34,7 @@ void ClientAuthenticator::sendIdsVerifMsg(){
 void ClientAuthenticator::getIds(std::string & user, std::string & passwd){
 	sock.recvMsg(user);
 	sock.recvMsg(passwd);
+	this->clients_password = passwd;
 }
 
 
@@ -63,6 +64,9 @@ bool ClientAuthenticator::login(){
 	}
 }
 
+void ClientAuthenticator::setPasswordTo(ClientHandler * ch){
+	ch->setPassword(this->clients_password);
+}
 
 ClientAuthenticator::~ClientAuthenticator() {
 	// TODO Auto-generated destructor stub

@@ -13,6 +13,7 @@
 #include "../../libs/database/MyDatabase.h"
 
 class ClientAuthenticator {
+	std::string clients_password;
 	FormattedSocket sock;
 	MyDatabase * db;
 	bool login();
@@ -21,6 +22,7 @@ class ClientAuthenticator {
 public:
 	ClientAuthenticator(int socket, MyDatabase * data);
 	bool authenticate();
+	void setPasswordTo(ClientHandler * ch);
 	void sendIdsVerifMsg();
 	void getIds(std::string & user, std::string & passwd);
 	virtual ~ClientAuthenticator();

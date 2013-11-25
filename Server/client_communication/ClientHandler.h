@@ -17,6 +17,7 @@ class Room; //Por la refs circulares...
 class Lobby;
 
 class ClientHandler : public Thread{
+	std::string passwd;
 	FormattedSocket * sock;
 	Room * room;
 	bool keep_listening;
@@ -24,12 +25,10 @@ class ClientHandler : public Thread{
 
 public:
 	explicit ClientHandler(int sock);
-
+	void setPassword(std::string pass);
 	void setRoom(Room * r);
-
 	void sendMsg(std::string s);
 	void recvMsg(std::string & s);
-
 	void exitRoom();
 
 	virtual ~ClientHandler();

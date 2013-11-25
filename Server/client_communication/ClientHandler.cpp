@@ -33,12 +33,19 @@ void ClientHandler::exitRoom(){
 	room->exitRoom(this);
 }
 
+void ClientHandler::setPassword(std::string pass){
+	this->passwd = pass;
+}
+
 void ClientHandler::setRoom(Room * r){
 	this->room = r;
 }
 
 void ClientHandler::recvMsg(std::string & s){
-	this->sock->recvMsg(s);
+	int recvd_bytes;
+	if (!this->sock->recvSignedMsg(s, this->passwd, recvd_bytes))
+		sock->closeConnection();
+
 }
 
 void ClientHandler::sendMsg(std::string s){
