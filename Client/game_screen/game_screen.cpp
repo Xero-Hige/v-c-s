@@ -99,6 +99,7 @@ void Game_Screen::animate_swap() {
     		sprites[reference].draw(window, p[0], p[1]);// - (DIMENSION_Y * board[0].size()) );
     	}
 
+    	over_mask.draw(window);
     	window.render();
 
     	bool ended = true;
@@ -147,6 +148,8 @@ void Game_Screen::setup_background() {
 	Surface temporal_background = Surface(
 			"resources/game_board/backgrounds/Zangoose.jpg");
 	temporal_background.set_scaled_dimensions(SCREEN_WIDTH, SCREEN_HEIGHT);
+
+	over_mask = temporal_background.convert_to_sprite(window,SCREEN_WIDTH,INICIO_Y);
 
 	//TODO: agregar soporte para multiples celdas
 	Surface temporal_cell = Surface("resources/game_board/cell/cell_A.png");
@@ -299,7 +302,7 @@ void Game_Screen::render() {
 		sprites[reference].draw(window, p[0], p[1]);// - (DIMENSION_Y * board[0].size()) );
 	}
 	//TODO: SACAR
-
+	over_mask.draw(window);
 	window.render();
 }
 
