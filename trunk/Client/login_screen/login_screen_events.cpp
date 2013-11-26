@@ -42,11 +42,11 @@ void Login_Screen::key_press_event(SDL_Event& event) {
 	user_pass.handle_event(event);
 
 	if (SDL_SCANCODE_RETURN == event.key.keysym.scancode) {
-		if (user_nick.get_text() == "" || user_pass.get_text() == "")
+		/*if (user_nick.get_text() == "" || user_pass.get_text() == "")
 		{
 			window.show_message_box(SDL_MESSAGEBOX_ERROR,"Datos Invalidos","Debe especificar un nombre y usuario");
 			return;
-		}
+		}*/
 		backend.async_log_in(user_nick.get_text(), user_pass.get_text());
 		while (!backend.operation_ended()) {
 			render_loadscreen(); //FIXME
