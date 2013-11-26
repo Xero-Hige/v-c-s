@@ -50,9 +50,9 @@ public:
      * La cantidad de productos debe coincidir con la cantidad de celdas */
     void setUp(std::vector<Product*> products);
     /* Devuelve la altura del tablero */
-    unsigned int getHeight();
+    int getHeight();
     /* Devuelve el ancho del tablero */
-    unsigned int getWidth();
+    int getWidth();
     /* Devuelve si un casillero es celda o agujero, según las contantes de *
      * la clase Tile                                                       */
     int getTileType(int x, int y);
@@ -82,6 +82,10 @@ public:
     void rearrangeColumn(int column_number);
     /* Acomoda todas las columnas pasadas por parámetro */
     void rearrangeColumn(std::vector<int> column_numbers);
+    /* Saca todos los productos de una fila y los devuelve en una lista */
+    std::list<Product*> takeOutRow(int row);
+    /* Saca todos los productos de una columna y los devuelve en una lista */
+    std::list<Product*> takeOutColumn(int column);
     ~Board();
 
 private:

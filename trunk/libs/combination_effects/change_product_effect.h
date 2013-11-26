@@ -35,6 +35,7 @@ public:
     ChangeProductEffect(Position origin, int new_type)
         : CombinationEffect(origin), new_type(new_type) {}
     void applyEffect();
+    ~ChangeProductEffect();
 };
 
 

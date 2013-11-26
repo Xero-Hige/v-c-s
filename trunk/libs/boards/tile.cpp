@@ -53,10 +53,16 @@ bool Tile::isEmpty() {
 }
 
 int Tile::getProductColor() {
+    if (product == NULL) {
+        return Product::NO_COLOR;
+    }
     return product->getColor();
 }
 
 int Tile::getProductType() {
+    if (product == NULL) {
+        return Product::NO_TYPE;
+    }
     return product->getType();
 }
 

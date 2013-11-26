@@ -35,7 +35,8 @@ private:
 public:
     TakeOutColumnEffect(Position origin, int column)
         : CombinationEffect(origin), column(column) {}
-    void applyEffect();
+    void applyEffect() {}
+    ~TakeOutColumnEffect() {}
 };
 
 

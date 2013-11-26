@@ -35,7 +35,8 @@ private:
 public:
     TakeOutRowEffect(Position origin, int row)
         : CombinationEffect(origin), row(row) {}
-    void applyEffect();
+    void applyEffect() {}
+    ~TakeOutRowEffect() {}
 };
 
 #endif /* TAKE_OUT_ROW_EFFECT_H_ */
