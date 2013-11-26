@@ -51,6 +51,11 @@ private:
 	Sprite background;
 	Sprite over_mask;
 
+	Sprite hover_cell;
+
+	int board_columns;
+	int board_rows;
+
 	//Loading_screen
 	Sprite loading_mask;
 	Animated_Sprite loading_icon;
