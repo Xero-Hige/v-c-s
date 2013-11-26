@@ -32,8 +32,8 @@ public:
     CombinationEffect(Position origin)
         : origin(origin) {}
     //TODO ver bien que pasarle de parámetro y si tiene que devolver algo (Gaston si ves esto, con vos tengo que hablarlo =P)
-    virtual void applyEffect() = 0;
-    virtual ~CombinationEffect();
+    virtual void applyEffect() {}
+    virtual ~CombinationEffect() {};
 };
 
 #endif /* COMBINATION_EFFECT_H_ */

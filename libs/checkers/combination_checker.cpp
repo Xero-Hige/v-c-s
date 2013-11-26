@@ -41,6 +41,9 @@ bool CombinationChecker::check(Position& pos) {
         return false;
     }
     int product_color = board->getProductColor(pos);
+    if (product_color == Product::NO_COLOR) {
+        return false;
+    }
     int combination_count;
     combination_count = checkCombination(UP, pos, product_color, NULL);
     combination_count += checkCombination(DOWN, pos, product_color, NULL);
@@ -57,7 +60,12 @@ bool CombinationChecker::check(Position& pos) {
 
 bool CombinationChecker::getVerticalCombination(Position& pos, list<Position>& combination_list) {
     int product_color = board->getProductColor(pos);
+    if (product_color == Product::NO_COLOR) {
+        return false;
+    }
     int n_combination = checkCombination(UP, pos, product_color, &combination_list);
+    combination_list.reverse();
+    combination_list.push_back(pos);
     n_combination += checkCombination(DOWN, pos, product_color, &combination_list);
     if (n_combination >= 2) {
         return true;
@@ -67,8 +75,13 @@ bool CombinationChecker::getVerticalCombination(Position& pos, list<Position>& c
 
 bool CombinationChecker::getHorizontalCombination(Position& pos, list<Position>& combination_list) {
     int product_color = board->getProductColor(pos);
-    int n_combination = checkCombination(RIGHT, pos, product_color, &combination_list);
-    n_combination += checkCombination(LEFT, pos, product_color, &combination_list);
+    if (product_color == Product::NO_COLOR) {
+        return false;
+    }
+    int n_combination = checkCombination(LEFT, pos, product_color, &combination_list);
+    combination_list.reverse();
+    combination_list.push_back(pos);
+    n_combination += checkCombination(RIGHT, pos, product_color, &combination_list);
     if (n_combination >= 2) {
         return true;
     }

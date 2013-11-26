@@ -52,11 +52,11 @@ void Board::setUp(vector<Product*> products) {
     //TODO
 }
 
-unsigned int Board::getHeight() {
+int Board::getHeight() {
     return rows;
 }
 
-unsigned int Board::getWidth() {
+int Board::getWidth() {
     return columns;
 }
 
@@ -139,6 +139,16 @@ void Board::rearrangeColumn(int column_number) {
         }
         y--;
     }
+}
+
+list<Product*> Board::takeOutRow(int row) {
+    //TODO
+    return list<Product*>();
+}
+
+list<Product*> Board::takeOutColumn(int column) {
+    //TODO
+    return list<Product*>();
 }
 
 Board::~Board() {

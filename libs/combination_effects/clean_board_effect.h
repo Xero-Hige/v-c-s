@@ -32,7 +32,8 @@ class CleanBoardEffect : public CombinationEffect {
 public:
     CleanBoardEffect(Position origin)
         : CombinationEffect(origin) {}
-    void applyEffect();
+    void applyEffect() {}
+    ~CleanBoardEffect() {}
 };
 
 #endif /* CLEAN_BOARD_EFFECT_H_ */

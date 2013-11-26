@@ -31,6 +31,7 @@
 
 #include <iostream> // FIXME borrame
 #include "info_nivel.h" // FIXME borrame
+#include "../../libs/combiner/combiner.h" // FIXME borrame
 
 using std::string;
 using std::vector;
@@ -73,7 +74,8 @@ string Backend::operation_error() {
 
 void Backend::async_log_in
 (const std::string& user,const std::string& password,int auth_type){
-	this->server_connector.connectServer(user, password, "1");
+    //FIXME lo comenté porque se rompía
+//	this->server_connector.connectServer(user, password, "1");
 }
 Backend::~Backend() {
 	// TODO Auto-generated destructor stub
@@ -184,6 +186,11 @@ bool Backend::async_make_swap(Position pos1_graphic, Position pos2_graphic) {
         std::cout << ") y (" << pos2_logic.getX() << "," << pos2_logic.getY() << ")" << std::endl;
         return false;
     }
+    //TODO esto va en el server y/o otro lado
+    Combiner combiner = Combiner(board);
+    combiner.makeCombinations(pos1_logic, pos2_logic);
+    std::cout << "Puntos obtenidos en el último movimiento: " << combiner.getLastCombinationsPoints() << std::endl;
+    /////////////////////////////////////////
     return true;
 }
 
