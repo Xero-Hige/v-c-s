@@ -174,6 +174,21 @@ client_app.o: Client/client_app.cpp Client/client_app.h
 client: Client/client.cpp $(CLIENT_OBJ)
 	$(CC) $(SDL_CPPFLAGS) $(CLIENT_OBJ) Client/client.cpp -o $(CLIENT_NAME) $(SDL_LDFLAGS) -ljsoncpp
 		
+#Editor
+
+EDITOR_EXTERN = $(GRAPHIC_LIBS)
+
+EDITOR_OBJ = $(EDITOR_EXTERN) editor_app.o
+
+EDITOR_NAME = game-editor
+
+editor_app.o: Level_Editor/editor_app.cpp Level_Editor/editor_app.h
+	$(CC) $(SDL_CPPFLAGS) -c Level_Editor/editor_app.cpp
+
+editor: Level_Editor/editor.cpp $(EDITOR_OBJ)
+	$(CC) $(SDL_CPPFLAGS) $(EDITOR_OBJ) Level_Editor/editor.cpp -o $(EDITOR_NAME) $(SDL_LDFLAGS) -ljsoncpp
+
+
 #Cleanup
 clean:
 	rm *.o $(CLIENT_NAME)
@@ -181,3 +196,7 @@ clean:
 #Run
 run-client: client
 	./$(CLIENT_NAME)
+	
+#Run
+run-editor: editor
+	./$(EDITOR_NAME)
