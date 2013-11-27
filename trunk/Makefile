@@ -2,7 +2,7 @@
 #General
 CC = gcc
 CPPFLAGS = -Wall -Wextra -g -pedantic
-CPPLDFLAGS = -lm -lstdc++ -lcrypto -lssl
+CPPLDFLAGS = -lm -lstdc++ -lcrypto -lssl -lpthread
 
 all: run-client
 
