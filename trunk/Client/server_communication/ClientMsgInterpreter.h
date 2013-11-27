@@ -21,6 +21,7 @@ class ClientMsgInterpreter : public MsgInterpreter{
 	 */
 
 	void exitRoom();
+	void exitCharPressed();
 	void interpretParticularMsg(std::string s);
 public:
 	explicit ClientMsgInterpreter(Server_Connector * c);

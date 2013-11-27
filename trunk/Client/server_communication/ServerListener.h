@@ -13,8 +13,8 @@
 #include "ClientMsgInterpreter.h"
 
 class ServerListener : public Thread {
-	FormattedSocket * sock;
-	ClientMsgInterpreter * msg_int;
+	FormattedSocket * socket;
+	ClientMsgInterpreter msg_int;
 	bool keep_listening;
 	/*
 	 * run escucha los mensajes que envia el servidor y se los entrega a
@@ -23,8 +23,12 @@ class ServerListener : public Thread {
 	void run();
 
 public:
-	ServerListener(FormattedSocket * s, ClientMsgInterpreter * c);
+	ServerListener(Server_Connector * sc);
 	virtual ~ServerListener();
 };
+
+//Para poner en el main: BORRAR ESTE COMMENT
+//new Server_connector sc;
+//new ServerListener(sc);
 
 #endif /* SERVERLISTENER_H_ */
