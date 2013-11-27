@@ -74,6 +74,7 @@ public:
 	 * closeConnection cierra el socket utilizado para la conex.
 	 */
 	void closeConection();
+	FormattedSocket * getSocket();
 	virtual ~Server_Connector();
 };
 

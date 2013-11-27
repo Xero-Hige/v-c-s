@@ -54,9 +54,11 @@ THREAD_LDFLAGS =
 
 THREAD_LIBS = Thread.o Mutex.o
 
-Thread.o:
+Thread.o: libs/wrappers/Thread.h libs/wrappers/Thread.cpp
+		$(CC) $(SDL_CPPFLAGS) -c libs/wrappers/Thread.cpp
 
-Mutex.o:
+Mutex.o: libs/wrappers/Mutex.h libs/wrappers/Mutex.cpp
+		$(CC) $(SDL_CPPFLAGS) -c libs/wrappers/Mutex.cpp
 
 #Sockets libs builder 
 
@@ -67,7 +69,13 @@ Socket.o: libs/wrappers/Socket.h libs/wrappers/Socket.cpp
 
 #Messages libs builder
 
-MESSAGES_LIBS = MsgInterpreter.o
+MESSAGES_LIBS = MsgInterpreter.o ClientMsgInterpreter.o
+
+MsgInterpreter.o: libs/messages/MsgInterpreter.h libs/messages/MsgInterpreter.cpp
+				$(CC) $(CPPFLAGS) -c libs/messages/MsgInterpreter.cpp
+				
+ClientMsgInterpreter.o: Client/server_communication/ClientMsgInterpreter.h Client/server_communication/ClientMsgInterpreter.cpp
+						$(CC) $(CPPFLAGS) -c Client/server_communication/ClientMsgInterpreter.cpp
 
 #Protocol libs builder
 
@@ -140,10 +148,10 @@ combiner.o: libs/combiner/combiner.h libs/combiner/combiner.cpp
 
 #Client
 
-CLIENT_EXTERN = $(GRAPHIC_LIBS) $(SOUND_LIBS) $(BOARDS_LIBS) $(CHECKERS_LIBS) $(SOCKET_LIBS) $(COMMUNICATION_PROTOCOL_LIBS) combiner.o
+CLIENT_EXTERN = $(GRAPHIC_LIBS) $(SOUND_LIBS) $(BOARDS_LIBS) $(CHECKERS_LIBS) $(SOCKET_LIBS) $(THREAD_LIBS) $(COMMUNICATION_PROTOCOL_LIBS) $(MESSAGES_LIBS) combiner.o
 #hay que sacar el combiner.o, lo agregué para probar
 
-CLIENT_OBJ = $(CLIENT_EXTERN) level_reader.o login_screen.o client_app.o rooms_screen.o game_screen.o server_connector.o Authenticator.o backend.o screen_sprite_animator.o
+CLIENT_OBJ = $(CLIENT_EXTERN) level_reader.o login_screen.o client_app.o rooms_screen.o game_screen.o server_connector.o Authenticator.o backend.o screen_sprite_animator.o ServerListener.o
 
 CLIENT_NAME = game-client
 
@@ -165,8 +173,12 @@ backend.o: Client/backend/backend.cpp Client/backend/backend.h
 Authenticator.o: Client/server_communication/Authenticator.h Client/server_communication/Authenticator.cpp
 		$(CC) $(SDL_CPPFLAGS) -c Client/server_communication/Authenticator.cpp
 	
+
 server_connector.o: Client/server_connector/server_connector.cpp Client/server_connector/server_connector.h
 	$(CC) $(SDL_CPPFLAGS) -c Client/server_connector/server_connector.cpp
+	
+ServerListener.o: Client/server_communication/ServerListener.h Client/server_communication/ServerListener.cpp
+	$(CC) $(SDL_CPPFLAGS) -c Client/server_communication/ServerListener.cpp
 
 client_app.o: Client/client_app.cpp Client/client_app.h
 	$(CC) $(SDL_CPPFLAGS) -c Client/client_app.cpp

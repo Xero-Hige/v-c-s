@@ -137,6 +137,10 @@ void Server_Connector::closeConection(){
 	sock->closeConnection();
 }
 
+FormattedSocket * Server_Connector::getSocket(){
+	return this->sock;
+}
+
 Server_Connector::~Server_Connector() {
 	delete sock;
 }

@@ -8,22 +8,21 @@
 #include "ServerListener.h"
 #include <string>
 
-ServerListener::ServerListener(FormattedSocket * s, ClientMsgInterpreter * c) {
-	sock = s;
-	msg_int = c;
+ServerListener::ServerListener(Server_Connector * sc) : msg_int(sc) {
+	socket = sc->getSocket();
 	keep_listening = true;
 }
 
 void ServerListener::run(){
 	while (keep_listening){
 		std::string rcvd_msg;
-		sock->recvMsg(rcvd_msg);
-		if (msg_int->interpret(rcvd_msg)) keep_listening = false;
+		socket->recvMsg(rcvd_msg);
+		if (msg_int.interpret(rcvd_msg)) keep_listening = false;
 	}
 }
 
 ServerListener::~ServerListener() {
 	keep_listening = false;
-	sock->socketShutdown();
+	socket->socketShutdown();
 	this->join();
 }

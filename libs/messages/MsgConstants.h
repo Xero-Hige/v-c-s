@@ -11,6 +11,7 @@
 #define IDS_PASSWD_SIZE 20
 #define IDS_USERNAME_SIZE 20
 #define IDS_VERIF "VERIF-IDS"
+#define IDS_FAIL "FAIL"
 
 #define TYPE_REGISTER 2
 #define TYPE_LOGIN 1
