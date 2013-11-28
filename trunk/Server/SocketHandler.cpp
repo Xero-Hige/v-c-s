@@ -53,7 +53,7 @@ void SocketHandler::run(){
 }
 
 void SocketHandler::addClient(int & new_client){
-	ClientHandler * ch = new ClientHandler(new_client, this->lobby);
+	ClientHandler * ch = new ClientHandler(new_client);
 	ClientAuthenticator ca(new_client, this->db);
 	if (ca.authenticate()){
 		ca.setPasswordTo(ch); //setea el password que recibio el CA al client

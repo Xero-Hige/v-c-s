@@ -11,7 +11,7 @@
 #include <stdlib.h>
 #include <arpa/inet.h>
 #include <vector>
-#include "../../libs/wrappers/Thread.h"
+#include "../libs/wrappers/Thread.h"
 #include "SocketHandler.h"
 #include "../libs/database/MyDatabase.h"
 
