@@ -60,10 +60,10 @@ public:
 private:
     int makeStarCombination(Position star_pos, Position product_pos, std::list<CombinationEffect>& result_list);
     int makeCombination(Position pos, std::list<CombinationEffect>& result_list);
-    int activateCombination(Position initial_pos, Position ending_pos, std::list<CombinationEffect>& result_list);
+    int activateCombination(Position initial_pos, Position ending_pos, Position origin, std::list<CombinationEffect>& result_list);
     int activateProduct(Position product_pos, std::list<CombinationEffect>& result_list);
     int getPointsPerProduct(int longest_combination_size);
-    void upgradeProduct(Position origin, int vertical_combination_size, int horizontal_combination_size, std::list<CombinationEffect>& result_list);
+    void upgradeProduct(Position origin, int color, int vertical_combination_size, int horizontal_combination_size, std::list<CombinationEffect>& result_list);
 //    getCombinationTypes();
 };
 

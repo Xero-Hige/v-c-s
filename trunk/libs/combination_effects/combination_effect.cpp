@@ -20,3 +20,14 @@
  */
 
 #include "combination_effect.h"
+
+bool CombinationEffect::isApplied() {
+    return applied;
+}
+void CombinationEffect::setApplied(bool state) {
+    applied = state;
+}
+
+Position CombinationEffect::getOrigin() {
+    return origin;
+}

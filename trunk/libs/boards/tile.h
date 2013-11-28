@@ -64,6 +64,7 @@ public:
     bool isHole();
     bool isCell();
     bool isEmpty();
+    bool hasProduct();
     int getProductColor();
     int getProductType();
     Product* popProduct();

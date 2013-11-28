@@ -1,5 +1,5 @@
 /*
- * take_out_product_effect.h
+ * take_out_row_effect.cpp
  *
  * Created on: Nov 26, 2013
  * 
@@ -19,29 +19,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses 
  */
 
-#ifndef TAKE_OUT_PRODUCT_EFFECT_H_
-#define TAKE_OUT_PRODUCT_EFFECT_H_
+#include "take_out_row_effect.h"
 
 #include "combination_effect.h"
-
 #include "../position/position.h"
 
 #include <vector>
 
-/* Clase que representa la eliminación de un producto simple */
-class TakeOutProductEffect : public CombinationEffect {
-private:
-    Position initial_pos;
-    Position ending_pos;
+using std::vector;
 
-public:
-    explicit TakeOutProductEffect(Position origin)
-        : CombinationEffect(origin) {}
-    TakeOutProductEffect(Position origin, Position initial_pos, Position ending_pos)
-        : CombinationEffect(origin), initial_pos(initial_pos), ending_pos(ending_pos) {}
-    void applyEffect();
-    std::vector<Position> getEliminatedProduct();
-    ~TakeOutProductEffect() {}
-};
+void TakeOutRowEffect::applyEffect() {
+    //TODO
+}
 
-#endif /* TAKE_OUT_PRODUCT_EFFECT_H_ */
+vector<Position> TakeOutRowEffect::getEliminatedProduct() {
+    vector<Position> products_to_eliminate;
+    int y = origin.getY();
+    for (int x = board_width; x >= 0; x++) {
+        products_to_eliminate.push_back(Position(x,y));
+    }
+    return products_to_eliminate;
+}

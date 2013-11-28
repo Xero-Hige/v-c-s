@@ -42,7 +42,6 @@ public:
     /* El índice 0 se refiere a la coordenada x, el 1 a la coordenada y *
      * Otro índice se considerará inválido y se devolverá -1            */
     int operator[](int pos);
-    const int operator[](int pos) const;
     Position operator+(Position rhs);
     /**
      * Devuelve si la posicion actual es valida. Una

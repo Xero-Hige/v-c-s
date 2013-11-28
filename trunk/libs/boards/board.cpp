@@ -34,22 +34,39 @@ using std::list;
 Board::Board(int n_rows, int n_columns)
     : rows(n_rows), columns(n_columns), tiles(vector<Tile>()) {
     initTiles();
+    cellsInColumn.resize(n_columns, 0);
+    productsInColumn.resize(n_columns, 0);
 }
 
 void Board::setSchema(vector<vector<int> >& schema) {
     for (int x = 0; x < columns; x++) {
         for (int y = 0; y < rows; y++) {
             int tile_type = schema[x][y];
-            // Se inicializa en CELL, por lo que solo hay que chequear HOLE
             if (tile_type == Tile::HOLE) {
                 tiles[getIndexFromPos(x, y)].setType(Tile::HOLE);
+            } else {
+                // Se inicializa en CELL, por lo que no hay que cambiar el tipo
+                cellsInColumn[x]++;
             }
         }
     }
 }
 
-void Board::setUp(vector<Product*> products) {
-    //TODO
+void Board::setUp(list<Product*> products) {
+    for (int x = 0; x < columns; x++) {
+        for (int y = 0; y < rows; y++) {
+            if (products.size()) {
+                return;
+            }
+            int index = getIndexFromPos(x, y);
+            Tile& tile = tiles[index];
+            if (tile.isCell()) {
+                tile.setProduct(products.front());
+                products.pop_front();
+                productsInColumn[x]++;
+            }
+        }
+    }
 }
 
 int Board::getHeight() {
@@ -77,11 +94,17 @@ int Board::getProductType(int x, int y) {
 
 Product* Board::takeOutProduct(int x, int y) {
     int pos = getIndexFromPos(x, y);
+    if (tiles[pos].hasProduct()) {
+        productsInColumn[x]--;
+    }
     return tiles[pos].popProduct();
 }
 
 bool Board::setProduct(Product* product, int x, int y) {
     int pos = getIndexFromPos(x, y);
+    if (tiles[pos].isEmpty()) {
+        productsInColumn[x]++;
+    }
     return tiles[pos].setProduct(product);
 }
 
@@ -111,20 +134,21 @@ void Board::swapProducts(Position& pos1, Position& pos2) {
     setProduct(swap_aux, pos2);
 }
 
-void Board::rearrangeColumn(vector<int> column_numbers) {
-    vector<int>::iterator it;
-    for (it = column_numbers.begin(); it != column_numbers.end(); ++it) {
-        rearrangeColumn(*it);
-    }
-}
+//void Board::rearrangeColumn(vector<int> column_numbers) {
+//    vector<int>::iterator it;
+//    for (it = column_numbers.begin(); it != column_numbers.end(); ++it) {
+//        rearrangeColumn(*it);
+//    }
+//}
 
 void Board::rearrangeColumn(int column_number) {
+    //TODO revisar esta cosa
     // If not a valid value, it is ignored
-    if (0 < column_number || column_number >= (int)columns) {
+    if (0 < column_number || column_number >= columns) {
         return;
     }
     int x = column_number;
-    int y = rows;
+    int y = rows-1;
     while (y >= 0) {
         Position initial_pos = Position(x,y);
         int empty_tiles = countEmpty(initial_pos);
@@ -141,14 +165,73 @@ void Board::rearrangeColumn(int column_number) {
     }
 }
 
+void Board::rearrangeBoard() {
+    for (int column = 0; column < columns; column++) {
+        if (productsInColumn[column] < cellsInColumn[column]) {
+            rearrangeColumn(column);
+        }
+    }
+}
+
 list<Product*> Board::takeOutRow(int row) {
-    //TODO
-    return list<Product*>();
+    list<Product*> products;
+    for (int x = 0; x < columns; x++) {
+        Product* product = takeOutProduct(x, row);
+        if (product != NULL) {
+            products.push_back(product);
+        }
+    }
+    return products;
 }
 
 list<Product*> Board::takeOutColumn(int column) {
-    //TODO
-    return list<Product*>();
+    list<Product*> products;
+    for (int y = 0; y < rows; y++) {
+        Product* product = takeOutProduct(column, y);
+        if (product != NULL) {
+            products.push_back(product);
+        }
+    }
+    return products;
+}
+
+int Board::pushInColumn(list<Product*> products, int column) {
+    int inserted = 0;
+    for (int y = rows-1; y >= 0; y--) {
+        if (products.size() == 0) {
+            break;
+        }
+        int index = getIndexFromPos(column, y);
+        if (tiles[index].isEmpty()) {
+            tiles[index].setProduct(products.front());
+            products.pop_front();
+            productsInColumn[column]++;
+            inserted++;
+        }
+    }
+    return inserted;
+}
+
+list<Product*> Board::popFromColumn(int n, int column) {
+    list<Product*> products;
+    int y = rows-1;
+    while (n > 0 && y >= 0) {
+        int index = getIndexFromPos(column, y);
+        if (tiles[index].hasProduct()) {
+            products.push_back(tiles[index].popProduct());
+            productsInColumn[column]--;
+            n--;
+        }
+        y--;
+    }
+    return products;
+}
+
+int Board::getEmptyCellsInColumn(int column_number) {
+    if (column_number < 0 || column_number >= columns) {
+        return -1;
+    }
+    return cellsInColumn[column_number] - productsInColumn[column_number];
 }
 
 Board::~Board() {

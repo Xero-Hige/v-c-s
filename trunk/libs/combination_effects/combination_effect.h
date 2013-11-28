@@ -24,16 +24,23 @@
 
 #include "../position/position.h"
 
+#include <vector>
+
 /* Clase base para los efectos a aplicar como resultado de una combinación */
 class CombinationEffect {
 protected:
     Position origin;
+    bool applied;
 public:
     CombinationEffect(Position origin)
-        : origin(origin) {}
+        : origin(origin), applied(false) {}
     //TODO ver bien que pasarle de parámetro y si tiene que devolver algo (Gaston si ves esto, con vos tengo que hablarlo =P)
     virtual void applyEffect() {}
-    virtual ~CombinationEffect() {};
+    bool isApplied();
+    void setApplied(bool state);
+    virtual std::vector<Position> getEliminatedProduct() {return std::vector<Position>();}
+    Position getOrigin();
+    virtual ~CombinationEffect() {}
 };
 
 #endif /* COMBINATION_EFFECT_H_ */

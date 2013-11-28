@@ -46,14 +46,14 @@ int Position::operator[](int pos) {
     return -1;
 }
 
-const int Position::operator[](int pos) const {
-    if (pos == 0) {
-        return x;
-    } else if (pos == 1) {
-        return y;
-    }
-    return -1;
-}
+//const int Position::operator[](int pos) const {
+//    if (pos == 0) {
+//        return x;
+//    } else if (pos == 1) {
+//        return y;
+//    }
+//    return -1;
+//}
 
 Position Position::operator+(Position rhs) {
     Position res = Position(this->x, this->y);
