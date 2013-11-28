@@ -251,6 +251,11 @@ void Game_Screen::setup_sprites() {
 	left_banner.set_scaled_width(INICIO_X);
 	left_banner.set_scaled_height(SCREEN_HEIGHT);
 	left_banner.move(0,0);
+
+	right_banner = Sprite("resources/game_board/right-banner.png",window);
+	int init = INICIO_X+(30*36);
+	right_banner.move(init,INICIO_Y);
+	right_banner.scale_with_widht(SCREEN_WIDTH-init);
 }
 
 void Game_Screen::setup_audio() {
@@ -343,6 +348,7 @@ void Game_Screen::render() {
 	//TODO: SACAR
 	over_mask.draw(window);
 	left_banner.draw(window);
+	right_banner.draw(window);
 	window.render();
 }
 
