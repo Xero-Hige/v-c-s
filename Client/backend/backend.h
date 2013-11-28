@@ -21,6 +21,7 @@
 
 #include <string>
 #include <vector>
+#include <list>
 
 #include "../../libs/boards/board.h"
 #include "../../libs/checkers/combination_checker.h"
@@ -29,6 +30,7 @@
 #include "../../libs/position/position.h"
 #include "../server_connector/server_connector.h"
 #include "../../libs/level_reader/level_reader.h"
+#include "../../libs/combination_effects/combination_effect.h"
 
 class Backend {
 
@@ -61,12 +63,23 @@ private:
 
 	LevelReader level_reader;
 
+	std::list<CombinationEffect> combination_effects_queue;
+
+	//FIXME a borrar!
 	Position l[2];
+	std::vector<Position> products_to_remove;
 
 private:
 
 	void setOperationEnded(bool b);
 	void setLogged(bool b);
+
+	/* Verifica si el cambio entre esas posiciones es válido */
+	bool checkSwap(Position pos1_logic, Position pos2_logic);
+
+	/* Verifica si hay combinación con el cambio de las dos posiciones *
+	 * El cambio debe haberse efectuado                                */
+	bool checkCombination(Position pos1_logic, Position pos2_logic);
 
 	/* Recibe una posición con coordenadas según la interfaz gráfica, y *
 	 * devuelve su equivalente según la lógica                          */
@@ -83,13 +96,6 @@ private:
 public:
 	Backend();
 	virtual ~Backend();
-
-	/* Verifica si el cambio entre esas posiciones es válido */
-	bool checkSwap(Position pos1_logic, Position pos2_logic);
-
-	/* Verifica si hay combinación con el cambio de las dos posiciones *
-	 * El cambio debe haberse efectuado                                */
-	bool checkCombination(Position pos1_logic, Position pos2_logic);
 
 	//Async control
 	/**
@@ -132,11 +138,26 @@ public:
 	 */
 	std::vector<std::string> get_board_pokemon_codes();
 
+	/* Devuelve true o false, dependiendo si hay un efecto de combinación  *
+	 * para aplicar o no                                                   *
+	 * Aplica al tablero lógico instantaneamente, y deja disponible los    *
+	 * datos para que la interfaz los pida hasta la próxima llamada a este *
+	 * método                                                              */
+	bool poolEffect();
+
 	/**
 	 * Devuelve una lista de las posiciones que se
 	 * eliminan con el ultimo movimiento
 	 */
 	std::vector<Position> get_removed_pokemons();
+
+	/* Devuelve la posición del producto donde se originó la combinación que *
+	 * causó el efecto actual                                                */
+	Position getEffectOrigin();
+
+	/* Devuelve la constante que corresponde a la animación a aplicar para *
+	 * el efecto de combinación actual                                     */
+	int getEffectAnimation();
 
 	//ASYNC
 	//Connect
