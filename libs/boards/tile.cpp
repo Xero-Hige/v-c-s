@@ -49,7 +49,11 @@ bool Tile::isCell() {
 }
 
 bool Tile::isEmpty() {
-    return (type == HOLE || product == NULL);
+    return (type == CELL && product == NULL);
+}
+
+bool Tile::hasProduct() {
+    return (type == CELL && product != NULL);
 }
 
 int Tile::getProductColor() {

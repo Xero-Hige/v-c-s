@@ -26,16 +26,19 @@
 
 #include "../position/position.h"
 
+#include <vector>
+
 /* Clase que representa la eliminación de una columna debido a una *
  * barra vertical o una combinación estrella+barra                 */
 class TakeOutColumnEffect : public CombinationEffect {
 private:
-    int column;
+    int board_height;
 
 public:
-    TakeOutColumnEffect(Position origin, int column)
-        : CombinationEffect(origin), column(column) {}
-    void applyEffect() {}
+    TakeOutColumnEffect(Position origin, int board_height)
+        : CombinationEffect(origin), board_height(board_height) {}
+    void applyEffect();
+    std::vector<Position> getEliminatedProduct();
     ~TakeOutColumnEffect() {}
 };
 

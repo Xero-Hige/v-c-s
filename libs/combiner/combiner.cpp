@@ -74,29 +74,32 @@ int Combiner::makeCombination(Position pos, std::list<CombinationEffect>& result
     int vertical_count = 0;
     list<Position> horizontal_combination;
     int horizontal_count = 0;
+    int origin_product_color = board.getProductColor(pos);
     if (checker.getVerticalCombination(pos, vertical_combination)) {
         std::cout << "Activando combinación vertical" << std::endl;
         vertical_count = vertical_combination.size();
         std::cout << "Tamaño de la combinación: " << vertical_count << std::endl;
-        products_eliminated += activateCombination(vertical_combination.front(), vertical_combination.back(), result_list);
+        products_eliminated += activateCombination(vertical_combination.front(), vertical_combination.back(), pos, result_list);
     }
     if (checker.getHorizontalCombination(pos, horizontal_combination)) {
         std::cout << "Activando combinación horizontal" << std::endl;
         horizontal_count = horizontal_combination.size();
         std::cout << "Tamaño de la combinación: " << horizontal_count << std::endl;
-        products_eliminated += activateCombination(horizontal_combination.front(), horizontal_combination.back(), result_list);
+        products_eliminated += activateCombination(horizontal_combination.front(), horizontal_combination.back(), pos, result_list);
     }
     int longest_combination_size = max(vertical_count, horizontal_count);
     int points_per_product = getPointsPerProduct(longest_combination_size);
     if (longest_combination_size > 3) {
-        upgradeProduct(pos, vertical_count, horizontal_count, result_list);
+        upgradeProduct(pos, origin_product_color, vertical_count, horizontal_count, result_list);
     }
     std::cout << "Productos eliminados: " << products_eliminated << " - Puntos por producto: " << points_per_product << " - Multiplicador: " << multiplier << std::endl;
     return products_eliminated * points_per_product * multiplier;
 }
 
-int Combiner::activateCombination(Position initial_pos, Position ending_pos, list<CombinationEffect>& result_list) {
+int Combiner::activateCombination(Position initial_pos, Position ending_pos, Position origin, list<CombinationEffect>& result_list) {
     int products_eliminated = 0;
+    TakeOutProductEffect combination_effect = TakeOutProductEffect(origin, initial_pos, ending_pos);
+    result_list.push_back(combination_effect);
     for (int x = initial_pos.getX(); x <= ending_pos.getX(); x++) {
         for (int y = initial_pos.getY(); y <= ending_pos.getY(); y++) {
             Position current_pos = Position(x,y);
@@ -113,7 +116,7 @@ int Combiner::activateProduct(Position product_pos, list<CombinationEffect>& res
     delete board.takeOutProduct(product_pos);
     products_eliminated++;
     if (product_type == Product::V_BAR) {
-//        result_list.push_back(TakeOutColumnEffect(product_pos));
+        result_list.push_back(TakeOutColumnEffect(product_pos, board.getHeight()));
         for (int y = 0; y < board.getHeight(); y++) {
             int current_product_type = board.getProductType(product_pos.getX(), y);
             if (current_product_type == Product::V_BAR || current_product_type == Product::H_BAR) {
@@ -124,7 +127,7 @@ int Combiner::activateProduct(Position product_pos, list<CombinationEffect>& res
         products_eliminated+= eliminated_products.size();
         eliminated_products.clear();
     } else if (product_type == Product::H_BAR) {
-//        result_list.push_back(TakeOutRowEffect(product_pos));
+        result_list.push_back(TakeOutRowEffect(product_pos, board.getWidth()));
         for (int x = 0; x < board.getWidth(); x++) {
             int current_product_type = board.getProductType(x, product_pos.getY());
             if (current_product_type == Product::V_BAR || current_product_type == Product::H_BAR) {
@@ -134,8 +137,6 @@ int Combiner::activateProduct(Position product_pos, list<CombinationEffect>& res
         list<Product*> eliminated_products = board.takeOutRow(product_pos.getY());
         products_eliminated+= eliminated_products.size();
         eliminated_products.clear();
-    } else {
-//        result_list.push_back(TakeOutProductEffect(product_pos));
     }
     return products_eliminated;
 }
@@ -152,15 +153,15 @@ int Combiner::getPointsPerProduct(int longest_combination_size) {
     }
 }
 
-void Combiner::upgradeProduct(Position origin, int vertical_combination_size, int horizontal_combination_size, list<CombinationEffect>& result_list) {
+void Combiner::upgradeProduct(Position origin, int color, int vertical_combination_size, int horizontal_combination_size, list<CombinationEffect>& result_list) {
     int longest_combination_size = max(vertical_combination_size, horizontal_combination_size);
     if (longest_combination_size == 4) {
         if (vertical_combination_size > horizontal_combination_size) {
-//            result_list.push_front(ChangeProductEffect(origin, Product::V_BAR));
+            result_list.push_front(ChangeProductEffect(origin, color, Product::V_BAR));
         } else {
-//            result_list.push_front(ChangeProductEffect(origin, Product::H_BAR));
+            result_list.push_front(ChangeProductEffect(origin, color, Product::H_BAR));
         }
     } else {
-//        result_list.push_front(ChangeProductEffect(origin, Product::STAR));
+        result_list.push_front(ChangeProductEffect(origin, color, Product::STAR));
     }
 }

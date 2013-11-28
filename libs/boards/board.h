@@ -34,10 +34,12 @@ private:
     //TODO esto hacerlo int, está trayendo más problemas que otra cosa
     int rows;
     int columns;
+    std::vector<Tile> tiles;
+    std::vector<int> cellsInColumn;
+    std::vector<int> productsInColumn;
 
 public:
     /* Solo se usa como dummy, el tablero no queda de forma válida ni usable */
-    std::vector<Tile> tiles;
     Board()
         : rows(-1), columns(-1) {};
     Board(int n_rows, int n_columns);
@@ -48,7 +50,7 @@ public:
     void setSchema(std::vector<std::vector<int> >& schema);
     /* Setea los productos contenidos en products en las celdas tablero  *
      * La cantidad de productos debe coincidir con la cantidad de celdas */
-    void setUp(std::vector<Product*> products);
+    void setUp(std::list<Product*> products);
     /* Devuelve la altura del tablero */
     int getHeight();
     /* Devuelve el ancho del tablero */
@@ -80,12 +82,27 @@ public:
      * vacías debajo, dejando las celdas superiores libres.              *
      * Si el número de columna es inválido, lo ignora                    */
     void rearrangeColumn(int column_number);
-    /* Acomoda todas las columnas pasadas por parámetro */
-    void rearrangeColumn(std::vector<int> column_numbers);
+    //FIXME este no está actualizado, creo que no se va a usar en ningún lugar
+//    /* Acomoda todas las columnas pasadas por parámetro */
+//    void rearrangeColumn(std::vector<int> column_numbers);
+    //////////////////////////////////////////////////////////////////////////
+    /* Acomoda todas las columnas del tablero */
+    void rearrangeBoard();
     /* Saca todos los productos de una fila y los devuelve en una lista */
     std::list<Product*> takeOutRow(int row);
     /* Saca todos los productos de una columna y los devuelve en una lista */
     std::list<Product*> takeOutColumn(int column);
+    /* Inserta los productos de la lista en la columna especificada   *
+     * Se insertan en el orden que vienen en la lista, de abajo hacia *
+     * arriba. Devuelve la cantidad de productos insertados           */
+    int pushInColumn(std::list<Product*> products, int column);
+    /* Extrae n productos de la columna especificada, y los devuelve     *
+     * Los productos se sacan de abajo hacia arriba, y se insertan en la *
+     * lista en el orden que se sacaron                                  */
+    std::list<Product*> popFromColumn(int n, int column);
+    /* Devuelve la cantidad de celdas vacias en la columna dada *
+     * Si el número de columna es inválido devuelve -1          */
+    int getEmptyCellsInColumn(int column_number);
     ~Board();
 
 private:

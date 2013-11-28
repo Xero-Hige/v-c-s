@@ -25,18 +25,23 @@
 #include "combination_effect.h"
 
 #include "../position/position.h"
+#include "../boards/product.h"
+
+#include <vector>
 
 /* Clase que representa el efecto de cambiar un producto a otro del mismo *
  * color y distinto tipo, como resultado de una combinación               */
 class ChangeProductEffect : public CombinationEffect {
 private:
+    int color;
     int new_type;
 public:
-    ChangeProductEffect(Position origin, int new_type)
-        : CombinationEffect(origin), new_type(new_type) {}
-    void applyEffect();
-    ~ChangeProductEffect();
+    ChangeProductEffect(Position origin, int color, int new_type)
+        : CombinationEffect(origin), color(color), new_type(new_type) {}
+    void applyEffect() {}
+    Product getChangedProduct() {return Product(-1, -1);}
+    std::vector<Position> getEliminatedProduct() {return std::vector<Position>();}
+    ~ChangeProductEffect() {}
 };
-
 
 #endif /* CHANGE_PRODUCT_EFFECT_H_ */

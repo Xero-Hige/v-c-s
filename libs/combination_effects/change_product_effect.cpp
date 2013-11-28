@@ -1,7 +1,7 @@
 /*
- * take_out_row_effect.h
+ * change_product_effect.cpp
  *
- * Created on: Nov 24, 2013
+ * Created on: Nov 26, 2013
  * 
  * Copyright 2013 Bruno Merlo Schurmann <brunomerloschurmann@gmail.com>
  * 
@@ -19,26 +19,4 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses 
  */
 
-#ifndef TAKE_OUT_ROW_EFFECT_H_
-#define TAKE_OUT_ROW_EFFECT_H_
-
-#include "combination_effect.h"
-
-#include "../position/position.h"
-
-#include <vector>
-
-/* Clase que representa la eliminación de una fila debido a una *
- * barra horizontal o una combinación estrella+barra            */
-class TakeOutRowEffect : public CombinationEffect {
-private:
-    int board_width;
-public:
-    TakeOutRowEffect(Position origin, int board_width)
-        : CombinationEffect(origin), board_width(board_width) {}
-    void applyEffect();
-    std::vector<Position> getEliminatedProduct();
-    ~TakeOutRowEffect() {}
-};
-
-#endif /* TAKE_OUT_ROW_EFFECT_H_ */
+#include "change_product_effect.h"

@@ -26,6 +26,8 @@
 
 #include "../position/position.h"
 
+#include <vector>
+
 /* Clase que representa la eliminación de todos los productos del tablero *
  * por una combinación estrella+estrella                                  */
 class CleanBoardEffect : public CombinationEffect {
