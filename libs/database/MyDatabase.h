@@ -8,7 +8,7 @@
 #ifndef MYDATABASE_H_
 #define MYDATABASE_H_
 
-#include "Database.h"
+#include "../wrappers/Database.h"
 
 class MyDatabase : public Database{
 	/*

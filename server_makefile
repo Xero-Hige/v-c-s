@@ -1,0 +1,78 @@
+#Project Builder
+#General
+CC = gcc
+CPPFLAGS = -Wall -Wextra -g -pedantic
+CPPLDFLAGS = -lcrypto -lssl -lpthread
+
+all: run-server
+
+#Thread libs builder
+
+THREAD_LDFLAGS = 
+
+THREAD_LIBS = Thread.o Mutex.o
+
+Thread.o: libs/wrappers/Thread.h libs/wrappers/Thread.cpp
+		$(CC) $(SDL_CPPFLAGS) -c libs/wrappers/Thread.cpp
+
+Mutex.o: libs/wrappers/Mutex.h libs/wrappers/Mutex.cpp
+		$(CC) $(SDL_CPPFLAGS) -c libs/wrappers/Mutex.cpp
+		
+#Sockets libs builder 
+
+SOCKET_LIBS = Socket.o
+
+Socket.o: libs/wrappers/Socket.h libs/wrappers/Socket.cpp
+	$(CC) $(CPPFLAGS) -c libs/wrappers/Socket.cpp
+	
+#Messages libs builder
+
+MESSAGES_LIBS = MsgInterpreter.o
+
+MsgInterpreter.o: libs/messages/MsgInterpreter.h libs/messages/MsgInterpreter.cpp
+				$(CC) $(CPPFLAGS) -c libs/messages/MsgInterpreter.cpp
+
+#Protocol libs builder
+
+COMMUNICATION_PROTOCOL_LIBS = HMAC.o BigEndianProtocol.o FormattedSocket.o 
+
+FormattedSocket.o: Socket.o libs/communication_protocol/FormattedSocket.h libs/communication_protocol/FormattedSocket.cpp
+		$(CC) $(CPPFLAGS) -c libs/communication_protocol/FormattedSocket.cpp
+
+HMAC.o: libs/communication_protocol/HMAC.h libs/communication_protocol/HMAC.cpp
+		$(CC) $(CPPFLAGS) -c libs/communication_protocol/HMAC.cpp
+
+BigEndianProtocol.o: libs/communication_protocol/BigEndianProtocol.h libs/communication_protocol/BigEndianProtocol.cpp
+		$(CC) $(CPPFLAGS) -c libs/communication_protocol/BigEndianProtocol.cpp
+
+#Database builder
+
+DATABASE_LIBS = database.o mydatabase.o
+
+database.o: libs/wrappers/Database.h libs/wrappers/Database.cpp
+	$(CC) $(CPPFLAGS) -c libs/wrappers/Database.cpp
+	
+mydatabase.o: libs/database/MyDatabase.h libs/database/MyDatabase.cpp
+	$(CC) $(CPPFLAGS) -c libs/database/MyDatabase.cpp
+	
+#Server
+
+SERVER_EXTERN = $(THREAD_LIBS) $(SOCKET_LIBS) $(MESSAGES_LIBS) $(COMMUNICATION_PROTOCOL_LIBS) $(DATABASE_LIBS)
+
+SERVER_OBJ = $(SERVER_EXTERN) SocketHandler.o
+
+SERVER_NAME = game-server
+
+main: Server/main.cpp $(SERVER_OBJ)
+	$(CC) $(CPPFLAGS) $(CLIENT_OBJ) Server/main.cpp -o $(SERVER_NAME)
+	
+SocketHandler.o: Server/SocketHandler.h Server/SocketHandler.cpp
+	$(CC) $(CPPFLAGS) -c Server/SocketHandler.cpp
+
+#Cleanup
+clean:
+	rm *.o $(SERVER_NAME)
+	
+#Run
+run-server: main
+	./$(SERVER_NAME)

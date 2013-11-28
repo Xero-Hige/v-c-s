@@ -69,13 +69,10 @@ Socket.o: libs/wrappers/Socket.h libs/wrappers/Socket.cpp
 
 #Messages libs builder
 
-MESSAGES_LIBS = MsgInterpreter.o ClientMsgInterpreter.o
+MESSAGES_LIBS = MsgInterpreter.o
 
 MsgInterpreter.o: libs/messages/MsgInterpreter.h libs/messages/MsgInterpreter.cpp
 				$(CC) $(CPPFLAGS) -c libs/messages/MsgInterpreter.cpp
-				
-ClientMsgInterpreter.o: Client/server_communication/ClientMsgInterpreter.h Client/server_communication/ClientMsgInterpreter.cpp
-						$(CC) $(CPPFLAGS) -c Client/server_communication/ClientMsgInterpreter.cpp
 
 #Protocol libs builder
 
@@ -97,16 +94,6 @@ POSITION = position.o
 position.o: libs/position/position.h libs/position/position.cpp
 	$(CC) $(CPPFLAGS) -c libs/position/position.cpp
 	
-#Database builder
-
-DATABASE = database.o mydatabase.o
-
-database.o: libs/wrappers/Database.h libs/wrappers/Database.cpp
-	$(CC) $(CPPFLAGS) -c libs/wrappers/Database.cpp
-	
-mydatabase.o: libs/database/MyDatabase.h libs/database/MyDatabase.cpp
-	$(CC) $(CPPFLAGS) -c libs/database/MyDatabase.cpp
-
 #Logic boards builder
 
 BOARDS_LIBS = product.o tile.o board.o refiller.o replacements_board.o
@@ -141,7 +128,7 @@ combination_checker.o: libs/checkers/combination_checker.h libs/checkers/combina
 level_reader.o: libs/level_reader/level_reader.h libs/level_reader/level_reader.cpp libs/boards/tile.h
 	$(CC) $(CPPFLAGS) -c libs/level_reader/level_reader.cpp
 	
-#Combiner
+#Combiner 
 
 combiner.o: libs/combiner/combiner.h libs/combiner/combiner.cpp
 	$(CC) $(CPPFLAGS) -c libs/combiner/combiner.cpp
@@ -151,7 +138,7 @@ combiner.o: libs/combiner/combiner.h libs/combiner/combiner.cpp
 CLIENT_EXTERN = $(GRAPHIC_LIBS) $(SOUND_LIBS) $(BOARDS_LIBS) $(CHECKERS_LIBS) $(SOCKET_LIBS) $(THREAD_LIBS) $(COMMUNICATION_PROTOCOL_LIBS) $(MESSAGES_LIBS) combiner.o
 #hay que sacar el combiner.o, lo agregué para probar
 
-CLIENT_OBJ = $(CLIENT_EXTERN) level_reader.o login_screen.o client_app.o rooms_screen.o game_screen.o server_connector.o Authenticator.o backend.o screen_sprite_animator.o ServerListener.o
+CLIENT_OBJ = $(CLIENT_EXTERN) level_reader.o login_screen.o client_app.o rooms_screen.o game_screen.o server_connector.o ClientMsgInterpreter.o Authenticator.o backend.o screen_sprite_animator.o ServerListener.o
 
 CLIENT_NAME = game-client
 
@@ -169,6 +156,9 @@ game_screen.o: Client/game_screen/game_screen.cpp Client/game_screen.h Client/ap
 
 backend.o: Client/backend/backend.cpp Client/backend/backend.h
 	$(CC) $(SDL_CPPFLAGS) -c Client/backend/backend.cpp
+	
+ClientMsgInterpreter.o: Client/server_communication/ClientMsgInterpreter.h Client/server_communication/ClientMsgInterpreter.cpp
+	$(CC) $(CPPFLAGS) -c Client/server_communication/ClientMsgInterpreter.cpp
 
 Authenticator.o: Client/server_communication/Authenticator.h Client/server_communication/Authenticator.cpp
 		$(CC) $(SDL_CPPFLAGS) -c Client/server_communication/Authenticator.cpp
