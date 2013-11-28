@@ -133,9 +133,31 @@ level_reader.o: libs/level_reader/level_reader.h libs/level_reader/level_reader.
 combiner.o: libs/combiner/combiner.h libs/combiner/combiner.cpp
 	$(CC) $(CPPFLAGS) -c libs/combiner/combiner.cpp
 
+#Combination effects
+
+COMBINATION_EFFECTS_LIBS = combination_effect.o change_product_effect.o take_out_product_effect.o take_out_column_effect.o take_out_row_effect.o clean_board_effect.o
+
+combination_effect.o: libs/combination_effects/combination_effect.h libs/combination_effects/combination_effect.cpp
+	$(CC) $(CPPFLAGS) -c libs/combination_effects/combination_effect.cpp
+	
+change_product_effect.o: libs/combination_effects/change_product_effect.h libs/combination_effects/change_product_effect.cpp
+	$(CC) $(CPPFLAGS) -c libs/combination_effects/change_product_effect.cpp
+	
+clean_board_effect.o: libs/combination_effects/clean_board_effect.h libs/combination_effects/clean_board_effect.cpp
+	$(CC) $(CPPFLAGS) -c libs/combination_effects/clean_board_effect.cpp
+	
+take_out_product_effect.o: libs/combination_effects/take_out_product_effect.h libs/combination_effects/take_out_product_effect.cpp
+	$(CC) $(CPPFLAGS) -c libs/combination_effects/take_out_product_effect.cpp
+	
+take_out_row_effect.o: libs/combination_effects/take_out_row_effect.h libs/combination_effects/take_out_row_effect.cpp
+	$(CC) $(CPPFLAGS) -c libs/combination_effects/take_out_row_effect.cpp
+	
+take_out_column_effect.o: libs/combination_effects/take_out_column_effect.h libs/combination_effects/take_out_column_effect.cpp
+	$(CC) $(CPPFLAGS) -c libs/combination_effects/take_out_column_effect.cpp
+
 #Client
 
-CLIENT_EXTERN = $(GRAPHIC_LIBS) $(SOUND_LIBS) $(BOARDS_LIBS) $(CHECKERS_LIBS) $(SOCKET_LIBS) $(THREAD_LIBS) $(COMMUNICATION_PROTOCOL_LIBS) $(MESSAGES_LIBS) combiner.o
+CLIENT_EXTERN = $(GRAPHIC_LIBS) $(SOUND_LIBS) $(BOARDS_LIBS) $(CHECKERS_LIBS) $(SOCKET_LIBS) $(THREAD_LIBS) $(COMMUNICATION_PROTOCOL_LIBS) $(MESSAGES_LIBS) $(COMBINATION_EFFECTS_LIBS) combiner.o
 #hay que sacar el combiner.o, lo agregué para probar
 
 CLIENT_OBJ = $(CLIENT_EXTERN) level_reader.o login_screen.o client_app.o rooms_screen.o game_screen.o server_connector.o ClientMsgInterpreter.o Authenticator.o backend.o screen_sprite_animator.o ServerListener.o
