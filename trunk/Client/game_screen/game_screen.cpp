@@ -246,6 +246,11 @@ void Game_Screen::setup_sprites() {
 
 	hover_cell = Sprite(*surface, window, DIMENSION_X, DIMENSION_Y);
 	hover_cell.set_transparency_level(64);
+
+	left_banner = Sprite("resources/game_board/left-banner.png",window);
+	left_banner.set_scaled_width(INICIO_X);
+	left_banner.set_scaled_height(SCREEN_HEIGHT);
+	left_banner.move(0,0);
 }
 
 void Game_Screen::setup_audio() {
@@ -337,6 +342,7 @@ void Game_Screen::render() {
 	}
 	//TODO: SACAR
 	over_mask.draw(window);
+	left_banner.draw(window);
 	window.render();
 }
 

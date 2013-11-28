@@ -50,6 +50,7 @@ private:
 	Window window;
 	Sprite background;
 	Sprite over_mask;
+	Sprite left_banner;
 
 	Sprite hover_cell;
 
