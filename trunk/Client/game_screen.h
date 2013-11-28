@@ -51,6 +51,7 @@ private:
 	Sprite background;
 	Sprite over_mask;
 	Sprite left_banner;
+	Sprite right_banner;
 
 	Sprite hover_cell;
 
