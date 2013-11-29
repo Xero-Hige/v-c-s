@@ -8,10 +8,11 @@
 #ifndef ROOM_H_
 #define ROOM_H_
 
-#include "../client_communication/ClientHandler.h"
-#include "Lobby.h"
 #include <vector>
 #include <string>
+
+class Lobby;
+class ClientHandler;
 
 class Room {
 	unsigned limit; //max clients

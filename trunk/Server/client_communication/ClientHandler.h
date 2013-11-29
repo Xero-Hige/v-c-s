@@ -13,8 +13,7 @@
 #include <stdlib.h>
 #include <string>
 
-class Room; //Por la refs circulares...
-class Lobby;
+class Room;
 
 class ClientHandler : public Thread{
 	std::string passwd;

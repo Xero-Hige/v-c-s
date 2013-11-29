@@ -6,6 +6,7 @@
  */
 
 #include "RoomKiller.h"
+#include "Room.h"
 #include <iostream>
 #include <map>
 

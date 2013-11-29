@@ -6,6 +6,8 @@
  */
 
 #include "Room.h"
+#include "../client_communication/ClientHandler.h"
+#include "Lobby.h"
 #include <iostream>
 #include <vector>
 #include <string>

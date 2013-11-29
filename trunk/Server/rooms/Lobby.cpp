@@ -7,8 +7,10 @@
 
 #include "Lobby.h"
 #include "Room.h"
+#include "RoomKiller.h"
 #include "MatchMakingStrategy.h"
 #include "../../libs/wrappers/Thread.h"
+#include "../client_communication/ClientHandler.h"
 #include <iostream>
 
 Lobby::Lobby(){
@@ -40,6 +42,10 @@ void Lobby::addNewClient(ClientHandler * ch) {
 	pthread_create(&thread, NULL, threadAddClient, (void *) &data);
 }
 
+void Lobby::addRoom(unsigned long id, Room * r){
+	rooms.insert(map_pair(id,r));
+}
+
 void Lobby::addClient(ClientHandler * ch){
 	MatchMakingStrategy mms;
 	mms.addClient(this, ch);
@@ -66,5 +72,5 @@ Room * Lobby::getNotFullNotPlayingRoom(){
 }
 
 Lobby::~Lobby() {
-	//room_killer.stop();
+//	room_killer.stop();
 }

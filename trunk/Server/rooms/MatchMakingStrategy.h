@@ -8,11 +8,12 @@
 #ifndef MATCHMAKINGSTRATEGY_H_
 #define MATCHMAKINGSTRATEGY_H_
 
-#include "../client_communication/ClientHandler.h"
-#include "Lobby.h"
-#include "Room.h"
 #include "../../libs/wrappers/Thread.h"
 #include <utility>
+
+class Lobby;
+class ClientHandler;
+class Room;
 
 typedef std::pair<unsigned long, Room*> map_pair;
 
