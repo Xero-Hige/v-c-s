@@ -50,8 +50,14 @@ private:
 	Window window;
 	Sprite background;
 	Sprite over_mask;
+
+	int number_of_players;
+
+	//banners
 	Sprite left_banner;
 	Sprite right_banner;
+
+	Position initial_right_banner;
 
 	Sprite hover_cell;
 
@@ -69,8 +75,9 @@ private:
 	std::vector<std::vector<int> > board;
 
 	Position actual_cell;
-
 	Screen_Grid grid;
+
+
 
 private:
 	/**
@@ -110,6 +117,9 @@ private:
 	void render_board();
 	void setup_board();
 	void animate_swap();
+	void setupBanners();
+	void renderBanners();
+	void renderMask();
 
 public:
 
