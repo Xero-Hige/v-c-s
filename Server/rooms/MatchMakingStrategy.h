@@ -10,6 +10,7 @@
 
 #include "../client_communication/ClientHandler.h"
 #include "Lobby.h"
+#include "Room.h"
 #include "../../libs/wrappers/Thread.h"
 #include <utility>
 

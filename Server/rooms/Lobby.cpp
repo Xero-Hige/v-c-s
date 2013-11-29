@@ -12,8 +12,8 @@
 #include <iostream>
 
 Lobby::Lobby(){
-	room_killer.setRooms(&rooms);//No se pq no me deja inicializarlo de entrada...
-	room_killer.start();
+	//room_killer.setRooms(&rooms);//No se pq no me deja inicializarlo de entrada...
+	//room_killer.start();
 }
 
 //Utilizo pthreads sin usar la clase Thread que construimos
@@ -45,6 +45,26 @@ void Lobby::addClient(ClientHandler * ch){
 	mms.addClient(this, ch);
 }
 
+Room * Lobby::getRoom(unsigned long id){
+	std::map<unsigned long, Room*>::iterator it;
+	it = rooms.find(id); //intenta encontrar la key
+	if (it == rooms.end()){//Si no la encontro no existe un room con ese id...
+		return NULL;
+	}else{
+		return it->second;
+	}
+}
+
+Room * Lobby::getNotFullNotPlayingRoom(){
+	if (rooms.size() == 0) return 0;
+	std::map<unsigned long, Room*>::iterator it;
+	for (it = rooms.begin(); it != rooms.end(); it++){
+		if (! it->second->isFull() && ! it->second->isPlaying())
+			return it->second;
+	}
+	return 0;
+}
+
 Lobby::~Lobby() {
-	room_killer.stop();
+	//room_killer.stop();
 }
