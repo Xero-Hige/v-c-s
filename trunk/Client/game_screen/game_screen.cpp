@@ -72,7 +72,7 @@ void Game_Screen::animate_swap() {
 		}
 	}
 
-	std::sort(del.begin(), del.end(), myfunction); // 12 32 45 71(26 33 53 80)
+	std::sort(del.begin(), del.end(), myfunction);
 
 	while (del.size() > 0) {
 		Position p = del.front();
@@ -117,7 +117,8 @@ void Game_Screen::animate_swap() {
 			sprites[reference].draw(window, p[0], p[1]); // - (DIMENSION_Y * board[0].size()) );
 		}
 
-		over_mask.draw(window);
+		renderMask();
+		renderBanners();
 		window.render();
 
 		bool ended = true;
@@ -127,10 +128,13 @@ void Game_Screen::animate_swap() {
 			ended &= s.animation_ended();
 		}
 
-		if (ended)
+		if (ended){
+			animations.clear();
 			break;
+		}
 		SDL_Delay(10);
 	}
+	board = backend.get_full_board();
 }
 
 void Game_Screen::mouse_button_event(SDL_Event& event) {
@@ -212,6 +216,16 @@ void Game_Screen::setup_loadingscreen() {
 			SCREEN_HEIGHT - loading_icon.get_scaled_height());
 }
 
+void Game_Screen::setupBanners() {
+	left_banner = Sprite("resources/game_board/left-banner.png", window);
+	left_banner.set_scaled_width(INICIO_X);
+	left_banner.set_scaled_height(SCREEN_HEIGHT);
+	left_banner.move(0, 0);
+	initial_right_banner = Position(INICIO_X + (30 * 36), INICIO_Y / 4);
+	right_banner = Sprite("resources/game_board/right-banner.png", window);
+	right_banner.scale_with_widht(SCREEN_WIDTH - initial_right_banner[0]);
+}
+
 void Game_Screen::setup_sprites() {
 	vector<string> pokemon_codes = backend.get_board_pokemon_codes();
 
@@ -247,15 +261,7 @@ void Game_Screen::setup_sprites() {
 	hover_cell = Sprite(*surface, window, DIMENSION_X, DIMENSION_Y);
 	hover_cell.set_transparency_level(64);
 
-	left_banner = Sprite("resources/game_board/left-banner.png",window);
-	left_banner.set_scaled_width(INICIO_X);
-	left_banner.set_scaled_height(SCREEN_HEIGHT);
-	left_banner.move(0,0);
-
-	right_banner = Sprite("resources/game_board/right-banner.png",window);
-	int init = INICIO_X+(30*36);
-	right_banner.move(init,INICIO_Y);
-	right_banner.scale_with_widht(SCREEN_WIDTH-init);
+	setupBanners();
 }
 
 void Game_Screen::setup_audio() {
@@ -267,7 +273,7 @@ void Game_Screen::setup_audio() {
 
 Game_Screen::Game_Screen(Backend& back) :
 		App(), backend(back), actual_cell(Position()), board_columns(0), board_rows(
-				0) {
+				0),number_of_players(8) { //FIXME
 
 }
 
@@ -332,23 +338,28 @@ void Game_Screen::render_board() {
 
 }
 
+void Game_Screen::renderBanners() {
+	left_banner.draw(window);
+	for (int i = 0; i < number_of_players; i++) {
+		int x = initial_right_banner[0];
+		int y = initial_right_banner[1]
+				+ (right_banner.get_scaled_height() * i);
+		right_banner.move(x, y);
+		right_banner.draw(window);
+	}
+}
+
+void Game_Screen::renderMask() {
+	over_mask.draw(window);
+}
+
 void Game_Screen::render() {
 	window.clear();
 
 	render_board();
+	renderMask();
+	renderBanners();
 
-	//TODO: SACAR
-	for (size_t i = 0; i < animations.size(); i++) {
-		Screen_Sprite_Animator& s = animations[i];
-		Position p = s.get_position();
-		int reference = s.get_reference() - 1;
-
-		sprites[reference].draw(window, p[0], p[1]);// - (DIMENSION_Y * board[0].size()) );
-	}
-	//TODO: SACAR
-	over_mask.draw(window);
-	left_banner.draw(window);
-	right_banner.draw(window);
 	window.render();
 }
 

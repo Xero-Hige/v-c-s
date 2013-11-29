@@ -137,26 +137,26 @@ bool Backend::poolEffect() {
 }
 
 vector<Position> Backend::get_removed_pokemons() {
-    return products_to_remove;
-//	Position a=l[0];
-//	Position b=l[1];
-//
-//	int x_a = a[0];
-//	int x_b = b[0];
-//
-//	int y_a = a[1];
-//	int y_b = b[1];
-//
-//	//TODO:
-//	vector<Position> res;
-//	res.push_back(Position(x_a,y_a));
-//	res.push_back(Position(x_a,y_a+1));
-//	res.push_back(Position(x_a,y_a-1));
-//	res.push_back(Position(x_b,y_b));
-//	res.push_back(Position(x_b,y_b+1));
-//	res.push_back(Position(x_b,y_b-1));
-//
-//	return res;
+//    return products_to_remove;
+	Position a=l[0];
+	Position b=l[1];
+
+	int x_a = a[0];
+	int x_b = b[0];
+
+	int y_a = a[1];
+	int y_b = b[1];
+
+	//TODO:
+	vector<Position> res;
+	res.push_back(Position(x_a,y_a));
+	res.push_back(Position(x_a,y_a+1));
+	res.push_back(Position(x_a,y_a-1));
+	res.push_back(Position(x_b,y_b));
+	res.push_back(Position(x_b,y_b+1));
+	res.push_back(Position(x_b,y_b-1));
+
+	return res;
 }
 
 Position Backend::getEffectOrigin() {
