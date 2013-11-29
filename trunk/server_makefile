@@ -2,7 +2,7 @@
 #General
 CC = gcc
 CPPFLAGS = -Wall -Wextra -g -pedantic
-CPPLDFLAGS = -lcrypto -lssl -lpthread
+CPPLDFLAGS = -lcrypto -lssl -lpthread -lsqlite3
 
 all: run-server
 
@@ -13,10 +13,10 @@ THREAD_LDFLAGS =
 THREAD_LIBS = Thread.o Mutex.o
 
 Thread.o: libs/wrappers/Thread.h libs/wrappers/Thread.cpp
-		$(CC) $(SDL_CPPFLAGS) -c libs/wrappers/Thread.cpp
+		$(CC) $(CPPFLAGS) -c libs/wrappers/Thread.cpp
 
 Mutex.o: libs/wrappers/Mutex.h libs/wrappers/Mutex.cpp
-		$(CC) $(SDL_CPPFLAGS) -c libs/wrappers/Mutex.cpp
+		$(CC) $(CPPFLAGS) -c libs/wrappers/Mutex.cpp
 		
 #Sockets libs builder 
 
@@ -47,27 +47,51 @@ BigEndianProtocol.o: libs/communication_protocol/BigEndianProtocol.h libs/commun
 
 #Database builder
 
-DATABASE_LIBS = database.o mydatabase.o
+DATABASE_LIBS = Database.o MyDatabase.o
 
-database.o: libs/wrappers/Database.h libs/wrappers/Database.cpp
+Database.o: libs/wrappers/Database.h libs/wrappers/Database.cpp
 	$(CC) $(CPPFLAGS) -c libs/wrappers/Database.cpp
 	
-mydatabase.o: libs/database/MyDatabase.h libs/database/MyDatabase.cpp
+MyDatabase.o: libs/database/MyDatabase.h libs/database/MyDatabase.cpp
 	$(CC) $(CPPFLAGS) -c libs/database/MyDatabase.cpp
 	
 #Server
 
 SERVER_EXTERN = $(THREAD_LIBS) $(SOCKET_LIBS) $(MESSAGES_LIBS) $(COMMUNICATION_PROTOCOL_LIBS) $(DATABASE_LIBS)
 
-SERVER_OBJ = $(SERVER_EXTERN) SocketHandler.o
+SERVER_OBJ = $(SERVER_EXTERN) ClientAuthenticator.o ClientHandler.o ServerMsgInterpreter.o Room.o RoomKiller.o Lobby.o SocketHandler.o MatchMakingStrategy.o Server.o
 
 SERVER_NAME = game-server
 
-main: Server/main.cpp $(SERVER_OBJ)
-	$(CC) $(CPPFLAGS) $(CLIENT_OBJ) Server/main.cpp -o $(SERVER_NAME)
+ClientAuthenticator.o: Server/client_communication/ClientAuthenticator.h Server/client_communication/ClientAuthenticator.cpp
+	$(CC) $(CPPFLAGS) -c Server/client_communication/ClientAuthenticator.cpp
+
+ClientHandler.o: Server/client_communication/ClientHandler.h Server/client_communication/ClientHandler.cpp
+	$(CC) $(CPPFLAGS) -c Server/client_communication/ClientHandler.cpp
+	
+ServerMsgInterpreter.o: Server/client_communication/ServerMsgInterpreter.h Server/client_communication/ServerMsgInterpreter.cpp
+	$(CC) $(CPPFLAGS) -c Server/client_communication/ServerMsgInterpreter.cpp
+	
+MatchMakingStrategy.o: 	Server/rooms/MatchMakingStrategy.h Server/rooms/MatchMakingStrategy.cpp
+	$(CC) $(CPPFLAGS) -c Server/rooms/MatchMakingStrategy.cpp
+	
+RoomKiller.o: Server/rooms/RoomKiller.h Server/rooms/RoomKiller.cpp
+	$(CC) $(CPPFLAGS) -c Server/rooms/RoomKiller.cpp	
+	
+Room.o: Server/rooms/Room.h Server/rooms/Room.cpp
+	$(CC) $(CPPFLAGS) -c Server/rooms/Room.cpp	
+	
+Lobby.o: Server/rooms/Lobby.h Server/rooms/Lobby.cpp
+	$(CC) $(CPPFLAGS) -c Server/rooms/Lobby.cpp	
 	
 SocketHandler.o: Server/SocketHandler.h Server/SocketHandler.cpp
 	$(CC) $(CPPFLAGS) -c Server/SocketHandler.cpp
+
+Server.o: Server/Server.h Server/Server.cpp
+	$(CC) $(CPPFLAGS) -c Server/Server.cpp
+
+main: Server/main.cpp $(SERVER_OBJ)
+	$(CC) $(CPPFLAGS) $(SERVER_OBJ) Server/main.cpp -o $(SERVER_NAME)
 
 #Cleanup
 clean:
