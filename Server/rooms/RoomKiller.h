@@ -10,7 +10,8 @@
 
 #include "../../libs/wrappers/Thread.h"
 #include <map>
-#include "Room.h"
+
+class Room;
 
 class RoomKiller : public Thread{
 	std::map<unsigned long,Room*> * rooms;

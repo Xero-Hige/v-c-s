@@ -9,13 +9,12 @@
 #define LOBBY_H_
 
 #include <map>
-//#include "RoomKiller.h"
 
 class Room;
 class ClientHandler;
+class RoomKiller;
 
 class Lobby{
-	friend class MatchMakingStrategy;
 	std::map<unsigned long,Room*> rooms;
 	//RoomKiller room_killer;
 
@@ -33,6 +32,10 @@ public:
 	 * hilo del cliente.
 	 */
 	void addNewClient(ClientHandler * ch); //Usar solo cuando es un nuevo cliente
+	/*
+	 * addRoom agrega un room a la lista con el id indicado.
+	 */
+	void addRoom(unsigned long id, Room * r);
 	/*
 	 * getRoom devuelve el room que tiene el id indicado, o null si no lo hay.
 	 */

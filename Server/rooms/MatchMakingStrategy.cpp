@@ -6,9 +6,12 @@
  */
 
 #include "MatchMakingStrategy.h"
+#include "../client_communication/ClientHandler.h"
 #include <iostream>
 #include <map>
 #include <string>
+#include "Lobby.h"
+#include "Room.h"
 
 MatchMakingStrategy::MatchMakingStrategy() {
 }
@@ -44,7 +47,7 @@ void MatchMakingStrategy::addDefault(Lobby * lob, ClientHandler * ch){
 		//Si no hay uno creado o si no pudo insertar en uno vacio crea uno nuevo
 		Room * new_room = new Room(lob, 2);
 		new_room->addClient(ch);
-		lob->rooms.insert(map_pair(new_room->id,new_room));
+		lob->addRoom(new_room->id,new_room);
 	} else {
 		r->addClient(ch);
 	}

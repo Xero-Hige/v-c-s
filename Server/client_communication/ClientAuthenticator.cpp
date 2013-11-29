@@ -66,7 +66,7 @@ bool ClientAuthenticator::login(){
 		this->sendIdsVerifMsg(true);
 		return true;
 	} else {
-		this->sendIdsVerifMsg(false)
+		this->sendIdsVerifMsg(false);
 		return false;
 	}
 }
