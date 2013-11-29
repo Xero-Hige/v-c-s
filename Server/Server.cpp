@@ -7,6 +7,8 @@
 
 #include "Server.h"
 #include <sys/socket.h> //AF_INET, SOCK_STREAM
+#include "SocketHandler.h"
+#include "rooms/Lobby.h"
 #include <iostream>
 #include <vector>
 #include <arpa/inet.h> //inet_addr, htons, server_addr

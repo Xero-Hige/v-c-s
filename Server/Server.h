@@ -12,8 +12,10 @@
 #include <arpa/inet.h>
 #include <vector>
 #include "../libs/wrappers/Thread.h"
-#include "SocketHandler.h"
 #include "../libs/database/MyDatabase.h"
+
+class SocketHandler;
+class Lobby;
 
 class Server {
 	MyDatabase db;

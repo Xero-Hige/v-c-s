@@ -6,6 +6,7 @@
  */
 
 #include "SocketHandler.h"
+#include "rooms/Lobby.h"
 #include "client_communication/ClientAuthenticator.h"
 #include <unistd.h> //close
 #include <iostream>
