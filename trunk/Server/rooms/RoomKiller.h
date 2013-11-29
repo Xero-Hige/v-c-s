@@ -9,8 +9,8 @@
 #define ROOMKILLER_H_
 
 #include "../../libs/wrappers/Thread.h"
-#include "Room.h"
 #include <map>
+#include "Room.h"
 
 class RoomKiller : public Thread{
 	std::map<unsigned long,Room*> * rooms;

@@ -9,6 +9,7 @@
 #define ROOM_H_
 
 #include "../client_communication/ClientHandler.h"
+#include "Lobby.h"
 #include <vector>
 #include <string>
 
@@ -48,7 +49,7 @@ public:
 	 */
 	bool isActive();
 	/*
-	 * isPlaying devuelve si el room esta activo.
+	 * isPlaying devuelve si en el room se esta jugando.
 	 */
 	bool isPlaying();
 	virtual ~Room();
