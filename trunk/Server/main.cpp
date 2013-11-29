@@ -11,6 +11,7 @@
 #include "rooms/Lobby.h"
 #include "rooms/Room.h"
 #include "../libs/wrappers/Thread.h"
+#include <stdlib.h>
 #include <pthread.h>
 #include <string>
 #include <vector>

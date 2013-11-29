@@ -2,7 +2,7 @@
 #General
 CC = gcc
 CPPFLAGS = -Wall -Wextra -g -pedantic
-CPPLDFLAGS = -lcrypto -lssl -lpthread -lsqlite3
+CPPLDFLAGS = -lstdc++ -lcrypto -lssl -lpthread -lsqlite3
 
 all: run-server
 
@@ -91,7 +91,7 @@ Server.o: Server/Server.h Server/Server.cpp
 	$(CC) $(CPPFLAGS) -c Server/Server.cpp
 
 main: Server/main.cpp $(SERVER_OBJ)
-	$(CC) $(CPPFLAGS) $(SERVER_OBJ) Server/main.cpp -o $(SERVER_NAME)
+	$(CC) $(CPPFLAGS) $(SERVER_OBJ) Server/main.cpp -o $(SERVER_NAME) $(CPPLDFLAGS)
 
 #Cleanup
 clean:

@@ -9,9 +9,10 @@
 #define SOCKETLISTENERHANDLER_H_
 
 #include "../libs/wrappers/Thread.h"
-#include "rooms/Lobby.h"
 #include "../libs/database/MyDatabase.h"
 #include <arpa/inet.h>
+
+class Lobby;
 
 class SocketHandler: public Thread {
 	MyDatabase * db;
