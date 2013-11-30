@@ -31,11 +31,13 @@
 
 class ReplacementsGenerator {
 private:
-    Board& replacements_board;
+    Board* replacements_board;
     std::vector<ProductGenerator*> product_generators;
 
 public:
-    ReplacementsGenerator(Board& replacements_board, std::vector<ProductGenerator*>& product_generators);
+    /* Dummy, el objeto queda en un estado inválido */
+    ReplacementsGenerator() {}
+    ReplacementsGenerator(Board* replacements_board, std::vector<ProductGenerator*>& product_generators);
     std::list<Product*> getReplacements(int n, int column_number);
     ~ReplacementsGenerator();
 };
