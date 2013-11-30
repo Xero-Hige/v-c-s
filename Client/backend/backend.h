@@ -42,6 +42,7 @@ private:
 	ServerListener server_listener;
 
 	//Connection info
+	bool is_connected;
 	std::string ip;
 	int port;
 
@@ -115,6 +116,9 @@ public:
 	std::string operation_error();
 
 	//Sync ops
+
+	bool connected();
+
 	/**
 	 * Devuelve si el backend tiene una sesion iniciada
 	 */

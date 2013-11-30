@@ -42,11 +42,24 @@ void Login_Screen::key_press_event(SDL_Event& event) {
 	user_pass.handleEvent(event);
 
 	if (SDL_SCANCODE_RETURN == event.key.keysym.scancode) {
-		/*if (user_nick.get_text() == "" || user_pass.get_text() == "")
+		if (user_nick.get_text() == "" || user_pass.get_text() == "")
 		{
 			window.show_message_box(SDL_MESSAGEBOX_ERROR,"Datos Invalidos","Debe especificar un nombre y usuario");
 			return;
-		}*/
+		}
+		if (!backend.connected()){
+		backend.async_connect("192.168.1.1",8080); //FIXME
+		while (!backend.operation_ended()) {
+			render_loadscreen(); //FIXME
+			SDL_Delay(10);
+		}
+		if (backend.operation_error() != "") {
+			window.show_message_box(SDL_MESSAGEBOX_INFORMATION, "Error",
+					backend.operation_error().c_str());
+			return;
+		}
+		}
+
 		backend.async_log_in(user_nick.getText(), user_pass.getText());
 		while (!backend.operation_ended()) {
 			render_loadscreen(); //FIXME

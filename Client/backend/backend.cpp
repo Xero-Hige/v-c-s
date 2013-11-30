@@ -39,6 +39,7 @@ using std::list;
 
 Backend::Backend() : server_listener(&server_connector, this) {
 
+	is_connected=false;
 	ip="";
 	port=0;
 
@@ -306,4 +307,8 @@ int Backend::getProductCode(Board& board, int x, int y) {
         return (Product::N_COLORS * (Product::N_TYPES-1) + 1);
     }
     return (color*(Product::N_TYPES-1) + type + 1);
+}
+
+bool Backend::connected() {
+	return is_connected;
 }
