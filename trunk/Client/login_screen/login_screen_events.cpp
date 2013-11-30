@@ -42,7 +42,7 @@ void Login_Screen::key_press_event(SDL_Event& event) {
 	user_pass.handleEvent(event);
 
 	if (SDL_SCANCODE_RETURN == event.key.keysym.scancode) {
-		if (user_nick.get_text() == "" || user_pass.get_text() == "")
+		if (user_nick.getText() == "" || user_pass.getText() == "")
 		{
 			window.show_message_box(SDL_MESSAGEBOX_ERROR,"Datos Invalidos","Debe especificar un nombre y usuario");
 			return;
