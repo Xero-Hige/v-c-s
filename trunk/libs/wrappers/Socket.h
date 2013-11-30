@@ -18,7 +18,7 @@ class Socket {
 	int socketRecv(char * buf, size_t length);
 
 public:
-	Socket(int sockfd);
+	explicit Socket(int sockfd);
 	int sendMsg(std::string msg);
 	int recvMsg(std::string & msg, size_t length);
 	int getSocket();

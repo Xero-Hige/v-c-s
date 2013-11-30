@@ -7,10 +7,10 @@
 
 #include "MsgInterpreter.h"
 #include <iostream>
+#include <string>
 
 MsgInterpreter::MsgInterpreter() {
 	// TODO Auto-generated constructor stub
-
 }
 
 //Devuelve si se presiono el char de salida
@@ -19,8 +19,7 @@ bool MsgInterpreter::interpret(std::string s) {
 	if (s.compare("q") == 0){
 		std::cout << "Mensaje: SALIDA" << std::endl;
 		return true;
-	}
-	else if (s.compare(CLIENT_EXIT_ROOM) == 0){
+	} else if (s.compare(CLIENT_EXIT_ROOM) == 0){
 		exitRoom();
 		return false;
 	}

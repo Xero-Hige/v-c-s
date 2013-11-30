@@ -9,6 +9,7 @@
 #define MYDATABASE_H_
 
 #include "../wrappers/Database.h"
+#include <string>
 
 class MyDatabase : public Database{
 	/*
@@ -16,6 +17,7 @@ class MyDatabase : public Database{
 	 * de datos.
 	 */
 	bool userAlreadyRegistered(std::string user);
+
 public:
 	MyDatabase();
 

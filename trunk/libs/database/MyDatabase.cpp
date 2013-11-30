@@ -8,6 +8,7 @@
 #include "MyDatabase.h"
 #include <sstream>
 #include <stdlib.h>
+#include <string>
 
 /*
  * Constantes referidas a las palabras reservadas de SQL
@@ -47,8 +48,6 @@
 #define POS_BEGGINING 0
 
 MyDatabase::MyDatabase() {
-	// TODO Auto-generated constructor stub
-
 }
 
 /*
@@ -89,7 +88,7 @@ std::string valuesConcatenation(std::string arg0, std::string arg1, int arg2){
 
 int MyDatabase::registerUser(std::string user, std::string passwd, int level){
 	if (userAlreadyRegistered(user)) return -1;
-	std::string query (DB_INSERT);
+	std::string query(DB_INSERT);
 	query = query + TABLE_NAME + DB_VALUES +
 				valuesConcatenation(user, passwd, level) + SEMICOLON;
 	return Database::exec(query);
@@ -106,7 +105,7 @@ int MyDatabase::createTable(){
  * formato de una base de datos, por ejemplo: LEVEL=arg0
  */
 std::string concatenateLevelValue(int arg0){
-	std::string s (COLUMN_LEVEL);
+	std::string s(COLUMN_LEVEL);
 	s.append(EQUALS);
 	s.append(itostring(arg0));
 	return s;
@@ -117,7 +116,7 @@ std::string concatenateLevelValue(int arg0){
  * formato de una base de datos, por ejemplo: USER='arg0'
  */
 std::string concatenateUserValue(std::string arg0){
-	std::string s (COLUMN_ID);
+	std::string s(COLUMN_ID);
 	s.append(EQUALS);
 	insertAphostrophes(arg0);
 	s.append(arg0);
@@ -125,9 +124,9 @@ std::string concatenateUserValue(std::string arg0){
 }
 
 int MyDatabase::updateLevel(std::string user, int new_level){
-	std::string query (DB_UPDATE);
-	query = query + TABLE_NAME + DB_SET + concatenateLevelValue(new_level) + DB_WHERE +
-			concatenateUserValue(user) + SEMICOLON;
+	std::string query(DB_UPDATE);
+	query = query + TABLE_NAME + DB_SET + concatenateLevelValue(new_level)
+			+ DB_WHERE + concatenateUserValue(user) + SEMICOLON;
 	return Database::exec(query);
 }
 
@@ -157,7 +156,7 @@ int callback_alreadyRegistered
 }
 
 bool MyDatabase::userAlreadyRegistered(std::string user){
-	std::string query (DB_SELECT);
+	std::string query(DB_SELECT);
 	query = query + COLUMN_ID + DB_FROM + TABLE_NAME + DB_WHERE
 		+ concatenateUserValue(user);
 	bool b = false;
@@ -165,7 +164,8 @@ bool MyDatabase::userAlreadyRegistered(std::string user){
 	return b;
 }
 
-int callback_reqLevel(void * data, int cols ,char** row_values,char** cols_name){
+int callback_reqLevel
+(void * data, int cols ,char** row_values,char** cols_name){
 	//Idem callback_reqPass(). Uso strings y despues lo convierto en int
 	std::string * s_ptr = (std::string*)data;
 	s_ptr->clear();
@@ -181,7 +181,6 @@ int MyDatabase::requestLevel(std::string user, int & level){
 	int r = Database::exec(query, callback_reqLevel, (void*)&s_level);
 	level = atoi(s_level.c_str());
 	return r;
-
 }
 
 int MyDatabase::open() {

@@ -13,9 +13,8 @@
 #include <string>
 
 class FormattedSocket : public Socket {
-
 public:
-	FormattedSocket(int sockfd);
+	explicit FormattedSocket(int sockfd);
 	int sendMsg(std::string msg);
 	int sendSignedMsg(std::string msg, std::string key);
 	bool recvSignedMsg(std::string & msg, std::string key, int & recvd_bytes);

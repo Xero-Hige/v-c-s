@@ -7,8 +7,9 @@
 
 #include "FormattedSocket.h"
 #include "HMAC.h"
-FormattedSocket::FormattedSocket(int sockfd) : Socket(sockfd) {
+#include <string>
 
+FormattedSocket::FormattedSocket(int sockfd) : Socket(sockfd) {
 }
 
 int FormattedSocket::sendMsg(std::string msg){
