@@ -33,6 +33,9 @@ Server::Server(){
 	// TODO Auto-generated constructor stub
 	sock_listeners = new std::vector<SocketHandler*>();
 	this->db.open();
+	int i = this->db.createTable();
+	std::cout << "Se crea la tabla. Codigo de retorno: ";
+	std::cout << i << std::endl;
 }
 
 /*

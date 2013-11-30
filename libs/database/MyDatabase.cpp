@@ -34,7 +34,6 @@
 #define COLUMNS "(ID       TEXT    PRIMARY KEY  NOT NULL," \
 				"PASSWD    TEXT    NOT NULL," \
 				"LEVEL     INT     NOT NULL);"
-
 #define COLUMN_ALL "*"
 #define COLUMN_ID "ID"
 #define COLUMN_PASS "PASSWD"
