@@ -12,6 +12,8 @@
 #include "../../libs/communication_protocol/FormattedSocket.h"
 #include "ClientMsgInterpreter.h"
 
+class Backend;
+
 class ServerListener : public Thread {
 	FormattedSocket * socket;
 	ClientMsgInterpreter msg_int;
@@ -23,7 +25,7 @@ class ServerListener : public Thread {
 	void run();
 
 public:
-	ServerListener(Server_Connector * sc);
+	ServerListener(Server_Connector * sc, Backend * b);
 	virtual ~ServerListener();
 };
 

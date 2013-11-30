@@ -12,8 +12,11 @@
 #include "../server_connector/server_connector.h"
 #include <string>
 
+class Backend;
+
 class ClientMsgInterpreter : public MsgInterpreter{
 	Server_Connector* client;
+	Backend * backend;
 
 	/*
 	 * Los metodos de esta clase interpretan el mensaje devuelto por el servidor
@@ -24,7 +27,7 @@ class ClientMsgInterpreter : public MsgInterpreter{
 	void exitCharPressed();
 	void interpretParticularMsg(std::string s);
 public:
-	explicit ClientMsgInterpreter(Server_Connector * c);
+	ClientMsgInterpreter(Server_Connector * c, Backend * b);
 	virtual ~ClientMsgInterpreter();
 };
 
