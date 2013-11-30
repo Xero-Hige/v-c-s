@@ -216,7 +216,7 @@ editor_app.o: Level_Editor/editor_app.cpp Level_Editor/editor_app.h
 	$(CC) $(SDL_CPPFLAGS) -c Level_Editor/editor_app.cpp
 
 editor: Level_Editor/editor.cpp $(EDITOR_OBJ)
-	$(CC) $(SDL_CPPFLAGS) $(EDITOR_OBJ) Level_Editor/editor.cpp -o $(EDITOR_NAME) $(SDL_LDFLAGS) -ljsoncpp
+	$(CC) $(SDL_CPPFLAGS) $(SDL_LDFLAGS) $(EDITOR_OBJ) Level_Editor/editor.cpp -o $(EDITOR_NAME) 
 
 
 #Cleanup
