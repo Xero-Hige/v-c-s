@@ -70,7 +70,7 @@ private:
 
 	//FIXME a borrar!
 	Position l[2];
-	std::vector<Position> products_to_remove;
+//	std::vector<Position> products_to_remove;
 
 private:
 
