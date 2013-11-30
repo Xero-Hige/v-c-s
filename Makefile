@@ -96,7 +96,7 @@ position.o: libs/position/position.h libs/position/position.cpp
 	
 #Logic boards builder
 
-BOARDS_LIBS = product.o tile.o board.o product_generator.o refiller.o replacements_board.o
+BOARDS_LIBS = product.o tile.o board.o product_generator.o refiller.o replacements_generator.o
 
 product.o: libs/boards/product.h libs/boards/product.cpp
 	$(CC) $(CPPFLAGS) -c libs/boards/product.cpp
@@ -113,8 +113,8 @@ product_generator.o: libs/boards/product_generator.h libs/boards/product_generat
 refiller.o: libs/boards/refiller.h libs/boards/refiller.cpp
 	$(CC) $(CPPFLAGS) -c libs/boards/refiller.cpp
 	
-replacements_board.o: libs/boards/board.h libs/boards/replacements_board.h libs/boards/replacements_board.cpp
-	$(CC) $(CPPFLAGS) -c libs/boards/replacements_board.cpp
+replacements_generator.o: libs/boards/replacements_generator.h libs/boards/replacements_generator.cpp
+	$(CC) $(CPPFLAGS) -c libs/boards/replacements_generator.cpp
 
 #Checkers builder
 
