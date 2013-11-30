@@ -1,7 +1,7 @@
 /*
  * refiller.cpp
  *
- * Created on: Nov 17, 2013
+ * Created on: Nov 29, 2013
  * 
  * Copyright 2013 Bruno Merlo Schurmann <brunomerloschurmann@gmail.com>
  * 
@@ -21,56 +21,28 @@
 
 #include "refiller.h"
 
+#include "board.h"
 #include "product.h"
 
-#include <map>
-#include <vector>
-#include <string>
-#include <cstdlib>
+#include <list>
 
-using std::map;
-using std::vector;
-using std::string;
+#include <iostream> //FIXME borrar
 
-map<string, unsigned int> Refiller::convertion_table = map<string, unsigned int>();
+using std::list;
 
-void Refiller::setConvertionTable(map<string, unsigned int>& colors) {
-    map<string, unsigned int>::iterator it;
-    for (it = colors.begin(); it != colors.end(); ++it) {
-        convertion_table[it->first] = it->second;
-    }
-}
-
-Refiller::Refiller(map<string, int>& probabilities) {
-    limit = 0;
-    this->probabilities = map<string, int>();
-    map<string, int>::iterator it;
-    for (it = probabilities.begin(); it != probabilities.end(); ++it) {
-        limit+= it->second;
-        this->probabilities[it->first] = it->second;
-    }
-}
-
-Product* Refiller::getNewProduct() {
-    int n = getRandomNumber();
-    int color = -1;
-    map<string, int>::iterator it;
-    for (it = probabilities.begin(); it != probabilities.end(); ++it) {
-        if (n <= it->second) {
-            color = convertion_table[it->first];
-            break;
+void Refiller::realocateBoard() {
+    board->rearrangeBoard();
+    for (int x = 0; x < board->getWidth(); x++) {
+        int emptyCells = board->getEmptyCellsInColumn(x);
+        list<Product*> products = replacement_board->popFromColumn(emptyCells, x);
+        for (list<Product*>::iterator it = products.begin(); it != products.end(); ++it) {
+            std::cout << "Producto a insertar en la columna " << x << ": Color " << (*it)->getColor() << " - Tipo " << (*it)->getType() << std::endl;
         }
-        n-= it->second;
+        board->pushInColumn(products, x);
     }
-    return (new Product(color, Product::BUTTON));
+    replacement_board->rearrangeBoard();
 }
 
-// Devuelve un número aleatorio entre 1 y el atributo limit (incluidos)
-int Refiller::getRandomNumber() {
-    int divisor = RAND_MAX/(limit+1);
-    int retval;
-    do {
-        retval = std::rand() / divisor;
-    } while (retval >= limit);
-    return retval+1;
+void Refiller::refillReplacementBoard(int column, list<Product*> products) {
+
 }

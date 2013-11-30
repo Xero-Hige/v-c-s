@@ -1,5 +1,5 @@
 /*
- * replacements_board.h
+ * product_generator.h
  *
  * Created on: Nov 17, 2013
  * 
@@ -19,30 +19,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses 
  */
 
-#ifndef REPLACEMENTS_BOARD_H_
-#define REPLACEMENTS_BOARD_H_
-
-#include "board.h"
+#ifndef PRODUCT_GENERATOR_H_
+#define PRODUCT_GENERATOR_H_
 
 #include "product.h"
-#include "product_generator.h"
 
+#include <map>
 #include <vector>
-#include <list>
+#include <string>
 
-class ReplacementsBoard : public Board {
+class ProductGenerator {
 private:
-    std::vector<ProductGenerator*> refillers;
+    static std::map<std::string, unsigned int> convertion_table;
+    std::map<std::string, int> probabilities;
+    int limit;
 
 public:
-    /* Solo se usa como dummy, el tablero no queda de forma válida ni usable */
-    ReplacementsBoard() {};
-    ReplacementsBoard(unsigned int n_rows, unsigned int n_columns, std::vector<ProductGenerator*>& refillers);
-    std::list<Product*> getReplacements(int n, int column_number);
-    ~ReplacementsBoard();
+    static void setConvertionTable(std::map<std::string, unsigned int>& colors);
+    ProductGenerator(std::map<std::string, int>& probabilities);
+    Product* getNewProduct();
 
 private:
-    void refill(int column_number, int n_extracted);
+    int getRandomNumber();
 };
 
-#endif /* REPLACEMENTS_BOARD_H_ */
+#endif /* PRODUCT_GENERATOR_H_ */

@@ -54,16 +54,16 @@ public:
         checker = CombinationChecker(&(this->board));
     }
     //TODO devuelve los puntos y tiene un efecto adentro? devuelve el efecto? HACE EXPLOTAR EL MUNDO?
-    std::list<CombinationEffect> makeCombinations(Position pos1, Position pos2, bool chained = false);
+    std::list<CombinationEffect*> makeCombinations(Position pos1, Position pos2, bool chained = false);
     int getLastCombinationsPoints();
 
 private:
-    int makeStarCombination(Position star_pos, Position product_pos, std::list<CombinationEffect>& result_list);
-    int makeCombination(Position pos, std::list<CombinationEffect>& result_list);
-    int activateCombination(Position initial_pos, Position ending_pos, Position origin, std::list<CombinationEffect>& result_list);
-    int activateProduct(Position product_pos, std::list<CombinationEffect>& result_list);
+    int makeStarCombination(Position star_pos, Position product_pos, std::list<CombinationEffect*>& result_list);
+    int makeCombination(Position pos, std::list<CombinationEffect*>& result_list);
+    int activateCombination(Position initial_pos, Position ending_pos, Position origin, std::list<CombinationEffect*>& result_list);
+    int activateProduct(Position product_pos, std::list<CombinationEffect*>& result_list);
     int getPointsPerProduct(int longest_combination_size);
-    void upgradeProduct(Position origin, int color, int vertical_combination_size, int horizontal_combination_size, std::list<CombinationEffect>& result_list);
+    void upgradeProduct(Position origin, int color, int vertical_combination_size, int horizontal_combination_size, std::list<CombinationEffect*>& result_list);
 //    getCombinationTypes();
 };
 

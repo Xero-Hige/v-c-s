@@ -1,7 +1,7 @@
 /*
  * refiller.h
  *
- * Created on: Nov 17, 2013
+ * Created on: Nov 29, 2013
  * 
  * Copyright 2013 Bruno Merlo Schurmann <brunomerloschurmann@gmail.com>
  * 
@@ -22,25 +22,24 @@
 #ifndef REFILLER_H_
 #define REFILLER_H_
 
+#include "board.h"
 #include "product.h"
 
-#include <map>
-#include <vector>
-#include <string>
+#include <list>
 
 class Refiller {
 private:
-    static std::map<std::string, unsigned int> convertion_table;
-    std::map<std::string, int> probabilities;
-    int limit;
+    Board* board;
+    Board* replacement_board;
 
 public:
-    static void setConvertionTable(std::map<std::string, unsigned int>& colors);
-    Refiller(std::map<std::string, int>& probabilities);
-    Product* getNewProduct();
-
-private:
-    int getRandomNumber();
+    Refiller()
+        : board(NULL), replacement_board(NULL) {}
+    Refiller(Board* board, Board* replacement_board)
+        : board(board), replacement_board(replacement_board) {}
+    void realocateBoard();
+    virtual void refillReplacementBoard(int column, std::list<Product*> products);
+    virtual ~Refiller() {}
 };
 
 #endif /* REFILLER_H_ */

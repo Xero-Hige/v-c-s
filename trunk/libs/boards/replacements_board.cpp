@@ -22,7 +22,7 @@
 #include "replacements_board.h"
 
 #include "product.h"
-#include "refiller.h"
+#include "product_generator.h"
 
 #include <vector>
 #include <list>
@@ -32,10 +32,10 @@ using std::vector;
 using std::list;
 using std::min;
 
-ReplacementsBoard::ReplacementsBoard(unsigned int n_rows, unsigned int n_columns, vector<Refiller*>& refillers)
+ReplacementsBoard::ReplacementsBoard(unsigned int n_rows, unsigned int n_columns, vector<ProductGenerator*>& refillers)
     : Board(n_rows, n_columns){
-    this->refillers = vector<Refiller*>();
-    vector<Refiller*>::iterator it;
+    this->refillers = vector<ProductGenerator*>();
+    vector<ProductGenerator*>::iterator it;
     for (it = refillers.begin(); it != refillers.end(); ++it) {
         this->refillers.push_back(*it);
     }
@@ -63,7 +63,7 @@ ReplacementsBoard::~ReplacementsBoard() {
 void ReplacementsBoard::refill(int column_number, int n_extracted) {
     int x = column_number;
     int y = min(n_extracted, (int)getHeight()) - 1;
-    Refiller* refiller = refillers[column_number];
+    ProductGenerator* refiller = refillers[column_number];
     while (y >= 0) {
         Product* product = refiller->getNewProduct();
         setProduct(product, x, y);

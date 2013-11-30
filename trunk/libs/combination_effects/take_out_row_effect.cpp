@@ -28,11 +28,11 @@
 
 using std::vector;
 
-void TakeOutRowEffect::applyEffect() {
-    //TODO
-}
+//void TakeOutRowEffect::applyEffect() {
+//    //TODO
+//}
 
-vector<Position> TakeOutRowEffect::getEliminatedProduct() {
+vector<Position> TakeOutRowEffect::getEliminatedProducts() {
     vector<Position> products_to_eliminate;
     int y = origin.getY();
     for (int x = board_width; x >= 0; x++) {

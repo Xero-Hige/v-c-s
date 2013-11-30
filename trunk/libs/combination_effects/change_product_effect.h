@@ -38,9 +38,9 @@ private:
 public:
     ChangeProductEffect(Position origin, int color, int new_type)
         : CombinationEffect(origin), color(color), new_type(new_type) {}
-    void applyEffect() {}
-    Product getChangedProduct() {return Product(-1, -1);}
-    std::vector<Position> getEliminatedProduct() {return std::vector<Position>();}
+    void applyEffect() {std::cout << "ChangeProductEffect" << std::endl;}
+    std::vector<Position> getChangedProducts() {return std::vector<Position>();}
+    std::vector<Position> getEliminatedProducts() {return std::vector<Position>();}
     ~ChangeProductEffect() {}
 };
 

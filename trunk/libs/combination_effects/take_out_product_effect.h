@@ -39,8 +39,8 @@ public:
         : CombinationEffect(origin) {}
     TakeOutProductEffect(Position origin, Position initial_pos, Position ending_pos)
         : CombinationEffect(origin), initial_pos(initial_pos), ending_pos(ending_pos) {}
-    void applyEffect();
-    std::vector<Position> getEliminatedProduct();
+    void applyEffect() {std::cout << "TakeOutProductEffect" << std::endl;};
+    std::vector<Position> getEliminatedProducts();
     ~TakeOutProductEffect() {}
 };
 
