@@ -48,6 +48,8 @@ Backend::Backend() {
 
 	_operation_ended = true;
 	_operation_error = "";
+
+	refiller = Refiller(&board, &replacements_board);
 }
 
 void Backend::async_connect(const std::string& ip,int port){
@@ -137,26 +139,36 @@ bool Backend::poolEffect() {
 }
 
 vector<Position> Backend::get_removed_pokemons() {
-//    return products_to_remove;
-	Position a=l[0];
-	Position b=l[1];
+    vector<Position> ret_vector = products_to_remove;
+    products_to_remove.clear();
+    return ret_vector;
+//	Position a=l[0];
+//	Position b=l[1];
+//
+//	int x_a = a[0];
+//	int x_b = b[0];
+//
+//	int y_a = a[1];
+//	int y_b = b[1];
+//
+//	//TODO:
+//	vector<Position> res;
+//	res.push_back(Position(x_a,y_a));
+//	res.push_back(Position(x_a,y_a+1));
+//	res.push_back(Position(x_a,y_a-1));
+//	res.push_back(Position(x_b,y_b));
+//	res.push_back(Position(x_b,y_b+1));
+//	res.push_back(Position(x_b,y_b-1));
+//
+//	return res;
+}
 
-	int x_a = a[0];
-	int x_b = b[0];
+vector<Position> getChangedProductsPositions() {
+    return vector<Position>();
+}
 
-	int y_a = a[1];
-	int y_b = b[1];
-
-	//TODO:
-	vector<Position> res;
-	res.push_back(Position(x_a,y_a));
-	res.push_back(Position(x_a,y_a+1));
-	res.push_back(Position(x_a,y_a-1));
-	res.push_back(Position(x_b,y_b));
-	res.push_back(Position(x_b,y_b+1));
-	res.push_back(Position(x_b,y_b-1));
-
-	return res;
+std::vector<int> getChangedProductsTypes() {
+    return vector<int>();
 }
 
 Position Backend::getEffectOrigin() {
@@ -201,11 +213,20 @@ bool Backend::async_make_swap(Position pos1_graphic, Position pos2_graphic) {
     }
     //TODO esto va en el server y/o otro lado
     Combiner combiner = Combiner(board);
-    list<CombinationEffect> effects = combiner.makeCombinations(pos1_logic, pos2_logic);
+    list<CombinationEffect*> effects = combiner.makeCombinations(pos1_logic, pos2_logic);
     combination_effects_queue.splice(combination_effects_queue.end(), effects);
     std::cout << "Puntos obtenidos en el último movimiento: " << combiner.getLastCombinationsPoints() << std::endl;
     std::cout << "Efectos a aplicar: " << combination_effects_queue.size() << std::endl;
+    for (list<CombinationEffect*>::iterator it = combination_effects_queue.begin(); it != combination_effects_queue.end(); ++it ) {
+        CombinationEffect* combination_effect = (*it);
+        combination_effect->applyEffect();
+        std::vector<Position> eliminated_product = combination_effect->getEliminatedProducts();
+        products_to_remove.insert(products_to_remove.end(), eliminated_product.begin(), eliminated_product.end());
+        std::cout << "Productos a eliminar (esta combinación): " << eliminated_product.size() << std::endl;
+        std::cout << "Productos a eliminar (total): " << products_to_remove.size() << std::endl;
+    }
     /////////////////////////////////////////
+    refiller.realocateBoard();
     return true;
 }
 

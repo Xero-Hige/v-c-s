@@ -71,7 +71,7 @@ void setUpRefiller() {
     colors.push_back("green");
     colors.push_back("blue");
     colors.push_back("violet");
-    Refiller::setConvertionTable(colors);
+    ProductGenerator::setConvertionTable(colors);
 }
 
 int main() {
@@ -107,7 +107,7 @@ int main() {
         cout << *it << " ";
     }
     cout << endl;
-    Refiller refiller = Refiller(probabilities);
+    ProductGenerator refiller = ProductGenerator(probabilities);
     Product* product;
     for (int i = 0; i < 15; i++) {
         product = refiller.getNewProduct();

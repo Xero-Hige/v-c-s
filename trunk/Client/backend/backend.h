@@ -31,6 +31,7 @@
 #include "../server_connector/server_connector.h"
 #include "../../libs/level_reader/level_reader.h"
 #include "../../libs/combination_effects/combination_effect.h"
+#include "../../libs/boards/refiller.h"
 
 class Backend {
 
@@ -57,13 +58,15 @@ private:
 	Board board;
 	Board replacements_board;
 
+	Refiller refiller;
+
 	// Checkers
 	PhysicalChecker physical_checker;
 	CombinationChecker combination_checker;
 
 	LevelReader level_reader;
 
-	std::list<CombinationEffect> combination_effects_queue;
+	std::list<CombinationEffect*> combination_effects_queue;
 
 	//FIXME a borrar!
 	Position l[2];
@@ -150,6 +153,14 @@ public:
 	 * eliminan con el ultimo movimiento
 	 */
 	std::vector<Position> get_removed_pokemons();
+
+	/* Devuelve una lista con las posiciones de los productos que cambian de *
+	 * tipo                                                                  */
+	std::vector<Position> getChangedProductsPositions();
+
+	/* Devuelve una lista con los tipos de los productos que cambian de *
+	 * tipo                                                                  */
+	std::vector<int> getChangedProductsTypes();
 
 	/* Devuelve la posición del producto donde se originó la combinación que *
 	 * causó el efecto actual                                                */

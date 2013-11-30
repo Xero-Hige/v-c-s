@@ -28,7 +28,7 @@
 #include <vector>
 #include <string>
 
-class Refiller {
+class ProductGenerator {
 private:
     static std::map<std::string, unsigned int> convertion_table;
     std::vector<int> probabilities;
@@ -36,7 +36,7 @@ private:
 
 public:
     static void setConvertionTable(std::vector<std::string>& colors);
-    Refiller(std::map<std::string, int>& probabilities);
+    ProductGenerator(std::map<std::string, int>& probabilities);
     Product* getNewProduct();
 
 private:

@@ -32,9 +32,9 @@ using std::map;
 using std::vector;
 using std::string;
 
-map<string, unsigned int> Refiller::convertion_table = map<string, unsigned int>();
+map<string, unsigned int> ProductGenerator::convertion_table = map<string, unsigned int>();
 
-void Refiller::setConvertionTable(vector<string>& colors) {
+void ProductGenerator::setConvertionTable(vector<string>& colors) {
     vector<string>::iterator it;
     unsigned int i = 0;
     for (it = colors.begin(); it != colors.end(); ++it) {
@@ -43,7 +43,7 @@ void Refiller::setConvertionTable(vector<string>& colors) {
     }
 }
 
-Refiller::Refiller(std::map<string, int>& probabilities) {
+ProductGenerator::ProductGenerator(std::map<string, int>& probabilities) {
     limit = 0;
     this->probabilities = vector<int>();
     this->probabilities.resize(convertion_table.size());
@@ -55,7 +55,7 @@ Refiller::Refiller(std::map<string, int>& probabilities) {
     }
 }
 
-Product* Refiller::getNewProduct() {
+Product* ProductGenerator::getNewProduct() {
     int n = getRandomNumber();
     int color = -1;
     for (unsigned int i = 0; i < probabilities.size(); i++) {
@@ -69,7 +69,7 @@ Product* Refiller::getNewProduct() {
 }
 
 // return a random number between 1 and limit (inclusive)
-int Refiller::getRandomNumber() {
+int ProductGenerator::getRandomNumber() {
     int divisor = RAND_MAX/(limit+1);
     int retval;
     do {
