@@ -152,6 +152,7 @@ vector<Position> Backend::get_removed_pokemons() {
         return vector<Position>();
     }
     CombinationEffect* combination_effect = combination_effects_queue.front();
+    std::cout << "CAE " << combination_effect->getEliminatedProducts().size() << std::endl;
     return combination_effect->getEliminatedProducts();
 //	Position a=l[0];
 //	Position b=l[1];

@@ -56,7 +56,8 @@ void BoardScreen::setupBackground() {
 }
 
 BoardScreen::BoardScreen(LevelBuilder& level) :
-		App(),level(level),window(Window()),background(Sprite()),cell(Sprite()),grid(ScreenGrid()) { //FIXME
+		App(), level(level), window(Window()), background(Sprite()), cell(
+				Sprite()), grid(ScreenGrid()) {
 
 }
 
@@ -102,7 +103,7 @@ void BoardScreen::renderBoard() {
 	background.draw(window);
 
 	for (int i = 0; i < board_columns; i++) {
-		for (int j = 0; j < board_rows ; j++) {
+		for (int j = 0; j < board_rows; j++) {
 			if (board_schema[i][j] != 0) {
 
 				int x = INICIO_X + (DIMENSION_X * i);

@@ -58,6 +58,7 @@ void BoardScreen::text_input_event(SDL_Event& event) {
 
 void BoardScreen::animate_swap() {
 	loop();
+	backend.poolEffect();
 	vector<Position> del = backend.get_removed_pokemons();
 	vector<Position> positions;
 	positions.resize(board_columns, Position());
