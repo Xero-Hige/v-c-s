@@ -23,7 +23,7 @@
 
 #include "../text_drawer/text_drawer.h"
 
-class Text_Box {
+class TextBox {
 
 private:
 	int x_pos;
@@ -49,35 +49,35 @@ private:
 	/**
 	 * Agrega un caracter al final del texto
 	 */
-	virtual void add_char(char character);
+	virtual void addChar(char character);
 	/**
 	 * Remueve el ultimo caracter del texto
 	 */
-	virtual void pop_char();
+	virtual void popChar();
 
 	/**
 	 * Maneja los eventos de teclado no alfanumerico
 	 */
-	void keydown_event(SDL_Event& event);
+	void keydownEvent(SDL_Event& event);
 
 	/**
 	 * Maneja los eventos de teclado alfanumerico
 	 */
-	void text_input_event(SDL_Event& event);
+	void textInputEvent(SDL_Event& event);
 
 	/**
 	 * Maneja los eventos del click de mouse
 	 */
-	void mouse_click_event(SDL_Event& event);
+	void mouseClickEvent(SDL_Event& event);
 
 public:
-	Text_Box();
+	TextBox();
 	/**
 	 * //TODO:
 	 */
-	Text_Box(int max_len, const std::string& font_path, int font_size,
+	TextBox(int max_len, const std::string& font_path, int font_size,
 			Window& window);
-	virtual ~Text_Box();
+	virtual ~TextBox();
 	/**
 	 * Mueve el textbox hacia las coordenadas x,y pasadas
 	 */
@@ -89,7 +89,7 @@ public:
 	/**
 	 * Obtiene el texto del cuadro de texto
 	 */
-	std::string get_text();
+	std::string getText();
 	/**
 	 * Refresca los datos si se modifico alguno de los atributos,
 	 * sino se hace solo durante el draw
@@ -100,7 +100,7 @@ public:
 	 * Setea un texto alternativo que se muestra hasta que se
 	 * modifique el texto
 	 */
-	void set_alternative_text(const std::string& text, Window& window);
+	void setAlternativeText(const std::string& text, Window& window);
 	/**
 	 * Libera los recursos pedidos por el textbox
 	 */
@@ -109,7 +109,7 @@ public:
 	/**
 	 * Metodo para manejar los eventos de sdl
 	 */
-	void handle_event(SDL_Event& event);
+	void handleEvent(SDL_Event& event);
 };
 
 #endif /* TEXTBOX_H_ */

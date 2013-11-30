@@ -16,14 +16,24 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
+
 #include "text_box.h"
+
+#include <SDL2/SDL_events.h>
+#include <SDL2/SDL_keyboard.h>
+#include <SDL2/SDL_scancode.h>
+
+#include "../sprite/sprite.h"
 
 using std::string;
 
-Text_Box::Text_Box() {
+TextBox::TextBox() :
+		x_pos(0), y_pos(0), height(0), length(0), active(false), text_sprite(
+				Sprite()), drawer(Text_Drawer()), text(""), shown_text(""), max_len(
+				0), need_refresh(false) {
 }
 
-Text_Box::Text_Box(int max_len, const string& font_path, int font_size,
+TextBox::TextBox(int max_len, const string& font_path, int font_size,
 		Window& window) {
 	this->max_len = max_len;
 	text = "";
@@ -44,22 +54,22 @@ Text_Box::Text_Box(int max_len, const string& font_path, int font_size,
 
 }
 
-Text_Box::~Text_Box() {
+TextBox::~TextBox() {
 }
 
-void Text_Box::move(int x_pos, int y_pos) {
+void TextBox::move(int x_pos, int y_pos) {
 	this->x_pos = x_pos;
 	this->y_pos = y_pos;
 	text_sprite.move(x_pos, y_pos);
 }
 
-void Text_Box::draw(Window& window) {
+void TextBox::draw(Window& window) {
 	if (need_refresh)
 		refresh(window);
 	text_sprite.draw(window);
 }
 
-void Text_Box::add_char(char character) {
+void TextBox::addChar(char character) {
 	text += character;
 	if (shown_text == " ")
 		shown_text = character;
@@ -71,7 +81,7 @@ void Text_Box::add_char(char character) {
 	need_refresh = true;
 }
 
-void Text_Box::pop_char() {
+void TextBox::popChar() {
 	if (text == "")
 		return;
 	text = text.substr(0, text.size() - 1);
@@ -88,7 +98,7 @@ void Text_Box::pop_char() {
 /**
  * Refresca el textbox regenerando el sprite a imprimir
  */
-void Text_Box::refresh(Window& window) {
+void TextBox::refresh(Window& window) {
 	if (!need_refresh)
 		return;
 	text_sprite.free();
@@ -97,35 +107,35 @@ void Text_Box::refresh(Window& window) {
 	need_refresh = false;
 }
 
-void Text_Box::free() {
+void TextBox::free() {
 	drawer.close_font();
 }
 
-void Text_Box::set_alternative_text(const std::string& text, Window& window) {
+void TextBox::setAlternativeText(const std::string& text, Window& window) {
 	//TODO exception
 	text_sprite = drawer.get_text_sprite(text, window);
 	text_sprite.move(x_pos, y_pos);
 }
 
-std::string Text_Box::get_text() {
+std::string TextBox::getText() {
 	return text;
 }
 
-void Text_Box::keydown_event(SDL_Event& event) {
+void TextBox::keydownEvent(SDL_Event& event) {
 	if (!active)
 		return;
 	if (SDL_SCANCODE_BACKSPACE == event.key.keysym.scancode) {
-		pop_char();
+		popChar();
 	}
 }
 
-void Text_Box::text_input_event(SDL_Event& event) {
+void TextBox::textInputEvent(SDL_Event& event) {
 	if (!active)
 		return;
-	add_char(event.text.text[0]);
+	addChar(event.text.text[0]);
 }
 
-void Text_Box::mouse_click_event(SDL_Event& event) {
+void TextBox::mouseClickEvent(SDL_Event& event) {
 	int x = event.button.x;
 	int y = event.button.y;
 	if (x >= x_pos && y >= y_pos && x <= x_pos + length
@@ -136,18 +146,18 @@ void Text_Box::mouse_click_event(SDL_Event& event) {
 	}
 }
 
-void Text_Box::handle_event(SDL_Event& event) {
+void TextBox::handleEvent(SDL_Event& event) {
 	switch (event.type) {
 	case SDL_MOUSEBUTTONDOWN:
-		mouse_click_event(event);
+		mouseClickEvent(event);
 		return;
 
 	case SDL_KEYDOWN:
-		keydown_event(event);
+		keydownEvent(event);
 		return;
 
 	case SDL_TEXTINPUT:
-		text_input_event(event);
+		textInputEvent(event);
 		return;
 	}
 }

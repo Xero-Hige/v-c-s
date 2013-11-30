@@ -47,8 +47,8 @@ private:
 	Window window;
 	Sprite background;
 
-	Text_Box user_nick;
-	Secret_Text_Box user_pass;
+	TextBox user_nick;
+	SecretTextBox user_pass;
 
 	Sprite mugshot_left;
 	Sprite mugshot_right;
