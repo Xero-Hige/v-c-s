@@ -9,14 +9,14 @@
 #define LOBBY_H_
 
 #include <map>
+#include "RoomKiller.h"
 
 class Room;
 class ClientHandler;
-class RoomKiller;
 
 class Lobby{
 	std::map<unsigned long,Room*> rooms;
-	//RoomKiller room_killer;
+	RoomKiller room_killer;
 
 public:
 	Lobby();

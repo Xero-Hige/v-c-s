@@ -29,6 +29,7 @@
 #include "../../libs/messages/MsgConstants.h"
 #include "../../libs/position/position.h"
 #include "../server_connector/server_connector.h"
+#include "../server_communication/ServerListener.h"
 #include "../../libs/level_reader/level_reader.h"
 #include "../../libs/combination_effects/combination_effect.h"
 #include "../../libs/boards/refiller.h"
@@ -38,6 +39,7 @@ class Backend {
 private:
 
 	Server_Connector server_connector;
+	ServerListener server_listener;
 
 	//Connection info
 	std::string ip;

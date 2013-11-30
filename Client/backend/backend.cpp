@@ -37,7 +37,7 @@ using std::string;
 using std::vector;
 using std::list;
 
-Backend::Backend() {
+Backend::Backend() : server_listener(&server_connector, this) {
 
 	ip="";
 	port=0;

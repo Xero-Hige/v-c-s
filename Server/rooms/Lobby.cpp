@@ -7,15 +7,15 @@
 
 #include "Lobby.h"
 #include "Room.h"
-#include "RoomKiller.h"
 #include "MatchMakingStrategy.h"
 #include "../../libs/wrappers/Thread.h"
 #include "../client_communication/ClientHandler.h"
 #include <iostream>
+#include <map>
 
 Lobby::Lobby(){
-	//room_killer.setRooms(&rooms);//No se pq no me deja inicializarlo de entrada...
-	//room_killer.start();
+	room_killer.setRooms(&rooms);//No se pq no me deja inicializarlo de entrada...
+	room_killer.start();
 }
 
 //Utilizo pthreads sin usar la clase Thread que construimos
@@ -72,5 +72,5 @@ Room * Lobby::getNotFullNotPlayingRoom(){
 }
 
 Lobby::~Lobby() {
-//	room_killer.stop();
+	room_killer.stop();
 }

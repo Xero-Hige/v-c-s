@@ -24,6 +24,7 @@
  */
 bool charDeSalidaApretado(){
 	//.get es bloqueante...
+	std::cout << "OMG OMG OMG" << std::endl;
 	if (std::cin.get() == CHAR_DE_SALIDA) return true;
 	return false;
 }
@@ -33,8 +34,8 @@ bool charDeSalidaApretado(){
  * donde el server tiene que escuchar.
  */
 std::vector<int> * getListaPuertos(int argc, char * argv[]){
-	std::vector<int> * l_ports = new std::vector<int>();
 	if (argc != 2) return NULL;
+	std::vector<int> * l_ports = new std::vector<int>();
 	std::string str;
 	int i = 0;
 	char c = (argv[1])[i];
@@ -53,18 +54,21 @@ std::vector<int> * getListaPuertos(int argc, char * argv[]){
 	return l_ports;
 }
 
+
 int main(int argc, char *argv[]){
 	Room::id_counter = 0;
 	std::vector<int> * list_puertos = getListaPuertos(argc, argv);
 	if (!list_puertos) return 0;
-	Lobby lob;
+//	Lobby lob;
 	Server s;
-	s.serverListen(list_puertos, &lob);
-	s.acceptConnections();
+//	s.serverListen(list_puertos, &lob);
+//	s.acceptConnections();
 	while (!charDeSalidaApretado()){ //ignorar
+		std::cout << "hola" << std::endl;
 	}
-	s.dejarDeAceptarConex();
+//	s.dejarDeAceptarConex();
 	delete list_puertos;
+
 	return 0;
 }
 

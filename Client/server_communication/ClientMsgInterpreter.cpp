@@ -6,12 +6,14 @@
  */
 
 #include "ClientMsgInterpreter.h"
+#include "../backend/backend.h"
 #include "../../libs/messages/MsgConstants.h"
 #include <string>
 #include <stdio.h>
 
-ClientMsgInterpreter::ClientMsgInterpreter(Server_Connector* c) {
+ClientMsgInterpreter::ClientMsgInterpreter(Server_Connector* c, Backend * b) {
 	this->client = c;
+	this->backend = b;
 }
 
 void ClientMsgInterpreter::exitRoom(){

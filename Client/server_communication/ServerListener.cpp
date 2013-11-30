@@ -6,9 +6,11 @@
  */
 
 #include "ServerListener.h"
+#include "../backend/backend.h"
 #include <string>
 
-ServerListener::ServerListener(Server_Connector * sc) : msg_int(sc) {
+ServerListener::ServerListener
+(Server_Connector * sc, Backend * b) : msg_int(sc, b) {
 	socket = sc->getSocket();
 	keep_listening = true;
 }
