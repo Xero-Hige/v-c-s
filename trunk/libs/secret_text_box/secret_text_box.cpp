@@ -23,16 +23,16 @@
 using std::string;
 using std::min;
 
-Secret_Text_Box::Secret_Text_Box(int max_len, const string& font_path,
+SecretTextBox::SecretTextBox(int max_len, const string& font_path,
 		int font_size, Window& window) :
-				Text_Box(max_len, font_path, font_size, window) {
+				TextBox(max_len, font_path, font_size, window) {
 	replace_string = "";
 	for (size_t i = 0; i < max_len; i++) {
 		replace_string += '*';
 	}
 }
 
-void Secret_Text_Box::add_char(char character) {
+void SecretTextBox::addChar(char character) {
 	text += character;
 
 	need_refresh = (shown_text.size() < max_len);
@@ -41,7 +41,7 @@ void Secret_Text_Box::add_char(char character) {
 		shown_text = replace_string.substr(0, text.size());
 }
 
-void Secret_Text_Box::pop_char() {
+void SecretTextBox::popChar() {
 	if (text == "")
 		return;
 	text = text.substr(0, text.size() - 1);

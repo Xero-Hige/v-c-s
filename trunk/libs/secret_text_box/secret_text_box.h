@@ -24,24 +24,24 @@
 /*
  *
  */
-class Secret_Text_Box: public Text_Box {
+class SecretTextBox: public TextBox {
 private:
 	std::string replace_string;
 
 public:
-	Secret_Text_Box(){}
+	SecretTextBox(){}
 
-	Secret_Text_Box(int max_len, const std::string& font_path, int font_size,
+	SecretTextBox(int max_len, const std::string& font_path, int font_size,
 			Window& window);
 
 	/**
 	 * Agrega un caracter al final del texto
 	 */
-	virtual void add_char(char character);
+	virtual void addChar(char character);
 	/**
 	 * Remueve el ultimo caracter del texto
 	 */
-	virtual void pop_char();
+	virtual void popChar();
 };
 
 #endif /* SECRETTEXTBOX_H_ */
