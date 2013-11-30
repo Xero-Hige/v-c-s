@@ -23,16 +23,13 @@
 #include <string>
 #include <vector>
 
+#include "level_builder/LevelBuilder.h"
 #include "../libs/position/position.h"
 #include "../libs/screen_grid/screen_grid.h"
 #include "../libs/sprite/sprite.h"
-#include "../libs/surface/surface.h"
 #include "../libs/window/window.h"
+
 #include "app.h"
-
-class LevelBuilder;
-
-class Backend;
 
 class BoardScreen: public App {
 
@@ -44,9 +41,6 @@ class BoardScreen: public App {
 	static const int board_columns = 30;
 	static const int board_rows = 20;
 
-	static const int EMPTY = 0;
-	static const int CELL = 1;
-
 private:
 
 	LevelBuilder& level;
@@ -54,15 +48,11 @@ private:
 	Window window;
 	Sprite background;
 
-	Position initial_right_banner;
-
 	Sprite cell;
 
 	std::vector<std::vector<int> > board_schema;
 
 	Screen_Grid grid;
-
-
 
 private:
 	/**

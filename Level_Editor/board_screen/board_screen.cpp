@@ -31,6 +31,8 @@
 #define INICIO_X 300
 #define INICIO_Y 100
 
+#define C 0
+
 using std::string;
 using std::vector;
 
@@ -59,7 +61,7 @@ void BoardScreen::setup_background() {
 	for (size_t i = 0; i < board_columns; i++) {
 		board_schema.push_back(vector<int>());
 		for (size_t j = 0; j < board_rows; j++) {
-			board_schema[i].push_back(EMPTY);
+			board_schema[i].push_back(1);
 		}
 	}
 }
@@ -100,11 +102,11 @@ void BoardScreen::render_board() {
 	background.draw(window);
 
 	for (int i = 0; i < board_columns; i++) {
-		for (int j = board_rows; j < board_rows * 2; j++) {
+		for (int j = 0; j < board_rows ; j++) {
 			if (board_schema[i][j] != 0) {
 
 				int x = INICIO_X + (DIMENSION_X * i);
-				int y = INICIO_Y + (DIMENSION_Y * (j - board_rows));
+				int y = INICIO_Y + (DIMENSION_Y * j);
 
 				cell.move(x, y);
 				cell.draw(window);
