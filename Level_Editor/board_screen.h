@@ -52,22 +52,9 @@ private:
 
 	std::vector<std::vector<int> > board_schema;
 
-	Screen_Grid grid;
+	ScreenGrid grid;
 
 private:
-	/**
-	 * Dibuja la pantalla de carga
-	 */
-	void render_loadscreen();
-
-	/**
-	 * Maneja los eventos de teclas
-	 */
-	void key_press_event(SDL_Event& event);
-	/**
-	 * Maneja los eventos de texto (teclas de caracteres)
-	 */
-	void text_input_event(SDL_Event& event);
 	/**
 	 * Maneja los eventos de los botones del mouse
 	 */

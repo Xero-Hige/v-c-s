@@ -101,7 +101,7 @@ bool Rooms_Screen::initialize() {
 	return true;
 }
 
-void Rooms_Screen::handle_event(SDL_Event& event) {
+void Rooms_Screen::handleEvent(SDL_Event& event) {
 	if (event.type == SDL_MOUSEBUTTONDOWN) { //FIXME
 		next_level_button.handle_event(event);
 		make_room_button.handle_event(event);

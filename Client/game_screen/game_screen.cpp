@@ -47,7 +47,7 @@ bool myfunction(Position i, Position j) {
 	}
 }
 
-void BoardScreen::render_loadscreen() {
+void BoardScreen::renderLoadscreen() {
 }
 
 void BoardScreen::key_press_event(SDL_Event& event) {

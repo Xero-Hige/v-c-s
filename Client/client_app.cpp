@@ -74,7 +74,7 @@ int Client_App::run() {
 	while (running) {
 		change_app();
 		while (SDL_PollEvent(&Event)) {
-			handle_event(Event);
+			handleEvent(Event);
 		}
 		loop();
 		render();
@@ -91,7 +91,7 @@ bool Client_App::initialize() {
 	return true;
 }
 
-void Client_App::handle_event(SDL_Event& event) {
+void Client_App::handleEvent(SDL_Event& event) {
 	apps[actual_app]->handleEvent(event);
 	if (event.type == SDL_QUIT) {
 		running = false;

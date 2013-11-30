@@ -21,9 +21,15 @@
 #define LEVELBUILDER_H_
 
 class LevelBuilder {
+
+private:
+	std::vector<std::vector<int> > board_schema;
+
 public:
 	LevelBuilder();
 	virtual ~LevelBuilder();
+
+	void setBoardSchema(const std::vector<std::vector<int> >& board_schema);
 };
 
 #endif /* LEVELBUILDER_H_ */
