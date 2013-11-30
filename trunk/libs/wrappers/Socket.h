@@ -14,7 +14,7 @@
 
 class Socket {
 	int socket;
-	int socketSend(char * buf, size_t length);
+	int socketSend(const char * buf, size_t length);
 	int socketRecv(char * buf, size_t length);
 
 public:

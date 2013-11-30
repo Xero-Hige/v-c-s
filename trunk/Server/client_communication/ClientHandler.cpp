@@ -13,6 +13,7 @@
 #include "../rooms/MatchMakingStrategy.h"
 #include "ServerMsgInterpreter.h"
 #include <string>
+#include <iostream>
 
 ClientHandler::ClientHandler(int s){
 	this->keep_listening = true;

@@ -58,9 +58,11 @@ void SocketHandler::addClient(int & new_client){
 	ClientAuthenticator ca(new_client, this->db);
 	if (ca.authenticate()){
 		ca.setPasswordTo(ch); //setea el password que recibio el CA al client
+		std::cout << "Se autentico un nuevo cliente." << std::endl;
 		this->lobby->addNewClient(ch);
 	}else{
 		close(new_client);
+		std::cout << "Fallo la autenticacion de un nuevo cliente." << std::endl;
 		delete ch;
 	}
 }
