@@ -1,5 +1,5 @@
 /**
- client_app.h
+ LevelBuilder.h
 
  Copyright 2013 Gaston Martinez Gaston.martinez.90@gmail.com
 
@@ -16,35 +16,14 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
-#ifndef CLIENT_APP_H_
-#define CLIENT_APP_H_
 
-#include <SDL2/SDL.h>
-#include <vector>
+#ifndef LEVELBUILDER_H_
+#define LEVELBUILDER_H_
 
-#include "app.h"
-
-#include "board_screen.h"
-
-class Editor_App {
-
-private:
-	bool running;
-	std::vector<App*> apps;
-
-	int actual_app;
-
-	void change_app();
-
+class LevelBuilder {
 public:
-	Editor_App();
-	~Editor_App();
-	int run();
-
-	bool initialize();
-	void handle_event(SDL_Event& event);
-	void loop();
-	void render();
-	void cleanup();
+	LevelBuilder();
+	virtual ~LevelBuilder();
 };
-#endif /* CLIENT_APP_H_ */
+
+#endif /* LEVELBUILDER_H_ */

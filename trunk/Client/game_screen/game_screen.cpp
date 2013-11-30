@@ -36,8 +36,8 @@
 using std::string;
 using std::vector;
 
-const string Game_Screen::TITLE = "Level ";
-const double Game_Screen::LOADING_ICON_CORRECTION_FACTOR = 2.3;
+const string BoardScreen::TITLE = "Level ";
+const double BoardScreen::LOADING_ICON_CORRECTION_FACTOR = 2.3;
 
 bool myfunction(Position i, Position j) {
 	if (i.getY() == j.getY()) {
@@ -47,16 +47,16 @@ bool myfunction(Position i, Position j) {
 	}
 }
 
-void Game_Screen::render_loadscreen() {
+void BoardScreen::render_loadscreen() {
 }
 
-void Game_Screen::key_press_event(SDL_Event& event) {
+void BoardScreen::key_press_event(SDL_Event& event) {
 }
 
-void Game_Screen::text_input_event(SDL_Event& event) {
+void BoardScreen::text_input_event(SDL_Event& event) {
 }
 
-void Game_Screen::animate_swap() {
+void BoardScreen::animate_swap() {
 	loop();
 	vector<Position> del = backend.get_removed_pokemons();
 	vector<Position> positions;
@@ -64,7 +64,7 @@ void Game_Screen::animate_swap() {
 
 	for (size_t i = 0; i < del.size(); i++) {
 		Position grid_pos = del[i];
-		board[grid_pos[0]][grid_pos[1]] = 0;
+		board_schema[grid_pos[0]][grid_pos[1]] = 0;
 
 		if (!positions[grid_pos[0]].is_valid()
 				|| positions[grid_pos[0]][1] < grid_pos[1]) {
@@ -80,10 +80,10 @@ void Game_Screen::animate_swap() {
 		int x_pos = p[0];
 		int y_pos = p[1];
 
-		int y_init = INICIO_Y - ((board[0].size() / 2) * DIMENSION_Y);
+		int y_init = INICIO_Y - ((board_schema[0].size() / 2) * DIMENSION_Y);
 
 		for (int i = y_pos - 1; i >= 0; i--) {
-			if (board[x_pos][i] > 0) {
+			if (board_schema[x_pos][i] > 0) {
 				Position change = Position(x_pos, i);
 				del.push_back(change);
 
@@ -93,13 +93,13 @@ void Game_Screen::animate_swap() {
 				Position direction = Position(0, 1);
 
 				Screen_Sprite_Animator animator = Screen_Sprite_Animator(
-						board[x_pos][i], screen_position, direction,
+						board_schema[x_pos][i], screen_position, direction,
 						DIMENSION_X, DIMENSION_Y);
 				animator.set_step_cells(y_pos - i);
 
 				animations.push_back(animator);
 
-				board[x_pos][i] = 0;
+				board_schema[x_pos][i] = 0;
 				break;
 			}
 		}
@@ -132,16 +132,17 @@ void Game_Screen::animate_swap() {
 			animations.clear();
 			break;
 		}
+
 		SDL_Delay(10);
 	}
-	board = backend.get_full_board();
+	board_schema = backend.get_full_board();
 }
 
-void Game_Screen::mouse_button_event(SDL_Event& event) {
+void BoardScreen::mouse_button_event(SDL_Event& event) {
 	Position pos = grid.get_grid_position(event.button.x, event.button.y);
 	int correction = board_rows;
 	if (pos.is_valid()) {
-		if (board[pos[0]][pos[1] + correction] > 0) //TODO cambiar para que sea -1
+		if (board_schema[pos[0]][pos[1] + correction] > 0) //TODO cambiar para que sea -1
 				{
 			if (!actual_cell.is_valid()) //sin setear
 			{
@@ -154,9 +155,9 @@ void Game_Screen::mouse_button_event(SDL_Event& event) {
 
 			if (backend.async_make_swap(pos, actual_cell)) {
 
-				int temp = board[actual_cell[0]][actual_cell[1]];
-				board[actual_cell[0]][actual_cell[1]] = board[pos[0]][pos[1]];
-				board[pos[0]][pos[1]] = temp;
+				int temp = board_schema[actual_cell[0]][actual_cell[1]];
+				board_schema[actual_cell[0]][actual_cell[1]] = board_schema[pos[0]][pos[1]];
+				board_schema[pos[0]][pos[1]] = temp;
 
 				animate_swap();
 			}
@@ -165,7 +166,7 @@ void Game_Screen::mouse_button_event(SDL_Event& event) {
 	actual_cell = Position();
 }
 
-void Game_Screen::setup_background() {
+void BoardScreen::setup_background() {
 
 	Surface temporal_background = Surface(
 			"resources/game_board/backgrounds/Zangoose.jpg");
@@ -197,7 +198,7 @@ void Game_Screen::setup_background() {
 	temporal_cell.free();
 }
 
-void Game_Screen::setup_loadingscreen() {
+void BoardScreen::setup_loadingscreen() {
 	SDL_Surface* surface = SDL_CreateRGBSurface(0, SCREEN_WIDTH, SCREEN_HEIGHT,
 			32, 0, 0, 0, 255);
 
@@ -216,7 +217,7 @@ void Game_Screen::setup_loadingscreen() {
 			SCREEN_HEIGHT - loading_icon.get_scaled_height());
 }
 
-void Game_Screen::setupBanners() {
+void BoardScreen::setupBanners() {
 	left_banner = Sprite("resources/game_board/left-banner.png", window);
 	left_banner.set_scaled_width(INICIO_X);
 	left_banner.set_scaled_height(SCREEN_HEIGHT);
@@ -226,7 +227,7 @@ void Game_Screen::setupBanners() {
 	right_banner.scale_with_widht(SCREEN_WIDTH - initial_right_banner[0]);
 }
 
-void Game_Screen::setup_sprites() {
+void BoardScreen::setup_sprites() {
 	vector<string> pokemon_codes = backend.get_board_pokemon_codes();
 
 	for (int i = 0; i < 5; i++) {
@@ -264,29 +265,29 @@ void Game_Screen::setup_sprites() {
 	setupBanners();
 }
 
-void Game_Screen::setup_audio() {
+void BoardScreen::setup_audio() {
 	background_music.open_audio();
 	background_music.open_music(
 			"resources/game_board/background_music/000-Trainer.mp3");
 	background_music.play(-1);
 }
 
-Game_Screen::Game_Screen(Backend& back) :
+BoardScreen::BoardScreen(Backend& back) :
 		App(), backend(back), actual_cell(Position()), board_columns(0), board_rows(
 				0),number_of_players(8) { //FIXME
 
 }
 
-void Game_Screen::setup_board() {
-	board = backend.get_full_board();
+void BoardScreen::setup_board() {
+	board_schema = backend.get_full_board();
 	//FIXME Pasar a constantes de clase;
-	board_columns = board.size();
-	board_rows = board[0].size() / 2;
+	board_columns = board_schema.size();
+	board_rows = board_schema[0].size() / 2;
 	grid = Screen_Grid(INICIO_X, INICIO_Y, DIMENSION_Y, DIMENSION_X,
 			board_columns, board_rows);
 }
 
-bool Game_Screen::initialize() {
+bool BoardScreen::initialize() {
 	window = Window(TITLE, SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_FLAGS);
 	//TODO: excepciones
 
@@ -298,7 +299,7 @@ bool Game_Screen::initialize() {
 	return true;
 }
 
-void Game_Screen::handle_event(SDL_Event& event) {
+void BoardScreen::handle_event(SDL_Event& event) {
 	switch (event.type) {
 	case SDL_QUIT:
 		status = STATUS_ENDED_ERROR;
@@ -309,23 +310,23 @@ void Game_Screen::handle_event(SDL_Event& event) {
 	}
 }
 
-void Game_Screen::loop() {
+void BoardScreen::loop() {
 	for (size_t i = 0; i < sprites.size(); i++) {
 		sprites[i].animate();
 	}
 }
 
-void Game_Screen::render_board() {
+void BoardScreen::render_board() {
 	background.draw(window);
 
 	for (int i = 0; i < board_columns; i++) {
 		for (int j = board_rows; j < board_rows * 2; j++) {
-			if (board[i][j] < 1)
+			if (board_schema[i][j] < 1)
 				continue;
 			int x = INICIO_X + (DIMENSION_X * i);
 			int y = INICIO_Y + (DIMENSION_Y * (j - board_rows));
 
-			sprites[board[i][j] - 1].draw(window, x, y);
+			sprites[board_schema[i][j] - 1].draw(window, x, y);
 
 			//FIXME
 			if (actual_cell.getX() == i
@@ -338,7 +339,7 @@ void Game_Screen::render_board() {
 
 }
 
-void Game_Screen::renderBanners() {
+void BoardScreen::renderBanners() {
 	left_banner.draw(window);
 	for (int i = 0; i < number_of_players; i++) {
 		int x = initial_right_banner[0];
@@ -349,11 +350,11 @@ void Game_Screen::renderBanners() {
 	}
 }
 
-void Game_Screen::renderMask() {
+void BoardScreen::renderMask() {
 	over_mask.draw(window);
 }
 
-void Game_Screen::render() {
+void BoardScreen::render() {
 	window.clear();
 
 	render_board();
@@ -363,5 +364,5 @@ void Game_Screen::render() {
 	window.render();
 }
 
-void Game_Screen::cleanup() {
+void BoardScreen::cleanup() {
 }
