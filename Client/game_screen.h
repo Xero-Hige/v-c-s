@@ -35,7 +35,7 @@
 
 class Backend;
 
-class BoardScreen: public App {
+class GameScreen: public App {
 
 	static const std::string TITLE;
 	static const int SCREEN_WIDTH = 1600;
@@ -126,7 +126,7 @@ public:
 	/**
 	 * Constructor que recibe un Backend
 	 */
-	BoardScreen(Backend& back);
+	GameScreen(Backend& back);
 
 	/**
 	 * Metodo para inicializar la app

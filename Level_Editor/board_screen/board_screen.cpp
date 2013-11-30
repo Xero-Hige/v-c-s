@@ -31,8 +31,6 @@
 #define INICIO_X 300
 #define INICIO_Y 100
 
-#define C 0
-
 using std::string;
 using std::vector;
 
