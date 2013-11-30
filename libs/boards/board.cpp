@@ -28,6 +28,8 @@
 #include <vector>
 #include <list>
 
+#include <iostream> //FIXME borrar
+
 using std::vector;
 using std::list;
 
@@ -143,23 +145,31 @@ void Board::swapProducts(Position& pos1, Position& pos2) {
 
 void Board::rearrangeColumn(int column_number) {
     //TODO revisar esta cosa
+    std::cout << "Reacomodando columna " << column_number;
     // If not a valid value, it is ignored
-    if (0 < column_number || column_number >= columns) {
+    if (0 > column_number || column_number >= columns) {
+        std::cout << " - Número de columna inválido (válidos de 0 a " << columns << "): " << column_number << std::endl;;
         return;
     }
+    std::cout << std::endl;
     int x = column_number;
     int y = rows-1;
     while (y >= 0) {
         Position initial_pos = Position(x,y);
+        if (getTileType(initial_pos) != Tile::CELL) {
+            y--;
+            continue;
+        }
         int empty_tiles = countEmpty(initial_pos);
         if (empty_tiles > 0) {
             // No hay más productos para rellenar
-            if (empty_tiles >= y) {
+            if (empty_tiles > y) {
                 return;
             }
             Position product_pos = Position(x, y-empty_tiles);
+            std::cout << "Posiciones a cambiar: (" << initial_pos.getX() << "," << initial_pos.getY() << ") y (" << product_pos.getX() << "," << product_pos.getY() << ")" << std::endl;
             Product* product = takeOutProduct(product_pos);
-            setProduct(product, product_pos);
+            setProduct(product, initial_pos);
         }
         y--;
     }
@@ -258,7 +268,7 @@ int Board::countEmpty(Position pos) {
         return 0;
     }
     int pos_index = getIndexFromPos(x, y);
-    if (! tiles[pos_index].isEmpty()) {
+    if (tiles[pos_index].hasProduct()) {
         return 0;
     }
     return 1 + countEmpty(Position(x, y-1));

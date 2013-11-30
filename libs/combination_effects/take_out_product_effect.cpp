@@ -28,14 +28,14 @@
 
 using std::vector;
 
-void TakeOutProductEffect::applyEffect() {
-    //TODO
-}
+//void TakeOutProductEffect::applyEffect() {
+//    //TODO
+//}
 
-vector<Position> TakeOutProductEffect::getEliminatedProduct() {
+vector<Position> TakeOutProductEffect::getEliminatedProducts() {
     vector<Position> products_to_eliminate;
-    for (int x = ending_pos.getX(); x <= initial_pos.getX(); x++) {
-        for (int y = ending_pos.getY(); y <= initial_pos.getY(); y++) {
+    for (int x = ending_pos.getX(); x >= initial_pos.getX(); x--) {
+        for (int y = ending_pos.getY(); y >= initial_pos.getY(); y--) {
             products_to_eliminate.push_back(Position(x,y));
         }
     }

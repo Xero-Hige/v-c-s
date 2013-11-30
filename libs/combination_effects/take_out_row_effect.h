@@ -36,8 +36,8 @@ private:
 public:
     TakeOutRowEffect(Position origin, int board_width)
         : CombinationEffect(origin), board_width(board_width) {}
-    void applyEffect();
-    std::vector<Position> getEliminatedProduct();
+    void applyEffect() {std::cout << "TakeOutRowEffect" << std::endl;};
+    std::vector<Position> getEliminatedProducts();
     ~TakeOutRowEffect() {}
 };
 
