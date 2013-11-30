@@ -34,6 +34,8 @@
 #include "../../libs/combination_effects/combination_effect.h"
 #include "../../libs/boards/refiller.h"
 
+#include "../../libs/boards/replacements_generator.h" // FIXME borrame
+
 class Backend {
 
 private:
@@ -74,6 +76,7 @@ private:
 	//FIXME a borrar!
 	Position l[2];
 //	std::vector<Position> products_to_remove;
+	ReplacementsGenerator replacements_generator;
 
 private:
 
