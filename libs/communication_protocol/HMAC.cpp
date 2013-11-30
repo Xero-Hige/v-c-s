@@ -27,11 +27,11 @@ void mySHA1(const std::string msg, unsigned char * digest){
 	SHA1((unsigned char *)msg.c_str(), msg.size(), digest);
 }
 
-void stringXor (std::string & s, const char key){
+void stringXor(std::string & s, const char key){
 	char * c_str = (char *)s.c_str();
 	for (unsigned i = 0; i < s.size(); i++){
 		//Hace el xor a cada byte
-		*( c_str + i) = (*(c_str + i)) ^ key;
+		*(c_str + i) = (*(c_str + i)) ^ key;
 	}
 }
 

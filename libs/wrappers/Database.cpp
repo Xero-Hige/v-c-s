@@ -6,6 +6,7 @@
  */
 
 #include "Database.h"
+#include <string>
 
 Database::Database() {
 	db = NULL;
