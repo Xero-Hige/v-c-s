@@ -60,6 +60,7 @@ Room * Lobby::getRoom(unsigned long id){
 }
 
 void Lobby::endMatch(unsigned long id){
+	if (rooms.size() == 0) return;
 	std::map<unsigned long, Room*>::iterator it;
 	it = rooms.find(id);
 	if (it == rooms.end()){
@@ -67,6 +68,16 @@ void Lobby::endMatch(unsigned long id){
 	} else {
 		Room * room_actual = it->second;
 		delete room_actual;
+	}
+}
+
+void Lobby::endAllMatches(){
+	std::map<unsigned long, Room*>::iterator it = rooms.begin();
+	while(it != rooms.end()){
+		Room* actual_room = it->second;
+		delete actual_room;
+		//erase(it++) funciona porque borra y luego incrementa el iter
+		rooms.erase(it++);//MAGIA
 	}
 }
 
@@ -81,4 +92,5 @@ Room * Lobby::getNotFullNotPlayingRoom(){
 }
 
 Lobby::~Lobby() {
+	endAllMatches();
 }

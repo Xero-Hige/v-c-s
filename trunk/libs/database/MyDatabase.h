@@ -31,7 +31,8 @@ public:
 	 */
 	int open();
 	/*
-	 * createTable crea una tabla en la base de datos.
+	 * createTable crea una tabla en la base de datos que contiene user, nivel y
+	 * password.
 	 */
 	int createTable();
 	/*

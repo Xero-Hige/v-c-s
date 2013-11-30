@@ -43,6 +43,10 @@ public:
 	 */
 	void endMatch(unsigned long id);
 	/*
+	 * endAllMatches termina las partidas del servidor.
+	 */
+	void endAllMatches();
+	/*
 	 * getNotFullNotActiveRoom devuelve un room que no este jugando ni lleno. Si
 	 * no encuentra ninguno devuelve NULL.
 	 */

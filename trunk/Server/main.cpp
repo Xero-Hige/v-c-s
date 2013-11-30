@@ -24,7 +24,6 @@
  */
 bool charDeSalidaApretado(){
 	//.get es bloqueante...
-	std::cout << "OMG OMG OMG" << std::endl;
 	if (std::cin.get() == CHAR_DE_SALIDA) return true;
 	return false;
 }
@@ -61,12 +60,11 @@ int main(int argc, char *argv[]){
 	if (!list_puertos) return 0;
 	Lobby lob;
 	Server s;
-//	s.serverListen(list_puertos, &lob);
-//	s.acceptConnections();
+	s.serverListen(list_puertos, &lob);
+	s.acceptConnections();
 	while (!charDeSalidaApretado()){ //ignorar
-		std::cout << "hola" << std::endl;
 	}
-//	s.dejarDeAceptarConex();
+	s.dejarDeAceptarConex();
 	delete list_puertos;
 
 	return 0;
