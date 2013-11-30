@@ -37,7 +37,7 @@ private:
 public:
     TakeOutColumnEffect(Position origin, int board_height)
         : CombinationEffect(origin), board_height(board_height) {}
-    void applyEffect() {std::cout << "TakeOutColumnEffect" << std::endl;}
+    void applyEffect() {std::cout << "TakeOutColumnEffect" << std::endl; setApplied();}
     std::vector<Position> getEliminatedProducts();
     ~TakeOutColumnEffect() {}
 };

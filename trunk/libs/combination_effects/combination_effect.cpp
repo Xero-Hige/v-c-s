@@ -24,8 +24,8 @@
 bool CombinationEffect::isApplied() {
     return applied;
 }
-void CombinationEffect::setApplied(bool state) {
-    applied = state;
+void CombinationEffect::setApplied() {
+    applied = true;
 }
 
 Position CombinationEffect::getOrigin() {

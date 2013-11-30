@@ -34,7 +34,7 @@ class CleanBoardEffect : public CombinationEffect {
 public:
     CleanBoardEffect(Position origin)
         : CombinationEffect(origin) {}
-    void applyEffect() {std::cout << "CleanBoardEffect" << std::endl;}
+    void applyEffect() {std::cout << "CleanBoardEffect" << std::endl; setApplied();}
     ~CleanBoardEffect() {}
 };
 
