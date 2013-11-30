@@ -22,7 +22,7 @@ bool ClientAuthenticator::authenticate(){
 	int auth_type = atoi(s_auth_type.c_str());
 	if(auth_type == TYPE_LOGIN)
 		return login();
-	else /*if (auth_type == TYPE_REGISTER)*/
+	else if (auth_type == TYPE_REGISTER)
 		return registerUser();
 }
 
