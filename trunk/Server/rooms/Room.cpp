@@ -24,7 +24,6 @@ Room::Room(Lobby * lob, unsigned limit, unsigned long r_id) {
 		this->id = r_id;
 	}
 	this->limit = limit;
-	active = true;
 	currently_playing = false;
 }
 
@@ -45,8 +44,8 @@ bool Room::exitRoom(ClientHandler* ch){
 		if (ch == actual_ch){//si los ptrs son iguales
 			clients.erase(it);
 			std::cout << "El cliente salio del room" << std::endl;
-			//Si se quedo sin clientes se pone como no activo
-			if (!clients.size()) active = false;
+			//Si se quedo sin clientes se termine la partida
+			if (!clients.size()) this->endMatch();
 			this->lob->addClient(ch);
 			return true;
 		}
@@ -62,8 +61,8 @@ bool Room::isPlaying(){
 	return currently_playing;
 }
 
-bool Room::isActive(){
-	return active;
+void Room::endMatch(){
+	this->lob->endMatch(this->id);
 }
 
 void Room::notifyClients(std::string msg){

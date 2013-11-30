@@ -9,14 +9,12 @@
 #define LOBBY_H_
 
 #include <map>
-#include "RoomKiller.h"
 
 class Room;
 class ClientHandler;
 
 class Lobby{
 	std::map<unsigned long,Room*> rooms;
-	RoomKiller room_killer;
 
 public:
 	Lobby();
@@ -40,6 +38,10 @@ public:
 	 * getRoom devuelve el room que tiene el id indicado, o null si no lo hay.
 	 */
 	Room * getRoom(unsigned long id);
+	/*
+	 * endMatch termina un room.
+	 */
+	void endMatch(unsigned long id);
 	/*
 	 * getNotFullNotActiveRoom devuelve un room que no este jugando ni lleno. Si
 	 * no encuentra ninguno devuelve NULL.

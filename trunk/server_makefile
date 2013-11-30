@@ -59,7 +59,7 @@ MyDatabase.o: libs/database/MyDatabase.h libs/database/MyDatabase.cpp
 
 SERVER_EXTERN = $(THREAD_LIBS) $(SOCKET_LIBS) $(MESSAGES_LIBS) $(COMMUNICATION_PROTOCOL_LIBS) $(DATABASE_LIBS)
 
-SERVER_OBJ = $(SERVER_EXTERN) ClientAuthenticator.o ClientHandler.o ServerMsgInterpreter.o Room.o RoomKiller.o Lobby.o SocketHandler.o MatchMakingStrategy.o Server.o
+SERVER_OBJ = $(SERVER_EXTERN) ClientAuthenticator.o ClientHandler.o ServerMsgInterpreter.o Room.o Lobby.o SocketHandler.o MatchMakingStrategy.o Server.o
 
 SERVER_NAME = game-server
 
@@ -74,9 +74,6 @@ ServerMsgInterpreter.o: Server/client_communication/ServerMsgInterpreter.h Serve
 	
 MatchMakingStrategy.o: 	Server/rooms/MatchMakingStrategy.h Server/rooms/MatchMakingStrategy.cpp
 	$(CC) $(CPPFLAGS) -c Server/rooms/MatchMakingStrategy.cpp
-	
-RoomKiller.o: Server/rooms/RoomKiller.h Server/rooms/RoomKiller.cpp
-	$(CC) $(CPPFLAGS) -c Server/rooms/RoomKiller.cpp	
 	
 Room.o: Server/rooms/Room.h Server/rooms/Room.cpp
 	$(CC) $(CPPFLAGS) -c Server/rooms/Room.cpp	
