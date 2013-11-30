@@ -1,5 +1,5 @@
 /**
- games_creen.h
+ board_creen.h
 
  Copyright 2013 Gaston Martinez Gaston.martinez.90@gmail.com
 
@@ -23,15 +23,14 @@
 #include <string>
 #include <vector>
 
-#include "../libs/animated_sprite/animated_sprite.h"
-#include "../libs/button/button.h"
-#include "../libs/music/music.h"
+#include "../libs/position/position.h"
 #include "../libs/screen_grid/screen_grid.h"
+#include "../libs/sprite/sprite.h"
 #include "../libs/surface/surface.h"
 #include "../libs/window/window.h"
 #include "app.h"
-#include "backend/backend.h"
-#include "screen_sprite_animator/screen_sprite_animator.h"
+
+class LevelBuilder;
 
 class Backend;
 
@@ -41,40 +40,26 @@ class BoardScreen: public App {
 	static const int SCREEN_WIDTH = 1600;
 	static const int SCREEN_HEIGHT = 900;
 	static const int WINDOW_FLAGS = SDL_WINDOW_RESIZABLE;
-	static const double LOADING_ICON_CORRECTION_FACTOR;
+
+	static const int board_columns = 30;
+	static const int board_rows = 20;
+
+	static const int EMPTY = 0;
+	static const int CELL = 1;
 
 private:
 
-	Backend& backend;
+	LevelBuilder& level;
 
 	Window window;
 	Sprite background;
-	Sprite over_mask;
-
-	int number_of_players;
-
-	//banners
-	Sprite left_banner;
-	Sprite right_banner;
 
 	Position initial_right_banner;
 
-	Sprite hover_cell;
+	Sprite cell;
 
-	int board_columns;
-	int board_rows;
-
-	//Loading_screen
-	Sprite loading_mask;
-	Animated_Sprite loading_icon;
-
-	Music background_music;
-
-	std::vector<Animated_Sprite> sprites;
-	std::vector<Screen_Sprite_Animator> animations;
 	std::vector<std::vector<int> > board_schema;
 
-	Position actual_cell;
 	Screen_Grid grid;
 
 
@@ -110,23 +95,16 @@ private:
 	 * Inicializa los mugshots
 	 */
 	void setup_sprites();
-	/**
-	 * Inicializa el audio de la ventana
-	 */
 	void setup_audio();
 	void render_board();
 	void setup_board();
-	void animate_swap();
-	void setupBanners();
-	void renderBanners();
-	void renderMask();
 
 public:
 
 	/**
 	 * Constructor que recibe un Backend
 	 */
-	BoardScreen(Backend& back);
+	BoardScreen(LevelBuilder& level);
 
 	/**
 	 * Metodo para inicializar la app

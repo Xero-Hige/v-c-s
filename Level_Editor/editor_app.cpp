@@ -19,10 +19,11 @@
 
 #include "editor_app.h"
 
-#include <SDL2/SDL.h>
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_timer.h>
 #include <SDL2/SDL_ttf.h>
+
+#include "level_builder/LevelBuilder.h"
 
 using std::vector;
 
@@ -31,6 +32,11 @@ Editor_App::Editor_App() {
 	TTF_Init();
 	running = false;
 	apps = vector<App*>();
+
+	LevelBuilder level;
+
+	apps.push_back(new BoardScreen(level));
+
 
 	actual_app = 0;
 }
