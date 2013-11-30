@@ -18,7 +18,6 @@ class Room {
 	unsigned limit; //max clients
 	Lobby * lob;
 	std::vector<ClientHandler *> clients;
-	bool active;
 	bool currently_playing;
 
 public:
@@ -43,16 +42,13 @@ public:
 	 */
 	bool isFull();
 	/*
-	 * isActive indica si el room esta activo (independientemente si se esta
-	 * jugando o no). isActive se utiliza cuando un room recien se crea, ya que el
-	 * mismo no va a tener jugadores, y no va a haber nadie jugando, pero como
-	 * esta activo el RoomKiller no lo va a eliminar.
-	 */
-	bool isActive();
-	/*
 	 * isPlaying devuelve si en el room se esta jugando.
 	 */
 	bool isPlaying();
+	/*
+	 * endMatch termina la partida y se lo notifica al lobby.
+	 */
+	void endMatch();
 	virtual ~Room();
 };
 

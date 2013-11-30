@@ -14,8 +14,6 @@
 #include <map>
 
 Lobby::Lobby(){
-	room_killer.setRooms(&rooms);//No se pq no me deja inicializarlo de entrada...
-	room_killer.start();
 }
 
 //Utilizo pthreads sin usar la clase Thread que construimos
@@ -61,6 +59,17 @@ Room * Lobby::getRoom(unsigned long id){
 	}
 }
 
+void Lobby::endMatch(unsigned long id){
+	std::map<unsigned long, Room*>::iterator it;
+	it = rooms.find(id);
+	if (it == rooms.end()){
+		return;//Si no lo encontro termina
+	} else {
+		Room * room_actual = it->second;
+		delete room_actual;
+	}
+}
+
 Room * Lobby::getNotFullNotPlayingRoom(){
 	if (rooms.size() == 0) return 0;
 	std::map<unsigned long, Room*>::iterator it;
@@ -72,5 +81,4 @@ Room * Lobby::getNotFullNotPlayingRoom(){
 }
 
 Lobby::~Lobby() {
-	room_killer.stop();
 }
