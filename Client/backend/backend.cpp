@@ -174,7 +174,7 @@ vector<Position> Backend::get_removed_pokemons() {
 //	return res;
 }
 
-vector<Position> getChangedProductsPositions() {
+vector<Position> Backend::getChangedProductsPositions() {
     if (combination_effects_queue.size() == 0) {
         return vector<Position>();
     }
@@ -182,7 +182,7 @@ vector<Position> getChangedProductsPositions() {
     return combination_effect->getChangedProducts();
 }
 
-vector<int> getChangedProductsTypes() {
+vector<int> Backend::getChangedProductsTypes() {
     if (combination_effects_queue.size() == 0) {
         return vector<int>();
     }
@@ -241,12 +241,12 @@ bool Backend::async_make_swap(Position pos1_graphic, Position pos2_graphic) {
     combination_effects_queue.splice(combination_effects_queue.end(), effects);
     std::cout << "Puntos obtenidos en el último movimiento: " << combiner.getLastCombinationsPoints() << std::endl;
     std::cout << "Efectos a aplicar: " << combination_effects_queue.size() << std::endl;
-    for (list<CombinationEffect*>::iterator it = combination_effects_queue.begin(); it != combination_effects_queue.end(); ++it ) {
-        CombinationEffect* combination_effect = (*it);
-        combination_effect->applyEffect();
-        std::vector<Position> eliminated_product = combination_effect->getEliminatedProducts();
-        products_to_remove.insert(products_to_remove.end(), eliminated_product.begin(), eliminated_product.end());
-    }
+//    for (list<CombinationEffect*>::iterator it = combination_effects_queue.begin(); it != combination_effects_queue.end(); ++it ) {
+//        CombinationEffect* combination_effect = (*it);
+//        combination_effect->applyEffect();
+//        std::vector<Position> eliminated_product = combination_effect->getEliminatedProducts();
+//        products_to_remove.insert(products_to_remove.end(), eliminated_product.begin(), eliminated_product.end());
+//    }
     /////////////////////////////////////////
     refiller.realocateBoard();
     return true;
