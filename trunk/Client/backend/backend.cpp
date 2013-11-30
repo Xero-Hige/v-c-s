@@ -39,7 +39,7 @@ using std::list;
 
 Backend::Backend() : server_listener(&server_connector, this) {
 
-	is_connected=false;
+	is_connected=true; //false;
 	ip="";
 	port=0;
 
