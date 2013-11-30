@@ -107,7 +107,7 @@ void BoardScreen::animate_swap() {
 
 	while (true) {
 		loop();
-		render_board();
+		renderBoard();
 		for (size_t i = 0; i < animations.size(); i++) {
 			Screen_Sprite_Animator& s = animations[i];
 			s.animate();
@@ -138,8 +138,8 @@ void BoardScreen::animate_swap() {
 	board_schema = backend.get_full_board();
 }
 
-void BoardScreen::mouse_button_event(SDL_Event& event) {
-	Position pos = grid.get_grid_position(event.button.x, event.button.y);
+void BoardScreen::mouseButtonEvent(SDL_Event& event) {
+	Position pos = grid.getGridPosition(event.button.x, event.button.y);
 	int correction = board_rows;
 	if (pos.is_valid()) {
 		if (board_schema[pos[0]][pos[1] + correction] > 0) //TODO cambiar para que sea -1
@@ -166,7 +166,7 @@ void BoardScreen::mouse_button_event(SDL_Event& event) {
 	actual_cell = Position();
 }
 
-void BoardScreen::setup_background() {
+void BoardScreen::setupBackground() {
 
 	Surface temporal_background = Surface(
 			"resources/game_board/backgrounds/Zangoose.jpg");
@@ -278,12 +278,12 @@ BoardScreen::BoardScreen(Backend& back) :
 
 }
 
-void BoardScreen::setup_board() {
+void BoardScreen::setupBoard() {
 	board_schema = backend.get_full_board();
 	//FIXME Pasar a constantes de clase;
 	board_columns = board_schema.size();
 	board_rows = board_schema[0].size() / 2;
-	grid = Screen_Grid(INICIO_X, INICIO_Y, DIMENSION_Y, DIMENSION_X,
+	grid = ScreenGrid(INICIO_X, INICIO_Y, DIMENSION_Y, DIMENSION_X,
 			board_columns, board_rows);
 }
 
@@ -291,21 +291,21 @@ bool BoardScreen::initialize() {
 	window = Window(TITLE, SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_FLAGS);
 	//TODO: excepciones
 
-	setup_background();
+	setupBackground();
 	setup_loadingscreen();
 	setup_sprites();
-	setup_board();
+	setupBoard();
 	setup_audio();
 	return true;
 }
 
-void BoardScreen::handle_event(SDL_Event& event) {
+void BoardScreen::handleEvent(SDL_Event& event) {
 	switch (event.type) {
 	case SDL_QUIT:
 		status = STATUS_ENDED_ERROR;
 		return;
 	case SDL_MOUSEBUTTONDOWN:
-		mouse_button_event(event);
+		mouseButtonEvent(event);
 		return;
 	}
 }
@@ -316,7 +316,7 @@ void BoardScreen::loop() {
 	}
 }
 
-void BoardScreen::render_board() {
+void BoardScreen::renderBoard() {
 	background.draw(window);
 
 	for (int i = 0; i < board_columns; i++) {
@@ -357,7 +357,7 @@ void BoardScreen::renderMask() {
 void BoardScreen::render() {
 	window.clear();
 
-	render_board();
+	renderBoard();
 	renderMask();
 	renderBanners();
 

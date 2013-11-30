@@ -47,7 +47,7 @@ public:
 	/**
 	 * Metodo para manejar los eventos de sdl
 	 */
-	virtual void handle_event(SDL_Event& event)=0;
+	virtual void handleEvent(SDL_Event& event)=0;
 	/**
 	 * Metodo para ejecutar durante el loop
 	 * (actualizacion de estados de la aplicacion)
