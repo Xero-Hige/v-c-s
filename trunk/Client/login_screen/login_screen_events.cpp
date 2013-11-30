@@ -21,7 +21,7 @@
 #define ACTIVE_NICK 1
 #define ACTIVE_PASS 2
 
-void Login_Screen::handle_event(SDL_Event& event) {
+void Login_Screen::handleEvent(SDL_Event& event) {
 	switch (event.type) {
 	case SDL_MOUSEBUTTONDOWN:
 		mouse_button_event(event);
@@ -38,8 +38,8 @@ void Login_Screen::handle_event(SDL_Event& event) {
 }
 
 void Login_Screen::key_press_event(SDL_Event& event) {
-	user_nick.handle_event(event);
-	user_pass.handle_event(event);
+	user_nick.handleEvent(event);
+	user_pass.handleEvent(event);
 
 	if (SDL_SCANCODE_RETURN == event.key.keysym.scancode) {
 		/*if (user_nick.get_text() == "" || user_pass.get_text() == "")
@@ -47,7 +47,7 @@ void Login_Screen::key_press_event(SDL_Event& event) {
 			window.show_message_box(SDL_MESSAGEBOX_ERROR,"Datos Invalidos","Debe especificar un nombre y usuario");
 			return;
 		}*/
-		backend.async_log_in(user_nick.get_text(), user_pass.get_text());
+		backend.async_log_in(user_nick.getText(), user_pass.getText());
 		while (!backend.operation_ended()) {
 			render_loadscreen(); //FIXME
 			SDL_Delay(10);
@@ -62,12 +62,12 @@ void Login_Screen::key_press_event(SDL_Event& event) {
 }
 
 void Login_Screen::text_input_event(SDL_Event& event) {
-	user_nick.handle_event(event);
-	user_pass.handle_event(event);
+	user_nick.handleEvent(event);
+	user_pass.handleEvent(event);
 }
 
 void Login_Screen::mouse_button_event(SDL_Event& event) {
-	user_nick.handle_event(event);
-	user_pass.handle_event(event);
+	user_nick.handleEvent(event);
+	user_pass.handleEvent(event);
 	//_register.handle_event(event);
 }

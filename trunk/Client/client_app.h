@@ -45,7 +45,7 @@ public:
 	int run();
 
 	bool initialize();
-	void handle_event(SDL_Event& event);
+	void handleEvent(SDL_Event& event);
 	void loop();
 	void render();
 	void cleanup();

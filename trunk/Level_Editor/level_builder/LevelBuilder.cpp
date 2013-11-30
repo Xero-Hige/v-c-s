@@ -28,3 +28,7 @@ LevelBuilder::~LevelBuilder() {
 	// TODO Auto-generated destructor stub
 }
 
+void LevelBuilder::setBoardSchema(
+		const std::vector<std::vector<int> >& board_schema) {
+	this->board_schema = board_schema;
+}

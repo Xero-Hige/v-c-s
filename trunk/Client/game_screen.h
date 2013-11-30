@@ -83,7 +83,7 @@ private:
 	/**
 	 * Dibuja la pantalla de carga
 	 */
-	void render_loadscreen();
+	void renderLoadscreen();
 
 	/**
 	 * Maneja los eventos de teclas
