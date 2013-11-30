@@ -26,20 +26,23 @@
 #include "product.h"
 
 #include <list>
+#include <vector>
 
 class Refiller {
 private:
     Board* board;
     Board* replacement_board;
+    std::vector<std::list<Product*> > replacements;
 
 public:
-    Refiller()
-        : board(NULL), replacement_board(NULL) {}
-    Refiller(Board* board, Board* replacement_board)
-        : board(board), replacement_board(replacement_board) {}
+    Refiller() {}
+    Refiller(Board* board, Board* replacement_board);
     void realocateBoard();
-    virtual void refillReplacementBoard(int column, std::list<Product*> products);
-    virtual ~Refiller() {}
+    void addReplacements(int column, std::list<Product*> products);
+
+private:
+    void refillReplacementsBoard();
+    void refillColumn(int column, int empty_cells);
 };
 
 #endif /* REFILLER_H_ */

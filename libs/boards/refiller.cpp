@@ -25,10 +25,15 @@
 #include "product.h"
 
 #include <list>
+#include <vector>
 
 #include <iostream> //FIXME borrar
 
 using std::list;
+
+Refiller::Refiller(Board* board, Board* replacement_board)
+    : board(board), replacement_board(replacement_board) {
+}
 
 void Refiller::realocateBoard() {
     board->rearrangeBoard();
@@ -41,8 +46,35 @@ void Refiller::realocateBoard() {
         board->pushInColumn(products, x);
     }
     replacement_board->rearrangeBoard();
+    refillReplacementsBoard();
 }
 
-void Refiller::refillReplacementBoard(int column, list<Product*> products) {
+void Refiller::addReplacements(int column, list<Product*> products) {
+    if (column >= (int)replacements.size()) {
+        replacements.resize(column);
+    }
+    replacements[column].splice(replacements[column].end(), products, products.begin(), products.end());
+}
 
+void Refiller::refillReplacementsBoard() {
+    for (int column = 0; column < replacement_board->getWidth(); column++) {
+        int empty_cells = replacement_board->getEmptyCellsInColumn(column);
+        if (empty_cells > 0) {
+            refillColumn(column, empty_cells);
+        }
+    }
+}
+
+void Refiller::refillColumn(int column, int empty_cells) {
+    if (column >= (int)replacements.size()) {
+        return;
+    }
+    list<Product*> products;
+    list<Product*>& replacements = this->replacements[column];
+    list<Product*>::iterator it = replacements.begin();
+    for (int c = 0; c < empty_cells; c++) {
+        ++it;
+    }
+    products.splice(products.end(), replacements, replacements.begin(), it);
+    replacement_board->pushInColumn(products, column);
 }
