@@ -39,7 +39,7 @@ using std::vector;
 const string BoardScreen::TITLE = "Level ";
 
 void BoardScreen::mouseButtonEvent(SDL_Event& event) {
-	Position pos = grid.get_grid_position(event.button.x, event.button.y);
+	Position pos = grid.getGridPosition(event.button.x, event.button.y);
 	if (pos.is_valid()) {
 		board_schema[pos[0]][pos[1]] = (board_schema[pos[0]][pos[1]] + 1) % 2;
 	}
@@ -56,12 +56,12 @@ void BoardScreen::setupBackground() {
 }
 
 BoardScreen::BoardScreen(LevelBuilder& level) :
-		App(),level(level),window(Window()),background(Sprite()),cell(Sprite()),grid(Screen_Grid()) { //FIXME
+		App(),level(level),window(Window()),background(Sprite()),cell(Sprite()),grid(ScreenGrid()) { //FIXME
 
 }
 
 void BoardScreen::setupBoard() {
-	grid = Screen_Grid(INICIO_X, INICIO_Y, DIMENSION_Y, DIMENSION_X, 30, 20);
+	grid = ScreenGrid(INICIO_X, INICIO_Y, DIMENSION_Y, DIMENSION_X, 30, 20);
 
 	//TODO: agregar soporte para multiples celdas
 	cell = Sprite("resources/game_board/cell/cell_A.png", window);

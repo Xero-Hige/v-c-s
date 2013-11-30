@@ -20,6 +20,8 @@
 #ifndef LEVELBUILDER_H_
 #define LEVELBUILDER_H_
 
+#include <vector>
+
 class LevelBuilder {
 
 private:
