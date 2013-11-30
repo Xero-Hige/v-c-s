@@ -1,5 +1,5 @@
 /*
- * replacements_board.h
+ * replacements_generator.h
  *
  * Created on: Nov 17, 2013
  * 
@@ -23,26 +23,21 @@
 #define REPLACEMENTS_BOARD_H_
 
 #include "board.h"
-
 #include "product.h"
 #include "product_generator.h"
 
 #include <vector>
 #include <list>
 
-class ReplacementsBoard : public Board {
+class ReplacementsGenerator {
 private:
-    std::vector<ProductGenerator*> refillers;
+    Board& replacements_board;
+    std::vector<ProductGenerator*> product_generators;
 
 public:
-    /* Solo se usa como dummy, el tablero no queda de forma válida ni usable */
-    ReplacementsBoard() {};
-    ReplacementsBoard(unsigned int n_rows, unsigned int n_columns, std::vector<ProductGenerator*>& refillers);
+    ReplacementsGenerator(Board& replacements_board, std::vector<ProductGenerator*>& product_generators);
     std::list<Product*> getReplacements(int n, int column_number);
-    ~ReplacementsBoard();
-
-private:
-    void refill(int column_number, int n_extracted);
+    ~ReplacementsGenerator();
 };
 
 #endif /* REPLACEMENTS_BOARD_H_ */
