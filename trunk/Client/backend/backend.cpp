@@ -32,10 +32,12 @@
 #include <iostream> // FIXME borrame
 #include "info_nivel.h" // FIXME borrame
 #include "../../libs/combiner/combiner.h" // FIXME borrame
+#include "../../libs/boards/replacements_generator.h" // FIXME borrame
 
 using std::string;
 using std::vector;
 using std::list;
+using std::map; //FIXME borrar
 
 Backend::Backend() : server_listener(&server_connector, this) {
 
@@ -51,6 +53,16 @@ Backend::Backend() : server_listener(&server_connector, this) {
 	_operation_error = "";
 
 	refiller = Refiller(&board, &replacements_board);
+
+	//FIXME borrar cuando haya conexión con el server
+	map<string, unsigned int> convertion_table;
+	convertion_table["red"] = Product::RED;
+	convertion_table["yellow"] = Product::YELLOW;
+	convertion_table["green"] = Product::GREEN;
+	convertion_table["blue"] = Product::BLUE;
+	convertion_table["violet"] = Product::VIOLET;
+	ProductGenerator::setConvertionTable(convertion_table);
+	/////////////////////////////////////////////////
 }
 
 void Backend::async_connect(const std::string& ip,int port){
@@ -81,6 +93,7 @@ void Backend::async_log_in
     //FIXME lo comenté porque se rompía
 //	this->server_connector.connectServer(user, password, "1");
 }
+
 Backend::~Backend() {
 	// TODO Auto-generated destructor stub
 }
@@ -104,9 +117,6 @@ vector<string> Backend::get_board_pokemon_codes() {
 }
 
 std::vector<std::vector<int> > Backend::get_full_board() {
-    //TODO esto no va acá, hay que acomodarlo donde corresponda
-    asyncSetUpInitialProducts();
-    ///////////////////////////////////////////////////////////
     // Los tableros tienen el mismo esquema, así que las cosas físicas se
     // toman y chequean de uno, pero también es válido para el otro
 	vector<vector<int> > products;
@@ -218,6 +228,20 @@ vector<vector<int> > Backend::get_board_schema() {
     // TODO Esto no me gusta acá, habría que ver donde/como se puede poner. Dónde se configuran los tableros (configureBoards)??
     board.setSchema(schema);
     replacements_board.setSchema(schema);
+    //TODO esto no va acá, hay que acomodarlo donde corresponda
+    asyncSetUpInitialProducts();
+    ///////////////////////////////////////////////////////////
+    //FIXME esto se hace en el server, borrar cuando haya conexión
+    map<string, int> probabilities_table;
+    probabilities_table["red"] = 20;
+    probabilities_table["yellow"] = 20;
+    probabilities_table["green"] = 20;
+    probabilities_table["blue"] = 20;
+    probabilities_table["violet"] = 20;
+    vector<ProductGenerator*> product_generators;
+    product_generators.resize(replacements_board.getWidth(), new ProductGenerator(probabilities_table));
+    replacements_generator = ReplacementsGenerator(&replacements_board, product_generators);
+    ///////////////////////////////////////////////////////////////
     return schema;
 }
 
@@ -237,7 +261,7 @@ bool Backend::async_make_swap(Position pos1_graphic, Position pos2_graphic) {
         std::cout << ") y (" << pos2_logic.getX() << "," << pos2_logic.getY() << ")" << std::endl;
         return false;
     }
-    //TODO esto va en el server y/o otro lado
+    //FIXME esto va en el server y/o otro lado
     Combiner combiner = Combiner(board);
     list<CombinationEffect*> effects = combiner.makeCombinations(pos1_logic, pos2_logic);
     combination_effects_queue.splice(combination_effects_queue.end(), effects);
@@ -249,6 +273,13 @@ bool Backend::async_make_swap(Position pos1_graphic, Position pos2_graphic) {
 //        std::vector<Position> eliminated_product = combination_effect->getEliminatedProducts();
 //        products_to_remove.insert(products_to_remove.end(), eliminated_product.begin(), eliminated_product.end());
 //    }
+    for (int column = 0; column < board.getWidth(); column++) {
+        int empty_cells = replacements_board.getEmptyCellsInColumn(column);
+        if (empty_cells > 0) {
+            list<Product*> replacements = replacements_generator.getReplacements(empty_cells, column);
+            refiller.addReplacements(column, replacements);
+        }
+    }
     /////////////////////////////////////////
     refiller.realocateBoard();
     return true;
