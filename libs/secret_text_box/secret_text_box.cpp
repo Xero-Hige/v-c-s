@@ -1,5 +1,5 @@
 /**
- secrettextbox.cpp
+ secret_text_box.cpp
 
  Copyright 2013 Gaston Martinez Gaston.martinez.90@gmail.com
 
@@ -25,7 +25,7 @@ using std::min;
 
 SecretTextBox::SecretTextBox(int max_len, const string& font_path,
 		int font_size, Window& window) :
-				TextBox(max_len, font_path, font_size, window) {
+		TextBox(max_len, font_path, font_size, window) {
 	replace_string = "";
 	for (size_t i = 0; i < max_len; i++) {
 		replace_string += '*';
@@ -48,8 +48,9 @@ void SecretTextBox::popChar() {
 
 	need_refresh = (shown_text.size() > text.size());
 
-	if (need_refresh){
+	if (need_refresh) {
 		shown_text = replace_string.substr(0, text.size());
-		if (shown_text == "") shown_text = " ";
+		if (shown_text == "")
+			shown_text = " ";
 	}
 }

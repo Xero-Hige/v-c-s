@@ -19,9 +19,7 @@
 
 #include "screen_grid.h"
 
-#include <stddef.h>
-
-Screen_Grid::Screen_Grid(size_t x_pos, size_t y_pos, size_t grid_height,
+ScreenGrid::ScreenGrid(size_t x_pos, size_t y_pos, size_t grid_height,
 		size_t grid_widht, size_t columns, size_t rows) {
 	this->columns = columns;
 	this->rows = rows;
@@ -33,7 +31,7 @@ Screen_Grid::Screen_Grid(size_t x_pos, size_t y_pos, size_t grid_height,
 	this->y_pos = y_pos;
 }
 
-Position Screen_Grid::get_grid_position(size_t x, size_t y) {
+Position ScreenGrid::getGridPosition(size_t x, size_t y) {
 	if (x >= x_pos and y >= y_pos) {
 		int x_reference = (x - x_pos) / grid_widht;
 		int y_reference = (y - y_pos) / grid_height;
@@ -48,7 +46,7 @@ Position Screen_Grid::get_grid_position(size_t x, size_t y) {
 	return Position(); //invalida
 }
 
-Position Screen_Grid::get_screen_position(Position position) {
+Position ScreenGrid::getScreenPosition(Position position) {
 	if (!position.is_valid())
 		return Position();
 

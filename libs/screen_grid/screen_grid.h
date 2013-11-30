@@ -23,7 +23,7 @@
 
 #include "../position/position.h"
 
-class Screen_Grid {
+class ScreenGrid {
 private:
 	size_t columns;
 	size_t rows;
@@ -36,14 +36,14 @@ private:
 
 public:
 
-	Screen_Grid() :
+	ScreenGrid() :
 			columns(0), rows(0), grid_height(0), grid_widht(0), x_pos(0), y_pos(
 					0) {
 	}
 	/**
 	 *
 	 */
-	Screen_Grid(size_t x_pos, size_t y_pos, size_t grid_height,
+	ScreenGrid(size_t x_pos, size_t y_pos, size_t grid_height,
 			size_t grid_widht, size_t columns = 1, size_t rows = 1);
 
 	/**
@@ -51,14 +51,14 @@ public:
 	 *	dentro de la grilla corresponde esa posicion. Si no corresponde
 	 *	a ninguna la posicion es (-1,-1) (invalida)
 	 */
-	Position get_grid_position(size_t x, size_t y);
+	Position getGridPosition(size_t x, size_t y);
 
 	/**
 	 * 	Devuelve una posicion que indica las coordenadas
 	 * 	x e y de la posicion de la grilla pasada. Devuelve
 	 * 	una posicion invalida si se le paso una posicion invalida
 	 */
-	Position get_screen_position(Position position);
+	Position getScreenPosition(Position position);
 };
 
 #endif /* SCREEN_ZONE_H_ */

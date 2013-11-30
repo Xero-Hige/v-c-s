@@ -92,7 +92,7 @@ bool Client_App::initialize() {
 }
 
 void Client_App::handle_event(SDL_Event& event) {
-	apps[actual_app]->handle_event(event);
+	apps[actual_app]->handleEvent(event);
 	if (event.type == SDL_QUIT) {
 		running = false;
 	}

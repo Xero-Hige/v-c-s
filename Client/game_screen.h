@@ -75,7 +75,7 @@ private:
 	std::vector<std::vector<int> > board_schema;
 
 	Position actual_cell;
-	Screen_Grid grid;
+	ScreenGrid grid;
 
 
 
@@ -96,12 +96,12 @@ private:
 	/**
 	 * Maneja los eventos de los botones del mouse
 	 */
-	void mouse_button_event(SDL_Event& event);
+	void mouseButtonEvent(SDL_Event& event);
 
 	/**
 	 * Inicializa el fondo
 	 */
-	void setup_background();
+	void setupBackground();
 	/**
 	 * Inicializa la pantalla de carga
 	 */
@@ -114,8 +114,8 @@ private:
 	 * Inicializa el audio de la ventana
 	 */
 	void setup_audio();
-	void render_board();
-	void setup_board();
+	void renderBoard();
+	void setupBoard();
 	void animate_swap();
 	void setupBanners();
 	void renderBanners();
@@ -135,7 +135,7 @@ public:
 	/**
 	 * Metodo para manejar los eventos de sdl
 	 */
-	virtual void handle_event(SDL_Event& event);
+	virtual void handleEvent(SDL_Event& event);
 	/**
 	 * Metodo para ejecutar durante el loop
 	 * (actualizacion de estados de la aplicacion)
