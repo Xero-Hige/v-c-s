@@ -36,8 +36,8 @@
 using std::string;
 using std::vector;
 
-const string BoardScreen::TITLE = "Level ";
-const double BoardScreen::LOADING_ICON_CORRECTION_FACTOR = 2.3;
+const string GameScreen::TITLE = "Level ";
+const double GameScreen::LOADING_ICON_CORRECTION_FACTOR = 2.3;
 
 bool myfunction(Position i, Position j) {
 	if (i.getY() == j.getY()) {
@@ -47,16 +47,16 @@ bool myfunction(Position i, Position j) {
 	}
 }
 
-void BoardScreen::renderLoadscreen() {
+void GameScreen::renderLoadscreen() {
 }
 
-void BoardScreen::key_press_event(SDL_Event& event) {
+void GameScreen::key_press_event(SDL_Event& event) {
 }
 
-void BoardScreen::text_input_event(SDL_Event& event) {
+void GameScreen::text_input_event(SDL_Event& event) {
 }
 
-void BoardScreen::animate_swap() {
+void GameScreen::animate_swap() {
 	loop();
 	backend.poolEffect();
 	vector<Position> del = backend.get_removed_pokemons();
@@ -139,7 +139,7 @@ void BoardScreen::animate_swap() {
 	board_schema = backend.get_full_board();
 }
 
-void BoardScreen::mouseButtonEvent(SDL_Event& event) {
+void GameScreen::mouseButtonEvent(SDL_Event& event) {
 	Position pos = grid.getGridPosition(event.button.x, event.button.y);
 	int correction = board_rows;
 	if (pos.is_valid()) {
@@ -167,7 +167,7 @@ void BoardScreen::mouseButtonEvent(SDL_Event& event) {
 	actual_cell = Position();
 }
 
-void BoardScreen::setupBackground() {
+void GameScreen::setupBackground() {
 
 	Surface temporal_background = Surface(
 			"resources/game_board/backgrounds/Zangoose.jpg");
@@ -199,7 +199,7 @@ void BoardScreen::setupBackground() {
 	temporal_cell.free();
 }
 
-void BoardScreen::setup_loadingscreen() {
+void GameScreen::setup_loadingscreen() {
 	SDL_Surface* surface = SDL_CreateRGBSurface(0, SCREEN_WIDTH, SCREEN_HEIGHT,
 			32, 0, 0, 0, 255);
 
@@ -218,7 +218,7 @@ void BoardScreen::setup_loadingscreen() {
 			SCREEN_HEIGHT - loading_icon.get_scaled_height());
 }
 
-void BoardScreen::setupBanners() {
+void GameScreen::setupBanners() {
 	left_banner = Sprite("resources/game_board/left-banner.png", window);
 	left_banner.set_scaled_width(INICIO_X);
 	left_banner.set_scaled_height(SCREEN_HEIGHT);
@@ -228,7 +228,7 @@ void BoardScreen::setupBanners() {
 	right_banner.scale_with_widht(SCREEN_WIDTH - initial_right_banner[0]);
 }
 
-void BoardScreen::setup_sprites() {
+void GameScreen::setup_sprites() {
 	vector<string> pokemon_codes = backend.get_board_pokemon_codes();
 
 	for (int i = 0; i < 5; i++) {
@@ -266,20 +266,20 @@ void BoardScreen::setup_sprites() {
 	setupBanners();
 }
 
-void BoardScreen::setup_audio() {
+void GameScreen::setup_audio() {
 	background_music.open_audio();
 	background_music.open_music(
 			"resources/game_board/background_music/000-Trainer.mp3");
 	background_music.play(-1);
 }
 
-BoardScreen::BoardScreen(Backend& back) :
+GameScreen::GameScreen(Backend& back) :
 		App(), backend(back), actual_cell(Position()), board_columns(0), board_rows(
 				0),number_of_players(8) { //FIXME
 
 }
 
-void BoardScreen::setupBoard() {
+void GameScreen::setupBoard() {
 	board_schema = backend.get_full_board();
 	//FIXME Pasar a constantes de clase;
 	board_columns = board_schema.size();
@@ -288,7 +288,7 @@ void BoardScreen::setupBoard() {
 			board_columns, board_rows);
 }
 
-bool BoardScreen::initialize() {
+bool GameScreen::initialize() {
 	window = Window(TITLE, SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_FLAGS);
 	//TODO: excepciones
 
@@ -300,7 +300,7 @@ bool BoardScreen::initialize() {
 	return true;
 }
 
-void BoardScreen::handleEvent(SDL_Event& event) {
+void GameScreen::handleEvent(SDL_Event& event) {
 	switch (event.type) {
 	case SDL_QUIT:
 		status = STATUS_ENDED_ERROR;
@@ -311,13 +311,13 @@ void BoardScreen::handleEvent(SDL_Event& event) {
 	}
 }
 
-void BoardScreen::loop() {
+void GameScreen::loop() {
 	for (size_t i = 0; i < sprites.size(); i++) {
 		sprites[i].animate();
 	}
 }
 
-void BoardScreen::renderBoard() {
+void GameScreen::renderBoard() {
 	background.draw(window);
 
 	for (int i = 0; i < board_columns; i++) {
@@ -340,7 +340,7 @@ void BoardScreen::renderBoard() {
 
 }
 
-void BoardScreen::renderBanners() {
+void GameScreen::renderBanners() {
 	left_banner.draw(window);
 	for (int i = 0; i < number_of_players; i++) {
 		int x = initial_right_banner[0];
@@ -351,11 +351,11 @@ void BoardScreen::renderBanners() {
 	}
 }
 
-void BoardScreen::renderMask() {
+void GameScreen::renderMask() {
 	over_mask.draw(window);
 }
 
-void BoardScreen::render() {
+void GameScreen::render() {
 	window.clear();
 
 	renderBoard();
@@ -365,5 +365,5 @@ void BoardScreen::render() {
 	window.render();
 }
 
-void BoardScreen::cleanup() {
+void GameScreen::cleanup() {
 }

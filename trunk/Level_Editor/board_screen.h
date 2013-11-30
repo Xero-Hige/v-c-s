@@ -23,13 +23,12 @@
 #include <string>
 #include <vector>
 
-#include "level_builder/LevelBuilder.h"
 #include "../libs/position/position.h"
 #include "../libs/screen_grid/screen_grid.h"
 #include "../libs/sprite/sprite.h"
 #include "../libs/window/window.h"
-
 #include "app.h"
+#include "level_builder/LevelBuilder.h"
 
 class BoardScreen: public App {
 
