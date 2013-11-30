@@ -30,21 +30,23 @@
 
 /* Clase base para los efectos a aplicar como resultado de una combinación */
 class CombinationEffect {
+private:
+    bool applied;
 protected:
     Position origin;
-    bool applied;
 public:
     CombinationEffect(Position origin)
         : origin(origin), applied(false) {}
     //TODO ver bien que pasarle de parámetro y si tiene que devolver algo (Gaston si ves esto, con vos tengo que hablarlo =P)
     virtual void applyEffect() {std::cout << "CombinationEffect" << std::endl;}
     bool isApplied();
-    void setApplied(bool state);
     virtual std::vector<Position> getEliminatedProducts() {std::cout << "Muerte no polimórfica!" <<std::endl; return std::vector<Position>();}
     virtual std::vector<Position> getChangedProducts() {return std::vector<Position>();}
     virtual std::vector<int> getNewProductsTypes() {return std::vector<int>();}
     Position getOrigin();
     virtual ~CombinationEffect() {}
+protected:
+    void setApplied();
 };
 
 #endif /* COMBINATION_EFFECT_H_ */

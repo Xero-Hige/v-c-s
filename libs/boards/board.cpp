@@ -167,7 +167,6 @@ void Board::rearrangeColumn(int column_number) {
                 return;
             }
             Position product_pos = Position(x, y-empty_tiles);
-            std::cout << "Posiciones a cambiar: (" << initial_pos.getX() << "," << initial_pos.getY() << ") y (" << product_pos.getX() << "," << product_pos.getY() << ")" << std::endl;
             Product* product = takeOutProduct(product_pos);
             setProduct(product, initial_pos);
         }
