@@ -135,13 +135,24 @@ std::vector<std::vector<int> > Backend::get_full_board() {
 }
 
 bool Backend::poolEffect() {
-    return false;
+    if (combination_effects_queue.size() == 0) {
+        return false;
+    }
+    CombinationEffect* combination_effect = combination_effects_queue.front();
+    if (combination_effect->isApplied()) {
+        combination_effects_queue.pop_front();
+        return poolEffect();
+    }
+    combination_effect->applyEffect();
+    return true;
 }
 
 vector<Position> Backend::get_removed_pokemons() {
-    vector<Position> ret_vector = products_to_remove;
-    products_to_remove.clear();
-    return ret_vector;
+    if (combination_effects_queue.size() == 0) {
+        return vector<Position>();
+    }
+    CombinationEffect* combination_effect = combination_effects_queue.front();
+    return combination_effect->getEliminatedProducts();
 //	Position a=l[0];
 //	Position b=l[1];
 //
@@ -164,18 +175,31 @@ vector<Position> Backend::get_removed_pokemons() {
 }
 
 vector<Position> getChangedProductsPositions() {
-    return vector<Position>();
+    if (combination_effects_queue.size() == 0) {
+        return vector<Position>();
+    }
+    CombinationEffect* combination_effect = combination_effects_queue.front();
+    return combination_effect->getChangedProducts();
 }
 
-std::vector<int> getChangedProductsTypes() {
-    return vector<int>();
+vector<int> getChangedProductsTypes() {
+    if (combination_effects_queue.size() == 0) {
+        return vector<int>();
+    }
+    CombinationEffect* combination_effect = combination_effects_queue.front();
+    return combination_effect->getNewProductsTypes();
 }
 
 Position Backend::getEffectOrigin() {
-    return Position(-1,-1);
+    if (combination_effects_queue.size() == 0) {
+        return Position();
+    }
+    CombinationEffect* combination_effect = combination_effects_queue.front();
+    return combination_effect->getOrigin();
 }
 
 int Backend::getEffectAnimation() {
+    //TODO no me acuerdo de donde dijimos que se sacaba esto
     return 0;
 }
 
@@ -222,8 +246,6 @@ bool Backend::async_make_swap(Position pos1_graphic, Position pos2_graphic) {
         combination_effect->applyEffect();
         std::vector<Position> eliminated_product = combination_effect->getEliminatedProducts();
         products_to_remove.insert(products_to_remove.end(), eliminated_product.begin(), eliminated_product.end());
-        std::cout << "Productos a eliminar (esta combinación): " << eliminated_product.size() << std::endl;
-        std::cout << "Productos a eliminar (total): " << products_to_remove.size() << std::endl;
     }
     /////////////////////////////////////////
     refiller.realocateBoard();
