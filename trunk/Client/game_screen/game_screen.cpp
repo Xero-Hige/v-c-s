@@ -113,7 +113,7 @@ void GameScreen::delete_animation(vector<Position>& deleted) {
 	positions.resize(board_columns, Position());
 
 	for (size_t i = 0; i < deleted.size(); i++) {
-		Position grid_pos = deleted[i];
+		Position& grid_pos = deleted[i];
 		grid_pos.setY(grid_pos[1] + board_rows);
 		board_schema[grid_pos[0]][grid_pos[1]] = 0;
 
@@ -130,6 +130,8 @@ void GameScreen::delete_animation(vector<Position>& deleted) {
 		deleted.erase(deleted.begin());
 		int x_pos = p[0];
 		int y_pos = p[1];
+
+		std::cout << "Aca:" << x_pos << "--" << y_pos << std::endl;
 
 		int y_init = INICIO_Y - ((board_schema[0].size() / 2) * DIMENSION_Y);
 
