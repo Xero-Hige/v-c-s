@@ -31,8 +31,8 @@
 using std::vector;
 using std::list;
 
-ReplacementsGenerator::ReplacementsGenerator(Board& replacements_board, vector<ProductGenerator*>& product_generators)
-    : replacements_board(replacements_board){
+ReplacementsGenerator::ReplacementsGenerator(Board* replacements_board, vector<ProductGenerator*>& product_generators) {
+    this->replacements_board = replacements_board;
     this->product_generators = vector<ProductGenerator*>();
     vector<ProductGenerator*>::iterator it;
     for (it = product_generators.begin(); it != product_generators.end(); ++it) {
@@ -41,7 +41,7 @@ ReplacementsGenerator::ReplacementsGenerator(Board& replacements_board, vector<P
 }
 
 list<Product*> ReplacementsGenerator::getReplacements(int n, int column_number) {
-    if (column_number < 0 || column_number >= replacements_board.getWidth()) {
+    if (column_number < 0 || column_number >= replacements_board->getWidth()) {
         return list<Product*>();
     }
     list<Product*> ret_list = list<Product*>();

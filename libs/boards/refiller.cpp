@@ -27,8 +27,6 @@
 #include <list>
 #include <vector>
 
-#include <iostream> //FIXME borrar
-
 using std::list;
 
 Refiller::Refiller(Board* board, Board* replacement_board)
@@ -40,9 +38,6 @@ void Refiller::realocateBoard() {
     for (int x = 0; x < board->getWidth(); x++) {
         int emptyCells = board->getEmptyCellsInColumn(x);
         list<Product*> products = replacement_board->popFromColumn(emptyCells, x);
-        for (list<Product*>::iterator it = products.begin(); it != products.end(); ++it) {
-            std::cout << "Producto a insertar en la columna " << x << ": Color " << (*it)->getColor() << " - Tipo " << (*it)->getType() << std::endl;
-        }
         board->pushInColumn(products, x);
     }
     replacement_board->rearrangeBoard();
@@ -51,8 +46,9 @@ void Refiller::realocateBoard() {
 
 void Refiller::addReplacements(int column, list<Product*> products) {
     if (column >= (int)replacements.size()) {
-        replacements.resize(column);
+        replacements.resize(column+1, list<Product*>());
     }
+    list<Product*>::iterator it;
     replacements[column].splice(replacements[column].end(), products, products.begin(), products.end());
 }
 
