@@ -25,6 +25,7 @@
 #include "message_builder.h"
 
 #include "interface_json_serializable.h"
+#include "../position/position.h"
 #include "../boards/product.h"
 #include "../combination_effects/combination_effect.h"
 
@@ -39,6 +40,7 @@ private:
 public:
     std::string buildScoreUpdateMsg(int score); //TODO agregar a que jugador corresponde
     std::string buildGameOverMsg(); //TODO agregar que jugador ganó (puede ser ninguno)
+    std::string buildSwapMessage(Position position1, Position position2); //TODO agregar que jugador fue
     std::string buildProductRefill(int column, std::list<Product*>& products);
     std::string buildCombinationEffectsMsg(std::list<CombinationEffect*>& effects);
 };
