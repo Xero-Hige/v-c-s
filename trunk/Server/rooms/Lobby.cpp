@@ -37,7 +37,7 @@ void Lobby::addNewClient(ClientHandler * ch) {
 	struct thread_data * data = new struct thread_data();
 	data->lobby = this;
 	data->ch = ch;
-	this->start((void*)data);
+	this->start((void*)data, DETACHED);
 }
 
 void Lobby::addRoom(unsigned long id, Room * r){
