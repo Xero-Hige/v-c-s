@@ -25,8 +25,10 @@
 #include "combination_effect.h"
 
 #include "../position/position.h"
+#include "../game_message_builder/interface_json_serializable.h"
 
 #include <vector>
+#include <jsoncpp/json.h>
 
 /* Clase que representa la eliminación de una fila debido a una *
  * barra horizontal o una combinación estrella+barra            */
@@ -34,10 +36,14 @@ class TakeOutRowEffect : public CombinationEffect {
 private:
     int board_width;
 public:
+    TakeOutRowEffect()
+        : CombinationEffect(), board_width(-1) {}
     TakeOutRowEffect(Position origin, int board_width)
         : CombinationEffect(origin), board_width(board_width) {}
     void applyEffect() {std::cout << "TakeOutRowEffect" << std::endl; setApplied();}
     std::vector<Position> getEliminatedProducts();
+    void serialize(Json::Value& root);
+    void deserialize(Json::Value& root);
     ~TakeOutRowEffect() {}
 };
 

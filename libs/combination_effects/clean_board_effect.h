@@ -25,16 +25,25 @@
 #include "combination_effect.h"
 
 #include "../position/position.h"
+#include "../game_message_builder/interface_json_serializable.h"
 
 #include <vector>
+#include <jsoncpp/json.h>
 
 /* Clase que representa la eliminación de todos los productos del tablero *
  * por una combinación estrella+estrella                                  */
 class CleanBoardEffect : public CombinationEffect {
 public:
+    CleanBoardEffect()
+        : CombinationEffect() {}
     CleanBoardEffect(Position origin)
         : CombinationEffect(origin) {}
     void applyEffect() {std::cout << "CleanBoardEffect" << std::endl; setApplied();}
+    std::vector<Position> getEliminatedProducts();
+    std::vector<Position> getChangedProducts() {return std::vector<Position>();}
+    std::vector<int> getNewProductsTypes() {return std::vector<int>();}
+    void serialize(Json::Value& root);
+    void deserialize(Json::Value& root);
     ~CleanBoardEffect() {}
 };
 

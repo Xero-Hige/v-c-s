@@ -25,8 +25,10 @@
 #include "combination_effect.h"
 
 #include "../position/position.h"
+#include "../game_message_builder/interface_json_serializable.h"
 
 #include <vector>
+#include <jsoncpp/json.h>
 
 /* Clase que representa la eliminación de un producto simple */
 class TakeOutProductEffect : public CombinationEffect {
@@ -35,12 +37,16 @@ private:
     Position ending_pos;
 
 public:
+    TakeOutProductEffect()
+        : CombinationEffect(), initial_pos(Position()), ending_pos(Position()) {}
     explicit TakeOutProductEffect(Position origin)
         : CombinationEffect(origin) {}
     TakeOutProductEffect(Position origin, Position initial_pos, Position ending_pos)
         : CombinationEffect(origin), initial_pos(initial_pos), ending_pos(ending_pos) {}
     void applyEffect() {std::cout << "TakeOutProductEffect" << std::endl; setApplied();}
     std::vector<Position> getEliminatedProducts();
+    void serialize(Json::Value& root);
+    void deserialize(Json::Value& root);
     ~TakeOutProductEffect() {}
 };
 
