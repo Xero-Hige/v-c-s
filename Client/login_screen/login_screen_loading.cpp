@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses
 */
 #include "../login_screen.h"
 
-void Login_Screen::render_loadscreen() {
+void LoginScreen::renderLoadscreen() {
 	loading_icon.animate();
 
 	window.clear();

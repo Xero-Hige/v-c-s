@@ -131,8 +131,6 @@ void GameScreen::delete_animation(vector<Position>& deleted) {
 		int x_pos = p[0];
 		int y_pos = p[1];
 
-		std::cout << "Aca:" << x_pos << "--" << y_pos << std::endl;
-
 		int y_init = INICIO_Y - ((board_schema[0].size() / 2) * DIMENSION_Y);
 
 		for (int i = y_pos - 1; i >= 0; i--) {

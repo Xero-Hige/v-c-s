@@ -31,14 +31,14 @@
 
 using std::string;
 
-const string Login_Screen::TITLE = "Login";
-const double Login_Screen::LOADING_ICON_CORRECTION_FACTOR = 2.3;
+const string LoginScreen::TITLE = "Login";
+const double LoginScreen::LOADING_ICON_CORRECTION_FACTOR = 2.3;
 
-Login_Screen::Login_Screen(Backend& back) :
+LoginScreen::LoginScreen(Backend& back) :
 		App(), backend(back) {
 }
 
-void Login_Screen::setup_background() {
+void LoginScreen::setupBackground() {
 	//TODO: excepciones
 	Surface background_temp = Surface("resources/login/background.png");
 	Surface textbox_temp = Surface("resources/login/textbox.png");
@@ -64,7 +64,7 @@ void Login_Screen::setup_background() {
 	background.set_scaled_width(SCREEN_WIDTH);
 }
 
-void Login_Screen::setup_textboxes() {
+void LoginScreen::setupTextboxes() {
 	user_nick = TextBox(14, "resources/login/logfont.ttf", 20, window);
 	user_nick.move(X_USER_NICK, Y_USER_NICK);
 	user_nick.setAlternativeText("USUARIO", window);
@@ -75,7 +75,7 @@ void Login_Screen::setup_textboxes() {
 
 }
 
-void Login_Screen::setup_loadingscreen() {
+void LoginScreen::setupLoadingScreen() {
 	SDL_Surface* surface = SDL_CreateRGBSurface(0, SCREEN_WIDTH, SCREEN_HEIGHT,
 			32, 0, 0, 0, 255);
 
@@ -94,7 +94,7 @@ void Login_Screen::setup_loadingscreen() {
 			SCREEN_HEIGHT - loading_icon.get_scaled_height());
 }
 
-void Login_Screen::setup_mugshots() {
+void LoginScreen::setupMugshots() {
 	mugshot_left = Sprite("resources/login/left_mug.png", window);
 	mugshot_right = Sprite("resources/login/right_mug.png", window);
 	double scale_left = double(SCREEN_HEIGHT)
@@ -110,31 +110,31 @@ void Login_Screen::setup_mugshots() {
 			0);
 }
 
-void Login_Screen::setup_audio() {
+void LoginScreen::setupAudio() {
 	background_music.open_audio();
 	background_music.open_music("resources/login/title_music.mp3");
 	background_music.play(-1);
 }
 
-bool Login_Screen::initialize() {
+bool LoginScreen::initialize() {
 
 	window = Window(TITLE, SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_FLAGS);
 	//TODO: excepciones
 
-	setup_background();
-	setup_textboxes();
-	setup_loadingscreen();
-	setup_mugshots();
-	setup_audio();
+	setupBackground();
+	setupTextboxes();
+	setupLoadingScreen();
+	setupMugshots();
+	setupAudio();
 	return true;
 }
 
-void Login_Screen::loop() {
+void LoginScreen::loop() {
 	user_nick.refresh(window);
 	user_pass.refresh(window);
 }
 
-void Login_Screen::render() {
+void LoginScreen::render() {
 	window.clear();
 
 	background.draw(window);
@@ -148,7 +148,7 @@ void Login_Screen::render() {
 
 }
 
-void Login_Screen::cleanup() {
+void LoginScreen::cleanup() {
 	background.free();
 
 	user_nick.free();

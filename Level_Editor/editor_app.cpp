@@ -23,6 +23,7 @@
 #include <SDL2/SDL_timer.h>
 #include <SDL2/SDL_ttf.h>
 
+#include "board_distribution_screen.h"
 #include "level_builder/LevelBuilder.h"
 
 using std::vector;
@@ -36,6 +37,7 @@ Editor_App::Editor_App() {
 	LevelBuilder level;
 
 	apps.push_back(new BoardScreen(level));
+	apps.push_back(new BoardDistributionScreen(level));
 
 
 	actual_app = 0;
@@ -47,19 +49,12 @@ Editor_App::~Editor_App() {
 }
 
 void Editor_App::change_app() {
-	if (apps[actual_app]->get_app_status() != STATUS_RUNNING) {
-		if (apps[actual_app]->get_app_status() != STATUS_ENDED_OK) {
+	if (apps[actual_app]->get_app_status() != App::STATUS_RUNNING) {
+		if (apps[actual_app]->get_app_status() != App::STATUS_ENDED_OK) {
 			running = false;
 			return;
 		}
 		switch (actual_app) {
-
-		case 2: //Tablero
-			apps[actual_app]->cleanup();
-			actual_app--;
-			apps[actual_app]->initialize();
-			return;
-
 		default:
 			apps[actual_app]->cleanup();
 			actual_app++;

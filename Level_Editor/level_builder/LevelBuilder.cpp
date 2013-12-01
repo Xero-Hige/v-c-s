@@ -29,6 +29,10 @@ LevelBuilder::~LevelBuilder() {
 }
 
 void LevelBuilder::setBoardSchema(
-		const std::vector<std::vector<int> >& board_schema) {
+		std::vector<std::vector<int> > board_schema) {
 	this->board_schema = board_schema;
+}
+
+std::vector<std::vector<int> > LevelBuilder::getBoardSchema() {
+	return this->board_schema;
 }

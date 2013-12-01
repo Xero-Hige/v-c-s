@@ -23,7 +23,7 @@
 using std::string;
 using std::min;
 
-SecretTextBox::SecretTextBox(int max_len, const string& font_path,
+SecretTextBox::SecretTextBox(size_t max_len, const string& font_path,
 		int font_size, Window& window) :
 		TextBox(max_len, font_path, font_size, window) {
 	replace_string = "";

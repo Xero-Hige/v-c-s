@@ -75,7 +75,7 @@ public:
 	/**
 	 * //TODO:
 	 */
-	TextBox(int max_len, const std::string& font_path, int font_size,
+	TextBox(size_t max_len, const std::string& font_path, int font_size,
 			Window& window);
 	virtual ~TextBox();
 	/**

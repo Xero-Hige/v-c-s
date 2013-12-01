@@ -17,12 +17,18 @@
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
 
-#include "../board_screen.h"
-
 #include <stddef.h>
 #include <SDL2/SDL_events.h>
+#include <string>
+#include <vector>
 
+#include "../../libs/position/position.h"
+#include "../../libs/screen_grid/screen_grid.h"
+#include "../../libs/sprite/sprite.h"
 #include "../../libs/surface/surface.h"
+#include "../../libs/window/window.h"
+#include "../app.h"
+#include "../board_distribution_screen.h"
 #include "../level_builder/LevelBuilder.h"
 
 //FIXME
@@ -31,21 +37,19 @@
 #define INICIO_X 300
 #define INICIO_Y 100
 
-#define C 0
-
 using std::string;
 using std::vector;
 
-const string BoardScreen::TITLE = "Level ";
+const string BoardDistributionScreen::TITLE = "Level ";
 
-void BoardScreen::mouseButtonEvent(SDL_Event& event) {
-	Position pos = grid.get_grid_position(event.button.x, event.button.y);
+void BoardDistributionScreen::mouseButtonEvent(SDL_Event& event) {
+	Position pos = grid.getGridPosition(event.button.x, event.button.y);
 	if (pos.is_valid()) {
 		board_schema[pos[0]][pos[1]] = (board_schema[pos[0]][pos[1]] + 1) % 2;
 	}
 }
 
-void BoardScreen::setupBackground() {
+void BoardDistributionScreen::setupBackground() {
 
 	Surface temporal_background = Surface(
 			"resources/game_board/backgrounds/Zangoose.jpg");
@@ -55,27 +59,21 @@ void BoardScreen::setupBackground() {
 	temporal_background.free();
 }
 
-BoardScreen::BoardScreen(LevelBuilder& level) :
-		App(),level(level),window(Window()),background(Sprite()),cell(Sprite()),grid(Screen_Grid()) { //FIXME
+BoardDistributionScreen::BoardDistributionScreen(LevelBuilder& level) :
+		App(),level(level),window(Window()),background(Sprite()),cell(Sprite()),grid(ScreenGrid()) { //FIXME
 
 }
 
-void BoardScreen::setupBoard() {
-	grid = Screen_Grid(INICIO_X, INICIO_Y, DIMENSION_Y, DIMENSION_X, 30, 20);
+void BoardDistributionScreen::setupBoard() {
+	grid = ScreenGrid(INICIO_X, INICIO_Y, DIMENSION_Y, DIMENSION_X, 30, 20);
 
 	//TODO: agregar soporte para multiples celdas
 	cell = Sprite("resources/game_board/cell/cell_A.png", window);
 
-	board_schema = vector<vector<int> >();
-	for (size_t i = 0; i < board_columns; i++) {
-		board_schema.push_back(vector<int>());
-		for (size_t j = 0; j < board_rows; j++) {
-			board_schema[i].push_back(1);
-		}
-	}
+	board_schema = level.getBoardSchema();
 }
 
-bool BoardScreen::initialize() {
+bool BoardDistributionScreen::initialize() {
 	window = Window(TITLE, SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_FLAGS);
 	//TODO: excepciones
 
@@ -84,7 +82,7 @@ bool BoardScreen::initialize() {
 	return true;
 }
 
-void BoardScreen::handleEvent(SDL_Event& event) {
+void BoardDistributionScreen::handleEvent(SDL_Event& event) {
 	switch (event.type) {
 	case SDL_QUIT:
 		status = STATUS_ENDED_ERROR;
@@ -95,10 +93,10 @@ void BoardScreen::handleEvent(SDL_Event& event) {
 	}
 }
 
-void BoardScreen::loop() {
+void BoardDistributionScreen::loop() {
 }
 
-void BoardScreen::renderBoard() {
+void BoardDistributionScreen::renderBoard() {
 	background.draw(window);
 
 	for (int i = 0; i < board_columns; i++) {
@@ -115,7 +113,7 @@ void BoardScreen::renderBoard() {
 	}
 }
 
-void BoardScreen::render() {
+void BoardDistributionScreen::render() {
 	window.clear();
 
 	renderBoard();
@@ -123,5 +121,5 @@ void BoardScreen::render() {
 	window.render();
 }
 
-void BoardScreen::cleanup() {
+void BoardDistributionScreen::cleanup() {
 }

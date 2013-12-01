@@ -19,20 +19,22 @@
 #ifndef APP_H_
 #define APP_H_
 
-#define STATUS_RUNNING 0
-#define STATUS_ENDED_OK 1
-#define STATUS_ENDED_ERROR 2
-
 #include <SDL2/SDL.h>
 
 class App {
+
+public:
+
+	static const int STATUS_RUNNING = 0;
+	static const int STATUS_ENDED_OK = 1;
+	static const int STATUS_ENDED_ERROR = 2;
 
 protected:
 	int status;
 
 public:
 	App() :
-		status(STATUS_RUNNING) {
+			status(STATUS_RUNNING) {
 	}
 	;
 

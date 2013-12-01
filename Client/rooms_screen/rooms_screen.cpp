@@ -27,9 +27,6 @@ Rooms_Screen::Rooms_Screen(Backend& back) :
 		App(), backend(back) {
 }
 
-void Rooms_Screen::key_press_event(SDL_Event& event) {
-}
-
 void Rooms_Screen::text_input_event(SDL_Event& event) {
 }
 
