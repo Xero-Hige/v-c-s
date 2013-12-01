@@ -31,17 +31,24 @@ void * starterWithArg(void * d){
 	return NULL;
 }
 
-void Thread::start(void * data){
+void Thread::start(void * data, int thread_type){
 	//Se pasa this porque esta clase va a ser heredada, entonces dentro de
 	//starter voy a tener acceso a la clase que estoy utilizando. De este
 	//modo se llama al run de la clase hija.
+	pthread_attr_t * attr_ptr = NULL;
+	pthread_attr_t attr;
+	if (thread_type == DETACHED){
+		attr_ptr = &attr;
+		pthread_attr_init(&attr);
+		pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
+	}
 	if (!data){
-		pthread_create(&myThread, NULL, starter, this);
+		pthread_create(&myThread, attr_ptr, starter, this);
 	}else{
 		struct thread_data * td = new struct thread_data();
 		td->t = this;
 		td->data = data;
-		pthread_create(&myThread, NULL, starterWithArg, (void*) td);
+		pthread_create(&myThread, attr_ptr, starterWithArg, (void*) td);
 	}
 }
 

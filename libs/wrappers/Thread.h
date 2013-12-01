@@ -8,6 +8,9 @@
 #ifndef THREAD_H_
 #define THREAD_H_
 
+#define JOINABLE 0
+#define DETACHED 1
+
 #include <pthread.h>
 
 /*
@@ -20,7 +23,7 @@ class Thread {
 
 public:
 	Thread();
-	void start(void * data = NULL);
+	void start(void * data = NULL, int thread_type = JOINABLE);
 	void join();
 	virtual void run(void * data = NULL) = 0;
 	virtual ~Thread();
