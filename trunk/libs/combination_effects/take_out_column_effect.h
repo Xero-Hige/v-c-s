@@ -25,8 +25,10 @@
 #include "combination_effect.h"
 
 #include "../position/position.h"
+#include "../game_message_builder/interface_json_serializable.h"
 
 #include <vector>
+#include <jsoncpp/json.h>
 
 /* Clase que representa la eliminación de una columna debido a una *
  * barra vertical o una combinación estrella+barra                 */
@@ -35,10 +37,14 @@ private:
     int board_height;
 
 public:
+    TakeOutColumnEffect()
+        : CombinationEffect(), board_height(-1) {}
     TakeOutColumnEffect(Position origin, int board_height)
         : CombinationEffect(origin), board_height(board_height) {}
     void applyEffect() {std::cout << "TakeOutColumnEffect" << std::endl; setApplied();}
     std::vector<Position> getEliminatedProducts();
+    void serialize(Json::Value& root);
+    void deserialize(Json::Value& root);
     ~TakeOutColumnEffect() {}
 };
 

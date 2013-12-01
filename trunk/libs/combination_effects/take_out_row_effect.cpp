@@ -23,8 +23,10 @@
 
 #include "combination_effect.h"
 #include "../position/position.h"
+#include "../game_message_builder/interface_json_serializable.h"
 
 #include <vector>
+#include <jsoncpp/json.h>
 
 using std::vector;
 
@@ -39,4 +41,15 @@ vector<Position> TakeOutRowEffect::getEliminatedProducts() {
         products_to_eliminate.push_back(Position(x,y));
     }
     return products_to_eliminate;
+}
+
+void TakeOutRowEffect::serialize(Json::Value& root) {
+    CombinationEffect::serialize(root);
+    root["type"] = "TakeOutRowEffect";
+    root["board width"] = board_width;
+}
+
+void TakeOutRowEffect::deserialize(Json::Value& root) {
+    CombinationEffect::deserialize(root);
+    board_width = root["board width"].asInt();
 }

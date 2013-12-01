@@ -40,6 +40,7 @@ void CombinationEffect::serialize(Json::Value& root) {
     Json::Value origin_value;
     origin.serialize(origin_value);
     root["origin"] = origin_value;
+    root["type"] = "CombinationEffect";
 }
 void CombinationEffect::deserialize(Json::Value& root) {
     Json::Value origin_value = root["origin"];

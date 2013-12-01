@@ -26,21 +26,27 @@
 
 #include "../position/position.h"
 #include "../boards/product.h"
+#include "../game_message_builder/interface_json_serializable.h"
 
 #include <vector>
+#include <jsoncpp/json.h>
 
 /* Clase que representa el efecto de cambiar un producto a otro del mismo *
  * color y distinto tipo, como resultado de una combinación               */
-class ChangeProductEffect : public CombinationEffect {
+class ChangeProductEffect : public CombinationEffect, public IJsonSerializable {
 private:
     int color;
     int new_type;
 public:
+    ChangeProductEffect()
+        : CombinationEffect(), color(Product::NO_COLOR), new_type(Product::NO_TYPE) {}
     ChangeProductEffect(Position origin, int color, int new_type)
         : CombinationEffect(origin), color(color), new_type(new_type) {}
     void applyEffect() {std::cout << "ChangeProductEffect" << std::endl; setApplied();}
     std::vector<Position> getChangedProducts() {return std::vector<Position>();}
     std::vector<Position> getEliminatedProducts() {return std::vector<Position>();}
+    void serialize(Json::Value& root);
+    void deserialize(Json::Value& root);
     ~ChangeProductEffect() {}
 };
 

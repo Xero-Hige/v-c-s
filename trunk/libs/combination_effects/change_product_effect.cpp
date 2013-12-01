@@ -20,3 +20,23 @@
  */
 
 #include "change_product_effect.h"
+
+#include "../position/position.h"
+#include "../boards/product.h"
+#include "../game_message_builder/interface_json_serializable.h"
+
+#include <vector>
+#include <jsoncpp/json.h>
+
+void ChangeProductEffect::serialize(Json::Value& root) {
+    CombinationEffect::serialize(root);
+    root["type"] = "ChangeProductEffect";
+    root["color"] = color;
+    root["new type"] = new_type;
+}
+
+void ChangeProductEffect::deserialize(Json::Value& root) {
+    CombinationEffect::deserialize(root);
+    color = root["color"].asInt();
+    new_type = root["new type"].asInt();
+}

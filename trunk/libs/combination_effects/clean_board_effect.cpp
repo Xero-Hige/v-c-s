@@ -20,3 +20,32 @@
  */
 
 #include "clean_board_effect.h"
+
+#include "combination_effect.h"
+#include "../position/position.h"
+#include "../game_message_builder/interface_json_serializable.h"
+
+#include <vector>
+#include <jsoncpp/json.h>
+
+using std::vector;
+
+//void applyEffect() {
+//    //TODO
+//}
+
+vector<Position> CleanBoardEffect::getEliminatedProducts() {
+    vector<Position> ret_vector;
+    // Una posición (-1,-1) indica que hay que borrar todos los productos
+    ret_vector.push_back(Position(-1,-1));
+    return ret_vector;
+}
+
+void CleanBoardEffect::serialize(Json::Value& root) {
+    CombinationEffect::serialize(root);
+    root["type"] = "CleanBoardEffect";
+}
+
+void CleanBoardEffect::deserialize(Json::Value& root) {
+    CombinationEffect::deserialize(root);
+}
