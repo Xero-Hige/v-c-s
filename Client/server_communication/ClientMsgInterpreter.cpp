@@ -28,6 +28,11 @@ void ClientMsgInterpreter::interpretParticularMsg(std::string msg){
 void ClientMsgInterpreter::exitCharPressed(){
 	client->exitCharPressed();
 }
+
+void ClientMsgInterpreter::closeConnection(){
+	client->closeConnection();
+}
+
 ClientMsgInterpreter::~ClientMsgInterpreter() {
 	// TODO Auto-generated destructor stub
 }

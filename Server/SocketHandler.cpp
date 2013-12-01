@@ -63,7 +63,7 @@ void SocketHandler::addClient(int & new_client){
 		std::cout << "Se autentico un nuevo cliente." << std::endl;
 		this->lobby->addNewClient(ch);
 	}else{
-		close(new_client);
+		ch->closeConnection();
 		std::cout << "Fallo la autenticacion de un nuevo cliente." << std::endl;
 		delete ch;
 	}

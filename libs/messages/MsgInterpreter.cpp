@@ -21,7 +21,8 @@ bool MsgInterpreter::interpret(std::string s) {
 		return true;
 	} else if (s.compare(CLIENT_EXIT_ROOM) == 0){
 		exitRoom();
-		return false;
+	} else if (s.compare(CLOSE_CONNECTION) == 0){
+		closeConnection();
 	}
 	interpretParticularMsg(s);
 	return false;

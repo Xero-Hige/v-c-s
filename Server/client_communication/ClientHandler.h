@@ -20,7 +20,7 @@ class ClientHandler : public Thread{
 	std::string userid;
 	unsigned level;
 
-	FormattedSocket * sock;
+	FormattedSocket sock;
 	Room * room;
 	bool keep_listening;
 	void run();
@@ -47,6 +47,11 @@ public:
 	 * exitRoom le avisa al room que este cliente desea salir.
 	 */
 	void exitRoom();
+	/*
+	 * closeConnection cierra la conexion del socket y le avisa al cliente que el
+	 * servidor esta cerrando la conexion.
+	 */
+	void closeConnection();
 	virtual ~ClientHandler();
 };
 

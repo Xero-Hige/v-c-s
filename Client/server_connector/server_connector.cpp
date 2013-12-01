@@ -133,7 +133,8 @@ void Server_Connector::getMatchmaking(std::string & mm){
 	return;
 }
 
-void Server_Connector::closeConection(){
+void Server_Connector::closeConnection(){
+	sock->sendMsg(CLOSE_CONNECTION);
 	sock->closeConnection();
 }
 

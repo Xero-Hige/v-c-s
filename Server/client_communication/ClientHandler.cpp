@@ -15,9 +15,8 @@
 #include <string>
 #include <iostream>
 
-ClientHandler::ClientHandler(int s){
+ClientHandler::ClientHandler(int s) : sock(s){
 	this->keep_listening = true;
-	this->sock = new FormattedSocket(s);
 	this->room = NULL;
 	this->level = 0;
 }
@@ -25,7 +24,7 @@ ClientHandler::ClientHandler(int s){
 void ClientHandler::run(){
 	while (keep_listening){
 		std::string rcvd_msg;
-		sock->recvMsg(rcvd_msg);
+		sock.recvMsg(rcvd_msg);
 		ServerMsgInterpreter msg_int(this);
 		if (msg_int.interpret(rcvd_msg)) keep_listening = false;
 	}
@@ -61,12 +60,22 @@ void ClientHandler::setLevel(unsigned l){
 
 void ClientHandler::recvMsg(std::string & s){
 	int recvd_bytes;
-	if (!this->sock->recvSignedMsg(s, this->passwd, recvd_bytes))
-		sock->closeConnection();
+	if (!this->sock.recvSignedMsg(s, this->passwd, recvd_bytes))
+		//Si la firma no se verifica se cierra la conexion
+		this->closeConnection();
 }
 
 void ClientHandler::sendMsg(std::string s){
-	this->sock->sendMsg(s);
+	this->sock.sendMsg(s);
+}
+
+void ClientHandler::closeConnection(){
+	//Tanto del lado del server como del lado del cliente se van a mandar mensajes
+	//mutuos diciendo que la conexion se va a cerrar. Por ej:
+	//server manda -> CLOSE_CONNECTION y cierra
+	//cliente recibe, interpreta manda -> CLOSE_CONNECTION y cierra.
+	this->sock.sendMsg(CLOSE_CONNECTION);
+	this->sock.closeConnection();
 }
 
 ClientHandler::~ClientHandler() {

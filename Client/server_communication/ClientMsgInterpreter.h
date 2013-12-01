@@ -22,7 +22,7 @@ class ClientMsgInterpreter : public MsgInterpreter{
 	 * Los metodos de esta clase interpretan el mensaje devuelto por el servidor
 	 * y llaman a los metodos que correspondan.
 	 */
-
+	void closeConnection();
 	void exitRoom();
 	void exitCharPressed();
 	void interpretParticularMsg(std::string s);
