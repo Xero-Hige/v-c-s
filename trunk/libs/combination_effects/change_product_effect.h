@@ -33,7 +33,7 @@
 
 /* Clase que representa el efecto de cambiar un producto a otro del mismo *
  * color y distinto tipo, como resultado de una combinación               */
-class ChangeProductEffect : public CombinationEffect, public IJsonSerializable {
+class ChangeProductEffect : public CombinationEffect {
 private:
     int color;
     int new_type;
@@ -43,7 +43,8 @@ public:
     ChangeProductEffect(Position origin, int color, int new_type)
         : CombinationEffect(origin), color(color), new_type(new_type) {}
     void applyEffect() {std::cout << "ChangeProductEffect" << std::endl; setApplied();}
-    std::vector<Position> getChangedProducts() {return std::vector<Position>();}
+    std::vector<Position> getChangedProducts();
+    std::vector<int> getNewProductsTypes();
     std::vector<Position> getEliminatedProducts() {return std::vector<Position>();}
     void serialize(Json::Value& root);
     void deserialize(Json::Value& root);
