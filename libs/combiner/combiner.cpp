@@ -75,17 +75,29 @@ int Combiner::makeCombination(Position pos, std::list<CombinationEffect*>& resul
     list<Position> horizontal_combination;
     int horizontal_count = 0;
     int origin_product_color = board.getProductColor(pos);
+    int origin_product_type = board.getProductType(pos);
     if (checker.getVerticalCombination(pos, vertical_combination)) {
         std::cout << "Activando combinación vertical" << std::endl;
         vertical_count = vertical_combination.size();
         std::cout << "Tamaño de la combinación: " << vertical_count << std::endl;
         products_eliminated += activateCombination(vertical_combination.front(), vertical_combination.back(), pos, result_list);
     }
+    // Si hubo combinación vertical y se eliminó el producto origen, se vuelve
+    // a insertar para probar la combinación horizontal
+    if (vertical_count != 0) {
+        Product* origin_product = new Product(origin_product_color, origin_product_type);
+        board.setProduct(origin_product, pos);
+    }
     if (checker.getHorizontalCombination(pos, horizontal_combination)) {
         std::cout << "Activando combinación horizontal" << std::endl;
         horizontal_count = horizontal_combination.size();
         std::cout << "Tamaño de la combinación: " << horizontal_count << std::endl;
         products_eliminated += activateCombination(horizontal_combination.front(), horizontal_combination.back(), pos, result_list);
+    }
+    // Si hubo alguna combinación, hay que asegurar que se sacó el producto
+    // origen (en el caso de combinación vertical pero no horizontal)
+    if (products_eliminated != 0) {
+        board.takeOutProduct(pos);
     }
     int longest_combination_size = max(vertical_count, horizontal_count);
     int points_per_product = getPointsPerProduct(longest_combination_size);
@@ -169,5 +181,5 @@ void Combiner::upgradeProduct(Position origin, int color, int vertical_combinati
     //FIXME descomentar cuando no se rompa al hacerlo, hay que chequear la interfaz gráfica
 //    product = new Product(color, product_new_type);
 //    board.setProduct(product, origin);
-    result_list.push_front(new ChangeProductEffect(origin, color, product_new_type));
+    result_list.push_back(new ChangeProductEffect(origin, color, product_new_type));
 }

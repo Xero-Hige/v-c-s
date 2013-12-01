@@ -22,6 +22,7 @@
 #ifndef COMBINATION_EFFECT_H_
 #define COMBINATION_EFFECT_H_
 
+#include "../game_messages/interface_json_serializable.h"
 #include "../position/position.h"
 
 #include <vector>
