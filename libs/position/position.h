@@ -22,10 +22,14 @@
 #ifndef POSITION_H_
 #define POSITION_H_
 
+#include "../game_message_builder/interface_json_serializable.h"
+
+#include <jsoncpp/json.h>
+
 /* Define un par ordenado para la ubicación de las cosas en los tableros *
  * usando coordenadas                                                    *
  * Se usará -1 como valor inválido para alguno de los miembros           */
-class Position {
+class Position : public IJsonSerializable {
 private:
     int x;
     int y;
@@ -49,6 +53,8 @@ public:
      * mayores o iguales a 0
      */
     bool is_valid();
+    void serialize(Json::Value& root);
+    void deserialize(Json::Value& root);
 };
 
 

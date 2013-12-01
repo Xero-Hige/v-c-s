@@ -1,7 +1,7 @@
 /*
- * product.c
+ * game_message_builder.h
  *
- * Created on: Nov 17, 2013
+ * Created on: Nov 30, 2013
  * 
  * Copyright 2013 Bruno Merlo Schurmann <brunomerloschurmann@gmail.com>
  * 
@@ -19,26 +19,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses 
  */
 
-#include "product.h"
+#ifndef GAME_MESSAGE_BUILDER_H_
+#define GAME_MESSAGE_BUILDER_H_
 
-#include "../game_message_builder/interface_json_serializable.h"
+#include "interface_json_serializable.h"
 
 #include <jsoncpp/json.h>
+#include <string>
+#include <vector>
+#include <list>
 
-int Product::getColor() {
-    return color;
-}
+class GameMessageBuilder {
+private:
+    Json::Value message;
 
-int Product::getType() {
-    return type;
-}
+public:
+    void startNewMessage();
+    void addStringField(std::string key, std::string value);
+    void addIntField(std::string key, int value);
+    void addObjectField(std::string key, IJsonSerializable* value);
+    void addObjectArrayField(std::string key, std::vector<IJsonSerializable*>& value);
+    void addObjectArrayField(std::string key, std::list<IJsonSerializable*>& value);
+    std::string getParsedMessage();
+};
 
-void Product::serialize(Json::Value& root) {
-    root["color"] = color;
-    root["type"] = type;
-}
-
-void Product::deserialize(Json::Value& root) {
-    color = root["color"].asInt();
-    type = root["type"].asInt();
-}
+#endif /* GAME_MESSAGE_BUILDER_H_ */

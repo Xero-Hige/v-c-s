@@ -21,6 +21,10 @@
 
 #include "combination_effect.h"
 
+#include "../game_message_builder/interface_json_serializable.h"
+
+#include <jsoncpp/json.h>
+
 bool CombinationEffect::isApplied() {
     return applied;
 }
@@ -30,4 +34,14 @@ void CombinationEffect::setApplied() {
 
 Position CombinationEffect::getOrigin() {
     return origin;
+}
+
+void CombinationEffect::serialize(Json::Value& root) {
+    Json::Value origin_value;
+    origin.serialize(origin_value);
+    root["origin"] = origin_value;
+}
+void CombinationEffect::deserialize(Json::Value& root) {
+    Json::Value origin_value = root["origin"];
+    origin.deserialize(origin_value);
 }

@@ -29,12 +29,14 @@
 #include <iostream> //FIXME borraaaaaar
 
 /* Clase base para los efectos a aplicar como resultado de una combinación */
-class CombinationEffect {
+class CombinationEffect : public IJsonSerializable {
 private:
     bool applied;
 protected:
     Position origin;
 public:
+    CombinationEffect()
+        : applied(false) {}
     CombinationEffect(Position origin)
         : origin(origin), applied(false) {}
     //TODO ver bien que pasarle de parámetro y si tiene que devolver algo (Gaston si ves esto, con vos tengo que hablarlo =P)
@@ -44,6 +46,8 @@ public:
     virtual std::vector<Position> getChangedProducts() {return std::vector<Position>();}
     virtual std::vector<int> getNewProductsTypes() {return std::vector<int>();}
     Position getOrigin();
+    void serialize(Json::Value& root);
+    void deserialize(Json::Value& root);
     virtual ~CombinationEffect() {}
 protected:
     void setApplied();

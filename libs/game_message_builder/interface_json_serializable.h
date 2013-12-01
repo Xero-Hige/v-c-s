@@ -1,7 +1,7 @@
 /*
- * product.c
+ * interface_json_serializable.h
  *
- * Created on: Nov 17, 2013
+ * Created on: Nov 30, 2013
  * 
  * Copyright 2013 Bruno Merlo Schurmann <brunomerloschurmann@gmail.com>
  * 
@@ -19,26 +19,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses 
  */
 
-#include "product.h"
-
-#include "../game_message_builder/interface_json_serializable.h"
+#ifndef INTERFACE_JSON_SERIALIZABLE_H_
+#define INTERFACE_JSON_SERIALIZABLE_H_
 
 #include <jsoncpp/json.h>
 
-int Product::getColor() {
-    return color;
-}
+/* Interfaz para los objetos que deben serializarse/deserializarse en *
+ * formato Json                                                       */
+class IJsonSerializable {
+public:
+    virtual void serialize(Json::Value& root) =0;
+    virtual void deserialize(Json::Value& root) =0;
+    virtual ~IJsonSerializable() {}
+};
 
-int Product::getType() {
-    return type;
-}
-
-void Product::serialize(Json::Value& root) {
-    root["color"] = color;
-    root["type"] = type;
-}
-
-void Product::deserialize(Json::Value& root) {
-    color = root["color"].asInt();
-    type = root["type"].asInt();
-}
+#endif /* INTERFACE_JSON_SERIALIZABLE_H_ */

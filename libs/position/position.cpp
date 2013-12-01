@@ -21,6 +21,10 @@
 
 #include "position.h"
 
+#include "../game_message_builder/interface_json_serializable.h"
+
+#include <jsoncpp/json.h>
+
 int Position::getX() {
     return x;
 }
@@ -64,4 +68,14 @@ Position Position::operator+(Position rhs) {
 
 bool Position::is_valid() {
 	return (x >= 0 and y >= 0);
+}
+
+void Position::serialize(Json::Value& root) {
+    root["x"] = x;
+    root["y"] = y;
+}
+
+void Position::deserialize(Json::Value& root) {
+    x = root["x"].asInt();
+    y = root["y"].asInt();
 }
