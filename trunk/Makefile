@@ -183,9 +183,14 @@ take_out_row_effect.o: libs/combination_effects/take_out_row_effect.h libs/combi
 take_out_column_effect.o: libs/combination_effects/take_out_column_effect.h libs/combination_effects/take_out_column_effect.cpp
 	$(CC) $(CPPFLAGS) -c libs/combination_effects/take_out_column_effect.cpp
 
+#Score Tracker
+
+score_tracker.o: libs/score_tracker/score_tracker.h libs/score_tracker/score_tracker.cpp
+	$(CC) $(CPPFLAGS) -c libs/score_tracker/score_tracker.cpp
+
 #Client
 
-CLIENT_EXTERN = $(GRAPHIC_LIBS) $(SOUND_LIBS) $(BOARDS_LIBS) $(CHECKERS_LIBS) $(SOCKET_LIBS) $(THREAD_LIBS) $(COMMUNICATION_PROTOCOL_LIBS) $(MESSAGES_LIBS) $(COMBINATION_EFFECTS_LIBS) $(GAME_MESSAGES_LIBS) combiner.o
+CLIENT_EXTERN = $(GRAPHIC_LIBS) $(SOUND_LIBS) $(BOARDS_LIBS) $(CHECKERS_LIBS) $(SOCKET_LIBS) $(THREAD_LIBS) $(COMMUNICATION_PROTOCOL_LIBS) $(MESSAGES_LIBS) $(COMBINATION_EFFECTS_LIBS) $(GAME_MESSAGES_LIBS) score_tracker.o combiner.o
 #hay que sacar el combiner.o, lo agregué para probar
 
 CLIENT_OBJ = $(CLIENT_EXTERN) level_reader.o login_screen.o client_app.o rooms_screen.o game_screen.o server_connector.o ClientMsgInterpreter.o Authenticator.o backend.o screen_sprite_animator.o ServerListener.o
