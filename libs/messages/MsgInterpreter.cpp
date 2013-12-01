@@ -15,7 +15,6 @@ MsgInterpreter::MsgInterpreter() {
 
 //Devuelve si se presiono el char de salida
 bool MsgInterpreter::interpret(std::string s) {
-	std::cout << s << std::endl;
 	if (s.compare("q") == 0){
 		std::cout << "Mensaje: SALIDA" << std::endl;
 		return true;

@@ -8,6 +8,7 @@
 #include "Socket.h"
 #include <sys/socket.h>
 #include <string>
+#include <iostream>
 
 Socket::Socket(int sockfd) {
 	// TODO Auto-generated constructor stub

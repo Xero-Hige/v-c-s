@@ -29,8 +29,4 @@ public:
 	virtual ~ServerListener();
 };
 
-//Para poner en el main: BORRAR ESTE COMMENT
-//new Server_connector sc;
-//new ServerListener(sc);
-
 #endif /* SERVERLISTENER_H_ */

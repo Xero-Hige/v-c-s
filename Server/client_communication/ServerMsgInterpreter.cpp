@@ -29,5 +29,4 @@ void ServerMsgInterpreter::interpretParticularMsg(std::string msg){
 }
 
 ServerMsgInterpreter::~ServerMsgInterpreter() {
-	// TODO Auto-generated destructor stub
 }

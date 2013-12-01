@@ -11,15 +11,16 @@
 #include <string>
 
 ClientAuthenticator::ClientAuthenticator
-(int socket, MyDatabase* data, ClientHandler * ch) : sock(socket) {
+(FormattedSocket * s, MyDatabase* data, ClientHandler * ch) {
 	this->db = data;
 	this->client_handler = ch;
+	this->sock = s;
 }
 
 bool ClientAuthenticator::authenticate(){
 	//Determina si el cliente quiere registrarse o logearse
 	std::string s_auth_type;
-	sock.recvMsg(s_auth_type);
+	sock->recvMsg(s_auth_type);
 	int auth_type = atoi(s_auth_type.c_str());
 	if(auth_type == TYPE_LOGIN)
 		return login();
@@ -32,16 +33,16 @@ bool ClientAuthenticator::authenticate(){
 void ClientAuthenticator::sendIdsVerifMsg(bool success){
 	if (success){
 		std::string msg(IDS_VERIF);
-		sock.sendMsg(msg);
+		sock->sendMsg(msg);
 	} else {
 		std::string msg(IDS_FAIL);
-		sock.sendMsg(msg);
+		sock->sendMsg(msg);
 	}
 }
 
 void ClientAuthenticator::getIds(std::string & user, std::string & passwd){
-	sock.recvMsg(user);
-	sock.recvMsg(passwd);
+	sock->recvMsg(user);
+	sock->recvMsg(passwd);
 	this->clients_password = passwd;
 	this->clients_username = user;
 }
