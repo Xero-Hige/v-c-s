@@ -22,7 +22,7 @@
 #ifndef POSITION_H_
 #define POSITION_H_
 
-#include "../game_message_builder/interface_json_serializable.h"
+#include "../game_messages/interface_json_serializable.h"
 
 #include <jsoncpp/json.h>
 

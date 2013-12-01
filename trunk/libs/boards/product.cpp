@@ -21,7 +21,7 @@
 
 #include "product.h"
 
-#include "../game_message_builder/interface_json_serializable.h"
+#include "../game_messages/interface_json_serializable.h"
 
 #include <jsoncpp/json.h>
 

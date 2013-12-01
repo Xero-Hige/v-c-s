@@ -26,7 +26,7 @@
 
 #include "../position/position.h"
 #include "../boards/product.h"
-#include "../game_message_builder/interface_json_serializable.h"
+#include "../game_messages/interface_json_serializable.h"
 
 #include <vector>
 #include <jsoncpp/json.h>

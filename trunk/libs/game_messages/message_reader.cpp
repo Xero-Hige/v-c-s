@@ -1,7 +1,7 @@
 /*
- * combination_effect.cpp
+ * message_reader.cpp
  *
- * Created on: Nov 24, 2013
+ * Created on: Dec 1, 2013
  * 
  * Copyright 2013 Bruno Merlo Schurmann <brunomerloschurmann@gmail.com>
  * 
@@ -19,30 +19,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses 
  */
 
-#include "combination_effect.h"
+#include "message_reader.h"
 
-#include "../game_messages/interface_json_serializable.h"
 
-#include <jsoncpp/json.h>
-
-bool CombinationEffect::isApplied() {
-    return applied;
-}
-void CombinationEffect::setApplied() {
-    applied = true;
-}
-
-Position CombinationEffect::getOrigin() {
-    return origin;
-}
-
-void CombinationEffect::serialize(Json::Value& root) {
-    Json::Value origin_value;
-    origin.serialize(origin_value);
-    root["origin"] = origin_value;
-    root["type"] = "CombinationEffect";
-}
-void CombinationEffect::deserialize(Json::Value& root) {
-    Json::Value origin_value = root["origin"];
-    origin.deserialize(origin_value);
-}
