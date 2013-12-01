@@ -25,6 +25,7 @@
 
 #include "board_distribution_screen.h"
 #include "level_builder/LevelBuilder.h"
+#include "level_config_screen.h"
 
 using std::vector;
 
@@ -34,6 +35,7 @@ Editor_App::Editor_App() {
 	running = false;
 	apps = vector<App*>();
 
+	apps.push_back(new levelConfigScreen(level));
 	apps.push_back(new BoardScreen(level));
 	apps.push_back(new BoardDistributionScreen(level));
 
