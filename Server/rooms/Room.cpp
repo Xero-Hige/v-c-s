@@ -35,13 +35,25 @@ bool Room::addClient(ClientHandler* ch){
 	std::cout << "Se agrego un cliente al room " << this->id;
 	std::cout << std::endl;
 	clients.push_back(ch);
+	usernames.push_back(ch->getUserid());
 	ch->setRoom(this);
 	return true;
 }
 
+void Room::eraseUsername(std::string username){
+	for (std::vector<std::string>::iterator it = usernames.begin();
+			it != usernames.end();
+			it++){
+		std::string username_actual = *it;
+		if (username_actual.compare(username) == 0){
+			usernames.erase(it);
+		}
+	}
+}
+
 bool Room::exitRoom(ClientHandler* ch){
 	for (std::vector<ClientHandler*>::iterator it = clients.begin();
-			it < clients.end();
+			it != clients.end();
 			it++){
 		ClientHandler* actual_ch = *it;
 		if (ch == actual_ch){//si los ptrs son iguales
@@ -50,6 +62,7 @@ bool Room::exitRoom(ClientHandler* ch){
 			//Si se quedo sin clientes se termine la partida
 			if (!clients.size()) this->endMatch();
 			ch->setRoom(NULL);
+			eraseUsername(ch->getUserid());
 			//Si sigue activo lo agrega a un room.
 			if(ch->isActive()) this->lob->addClient(ch);
 			else delete ch;

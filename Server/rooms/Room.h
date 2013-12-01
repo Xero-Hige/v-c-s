@@ -19,7 +19,10 @@ class Room {
 	unsigned limit; //max clients
 	Lobby * lob;
 	std::vector<ClientHandler *> clients;
+	std::vector<std::string> usernames;
 	bool currently_playing;
+
+	void eraseUsername(std::string username);
 
 public:
 	static unsigned long id_counter; //Generador de un id incremental
