@@ -28,7 +28,7 @@ int Socket::socketSend(const char * buf, size_t length){
 }
 
 int Socket::recvMsg(std::string & msg, size_t length){
-	char * c_msg = new char[length];
+	char * c_msg = new char[length]();
 	int r = socketRecv(c_msg, length);
 	msg.append(c_msg, length);
 	delete[] c_msg;
