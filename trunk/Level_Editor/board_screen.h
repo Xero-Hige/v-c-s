@@ -69,12 +69,11 @@ private:
 	/**
 	 * Inicializa la pantalla de carga
 	 */
-	void setup_loadingscreen();
+	void setupLoadingScreen();
 	/**
 	 * Inicializa los mugshots
 	 */
 	void setup_sprites();
-	void setup_audio();
 	void renderBoard();
 	void setupBoard();
 	void setupButtons();

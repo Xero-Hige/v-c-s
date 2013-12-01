@@ -20,6 +20,7 @@
 #ifndef LEVELBUILDER_H_
 #define LEVELBUILDER_H_
 
+#include <string>
 #include <vector>
 
 class LevelBuilder {
@@ -32,7 +33,8 @@ public:
 	virtual ~LevelBuilder();
 
 	void setBoardSchema(std::vector<std::vector<int> > board_schema);
-	std::vector<std::vector<int> > getBoardSchema();
+	std::vector<std::vector<int> >& getBoardSchema();
+	std::vector<std::string> getCellFiles();
 };
 
 #endif /* LEVELBUILDER_H_ */

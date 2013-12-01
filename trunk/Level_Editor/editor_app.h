@@ -30,6 +30,8 @@ class Editor_App {
 
 private:
 	bool running;
+	LevelBuilder level;
+
 	std::vector<App*> apps;
 
 	int actual_app;
