@@ -65,8 +65,15 @@ Backend::Backend() : server_listener(&server_connector, this) {
 	/////////////////////////////////////////////////
 }
 
+
+//TODO BORRAR ESTO: es para debug
+#define LOCALHOST "127.0.0.1"
+#define PORT 8080
+
 void Backend::async_connect(const std::string& ip,int port){
-	this->server_connector.makeConnection(ip, port);
+	int i = this->server_connector.makeConnection(LOCALHOST, PORT);
+	std::cout << "Conexion al servidor. Codigo: " << i;
+	std::cout << " (0 = OK)" << std::endl;
 }
 
 bool Backend::logged_in(){
@@ -90,8 +97,11 @@ string Backend::operation_error() {
 
 void Backend::async_log_in
 (const std::string& user,const std::string& password,int auth_type){
-    //FIXME lo comenté porque se rompía
-//	this->server_connector.connectServer(user, password, "1");
+//    //FIXME lo comenté porque se rompía
+//	std::cout << "Autenticacion al server.";
+//	bool success = this->server_connector.connectServer(user, password, "1");
+//	std::cout << " Exito? " << c << std::endl;
+//	if (!success) _operation_error = "User/Password incorrecta";
 }
 
 Backend::~Backend() {
