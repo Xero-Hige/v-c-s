@@ -50,6 +50,7 @@ void Thread::start(void * data, int thread_type){
 		td->data = data;
 		pthread_create(&myThread, attr_ptr, starterWithArg, (void*) td);
 	}
+	if (attr_ptr)pthread_attr_destroy(attr_ptr);
 }
 
 void Thread::join(){
