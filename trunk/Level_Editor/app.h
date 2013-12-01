@@ -73,8 +73,6 @@ public:
 	int get_app_status() {
 		return status;
 	}
-	;
-
 };
 
 #endif /* APP_H_ */
