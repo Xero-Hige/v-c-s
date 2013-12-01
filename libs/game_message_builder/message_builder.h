@@ -1,7 +1,7 @@
 /*
- * game_message_builder.h
+ * message_builder.h
  *
- * Created on: Nov 30, 2013
+ * Created on: Dec 1, 2013
  * 
  * Copyright 2013 Bruno Merlo Schurmann <brunomerloschurmann@gmail.com>
  * 
@@ -19,9 +19,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses 
  */
 
-#ifndef GAME_MESSAGE_BUILDER_H_
-#define GAME_MESSAGE_BUILDER_H_
+#ifndef MESSAGE_BUILDER_H_
+#define MESSAGE_BUILDER_H_
 
+#include "json_serializer.h"
 #include "interface_json_serializable.h"
 
 #include <jsoncpp/json.h>
@@ -29,12 +30,13 @@
 #include <vector>
 #include <list>
 
-class GameMessageBuilder {
+class MessageBuilder {
 private:
     Json::Value message;
+    JsonSerializer serializer;
 
 public:
-    void startNewMessage();
+    void startNewMessage(std::string header);
     void addStringField(std::string key, std::string value);
     void addIntField(std::string key, int value);
     void addObjectField(std::string key, IJsonSerializable* value);
@@ -43,4 +45,4 @@ public:
     std::string getParsedMessage();
 };
 
-#endif /* GAME_MESSAGE_BUILDER_H_ */
+#endif /* MESSAGE_BUILDER_H_ */

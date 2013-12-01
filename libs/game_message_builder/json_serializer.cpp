@@ -1,5 +1,5 @@
 /*
- * game_message_builder.cpp
+ * json_serializer.cpp
  *
  * Created on: Nov 30, 2013
  * 
@@ -19,7 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses 
  */
 
-#include "game_message_builder.h"
+#include "json_serializer.h"
 
 #include "interface_json_serializable.h"
 
@@ -32,25 +32,25 @@ using std::string;
 using std::vector;
 using std::list;
 
-void GameMessageBuilder::startNewMessage() {
-    message = Json::Value();
+void JsonSerializer::startNewObject() {
+    object = Json::Value();
 }
 
-void GameMessageBuilder::addStringField(string key, string value) {
-    message[key] = value;
+void JsonSerializer::addStringField(string key, string value) {
+    object[key] = value;
 }
 
-void GameMessageBuilder::addIntField(string key, int value) {
-    message[key] = value;
+void JsonSerializer::addIntField(string key, int value) {
+    object[key] = value;
 }
 
-void GameMessageBuilder::addObjectField(string key, IJsonSerializable* value) {
+void JsonSerializer::addObjectField(string key, IJsonSerializable* value) {
     Json::Value object;
     value->serialize(object);
-    message[key] = object;
+    this->object[key] = object;
 }
 
-void GameMessageBuilder::addObjectArrayField(string key, vector<IJsonSerializable*>& value) {
+void JsonSerializer::addObjectArrayField(string key, vector<IJsonSerializable*>& value) {
     Json::Value value_array = Json::Value(Json::arrayValue);
     vector<IJsonSerializable*>::iterator it;
     for (it = value.begin(); it != value.end(); ++it) {
@@ -58,10 +58,10 @@ void GameMessageBuilder::addObjectArrayField(string key, vector<IJsonSerializabl
         (*it)->serialize(object);
         value_array.append(object);
     }
-    message[key] = value_array;
+    this->object[key] = value_array;
 }
 
-void GameMessageBuilder::addObjectArrayField(string key, list<IJsonSerializable*>& value) {
+void JsonSerializer::addObjectArrayField(string key, list<IJsonSerializable*>& value) {
     Json::Value value_array = Json::Value(Json::arrayValue);
     list<IJsonSerializable*>::iterator it;
     for (it = value.begin(); it != value.end(); ++it) {
@@ -69,9 +69,13 @@ void GameMessageBuilder::addObjectArrayField(string key, list<IJsonSerializable*
         (*it)->serialize(object);
         value_array.append(object);
     }
-    message[key] = value_array;
+    this->object[key] = value_array;
 }
 
-string GameMessageBuilder::getParsedMessage() {
-    return message.toStyledString();
+Json::Value JsonSerializer::getObject() {
+    return object;
+}
+
+string JsonSerializer::getParsedObject() {
+    return object.toStyledString();
 }
