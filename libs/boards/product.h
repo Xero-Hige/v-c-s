@@ -52,6 +52,8 @@ private:
     int type;
 
 public:
+    Product()
+        : color(NO_COLOR), type(NO_TYPE) {}
     Product(int color, int type)
         : color(color), type(type) {}
     int getColor();
