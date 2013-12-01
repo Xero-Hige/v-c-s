@@ -19,12 +19,13 @@ ClientHandler::ClientHandler(int s) : sock(s){
 	this->keep_listening = true;
 	this->room = NULL;
 	this->level = 0;
+	this->is_active = true;
 }
 
 void ClientHandler::run(void * data){
 	while (keep_listening){
 		std::string rcvd_msg;
-		std::cout << this->sock.recvMsg(rcvd_msg)  << std::endl;
+		if (this->sock.recvMsg(rcvd_msg) < 0) return; //error en la conexion
 		ServerMsgInterpreter msg_int(this);
 		if (msg_int.interpret(rcvd_msg)) keep_listening = false;
 	}
@@ -58,11 +59,12 @@ void ClientHandler::setLevel(unsigned l){
 	this->level = l;
 }
 
-void ClientHandler::recvMsg(std::string & s){
+int ClientHandler::recvMsg(std::string & s){
 	int recvd_bytes;
 	if (!this->sock.recvSignedMsg(s, this->passwd, recvd_bytes))
 		//Si la firma no se verifica se cierra la conexion
 		this->closeConnection();
+	return recvd_bytes;
 }
 
 void ClientHandler::sendMsg(std::string s){
@@ -77,6 +79,12 @@ void ClientHandler::closeConnection(){
 	this->sock.sendMsg(CLOSE_CONNECTION);
 	this->sock.socketShutdown();
 	this->sock.closeConnection();
+	this->is_active = false;
+	this->exitRoom();
+}
+
+bool ClientHandler::isActive(){
+	return this->is_active;
 }
 
 FormattedSocket * ClientHandler::getSocket(){

@@ -49,7 +49,10 @@ bool Room::exitRoom(ClientHandler* ch){
 			std::cout << "El cliente salio del room" << std::endl;
 			//Si se quedo sin clientes se termine la partida
 			if (!clients.size()) this->endMatch();
-			this->lob->addClient(ch);
+			ch->setRoom(NULL);
+			//Si sigue activo lo agrega a un room.
+			if(ch->isActive()) this->lob->addClient(ch);
+			else delete ch;
 			return true;
 		}
 	}

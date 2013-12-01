@@ -71,7 +71,8 @@ public:
 	 */
 	void communicate();
 	/*
-	 * closeConnection cierra el socket utilizado para la conex.
+	 * closeConnection cierra el socket utilizado para la conex y envia al servidor
+	 * un mensaje.
 	 */
 	void closeConnection();
 	FormattedSocket * getSocket();

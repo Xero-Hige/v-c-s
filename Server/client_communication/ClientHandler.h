@@ -23,6 +23,7 @@ class ClientHandler : public Thread{
 	FormattedSocket sock;
 	Room * room;
 	bool keep_listening;
+	bool is_active;
 	void run(void * data = NULL);
 
 public:
@@ -43,7 +44,7 @@ public:
 	 * hash concuerda con la del mensaje recibido. Si no concuerda cierra la
 	 * conexion.
 	 */
-	void recvMsg(std::string & s);
+	int recvMsg(std::string & s);
 	/*
 	 * exitRoom le avisa al room que este cliente desea salir.
 	 */
@@ -53,6 +54,7 @@ public:
 	 * servidor esta cerrando la conexion.
 	 */
 	void closeConnection();
+	bool isActive();
 	virtual ~ClientHandler();
 };
 

@@ -350,6 +350,10 @@ int Backend::getProductCode(Board& board, int x, int y) {
     return (color*(Product::N_TYPES-1) + type + 1);
 }
 
+void Backend::quit(){
+	server_connector.closeConnection();
+}
+
 bool Backend::connected() {
 	return is_connected;
 }
