@@ -154,14 +154,20 @@ int Combiner::getPointsPerProduct(int longest_combination_size) {
 }
 
 void Combiner::upgradeProduct(Position origin, int color, int vertical_combination_size, int horizontal_combination_size, list<CombinationEffect*>& result_list) {
+    Product* product;
+    int product_new_type;
     int longest_combination_size = max(vertical_combination_size, horizontal_combination_size);
     if (longest_combination_size == 4) {
         if (vertical_combination_size > horizontal_combination_size) {
-            result_list.push_front(new ChangeProductEffect(origin, color, Product::V_BAR));
+            product_new_type = Product::V_BAR;
         } else {
-            result_list.push_front(new ChangeProductEffect(origin, color, Product::H_BAR));
+            product_new_type = Product::H_BAR;
         }
     } else {
-        result_list.push_front(new ChangeProductEffect(origin, color, Product::STAR));
+        product_new_type = Product::STAR;
     }
+    //FIXME descomentar cuando no se rompa al hacerlo, hay que chequear la interfaz gráfica
+//    product = new Product(color, product_new_type);
+//    board.setProduct(product, origin);
+    result_list.push_front(new ChangeProductEffect(origin, color, product_new_type));
 }

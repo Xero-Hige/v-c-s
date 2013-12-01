@@ -28,6 +28,20 @@
 #include <vector>
 #include <jsoncpp/json.h>
 
+using std::vector;
+
+vector<Position> ChangeProductEffect::getChangedProducts() {
+    vector<Position> ret_vector;
+    ret_vector.push_back(getOrigin());
+    return ret_vector;
+}
+
+vector<int> ChangeProductEffect::getNewProductsTypes() {
+    vector<int> ret_vector;
+    ret_vector.push_back(new_type);
+    return ret_vector;
+}
+
 void ChangeProductEffect::serialize(Json::Value& root) {
     CombinationEffect::serialize(root);
     root["type"] = "ChangeProductEffect";
