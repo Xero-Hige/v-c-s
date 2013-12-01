@@ -22,7 +22,11 @@
 #ifndef PRODUCT_H_
 #define PRODUCT_H_
 
-class Product {
+#include "../game_message_builder/interface_json_serializable.h"
+
+#include <jsoncpp/json.h>
+
+class Product : public IJsonSerializable {
 public:
     // Constantes de color
     static const int NO_COLOR = -1;
@@ -52,6 +56,8 @@ public:
         : color(color), type(type) {}
     int getColor();
     int getType();
+    void serialize(Json::Value& root);
+    void deserialize(Json::Value& root);
 };
 
 #endif /* PRODUCT_H_ */
