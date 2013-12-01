@@ -53,9 +53,9 @@ void SocketHandler::run(){
 	}
 }
 
-void SocketHandler::addClient(int & new_client){
+void SocketHandler::addClient(int new_client){
 	ClientHandler * ch = new ClientHandler(new_client);
-	ClientAuthenticator ca(new_client, this->db, ch);
+	ClientAuthenticator ca(ch->getSocket(), this->db, ch);
 	if (ca.authenticate()){
 		//setea el password y el user que recibio el CA al client
 		//y tambien el nivel.

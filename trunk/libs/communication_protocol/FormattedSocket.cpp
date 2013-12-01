@@ -51,6 +51,7 @@ int FormattedSocket::recvMsg(std::string & msg){
 }
 
 FormattedSocket::~FormattedSocket() {
+	std::cout << "CIERRE DE CONEXION" << std::endl;
 	socketShutdown();
 	closeConnection();
 }

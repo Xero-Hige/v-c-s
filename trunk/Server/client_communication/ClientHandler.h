@@ -31,6 +31,7 @@ public:
 	void setUserid(std::string userid);
 	std::string getUserid();
 	void setRoom(Room * r);
+	FormattedSocket * getSocket();
 	unsigned getLevel();
 	void setLevel(unsigned l);
 	/*

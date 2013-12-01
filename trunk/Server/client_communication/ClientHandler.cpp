@@ -24,9 +24,9 @@ ClientHandler::ClientHandler(int s) : sock(s){
 void ClientHandler::run(){
 	while (keep_listening){
 		std::string rcvd_msg;
-//		sock.recvMsg(rcvd_msg);
-//		ServerMsgInterpreter msg_int(this);
-//		if (msg_int.interpret(rcvd_msg)) keep_listening = false;
+		std::cout << this->sock.recvMsg(rcvd_msg)  << std::endl;
+		ServerMsgInterpreter msg_int(this);
+		if (msg_int.interpret(rcvd_msg)) keep_listening = false;
 	}
 }
 
@@ -77,6 +77,10 @@ void ClientHandler::closeConnection(){
 	this->sock.sendMsg(CLOSE_CONNECTION);
 	this->sock.socketShutdown();
 	this->sock.closeConnection();
+}
+
+FormattedSocket * ClientHandler::getSocket(){
+	return &sock;
 }
 
 ClientHandler::~ClientHandler() {

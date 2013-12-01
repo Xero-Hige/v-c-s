@@ -45,7 +45,7 @@ class SocketHandler: public Thread {
 	 * addClient crea un nuevo FormattedSocket y ClientHandler por cada cliente
 	 * que intenta conectarse por el server, identificandolo previamente.
 	 */
-	void addClient(int & new_client);
+	void addClient(int new_client);
 
 public:
 	SocketHandler(struct sockaddr_in * addr, Lobby * lob, MyDatabase * data);

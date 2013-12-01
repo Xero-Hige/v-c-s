@@ -21,7 +21,7 @@ class ClientAuthenticator {
 	std::string clients_password;
 	std::string clients_username;
 	ClientHandler * client_handler;
-	FormattedSocket sock;
+	FormattedSocket * sock;
 	MyDatabase * db;
 	/*
 	 * login chequea los datos que envio el usuario con los de la base de datos.
@@ -36,7 +36,7 @@ class ClientAuthenticator {
 	bool registerUser();
 
 public:
-	ClientAuthenticator(int socket, MyDatabase * data, ClientHandler* ch);
+	ClientAuthenticator(FormattedSocket * s, MyDatabase * data, ClientHandler* ch);
 	/*
 	 * authenticate recibe el modo de autenticacion que pide el usuario y decide
 	 * si tiene que registrar un usuario nuevo o loguearlo.
