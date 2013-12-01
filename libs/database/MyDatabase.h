@@ -49,7 +49,7 @@ public:
 	 * requestPassword le pide a la base de datos el nivel registrado para
 	 * el usuario 'user'.
 	 */
-	int requestLevel(std::string user, int & level);
+	int requestLevel(std::string user, unsigned & level);
 	/*
 	 * registerUser registra un nuevo usuario en la base de datos. En caso de que el
 	 * usuario ya exista se devuelve -1

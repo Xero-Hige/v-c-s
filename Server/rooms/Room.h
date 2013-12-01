@@ -15,6 +15,7 @@ class Lobby;
 class ClientHandler;
 
 class Room {
+	unsigned level;
 	unsigned limit; //max clients
 	Lobby * lob;
 	std::vector<ClientHandler *> clients;
@@ -24,7 +25,7 @@ public:
 	static unsigned long id_counter; //Generador de un id incremental
 	unsigned long id; //room id
 
-	Room(Lobby * lob, unsigned limit, unsigned long r_id = 0);
+	Room(Lobby * lob, unsigned limit, unsigned level,unsigned long r_id = 0);
 	/*
 	 * addClient agrega el cliente al room.
 	 */

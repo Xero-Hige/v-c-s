@@ -11,14 +11,15 @@
 #include <stdlib.h>
 #include <arpa/inet.h>
 #include <vector>
+#include "rooms/Lobby.h"
 #include "../libs/wrappers/Thread.h"
 #include "../libs/database/MyDatabase.h"
 
 class SocketHandler;
-class Lobby;
 
 class Server {
 	MyDatabase db;
+	Lobby lobby;
 	/*
 	 * sock_listeners contiene todos threads de cada socket que escucha el serv.
 	 */
@@ -29,7 +30,7 @@ class Server {
 	 * por cada uno de ellos. A cada SLH creado lo agrega a la lista
 	 * sock_listeners.
 	 */
-	void createListeningPorts(std::vector<int> * list_puertos, Lobby * lob);
+	void createListeningPorts(std::vector<int> * list_puertos);
 
 public:
 	/*
@@ -40,7 +41,7 @@ public:
 	/*
 	 * serverListen indica a cada puerto que el server haya abierto que escuche.
 	 */
-	void serverListen(std::vector<int> * list_puertos, Lobby * lob);
+	void serverListen(std::vector<int> * list_puertos);
 	/*
 	 * acceptConnections indica a cada SocketListenerHandler de la lista
 	 *  que se ejecute (cada uno en un thread distinto).

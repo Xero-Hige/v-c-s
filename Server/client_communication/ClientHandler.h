@@ -17,6 +17,9 @@ class Room;
 
 class ClientHandler : public Thread{
 	std::string passwd;
+	std::string userid;
+	unsigned level;
+
 	FormattedSocket * sock;
 	Room * room;
 	bool keep_listening;
@@ -25,7 +28,11 @@ class ClientHandler : public Thread{
 public:
 	explicit ClientHandler(int sock);
 	void setPassword(std::string pass);
+	void setUserid(std::string userid);
+	std::string getUserid();
 	void setRoom(Room * r);
+	unsigned getLevel();
+	void setLevel(unsigned l);
 	/*
 	 * sendMsg envia el mensaje 's' a traves del socket.
 	 */
@@ -36,6 +43,9 @@ public:
 	 * conexion.
 	 */
 	void recvMsg(std::string & s);
+	/*
+	 * exitRoom le avisa al room que este cliente desea salir.
+	 */
 	void exitRoom();
 	virtual ~ClientHandler();
 };
