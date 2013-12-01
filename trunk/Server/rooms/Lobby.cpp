@@ -9,7 +9,6 @@
 #include "Room.h"
 #include "MatchMakingStrategy.h"
 #include "../../libs/database/MyDatabase.h"
-#include "../../libs/wrappers/Thread.h"
 #include "../client_communication/ClientHandler.h"
 #include <iostream>
 #include <map>
@@ -26,20 +25,19 @@ struct thread_data {
 	ClientHandler * ch;
 };
 
-void * threadAddClient(void * data){
+void Lobby::run(void * data){
 	struct thread_data * t_data = (struct thread_data *)data;
 	MatchMakingStrategy mms;
 	mms.addClient(t_data->lobby, t_data->ch);
 	t_data->ch->start();
-	return NULL;
+	delete t_data;
 }
 
 void Lobby::addNewClient(ClientHandler * ch) {
-	pthread_t thread;
-	struct thread_data data;
-	data.lobby = this;
-	data.ch = ch;
-	pthread_create(&thread, NULL, threadAddClient, (void *) &data);
+	struct thread_data * data = new struct thread_data();
+	data->lobby = this;
+	data->ch = ch;
+	this->start((void*)data);
 }
 
 void Lobby::addRoom(unsigned long id, Room * r){
@@ -74,15 +72,15 @@ void Lobby::endMatch(unsigned long id){
 	}
 }
 
-void Lobby::endAllMatches(){
-	std::map<unsigned long, Room*>::iterator it = rooms.begin();
-	while(it != rooms.end()){
-		Room* actual_room = it->second;
-		delete actual_room;
-		//erase(it++) funciona porque borra y luego incrementa el iter
-		rooms.erase(it++);//MAGIA
-	}
-}
+//void Lobby::endAllMatches(){
+//	std::map<unsigned long, Room*>::iterator it = rooms.begin();
+//	while(it != rooms.end()){
+//		Room* actual_room = it->second;
+//		delete actual_room;
+//		//erase(it++) funciona porque borra y luego incrementa el iter
+//		rooms.erase(it++);//MAGIA
+//	}
+//}
 
 Room * Lobby::getNotFullNotPlayingRoom(){
 	if (rooms.size() == 0) return 0;
@@ -95,5 +93,12 @@ Room * Lobby::getNotFullNotPlayingRoom(){
 }
 
 Lobby::~Lobby() {
-	endAllMatches();
+//	endAllMatches();
+	std::map<unsigned long, Room*>::iterator it = rooms.begin();
+	while(it != rooms.end()){
+		Room* actual_room = it->second;
+		delete actual_room;
+		//erase(it++) funciona porque borra y luego incrementa el iter
+		rooms.erase(it++);//MAGIA
+	}
 }

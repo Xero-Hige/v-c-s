@@ -9,14 +9,17 @@
 #define LOBBY_H_
 
 #include <map>
+#include "../../libs/wrappers/ThreadWithData.h"
 
 class Room;
 class ClientHandler;
 class MyDatabase;
 
-class Lobby{
+class Lobby : public ThreadWithData{
 	std::map<unsigned long,Room*> rooms;
 	MyDatabase * db;
+
+	void run(void * data);
 
 public:
 	Lobby(MyDatabase * database);
@@ -47,7 +50,7 @@ public:
 	/*
 	 * endAllMatches termina las partidas del servidor.
 	 */
-	void endAllMatches();
+//	void endAllMatches();
 	/*
 	 * getNotFullNotActiveRoom devuelve un room que no este jugando ni lleno. Si
 	 * no encuentra ninguno devuelve NULL.
