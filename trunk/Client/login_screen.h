@@ -31,14 +31,16 @@
 #include "../libs/music/music.h"
 #include "../libs/button/button.h"
 
-class Login_Screen: public App {
+class LoginScreen: public App {
 
 private:
-	static const std::string  TITLE;
-	static const int SCREEN_WIDTH = 600;
-	static const int SCREEN_HEIGHT = 300;
-	static const int WINDOW_FLAGS = 0;
+
 	static const double LOADING_ICON_CORRECTION_FACTOR;
+	static const int SCREEN_HEIGHT = 300;
+	static const int SCREEN_WIDTH = 600;
+	static const int WINDOW_FLAGS = 0;
+	static const size_t TEXTBOX_LENGHT = 14;
+	static const std::string TITLE;
 
 private:
 
@@ -65,48 +67,48 @@ private:
 	/**
 	 * Dibuja la pantalla de carga
 	 */
-	void render_loadscreen();
+	void renderLoadscreen();
 
 	/**
 	 * Maneja los eventos de teclas
 	 */
-	void key_press_event(SDL_Event& event);
+	void keyPressEvent(SDL_Event& event);
 	/**
 	 * Maneja los eventos de texto (teclas de caracteres)
 	 */
-	void text_input_event(SDL_Event& event);
+	void textInputEvent(SDL_Event& event);
 	/**
 	 * Maneja los eventos de los botones del mouse
 	 */
-	void mouse_button_event(SDL_Event& event);
+	void mouseButtonEvent(SDL_Event& event);
 
 	/**
 	 * Inicializa el fondo
 	 */
-	void setup_background();
+	void setupBackground();
 	/**
 	 * Inicializa los textboxes
 	 */
-	void setup_textboxes();
+	void setupTextboxes();
 	/**
 	 * Inicializa la pantalla de carga
 	 */
-	void setup_loadingscreen();
+	void setupLoadingScreen();
 	/**
 	 * Inicializa los mugshots
 	 */
-	void setup_mugshots();
+	void setupMugshots();
 	/**
 	 * Inicializa el audio de la ventana
 	 */
-	void setup_audio();
+	void setupAudio();
 
 public:
 
 	/**
 	 * Constructor que recibe un Backend
 	 */
-	Login_Screen(Backend& back);
+	LoginScreen(Backend& back);
 
 	/**
 	 * Metodo para inicializar la app

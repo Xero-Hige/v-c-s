@@ -21,23 +21,23 @@
 #define ACTIVE_NICK 1
 #define ACTIVE_PASS 2
 
-void Login_Screen::handleEvent(SDL_Event& event) {
+void LoginScreen::handleEvent(SDL_Event& event) {
 	switch (event.type) {
 	case SDL_MOUSEBUTTONDOWN:
-		mouse_button_event(event);
+		mouseButtonEvent(event);
 		break;
 
 	case SDL_KEYDOWN:
-		key_press_event(event);
+		keyPressEvent(event);
 		break;
 
 	case SDL_TEXTINPUT:
-		text_input_event(event);
+		textInputEvent(event);
 		break;
 	}
 }
 
-void Login_Screen::key_press_event(SDL_Event& event) {
+void LoginScreen::keyPressEvent(SDL_Event& event) {
 	user_nick.handleEvent(event);
 	user_pass.handleEvent(event);
 
@@ -50,7 +50,7 @@ void Login_Screen::key_press_event(SDL_Event& event) {
 		if (!backend.connected()) {
 			backend.async_connect("192.168.1.1", 8080); //FIXME
 			while (!backend.operation_ended()) {
-				render_loadscreen(); //FIXME
+				renderLoadscreen(); //FIXME
 				SDL_Delay(10);
 			}
 			if (backend.operation_error() != "") {
@@ -62,7 +62,7 @@ void Login_Screen::key_press_event(SDL_Event& event) {
 
 		backend.async_log_in(user_nick.getText(), user_pass.getText());
 		while (!backend.operation_ended()) {
-			render_loadscreen(); //FIXME
+			renderLoadscreen(); //FIXME
 			SDL_Delay(10);
 		}
 		if (backend.operation_error() != "") {
@@ -74,12 +74,12 @@ void Login_Screen::key_press_event(SDL_Event& event) {
 	}
 }
 
-void Login_Screen::text_input_event(SDL_Event& event) {
+void LoginScreen::textInputEvent(SDL_Event& event) {
 	user_nick.handleEvent(event);
 	user_pass.handleEvent(event);
 }
 
-void Login_Screen::mouse_button_event(SDL_Event& event) {
+void LoginScreen::mouseButtonEvent(SDL_Event& event) {
 	user_nick.handleEvent(event);
 	user_pass.handleEvent(event);
 	//_register.handle_event(event);

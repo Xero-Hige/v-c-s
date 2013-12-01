@@ -4,7 +4,7 @@ CC = gcc
 CPPFLAGS = -Wall -Wextra -g -pedantic
 CPPLDFLAGS = -lm -lstdc++ -lcrypto -lssl -lpthread
 
-all: run-client
+all: client editor
 
 #Graphic libs builder
 
@@ -205,12 +205,15 @@ client: Client/client.cpp $(CLIENT_OBJ)
 
 EDITOR_EXTERN = $(GRAPHIC_LIBS)
 
-EDITOR_OBJ = $(EDITOR_EXTERN) editor_app.o board_screen.o LevelBuilder.o
+EDITOR_OBJ = $(EDITOR_EXTERN) editor_app.o board_screen.o board_distribution_screen.o LevelBuilder.o
 
 EDITOR_NAME = game-editor
 
 board_screen.o: Level_Editor/board_screen/board_screen.cpp Level_Editor/board_screen.h
 	$(CC) $(SDL_CPPFLAGS) -c Level_Editor/board_screen/board_screen.cpp
+
+board_distribution_screen.o: Level_Editor/board_distribution_screen/board_distribution_screen.cpp Level_Editor/board_distribution_screen.h
+	$(CC) $(SDL_CPPFLAGS) -c Level_Editor/board_distribution_screen/board_distribution_screen.cpp
 	
 LevelBuilder.o: Level_Editor/level_builder/LevelBuilder.cpp Level_Editor/level_builder/LevelBuilder.h
 	$(CC) $(SDL_CPPFLAGS) -c Level_Editor/level_builder/LevelBuilder.cpp
@@ -224,7 +227,7 @@ editor: Level_Editor/editor.cpp $(EDITOR_OBJ)
 
 #Cleanup
 clean:
-	rm *.o $(CLIENT_NAME)
+	rm *.o $(CLIENT_NAME) $(EDITOR_NAME)
 	
 #Run
 run-client: client

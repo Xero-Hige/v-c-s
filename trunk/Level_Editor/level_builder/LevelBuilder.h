@@ -31,7 +31,8 @@ public:
 	LevelBuilder();
 	virtual ~LevelBuilder();
 
-	void setBoardSchema(const std::vector<std::vector<int> >& board_schema);
+	void setBoardSchema(std::vector<std::vector<int> > board_schema);
+	std::vector<std::vector<int> > getBoardSchema();
 };
 
 #endif /* LEVELBUILDER_H_ */

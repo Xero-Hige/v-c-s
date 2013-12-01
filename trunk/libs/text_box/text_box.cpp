@@ -33,7 +33,7 @@ TextBox::TextBox() :
 				0), need_refresh(false) {
 }
 
-TextBox::TextBox(int max_len, const string& font_path, int font_size,
+TextBox::TextBox(size_t max_len, const string& font_path, int font_size,
 		Window& window) {
 	this->max_len = max_len;
 	text = "";

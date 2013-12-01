@@ -16,8 +16,8 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
-#ifndef GAMES_CREEN_H_
-#define GAMES_CREEN_H_
+#ifndef BOARD_DISTRIBUTION_SCREEN_H_
+#define BOARD_DISTRIBUTION_SCREEN_H_
 
 #include <SDL2/SDL_video.h>
 #include <string>
@@ -28,10 +28,12 @@
 #include "../libs/screen_grid/screen_grid.h"
 #include "../libs/sprite/sprite.h"
 #include "../libs/window/window.h"
+#include "../libs/button/button.h"
+
 
 #include "app.h"
 
-class BoardScreen: public App {
+class BoardDistributionScreen: public App {
 
 	static const std::string TITLE;
 	static const int SCREEN_WIDTH = 1600;
@@ -52,22 +54,15 @@ private:
 
 	std::vector<std::vector<int> > board_schema;
 
-	Screen_Grid grid;
+	ScreenGrid grid;
+
+	Button next_step;
 
 private:
 	/**
 	 * Dibuja la pantalla de carga
 	 */
 	void renderLoadscreen();
-
-	/**
-	 * Maneja los eventos de teclas
-	 */
-	void key_press_event(SDL_Event& event);
-	/**
-	 * Maneja los eventos de texto (teclas de caracteres)
-	 */
-	void text_input_event(SDL_Event& event);
 	/**
 	 * Maneja los eventos de los botones del mouse
 	 */
@@ -94,7 +89,7 @@ public:
 	/**
 	 * Constructor que recibe un Backend
 	 */
-	BoardScreen(LevelBuilder& level);
+	BoardDistributionScreen(LevelBuilder& level);
 
 	/**
 	 * Metodo para inicializar la app
@@ -121,4 +116,4 @@ public:
 
 };
 
-#endif /* GAMES_CREEN_H_ */
+#endif /* BOARD_DISTRIBUTION_SCREEN_H_ */

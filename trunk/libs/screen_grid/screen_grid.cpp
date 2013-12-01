@@ -33,8 +33,8 @@ ScreenGrid::ScreenGrid(size_t x_pos, size_t y_pos, size_t grid_height,
 
 Position ScreenGrid::getGridPosition(size_t x, size_t y) {
 	if (x >= x_pos and y >= y_pos) {
-		int x_reference = (x - x_pos) / grid_widht;
-		int y_reference = (y - y_pos) / grid_height;
+		size_t x_reference = (x - x_pos) / grid_widht;
+		size_t y_reference = (y - y_pos) / grid_height;
 
 		if (x_reference >= columns or y_reference >= rows) {
 			return Position();

@@ -40,6 +40,14 @@ void BoardScreen::mouseButtonEvent(SDL_Event& event) {
 	Position pos = grid.getGridPosition(event.button.x, event.button.y);
 	if (pos.is_valid()) {
 		board_schema[pos[0]][pos[1]] = (board_schema[pos[0]][pos[1]] + 1) % 2;
+		return;
+	}
+	next_step.handle_event(event);
+	if (next_step.is_clicked())
+	{
+		render();
+		level.setBoardSchema(board_schema);
+		status = STATUS_ENDED_OK;
 	}
 }
 
@@ -74,12 +82,19 @@ void BoardScreen::setupBoard() {
 	}
 }
 
+void BoardScreen::setupButtons() {
+	next_step = Button("resources/game_editor/next_button.png", window);
+	next_step.scale_with_widht(INICIO_X);
+	next_step.move(0, SCREEN_HEIGHT / 2);
+}
+
 bool BoardScreen::initialize() {
 	window = Window(TITLE, SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_FLAGS);
 	//TODO: excepciones
 
 	setupBackground();
 	setupBoard();
+	setupButtons();
 	return true;
 }
 
@@ -118,6 +133,8 @@ void BoardScreen::render() {
 	window.clear();
 
 	renderBoard();
+
+	next_step.draw(window);
 
 	window.render();
 }

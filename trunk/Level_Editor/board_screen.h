@@ -16,13 +16,14 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
-#ifndef GAMES_CREEN_H_
-#define GAMES_CREEN_H_
+#ifndef BOARD_SCREEN_H_
+#define BOARD_SCREEN_H_
 
 #include <SDL2/SDL_video.h>
 #include <string>
 #include <vector>
 
+#include "../libs/button/button.h"
 #include "../libs/position/position.h"
 #include "../libs/screen_grid/screen_grid.h"
 #include "../libs/sprite/sprite.h"
@@ -53,6 +54,8 @@ private:
 
 	ScreenGrid grid;
 
+	Button next_step;
+
 private:
 	/**
 	 * Maneja los eventos de los botones del mouse
@@ -74,6 +77,7 @@ private:
 	void setup_audio();
 	void renderBoard();
 	void setupBoard();
+	void setupButtons();
 
 public:
 
@@ -107,4 +111,4 @@ public:
 
 };
 
-#endif /* GAMES_CREEN_H_ */
+#endif /* BOARD_SCREEN_H_ */
