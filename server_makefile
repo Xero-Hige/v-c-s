@@ -10,10 +10,13 @@ all: run-server
 
 THREAD_LDFLAGS = 
 
-THREAD_LIBS = Thread.o Mutex.o
+THREAD_LIBS = Thread.o ThreadWithData.o Mutex.o
 
 Thread.o: libs/wrappers/Thread.h libs/wrappers/Thread.cpp
 		$(CC) $(CPPFLAGS) -c libs/wrappers/Thread.cpp
+		
+ThreadWithData.o: libs/wrappers/ThreadWithData.h libs/wrappers/ThreadWithData.cpp
+		$(CC) $(CPPFLAGS) -c libs/wrappers/ThreadWithData.cpp
 
 Mutex.o: libs/wrappers/Mutex.h libs/wrappers/Mutex.cpp
 		$(CC) $(CPPFLAGS) -c libs/wrappers/Mutex.cpp
