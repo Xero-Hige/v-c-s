@@ -60,16 +60,30 @@ private:
 	TextBox cell_file_marker;
 	TextBox win_points_needed_marker;
 	TextBox max_players_marker;
+	TextBox columns_marker;
+	TextBox rows_marker;
 
 	TextBox level_name;
 	TextBox background_file;
 	TextBox cell_file;
 	TextBox win_points_needed;
 	TextBox max_players;
+	TextBox columns;
+	TextBox rows;
 
 	Button add_cell;
 	Button next_step;
 
+	void setup_markers();
+	void setup_textboxes();
+
+	void textInputEvent(SDL_Event& event);
+	void mouseButtonEvent(SDL_Event& event);
+	void render_markers();
+	void render_textboxes();
+
+	void setupButtons();
+	void draw_buttons();
 
 public:
 	levelConfigScreen(LevelBuilder& level);
