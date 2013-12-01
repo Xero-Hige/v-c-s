@@ -35,19 +35,23 @@ using std::string;
 using std::vector;
 using std::list;
 
-//TODO agregar a que jugador corresponde
-string GameMessageBuilder::buildScoreUpdateMsg(int score) {
-    return string();
+
+string GameMessageBuilder::buildScoreUpdateMsg(string user_id, int score) {
+    msg_builder.startNewMessage("score update");
+    msg_builder.addStringField("user id", user_id);
+    msg_builder.addIntField("score", score);
+    return msg_builder.getParsedMessage();
 }
 
-//TODO agregar que jugador ganó (puede ser ninguno)
-string GameMessageBuilder::buildGameOverMsg() {
-    return string();
+string GameMessageBuilder::buildGameOverMsg(string user_id) {
+    msg_builder.startNewMessage("game over");
+    msg_builder.addStringField("user id", user_id);
+    return msg_builder.getParsedMessage();
 }
 
-//TODO agregar que jugador fue
-string GameMessageBuilder::buildSwapMessage(Position position1, Position position2) {
+string GameMessageBuilder::buildSwapMessage(string user_id, Position position1, Position position2) {
     msg_builder.startNewMessage("swap");
+    msg_builder.addStringField("user id", user_id);
     msg_builder.addObjectField("position 1", &position1);
     msg_builder.addObjectField("position 2", &position2);
     return msg_builder.getParsedMessage();

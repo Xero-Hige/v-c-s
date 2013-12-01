@@ -38,9 +38,9 @@ private:
     MessageBuilder msg_builder;
 
 public:
-    std::string buildScoreUpdateMsg(int score); //TODO agregar a que jugador corresponde
-    std::string buildGameOverMsg(); //TODO agregar que jugador ganó (puede ser ninguno)
-    std::string buildSwapMessage(Position position1, Position position2); //TODO agregar que jugador fue
+    std::string buildScoreUpdateMsg(std::string user_id, int score);
+    std::string buildGameOverMsg(std::string user_id);
+    std::string buildSwapMessage(std::string user_id, Position position1, Position position2);
     std::string buildProductRefill(int column, std::list<Product*>& products);
     std::string buildCombinationEffectsMsg(std::list<CombinationEffect*>& effects);
 };
