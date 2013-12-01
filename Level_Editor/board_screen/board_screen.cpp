@@ -140,4 +140,9 @@ void BoardScreen::render() {
 }
 
 void BoardScreen::cleanup() {
+	cell.free();
+	next_step.free();
+	background.free();
+
+	window.free();
 }

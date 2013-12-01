@@ -34,8 +34,6 @@ Editor_App::Editor_App() {
 	running = false;
 	apps = vector<App*>();
 
-	LevelBuilder level;
-
 	apps.push_back(new BoardScreen(level));
 	apps.push_back(new BoardDistributionScreen(level));
 

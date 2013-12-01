@@ -19,6 +19,11 @@
 
 #include "LevelBuilder.h"
 
+#include <string>
+
+using std::string;
+using std::vector;
+
 LevelBuilder::LevelBuilder() {
 	// TODO Auto-generated constructor stub
 
@@ -33,6 +38,13 @@ void LevelBuilder::setBoardSchema(
 	this->board_schema = board_schema;
 }
 
-std::vector<std::vector<int> > LevelBuilder::getBoardSchema() {
+vector<vector<int> >& LevelBuilder::getBoardSchema() {
 	return this->board_schema;
+}
+
+vector<string> LevelBuilder::getCellFiles() {
+	vector<string> files;
+	files.push_back("cell_A");
+	files.push_back("hover_cell_A");
+	return files;
 }

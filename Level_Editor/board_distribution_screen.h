@@ -50,7 +50,7 @@ private:
 	Window window;
 	Sprite background;
 
-	Sprite cell;
+	std::vector<Sprite> cells;
 
 	std::vector<std::vector<int> > board_schema;
 

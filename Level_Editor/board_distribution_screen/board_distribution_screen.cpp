@@ -45,7 +45,11 @@ const string BoardDistributionScreen::TITLE = "Level ";
 void BoardDistributionScreen::mouseButtonEvent(SDL_Event& event) {
 	Position pos = grid.getGridPosition(event.button.x, event.button.y);
 	if (pos.is_valid()) {
-		board_schema[pos[0]][pos[1]] = (board_schema[pos[0]][pos[1]] + 1) % 2;
+		if (board_schema[pos[0]][pos[1]] == 0)
+			return; //no hay nada
+		board_schema[pos[0]][pos[1]] = (board_schema[pos[0]][pos[1]] + 1) % 3;
+		if (board_schema[pos[0]][pos[1]] == 0)
+			board_schema[pos[0]][pos[1]] = 1;
 	}
 }
 
@@ -60,16 +64,19 @@ void BoardDistributionScreen::setupBackground() {
 }
 
 BoardDistributionScreen::BoardDistributionScreen(LevelBuilder& level) :
-		App(),level(level),window(Window()),background(Sprite()),cell(Sprite()),grid(ScreenGrid()) { //FIXME
+		App(), level(level), window(Window()), background(Sprite()),grid(ScreenGrid()) { //FIXME
 
 }
 
 void BoardDistributionScreen::setupBoard() {
 	grid = ScreenGrid(INICIO_X, INICIO_Y, DIMENSION_Y, DIMENSION_X, 30, 20);
 
-	//TODO: agregar soporte para multiples celdas
-	cell = Sprite("resources/game_board/cell/cell_A.png", window);
-
+	vector<string> cell_files = level.getCellFiles();
+	for (size_t i = 0; i < cell_files.size(); i++) {
+		cells.push_back(
+				Sprite("resources/game_board/cell/" + cell_files[i] + ".png",
+						window));
+	}
 	board_schema = level.getBoardSchema();
 }
 
@@ -100,14 +107,16 @@ void BoardDistributionScreen::renderBoard() {
 	background.draw(window);
 
 	for (int i = 0; i < board_columns; i++) {
-		for (int j = 0; j < board_rows ; j++) {
-			if (board_schema[i][j] != 0) {
+		for (int j = 0; j < board_rows; j++) {
+			int cell = board_schema[i][j];
+			if (cell != 0) {
+				cell--; //Corregido para que vaya de 0 a longitud-1
 
 				int x = INICIO_X + (DIMENSION_X * i);
 				int y = INICIO_Y + (DIMENSION_Y * j);
 
-				cell.move(x, y);
-				cell.draw(window);
+				cells[cell].move(x, y);
+				cells[cell].draw(window);
 			}
 		}
 	}
