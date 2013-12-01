@@ -45,6 +45,14 @@ string GameMessageBuilder::buildGameOverMsg() {
     return string();
 }
 
+//TODO agregar que jugador fue
+string GameMessageBuilder::buildSwapMessage(Position position1, Position position2) {
+    msg_builder.startNewMessage("swap");
+    msg_builder.addObjectField("position 1", &position1);
+    msg_builder.addObjectField("position 2", &position2);
+    return msg_builder.getParsedMessage();
+}
+
 string GameMessageBuilder::buildProductRefill(int column, list<Product*>& products) {
     msg_builder.startNewMessage("product refill");
     msg_builder.addIntField("column", column);
