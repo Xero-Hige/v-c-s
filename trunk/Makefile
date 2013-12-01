@@ -87,6 +87,31 @@ HMAC.o: libs/communication_protocol/HMAC.h libs/communication_protocol/HMAC.cpp
 BigEndianProtocol.o: libs/communication_protocol/BigEndianProtocol.h libs/communication_protocol/BigEndianProtocol.cpp
 		$(CC) $(CPPFLAGS) -c libs/communication_protocol/BigEndianProtocol.cpp
 
+#Game Messages
+
+GAME_MESSAGES_LIBS = json_serializer.o message_builder.o game_message_builder.o combination_effects_factory.o json_deserializer.o message_reader.o game_message_reader.o    
+
+json_serializer.o: libs/game_messages/json_serializer.h libs/game_messages/json_serializer.cpp
+		$(CC) $(CPPFLAGS) -c libs/game_messages/json_serializer.cpp
+
+message_builder.o: libs/game_messages/message_builder.h libs/game_messages/message_builder.cpp
+		$(CC) $(CPPFLAGS) -c libs/game_messages/message_builder.cpp
+
+game_message_builder.o: libs/game_messages/game_message_builder.h libs/game_messages/game_message_builder.cpp
+		$(CC) $(CPPFLAGS) -c libs/game_messages/game_message_builder.cpp
+
+combination_effects_factory.o: libs/game_messages/combination_effects_factory.h libs/game_messages/combination_effects_factory.cpp
+		$(CC) $(CPPFLAGS) -c libs/game_messages/combination_effects_factory.cpp
+
+json_deserializer.o: libs/game_messages/json_deserializer.h libs/game_messages/json_deserializer.cpp
+		$(CC) $(CPPFLAGS) -c libs/game_messages/json_deserializer.cpp
+
+message_reader.o: libs/game_messages/message_reader.h libs/game_messages/message_reader.cpp
+		$(CC) $(CPPFLAGS) -c libs/game_messages/message_reader.cpp
+
+game_message_reader.o: libs/game_messages/game_message_reader.h libs/game_messages/game_message_reader.cpp
+		$(CC) $(CPPFLAGS) -c libs/game_messages/game_message_reader.cpp
+
 #Position
 
 POSITION = position.o
@@ -160,7 +185,7 @@ take_out_column_effect.o: libs/combination_effects/take_out_column_effect.h libs
 
 #Client
 
-CLIENT_EXTERN = $(GRAPHIC_LIBS) $(SOUND_LIBS) $(BOARDS_LIBS) $(CHECKERS_LIBS) $(SOCKET_LIBS) $(THREAD_LIBS) $(COMMUNICATION_PROTOCOL_LIBS) $(MESSAGES_LIBS) $(COMBINATION_EFFECTS_LIBS) combiner.o
+CLIENT_EXTERN = $(GRAPHIC_LIBS) $(SOUND_LIBS) $(BOARDS_LIBS) $(CHECKERS_LIBS) $(SOCKET_LIBS) $(THREAD_LIBS) $(COMMUNICATION_PROTOCOL_LIBS) $(MESSAGES_LIBS) $(COMBINATION_EFFECTS_LIBS) $(GAME_MESSAGES_LIBS) combiner.o
 #hay que sacar el combiner.o, lo agregué para probar
 
 CLIENT_OBJ = $(CLIENT_EXTERN) level_reader.o login_screen.o client_app.o rooms_screen.o game_screen.o server_connector.o ClientMsgInterpreter.o Authenticator.o backend.o screen_sprite_animator.o ServerListener.o

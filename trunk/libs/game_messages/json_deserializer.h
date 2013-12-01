@@ -38,11 +38,13 @@ public:
     std::string getStringField(std::string key);
     int getIntField(std::string key);
     void getObjectField(std::string key, IJsonSerializable* buffer);
-    void getObject(std::string key, Json::Value& value,bool get_root = false);
+    void getObject(std::string key, Json::Value& value, bool get_root = false);
     void getObjectWithKey(std::string key, Json::Value& value);
     bool getObjectFromArray(std::string key, Json::Value& value, int index);
+    bool getObjectFromArray(std::string key, IJsonSerializable* value, int index);
     int getObjectArraySize(std::string key);
     int getObjectArrayField(std::string key, std::vector<IJsonSerializable*>& buffer);
+    int getObjectArrayField(std::string key, std::list<IJsonSerializable*>& buffer);
 };
 
 #endif /* JSON_DESERIALIZER_H_ */

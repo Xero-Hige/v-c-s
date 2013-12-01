@@ -49,18 +49,18 @@ void JsonDeserializer::getObjectField(string key, IJsonSerializable* buffer) {
     buffer->deserialize(root[key]);
 }
 
-void JsonDeserializer::getObject(string key, Json::Value& value,bool get_root = false) {
+void JsonDeserializer::getObject(string key, Json::Value& value,bool get_root) {
     if (get_root) {
         value = root;
     }
     value = root[key];
 }
 
-void JsonDeserializer::getObjectWithKey(std::string key, Json::Value& value) {
+void JsonDeserializer::getObjectWithKey(string key, Json::Value& value) {
     value[key] = root[key];
 }
 
-bool JsonDeserializer::getObjectFromArray(std::string key, Json::Value& value, int index) {
+bool JsonDeserializer::getObjectFromArray(string key, Json::Value& value, int index) {
     if (! root[key].isValidIndex(index)) {
         return false;
     }
@@ -68,6 +68,38 @@ bool JsonDeserializer::getObjectFromArray(std::string key, Json::Value& value, i
     return true;
 }
 
-int JsonDeserializer::getObjectArraySize(std::string key) {
+bool JsonDeserializer::getObjectFromArray(string key, IJsonSerializable* value, int index) {
+    if (! root[key].isValidIndex(index)) {
+        return false;
+    }
+    value->deserialize(root[key][index]);
+    return true;
+}
+
+int JsonDeserializer::getObjectArraySize(string key) {
     return root[key].size();
+}
+
+int JsonDeserializer::getObjectArrayField(string key, vector<IJsonSerializable*>& buffer) {
+    int index = 0;
+    Json::Value value = root[key];
+    vector<IJsonSerializable*>::iterator it = buffer.begin();
+    while (value.isValidIndex(index) && it != buffer.end()) {
+        (*it)->deserialize(value[index]);
+        index++;
+        ++it;
+    }
+    return index;
+}
+
+int JsonDeserializer::getObjectArrayField(string key, list<IJsonSerializable*>& buffer) {
+    int index = 0;
+    Json::Value value = root[key];
+    list<IJsonSerializable*>::iterator it = buffer.begin();
+    while (value.isValidIndex(index) && it != buffer.end()) {
+        (*it)->deserialize(value[index]);
+        index++;
+        ++it;
+    }
+    return index;
 }

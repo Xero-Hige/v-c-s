@@ -1,5 +1,5 @@
 /*
- * game_message_builder.h
+ * combination_effects_factory.h
  *
  * Created on: Dec 1, 2013
  * 
@@ -19,29 +19,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses 
  */
 
-#ifndef GAME_MESSAGE_BUILDER_H_
-#define GAME_MESSAGE_BUILDER_H_
+#ifndef COMBINATION_EFFECTS_FACTORY_H_
+#define COMBINATION_EFFECTS_FACTORY_H_
 
-#include "message_builder.h"
-#include "interface_json_serializable.h"
-#include "../position/position.h"
-#include "../boards/product.h"
 #include "../combination_effects/combination_effect.h"
+#include "../combination_effects/change_product_effect.h"
+#include "../combination_effects/clean_board_effect.h"
+#include "../combination_effects/take_out_column_effect.h"
+#include "../combination_effects/take_out_product_effect.h"
+#include "../combination_effects/take_out_row_effect.h"
 
 #include <string>
-#include <vector>
-#include <list>
 
-class GameMessageBuilder {
-private:
-    MessageBuilder msg_builder;
-
+class CombinationEffectsFactory {
 public:
-    std::string buildScoreUpdateMsg(std::string user_id, int score);
-    std::string buildGameOverMsg(std::string user_id);
-    std::string buildSwapMessage(std::string user_id, Position position1, Position position2);
-    std::string buildProductRefill(int column, std::list<Product*>& products);
-    std::string buildCombinationEffectsMsg(std::list<CombinationEffect*>& effects);
+    CombinationEffect* getCombinationEffect(std::string type);
 };
 
-#endif /* GAME_MESSAGE_BUILDER_H_ */
+
+#endif /* COMBINATION_EFFECTS_FACTORY_H_ */

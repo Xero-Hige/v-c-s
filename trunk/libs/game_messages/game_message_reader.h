@@ -1,5 +1,5 @@
 /*
- * game_message_builder.h
+ * game_message_reader.h
  *
  * Created on: Dec 1, 2013
  * 
@@ -19,29 +19,32 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses 
  */
 
-#ifndef GAME_MESSAGE_BUILDER_H_
-#define GAME_MESSAGE_BUILDER_H_
+#ifndef GAME_MESSAGE_READER_H_
+#define GAME_MESSAGE_READER_H_
 
-#include "message_builder.h"
+#include "message_reader.h"
 #include "interface_json_serializable.h"
 #include "../position/position.h"
 #include "../boards/product.h"
 #include "../combination_effects/combination_effect.h"
+#include "combination_effects_factory.h"
 
 #include <string>
 #include <vector>
 #include <list>
 
-class GameMessageBuilder {
-private:
-    MessageBuilder msg_builder;
-
+class GameMessageReader {
+    CombinationEffectsFactory* effects_factory;
 public:
-    std::string buildScoreUpdateMsg(std::string user_id, int score);
-    std::string buildGameOverMsg(std::string user_id);
-    std::string buildSwapMessage(std::string user_id, Position position1, Position position2);
-    std::string buildProductRefill(int column, std::list<Product*>& products);
-    std::string buildCombinationEffectsMsg(std::list<CombinationEffect*>& effects);
+    GameMessageReader() {effects_factory = new CombinationEffectsFactory();}
+    GameMessageReader(CombinationEffectsFactory* effects_factory)
+        : effects_factory(effects_factory) {}
+    void readScoreUpdateMsg(std::string& user_id, int& score, MessageReader& msg_body);
+    void readGameOverMsg(std::string& user_id, MessageReader& msg_body);
+    void readSwapMessage(std::string& user_id, Position& position1, Position& position2, MessageReader& msg_body);
+    void readProductRefill(int& column, std::list<Product*>& products, MessageReader& msg_body);
+    void readCombinationEffectsMsg(std::list<CombinationEffect*>& effects, MessageReader& msg_body);
+    ~GameMessageReader() {delete effects_factory;}
 };
 
-#endif /* GAME_MESSAGE_BUILDER_H_ */
+#endif /* GAME_MESSAGE_READER_H_ */
