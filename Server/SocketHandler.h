@@ -40,7 +40,7 @@ class SocketHandler: public Thread {
 	 * conecta un nuevo cliente llama a procesarCliente, luego cierra la
 	 * conexion.
 	 */
-	void run();
+	void run(void * data = NULL);
 	/*
 	 * addClient crea un nuevo FormattedSocket y ClientHandler por cada cliente
 	 * que intenta conectarse por el server, identificandolo previamente.

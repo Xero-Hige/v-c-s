@@ -20,9 +20,9 @@ class Thread {
 
 public:
 	Thread();
-	void start();
+	void start(void * data = NULL);
 	void join();
-	virtual void run() = 0;
+	virtual void run(void * data = NULL) = 0;
 	virtual ~Thread();
 };
 

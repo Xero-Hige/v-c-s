@@ -15,7 +15,8 @@ ServerListener::ServerListener
 	keep_listening = true;
 }
 
-void ServerListener::run(){
+void ServerListener::run(void * data){
+	if (data) return;
 	while (keep_listening){
 		std::string rcvd_msg;
 		socket->recvMsg(rcvd_msg);

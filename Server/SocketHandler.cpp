@@ -42,7 +42,8 @@ SocketHandler::SocketHandler
 	bind(*sock_listener, (struct sockaddr *)addr, sizeof(struct sockaddr));
 }
 
-void SocketHandler::run(){
+void SocketHandler::run(void * data){
+	if (data) return;
 	while (keep_accepting){
 		unsigned int cli_len = sizeof(*(this->addr));
 		int new_cli = accept(*sock_listener, (struct sockaddr*) this->addr, &cli_len);

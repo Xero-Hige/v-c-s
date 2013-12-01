@@ -9,17 +9,17 @@
 #define LOBBY_H_
 
 #include <map>
-#include "../../libs/wrappers/ThreadWithData.h"
+#include "../../libs/wrappers/Thread.h"
 
 class Room;
 class ClientHandler;
 class MyDatabase;
 
-class Lobby : public ThreadWithData{
+class Lobby : public Thread{
 	std::map<unsigned long,Room*> rooms;
 	MyDatabase * db;
 
-	void run(void * data);
+	void run(void * data = NULL);
 
 public:
 	Lobby(MyDatabase * database);
