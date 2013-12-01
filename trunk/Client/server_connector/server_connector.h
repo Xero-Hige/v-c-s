@@ -73,7 +73,7 @@ public:
 	/*
 	 * closeConnection cierra el socket utilizado para la conex.
 	 */
-	void closeConection();
+	void closeConnection();
 	FormattedSocket * getSocket();
 	virtual ~Server_Connector();
 };

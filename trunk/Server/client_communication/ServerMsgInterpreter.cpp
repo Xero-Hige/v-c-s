@@ -17,6 +17,10 @@ void ServerMsgInterpreter::exitRoom(){
 	client->exitRoom();
 }
 
+void ServerMsgInterpreter::closeConnection(){
+	client->closeConnection();
+}
+
 void ServerMsgInterpreter::exitCharPressed(){
 	//todo cortar comunicacion con el user.
 }

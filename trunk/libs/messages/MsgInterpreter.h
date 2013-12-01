@@ -12,6 +12,7 @@
 #include "MsgConstants.h"
 
 class MsgInterpreter {
+	virtual void closeConnection() = 0;
 	virtual void exitRoom() = 0;
 	virtual void exitCharPressed() = 0;
 	virtual void interpretParticularMsg(std::string s) = 0;

@@ -20,6 +20,8 @@
 #define MM_USER_DEF 1
 #define MM_DEFAULT 2
 
+#define CLOSE_CONNECTION "CONNECTION ENDED"
+
 #define CLIENT_EXIT_ROOM "e" //es menester que esto sea un char ptr
 
 #endif /* COMMON_MSGCONSTANTS_H_ */
