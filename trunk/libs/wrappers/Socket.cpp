@@ -8,7 +8,6 @@
 #include "Socket.h"
 #include <sys/socket.h>
 #include <string>
-#include <iostream>
 
 Socket::Socket(int sockfd) {
 	// TODO Auto-generated constructor stub
@@ -17,7 +16,6 @@ Socket::Socket(int sockfd) {
 
 int Socket::sendMsg(std::string msg){
 	int r = socketSend(msg.c_str(), msg.length());
-	std::cout << msg << msg.length() << std::endl;
 	return r;
 }
 

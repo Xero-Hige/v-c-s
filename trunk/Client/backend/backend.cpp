@@ -99,8 +99,8 @@ void Backend::async_log_in
 (const std::string& user,const std::string& password,int auth_type){
 //    //FIXME lo comenté porque se rompía
 //	std::cout << "Autenticacion al server.";
-//	bool success = this->server_connector.connectServer(user, password, "1");
-//	std::cout << " Exito? " << c << std::endl;
+//	bool success = this->server_connector.connectServer(user, password, "2");
+//	std::cout << " Exito? " << success << std::endl;
 //	if (!success) _operation_error = "User/Password incorrecta";
 }
 
