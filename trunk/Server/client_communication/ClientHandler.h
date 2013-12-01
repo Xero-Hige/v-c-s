@@ -23,7 +23,7 @@ class ClientHandler : public Thread{
 	FormattedSocket sock;
 	Room * room;
 	bool keep_listening;
-	void run();
+	void run(void * data = NULL);
 
 public:
 	explicit ClientHandler(int sock);

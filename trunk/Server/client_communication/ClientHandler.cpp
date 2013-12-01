@@ -21,7 +21,7 @@ ClientHandler::ClientHandler(int s) : sock(s){
 	this->level = 0;
 }
 
-void ClientHandler::run(){
+void ClientHandler::run(void * data){
 	while (keep_listening){
 		std::string rcvd_msg;
 		std::cout << this->sock.recvMsg(rcvd_msg)  << std::endl;
