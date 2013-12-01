@@ -41,7 +41,7 @@ using std::map; //FIXME borrar
 
 Backend::Backend() : server_listener(&server_connector, this) {
 
-	is_connected=false; //false;
+	is_connected=true; //false;
 	ip="";
 	port=0;
 
@@ -97,11 +97,11 @@ string Backend::operation_error() {
 
 void Backend::async_log_in
 (const std::string& user,const std::string& password,int auth_type){
-    //FIXME lo comenté porque se rompía
-	std::cout << "Autenticacion al server.";
-	bool success = this->server_connector.connectServer(user, password, "2");
-	std::cout << " Exito? " << success << std::endl;
-	if (!success) _operation_error = "User/Password incorrecta";
+//    //FIXME lo comenté porque se rompía
+//	std::cout << "Autenticacion al server.";
+//	bool success = this->server_connector.connectServer(user, password, "2");
+//	std::cout << " Exito? " << success << std::endl;
+//	if (!success) _operation_error = "User/Password incorrecta";
 }
 
 Backend::~Backend() {
