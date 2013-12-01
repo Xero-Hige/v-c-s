@@ -17,13 +17,12 @@
 
 class Thread {
 	pthread_t myThread;
+
 public:
 	Thread();
 	void start();
-//	void start(void * data);
 	void join();
 	virtual void run() = 0;
-//	virtual void run(void * obj);
 	virtual ~Thread();
 };
 

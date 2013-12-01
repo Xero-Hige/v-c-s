@@ -18,7 +18,6 @@ int FormattedSocket::sendMsg(std::string msg){
 	char * msg_with_size = new char[size];
 	darFormato(msg_with_size, msg); //BigEndianProtocol
 	std::string s_msg(msg_with_size, size);
-	std::cout << s_msg << std::endl;
 	int r = Socket::sendMsg(s_msg);
 	delete[] msg_with_size;
 	return r;

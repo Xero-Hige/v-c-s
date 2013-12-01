@@ -82,5 +82,12 @@ void Room::notifyClients(std::string msg){
 }
 
 Room::~Room() {
-	// TODO Auto-generated destructor stub
+	for (std::vector<ClientHandler*>::iterator it = clients.begin();
+			it < clients.end();
+			it++){
+		ClientHandler* actual_ch = *it;
+		actual_ch->closeConnection();
+		actual_ch->join();
+		delete actual_ch;
+	}
 }
