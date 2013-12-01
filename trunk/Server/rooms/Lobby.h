@@ -12,12 +12,14 @@
 
 class Room;
 class ClientHandler;
+class MyDatabase;
 
 class Lobby{
 	std::map<unsigned long,Room*> rooms;
+	MyDatabase * db;
 
 public:
-	Lobby();
+	Lobby(MyDatabase * database);
 	/*
 	 * addClient agrega a un room el cliente indicado, haciendo uso de
 	 * MatchMakingStrategy

@@ -31,12 +31,14 @@ void MatchMakingStrategy::addUserDefined(Lobby * lob, ClientHandler * ch){
 	ch->recvMsg(s_roomid);
 	unsigned long room_id = atoi(s_roomid.c_str());
 	Room * r = lob->getRoom(room_id);
-	if (!r){
+	if (!r || r->isFull() || r->isPlaying()){
 		return addDefault(lob, ch);
-	} else if (r->isFull() || r->isPlaying()){
-		return addDefault(lob,ch);
 	} else {
-		r->addClient(ch);
+		//Intenta agregarlo..
+		if (!(r->addClient(ch))){
+			//Si no se pudo agregar al room es porque no le da el level
+			return addDefault(lob, ch);
+		}
 	}
 }
 
@@ -45,7 +47,7 @@ void MatchMakingStrategy::addDefault(Lobby * lob, ClientHandler * ch){
 	Room * r = lob->getNotFullNotPlayingRoom();
 	if (!r){
 		//Si no hay uno creado o si no pudo insertar en uno vacio crea uno nuevo
-		Room * new_room = new Room(lob, 2);
+		Room * new_room = new Room(lob, 2, ch->getLevel());
 		new_room->addClient(ch);
 		lob->addRoom(new_room->id,new_room);
 	} else {

@@ -8,7 +8,6 @@
 #include "Server.h"
 #include <sys/socket.h> //AF_INET, SOCK_STREAM
 #include "SocketHandler.h"
-#include "rooms/Lobby.h"
 #include <iostream>
 #include <vector>
 #include <arpa/inet.h> //inet_addr, htons, server_addr
@@ -29,7 +28,7 @@ void setListener(struct sockaddr_in * cli_addr, int & server_port){
 	memset(&(cli_addr->sin_zero), 0, sizeof(cli_addr->sin_zero));
 }
 
-Server::Server(){
+Server::Server() : lobby(&db){
 	// TODO Auto-generated constructor stub
 	sock_listeners = new std::vector<SocketHandler*>();
 	this->db.open();
@@ -47,17 +46,16 @@ bool comparadorPuertos
 	return (sh1->getPort() == sh2->getPort());
 }
 
-void Server::createListeningPorts(std::vector<int> * list_puertos, Lobby * lob){
+void Server::createListeningPorts(std::vector<int> * list_puertos){
 	//Se recorre la lista de puertos.
 	for (unsigned i = 0; i < list_puertos->size(); i++){
 		int port_actual = list_puertos->at(i);
 		//Se crea un nuevo sockaddr
-		//Lo libera SocketListenerHandler
 		struct sockaddr_in * caddr = new struct sockaddr_in();
 		//Se le indica que puerto va a escuchar
 		setListener(caddr, port_actual);
 		//Se agrega a la lista
-		SocketHandler * sh = new SocketHandler(caddr, lob, &db);
+		SocketHandler * sh = new SocketHandler(caddr, &lobby, &db);
 		if (contiene(sock_listeners, sh, comparadorPuertos)){
 			delete sh;
 		} else {
@@ -70,9 +68,9 @@ void Server::createListeningPorts(std::vector<int> * list_puertos, Lobby * lob){
  * serverListen crea una lista de sockets que escuchan en los puertos indicados
  * por 'list_puertos'. Luego los setea en modo escucha.
  */
-void Server::serverListen(std::vector<int> * list_puertos, Lobby * lob){
+void Server::serverListen(std::vector<int> * list_puertos){
 	//Se crean
-	this->createListeningPorts(list_puertos, lob);
+	this->createListeningPorts(list_puertos);
 	for (unsigned i = 0; i < sock_listeners->size(); i++){
 		//Obtiene cada socket y lo pone en modo escucha
 		(sock_listeners->at(i))->setListeningMode();

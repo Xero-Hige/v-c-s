@@ -19,6 +19,7 @@ ClientHandler::ClientHandler(int s){
 	this->keep_listening = true;
 	this->sock = new FormattedSocket(s);
 	this->room = NULL;
+	this->level = 0;
 }
 
 void ClientHandler::run(){
@@ -38,8 +39,24 @@ void ClientHandler::setPassword(std::string pass){
 	this->passwd = pass;
 }
 
+void ClientHandler::setUserid(std::string user){
+	this->userid = user;
+}
+
+std::string ClientHandler::getUserid(){
+	return userid;
+}
+
 void ClientHandler::setRoom(Room * r){
 	this->room = r;
+}
+
+unsigned ClientHandler::getLevel(){
+	return level;
+}
+
+void ClientHandler::setLevel(unsigned l){
+	this->level = l;
 }
 
 void ClientHandler::recvMsg(std::string & s){

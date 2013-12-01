@@ -14,7 +14,7 @@
 
 unsigned long Room::id_counter = 0;
 
-Room::Room(Lobby * lob, unsigned limit, unsigned long r_id) {
+Room::Room(Lobby * lob, unsigned limit,unsigned lvl, unsigned long r_id) {
 	this->lob = lob;
 	if (!r_id){
 		//el id se auto-genera
@@ -23,12 +23,15 @@ Room::Room(Lobby * lob, unsigned limit, unsigned long r_id) {
 	} else {
 		this->id = r_id;
 	}
+	this->level = lvl;
 	this->limit = limit;
 	currently_playing = false;
 }
 
 bool Room::addClient(ClientHandler* ch){
-	if (this->clients.size() >= limit || currently_playing) return false;
+	if (this->clients.size() >= limit ||
+			currently_playing ||
+			ch->getLevel() < this->level) return false;
 	std::cout << "Se agrego un cliente al room " << this->id;
 	std::cout << std::endl;
 	clients.push_back(ch);
@@ -62,6 +65,11 @@ bool Room::isPlaying(){
 }
 
 void Room::endMatch(){
+	for (std::vector<ClientHandler*>::iterator it = clients.begin();
+			it < clients.end();
+			it++){
+		exitRoom(*it);
+	}
 	this->lob->endMatch(this->id);
 }
 

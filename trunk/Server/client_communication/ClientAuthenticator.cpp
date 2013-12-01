@@ -10,9 +10,10 @@
 #include <cstring>
 #include <string>
 
-ClientAuthenticator::ClientAuthenticator(int socket, MyDatabase* data) :
-sock(socket) {
+ClientAuthenticator::ClientAuthenticator
+(int socket, MyDatabase* data, ClientHandler * ch) : sock(socket) {
 	this->db = data;
+	this->client_handler = ch;
 }
 
 bool ClientAuthenticator::authenticate(){
@@ -24,6 +25,8 @@ bool ClientAuthenticator::authenticate(){
 		return login();
 	else if (auth_type == TYPE_REGISTER)
 		return registerUser();
+	else
+		return false;
 }
 
 void ClientAuthenticator::sendIdsVerifMsg(bool success){
@@ -40,6 +43,7 @@ void ClientAuthenticator::getIds(std::string & user, std::string & passwd){
 	sock.recvMsg(user);
 	sock.recvMsg(passwd);
 	this->clients_password = passwd;
+	this->clients_username = user;
 }
 
 
@@ -71,8 +75,12 @@ bool ClientAuthenticator::login(){
 	}
 }
 
-void ClientAuthenticator::setPasswordTo(ClientHandler * ch){
+void ClientAuthenticator::setIdsTo(ClientHandler * ch){
 	ch->setPassword(this->clients_password);
+	ch->setUserid(this->clients_username);
+	unsigned level;
+	this->db->requestLevel(clients_username, level);
+	ch->setLevel(level);
 }
 
 ClientAuthenticator::~ClientAuthenticator() {

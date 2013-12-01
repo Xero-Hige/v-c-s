@@ -58,9 +58,8 @@ int main(int argc, char *argv[]){
 	Room::id_counter = 0;
 	std::vector<int> * list_puertos = getListaPuertos(argc, argv);
 	if (!list_puertos) return 0;
-	Lobby lob;
 	Server s;
-	s.serverListen(list_puertos, &lob);
+	s.serverListen(list_puertos);
 	s.acceptConnections();
 	while (!charDeSalidaApretado()){ //ignorar
 	}

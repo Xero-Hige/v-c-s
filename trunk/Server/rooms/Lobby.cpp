@@ -8,12 +8,14 @@
 #include "Lobby.h"
 #include "Room.h"
 #include "MatchMakingStrategy.h"
+#include "../../libs/database/MyDatabase.h"
 #include "../../libs/wrappers/Thread.h"
 #include "../client_communication/ClientHandler.h"
 #include <iostream>
 #include <map>
 
-Lobby::Lobby(){
+Lobby::Lobby(MyDatabase * data){
+	db = data;
 }
 
 //Utilizo pthreads sin usar la clase Thread que construimos
@@ -45,6 +47,7 @@ void Lobby::addRoom(unsigned long id, Room * r){
 }
 
 void Lobby::addClient(ClientHandler * ch){
+	db->updateLevel(ch->getUserid(), ch->getLevel());
 	MatchMakingStrategy mms;
 	mms.addClient(this, ch);
 }

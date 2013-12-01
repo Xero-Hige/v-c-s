@@ -172,7 +172,7 @@ int callback_reqLevel
 	return 0;
 }
 
-int MyDatabase::requestLevel(std::string user, int & level){
+int MyDatabase::requestLevel(std::string user, unsigned & level){
 	std::string query(DB_SELECT);
 	query = query + COLUMN_ALL + DB_FROM + TABLE_NAME + DB_WHERE
 			+ concatenateUserValue(user);

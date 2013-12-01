@@ -19,6 +19,8 @@ class ClientAuthenticator {
 	 * Se utiliza para firmar sus mensajes.
 	 */
 	std::string clients_password;
+	std::string clients_username;
+	ClientHandler * client_handler;
 	FormattedSocket sock;
 	MyDatabase * db;
 	/*
@@ -34,7 +36,7 @@ class ClientAuthenticator {
 	bool registerUser();
 
 public:
-	ClientAuthenticator(int socket, MyDatabase * data);
+	ClientAuthenticator(int socket, MyDatabase * data, ClientHandler* ch);
 	/*
 	 * authenticate recibe el modo de autenticacion que pide el usuario y decide
 	 * si tiene que registrar un usuario nuevo o loguearlo.
@@ -44,7 +46,7 @@ public:
 	 * setPasswordTo setea el password de un usuario recientemente logueado a su
 	 * representacion del lado del server (ClientHandler).
 	 */
-	void setPasswordTo(ClientHandler * ch);
+	void setIdsTo(ClientHandler * ch);
 	/*
 	 * sendIdsVerifMsg envia el mensaje de verificacion de logueo al cliente.
 	 * success indica si se logueo/registro con exito o no.
