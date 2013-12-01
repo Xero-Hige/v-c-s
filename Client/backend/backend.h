@@ -214,6 +214,10 @@ public:
 	 * llegar a intercambiar, false en caso contrario.
 	 */
 	bool async_make_swap(Position pos1,Position pos2);
+	/*
+	 * Envia al servidor un mensaje comunicandole que el cliente salio del juego.
+	 */
+	void quit();
 };
 
 #endif /* BACKEND_H_ */
