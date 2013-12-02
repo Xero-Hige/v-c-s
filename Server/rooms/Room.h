@@ -43,6 +43,11 @@ public:
 	 */
 	bool exitRoom(ClientHandler* ch);
 	/*
+	 * updateActive se fija si quedan clientes jugando, de no ser asi setea el
+	 * room como inactivo
+	 */
+	void updateActive();
+	/*
 	 * notifyClients envia el mensaje 'msg' a todos los clientes del room.
 	 */
 	void notifyClients(std::string msg);
