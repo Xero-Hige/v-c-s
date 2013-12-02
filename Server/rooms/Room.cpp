@@ -31,6 +31,7 @@ Room::Room(Lobby * lob, unsigned limit,unsigned lvl, unsigned long r_id):
 	}
 	this->level = lvl;
 	currently_playing = false;
+	active = true;
 	//TODO leer las cosas del archivo y mandarlo acá
 //	level_reader.changeLevelData(loadLevel());
 //	this->limit = level_reader.getNumberOfPlayers();
@@ -100,6 +101,10 @@ bool Room::isFull(){
 
 bool Room::isPlaying(){
 	return currently_playing;
+}
+
+bool Room::isActive(){
+	return active;
 }
 
 //void Room::endMatch(){

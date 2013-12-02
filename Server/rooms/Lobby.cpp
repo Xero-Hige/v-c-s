@@ -15,6 +15,7 @@
 
 Lobby::Lobby(MyDatabase * data){
 	db = data;
+	room_killer.setRooms(&rooms);
 }
 
 //Utilizo pthreads sin usar la clase Thread que construimos
