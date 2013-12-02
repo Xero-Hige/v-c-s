@@ -39,19 +39,16 @@
 using std::list;
 using std::max;
 
-list<CombinationEffect*> Combiner::makeCombinations(Position pos1, Position pos2, bool chained) {
-    if (! chained) {
-        last_combination_points = 0;
-        multiplier = 1;
-    } else {
-        multiplier++;
-    }
+list<CombinationEffect*> Combiner::makeCombinations(Position pos1, Position pos2) {
+    last_combination_points = 0;
+    multiplier = 1;
+    last_combination_positions.clear();
     list<CombinationEffect*> result_list;
     // Si alguno de los productos es una estrella, se maneja aparte
     if (board.getProductType(pos1) == Product::STAR) {
-        makeStarCombination(pos1, pos2, result_list);
+        last_combination_points += makeStarCombination(pos1, pos2, result_list);
     } else if (board.getProductType(pos2) == Product::STAR) {
-        makeStarCombination(pos2, pos1, result_list);
+        last_combination_points += makeStarCombination(pos2, pos1, result_list);
     }
     std::cout << "Haciendo primera combinación, posición (" << pos1.getX() << "," << pos1.getY() << ")" << std::endl;
     last_combination_points += makeCombination(pos1, result_list);
@@ -60,12 +57,56 @@ list<CombinationEffect*> Combiner::makeCombinations(Position pos1, Position pos2
     return result_list;
 }
 
+list<CombinationEffect*> Combiner::makeChainedCombinations() {
+    multiplier++;
+    list<CombinationEffect*> result_list;
+    while (last_combination_positions.size() > 0) {
+        Position pos = last_combination_positions.front();
+        if (board.getProductType(pos) != Product::STAR) {
+            makeCombination(pos, result_list);
+        }
+        last_combination_positions.pop_front();
+    }
+    return result_list;
+}
+
 int Combiner::getLastCombinationsPoints() {
     return last_combination_points;
 }
 
 int Combiner::makeStarCombination(Position star_pos, Position product_pos, list<CombinationEffect*>& result_list) {
-    return 0;
+    int product_type = board.getProductType(product_pos);
+    int eliminated_products = 0;
+    list<CombinationEffect*> dummy_list;
+    int color_to_eliminate;
+    switch (product_type) {
+    case Product::STAR:
+        result_list.push_back(new CleanBoardEffect(star_pos));
+        for (int x = 0; x < board.getWidth(); x++) {
+            for (int y = 0; y < board.getHeight(); y++) {
+                activateProduct(Position(x, y), dummy_list);
+            }
+        }
+        eliminated_products = board.getHeight() * board.getWidth();
+        break;
+    case Product::BUTTON:
+        color_to_eliminate = board.getProductColor(product_pos);
+        eliminated_products += eliminateAllProductsColor(color_to_eliminate, result_list);
+        break;
+    default:  // Alguna mini-bar, es lo mismo para las dos
+        color_to_eliminate = board.getProductColor(product_pos);
+        eliminated_products += eliminateAllProductsColor(color_to_eliminate, result_list);
+        result_list.push_back(new TakeOutRowEffect(product_pos, board.getWidth()));
+        result_list.push_back(new TakeOutColumnEffect(product_pos, board.getHeight()));
+        for (int x = 0; x < board.getWidth(); x++) {
+            eliminated_products += activateProduct(Position(x, product_pos.getY()), result_list);
+        }
+        for (int y = 0; y < board.getHeight(); y++) {
+            eliminated_products += activateProduct(Position(product_pos.getX(), y), result_list);
+        }
+        break;
+    }
+    return eliminated_products * STAR_COMB_SCORE * multiplier;
 }
 
 int Combiner::makeCombination(Position pos, std::list<CombinationEffect*>& result_list) {
@@ -127,6 +168,7 @@ int Combiner::activateProduct(Position product_pos, list<CombinationEffect*>& re
     std::cout << "Tipo de producto al activar: " << product_type << std::endl;
     delete board.takeOutProduct(product_pos);
     products_eliminated++;
+    last_combination_positions.push_back(product_pos);
     if (product_type == Product::V_BAR) {
         result_list.push_back(new TakeOutColumnEffect(product_pos, board.getHeight()));
         for (int y = 0; y < board.getHeight(); y++) {
@@ -176,10 +218,27 @@ void Combiner::upgradeProduct(Position origin, int color, int vertical_combinati
             product_new_type = Product::H_BAR;
         }
     } else {
+        color = Product::NO_COLOR;
         product_new_type = Product::STAR;
     }
     //FIXME descomentar cuando no se rompa al hacerlo, hay que chequear la interfaz gráfica
 //    product = new Product(color, product_new_type);
 //    board.setProduct(product, origin);
     result_list.push_back(new ChangeProductEffect(origin, color, product_new_type));
+}
+
+int Combiner::eliminateAllProductsColor(int color_to_eliminate, std::list<CombinationEffect*>& result_list) {
+    int eliminated_products = 0;
+    for (int x = 0; x < board.getWidth(); x++) {
+        for (int y = 0; y < board.getHeight(); y++) {
+            Position current_pos = Position(x, y);
+            if (board.getProductColor(current_pos) == color_to_eliminate) {
+                if (board.getProductType(current_pos) == Product::BUTTON) {
+                    result_list.push_back(new TakeOutProductEffect(current_pos));
+                }
+                eliminated_products += activateProduct(current_pos, result_list);
+            }
+        }
+    }
+    return eliminated_products;
 }
