@@ -29,7 +29,7 @@ void Lobby::run(void * data){
 	struct thread_data * t_data = (struct thread_data *)data;
 	MatchMakingStrategy mms;
 	mms.addClient(t_data->lobby, t_data->ch);
-	t_data->ch->start();
+	t_data->ch->start(NULL, DETACHED);
 	delete t_data;
 }
 
