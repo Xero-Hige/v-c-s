@@ -235,9 +235,12 @@ client: Client/client.cpp $(CLIENT_OBJ)
 
 EDITOR_EXTERN = $(GRAPHIC_LIBS)
 
-EDITOR_OBJ = $(EDITOR_EXTERN) editor_app.o board_screen.o board_distribution_screen.o level_config_screen.o LevelBuilder.o
+EDITOR_OBJ = $(EDITOR_EXTERN) editor_app.o board_screen.o board_distribution_screen.o level_config_screen.o board_values.o LevelBuilder.o
 
 EDITOR_NAME = game-editor
+
+board_values.o: Level_Editor/board_values/board_values.cpp Level_Editor/board_values.h
+	$(CC) $(SDL_CPPFLAGS) -c Level_Editor/board_values/board_values.cpp
 
 board_screen.o: Level_Editor/board_screen/board_screen.cpp Level_Editor/board_screen.h
 	$(CC) $(SDL_CPPFLAGS) -c Level_Editor/board_screen/board_screen.cpp

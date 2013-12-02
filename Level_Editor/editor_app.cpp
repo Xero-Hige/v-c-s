@@ -24,6 +24,7 @@
 #include <SDL2/SDL_ttf.h>
 
 #include "board_distribution_screen.h"
+#include "board_values.h"
 #include "level_builder/LevelBuilder.h"
 #include "level_config_screen.h"
 
@@ -38,7 +39,7 @@ Editor_App::Editor_App() {
 	apps.push_back(new levelConfigScreen(level));
 	apps.push_back(new BoardScreen(level));
 	apps.push_back(new BoardDistributionScreen(level));
-
+	apps.push_back(new BoardValues(level));
 
 	actual_app = 0;
 }

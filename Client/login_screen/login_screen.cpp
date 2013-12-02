@@ -82,6 +82,8 @@ void LoginScreen::setupLoadingScreen() {
 	loading_mask = Sprite(*surface, window, SCREEN_WIDTH, SCREEN_HEIGHT);
 	loading_mask.set_transparency_level(128);
 
+	SDL_FreeSurface(surface);
+
 	loading_icon = Animated_Sprite("resources/general/pika_loading.png", window,
 			4);
 

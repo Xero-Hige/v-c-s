@@ -98,11 +98,11 @@ void GameScreen::animate_efects() {
 			change_animation();
 		} else {
 			delete_animation(del);
-			render_animations();
-			board_schema = backend.get_full_board();
 		}
-
 	}
+
+	renderAnimations();
+	board_schema = backend.get_full_board();
 }
 
 void GameScreen::change_animation() {
@@ -157,7 +157,7 @@ void GameScreen::delete_animation(vector<Position>& deleted) {
 	}
 }
 
-void GameScreen::render_animations() {
+void GameScreen::renderAnimations() {
 	while (true) {
 		loop();
 		renderBoard();

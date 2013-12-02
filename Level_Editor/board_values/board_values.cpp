@@ -17,20 +17,15 @@
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
 
-#include "../board_distribution_screen.h"
+#include "../board_values.h"
 
 #include <stddef.h>
 #include <SDL2/SDL_events.h>
 #include <iostream>
-//#include <string>
-//#include <vector>
 
-//#include "../../libs/position/position.h"
-//#include "../../libs/screen_grid/screen_grid.h"
-//#include "../../libs/sprite/sprite.h"
 #include "../../libs/surface/surface.h"
+
 //#include "../../libs/window/window.h"
-//#include "../app.h"
 //#include "../level_builder/LevelBuilder.h"
 
 //FIXME
@@ -42,26 +37,31 @@
 using std::string;
 using std::vector;
 
-const string BoardDistributionScreen::TITLE = "Level ";
+const string BoardValues::TITLE = "Level ";
 
-void BoardDistributionScreen::mouseButtonEvent(SDL_Event& event) {
+void BoardValues::mouseButtonEvent(SDL_Event& event) {
 	Position pos = grid.getGridPosition(event.button.x, event.button.y);
 	if (pos.is_valid()) {
 		if (board_schema[pos[0]][pos[1]] == 0)
 			return; //no hay nada
-		board_schema[pos[0]][pos[1]] = (board_schema[pos[0]][pos[1]] + 1) % cells.size();
-		if (board_schema[pos[0]][pos[1]] == 0)
-			board_schema[pos[0]][pos[1]] = 1;
+		selected_board[pos[0]][pos[1]] = (selected_board[pos[0]][pos[1]] + 1) % 2;
 	}
+
 	next_step.handle_event(event);
 	if (next_step.is_clicked()) {
 		render();
 		level.setBoardSchema(board_schema);
 		status = STATUS_ENDED_OK;
 	}
+
+	apply.handle_event(event);
+	if (next_step.is_clicked()) {
+		render();
+		//APPLY val
+	}
 }
 
-void BoardDistributionScreen::setupBackground() {
+void BoardValues::setupBackground() {
 
 	Surface temporal_background = Surface(
 			"resources/game_board/backgrounds/"+level.getBackgroundFile()+".jpg");
@@ -71,12 +71,12 @@ void BoardDistributionScreen::setupBackground() {
 	temporal_background.free();
 }
 
-BoardDistributionScreen::BoardDistributionScreen(LevelBuilder& level) :
+BoardValues::BoardValues(LevelBuilder& level) :
 		App(), level(level), window(Window()), background(Sprite()),grid(ScreenGrid()) { //FIXME
 
 }
 
-void BoardDistributionScreen::setupBoard() {
+void BoardValues::setupBoard() {
 	grid = ScreenGrid(INICIO_X, INICIO_Y, DIMENSION_Y, DIMENSION_X, level.getColumns(), level.getRows());
 
 	vector<string> cell_files = level.getCellFiles();
@@ -86,15 +86,18 @@ void BoardDistributionScreen::setupBoard() {
 						window));
 	}
 	board_schema = level.getBoardSchema();
+
+	for (size_t i = 0;i<board_schema.size();i++)
+	{
+		selected_board.push_back(vector<int>());
+		for(size_t j=0;j<board_schema[i].size();j++)
+		{
+			selected_board[i].push_back(0);
+		}
+	}
 }
 
-void BoardDistributionScreen::setupButtons() {
-	next_step = Button("resources/game_editor/next_button.png", window);
-	next_step.scale_with_widht(INICIO_X);
-	next_step.move(0, SCREEN_HEIGHT / 2);
-}
-
-bool BoardDistributionScreen::initialize() {
+bool BoardValues::initialize() {
 	window = Window(TITLE, SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_FLAGS);
 	//TODO: excepciones
 
@@ -105,7 +108,7 @@ bool BoardDistributionScreen::initialize() {
 	return true;
 }
 
-void BoardDistributionScreen::handleEvent(SDL_Event& event) {
+void BoardValues::handleEvent(SDL_Event& event) {
 	switch (event.type) {
 	case SDL_QUIT:
 		status = STATUS_ENDED_ERROR;
@@ -116,37 +119,62 @@ void BoardDistributionScreen::handleEvent(SDL_Event& event) {
 	}
 }
 
-void BoardDistributionScreen::loop() {
+void BoardValues::loop() {
 }
 
-void BoardDistributionScreen::renderBoard() {
+void BoardValues::renderBoard() {
 	background.draw(window);
 
 	for (int i = 0; i < level.getColumns(); i++) {
 		for (int j = 0; j < level.getRows(); j++) {
+			int x = INICIO_X + (DIMENSION_X * i);
+			int y = INICIO_Y + (DIMENSION_Y * j);
+
 			int cell = board_schema[i][j];
 			if (cell > 0) {
 				cell--; //Corregido para que vaya de 0 a longitud-1
 
-				int x = INICIO_X + (DIMENSION_X * i);
-				int y = INICIO_Y + (DIMENSION_Y * j);
-				std::cout << cell << std::endl;
 				cells[cell].move(x, y);
 				cells[cell].draw(window);
+			}
+			if (selected_board[i][j] == 1)
+			{
+				hover_cell.move(x, y);
+				hover_cell.draw(window);
 			}
 		}
 	}
 }
 
-void BoardDistributionScreen::render() {
+void BoardValues::setupButtons() {
+	next_step = Button("resources/game_editor/next_button.png", window);
+	next_step.scale_with_widht(INICIO_X);
+	next_step.move(0, SCREEN_HEIGHT / 2);
+
+	apply = Button("resources/game_editor/add_button.png", window);
+	apply.scale_with_widht(INICIO_X);
+	apply.move(0, SCREEN_HEIGHT - apply.get_scaled_height());
+
+}
+
+void BoardValues::render() {
 	window.clear();
 
 	renderBoard();
 
 	next_step.draw(window);
+	apply.draw(window);
 
 	window.render();
 }
 
-void BoardDistributionScreen::cleanup() {
+void BoardValues::setup_sprites() {
+	SDL_Surface* temp_surface = SDL_CreateRGBSurface(0,DIMENSION_X, DIMENSION_Y,
+	32, 0, 0, 0, 255);
+	hover_cell = Sprite(*temp_surface,window);
+	hover_cell.set_transparency_level(64);
+	SDL_FreeSurface(temp_surface);
+}
+
+void BoardValues::cleanup() {
 }
