@@ -165,7 +165,7 @@ game_manager.o: Server/game_manager/game_manager.h Server/game_manager/game_mana
 
 SERVER_EXTERN = $(POSITION) $(BOARDS_LIBS) $(CHECKERS_LIBS) $(COMBINATION_EFFECTS_LIBS) $(GAME_MESSAGES_LIBS) level_reader.o score_tracker.o combiner.o game_manager.o $(THREAD_LIBS) $(SOCKET_LIBS) $(MESSAGES_LIBS) $(COMMUNICATION_PROTOCOL_LIBS) $(DATABASE_LIBS)
 
-SERVER_OBJ = $(SERVER_EXTERN) ClientAuthenticator.o ClientHandler.o ServerMsgInterpreter.o Room.o Lobby.o SocketHandler.o MatchMakingStrategy.o Server.o
+SERVER_OBJ = $(SERVER_EXTERN) ClientAuthenticator.o ClientHandler.o ServerMsgInterpreter.o Room.o RoomKiller.o Lobby.o SocketHandler.o MatchMakingStrategy.o Server.o
 
 SERVER_NAME = game-server
 
@@ -184,6 +184,9 @@ MatchMakingStrategy.o: 	Server/rooms/MatchMakingStrategy.h Server/rooms/MatchMak
 Room.o: Server/rooms/Room.h Server/rooms/Room.cpp
 	$(CC) $(CPPFLAGS) -c Server/rooms/Room.cpp	
 	
+RoomKiller.o: Server/rooms/RoomKiller.h Server/rooms/RoomKiller.cpp
+	$(CC) $(CPPFLAGS) -c Server/rooms/RoomKiller.cpp
+		
 Lobby.o: Server/rooms/Lobby.h Server/rooms/Lobby.cpp
 	$(CC) $(CPPFLAGS) -c Server/rooms/Lobby.cpp	
 	

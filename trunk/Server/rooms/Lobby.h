@@ -9,6 +9,7 @@
 #define LOBBY_H_
 
 #include <map>
+#include "RoomKiller.h"
 #include "../../libs/wrappers/Thread.h"
 
 class Room;
@@ -18,6 +19,8 @@ class MyDatabase;
 class Lobby : public Thread{
 	std::map<unsigned long,Room*> rooms;
 	MyDatabase * db;
+	RoomKiller room_killer;
+
 
 	void run(void * data = NULL);
 

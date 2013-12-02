@@ -23,6 +23,7 @@ class Room {
 	std::vector<ClientHandler *> clients;
 	std::vector<std::string> usernames;
 	bool currently_playing;
+	bool active;
 	LevelReader level_reader;
 	GameManager game_manager;
 	std::string getLevelName();
@@ -61,6 +62,11 @@ public:
 	 * loadLevel devuelve un string con los datos del nivel.
 	 */
 	std::string loadLevel();
+	/*
+	 * isActive devuelve si un room esta activo o no. Es la variable que determina
+	 * si un room se debe eliminar o no.
+	 */
+	bool isActive();
 	virtual ~Room();
 };
 
