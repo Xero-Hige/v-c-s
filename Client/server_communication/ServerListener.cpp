@@ -24,8 +24,11 @@ void ServerListener::run(void * data){
 	}
 }
 
+void ServerListener::stopListening(){
+	keep_listening = false;
+}
+
 ServerListener::~ServerListener() {
 	keep_listening = false;
-	socket->socketShutdown();
-	this->join();
+//	socket->socketShutdown();
 }

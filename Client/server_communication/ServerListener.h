@@ -26,6 +26,7 @@ class ServerListener : public Thread {
 
 public:
 	ServerListener(Server_Connector * sc, Backend * b);
+	void stopListening();
 	virtual ~ServerListener();
 };
 

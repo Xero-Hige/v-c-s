@@ -30,11 +30,13 @@ void setListener(struct sockaddr_in * cli_addr, int & server_port){
 
 Server::Server() : lobby(&db){
 	// TODO Auto-generated constructor stub
+	std::cout << "Iniciando server..." << std::endl;
 	sock_listeners = new std::vector<SocketHandler*>();
 	this->db.open();
 	int i = this->db.createTable();
-	std::cout << "Se crea la tabla. Codigo de retorno: ";
-	std::cout << i << std::endl;
+	std::cout << "Se crea la tabla. (Codigo de retorno: ";
+	std::cout << i << ")" << std::endl;
+	std::cout << "Server iniciado." << std::endl;
 }
 
 /*

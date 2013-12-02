@@ -30,6 +30,7 @@ Room::Room(Lobby * lob, unsigned limit,unsigned lvl, unsigned long r_id):
 		this->id = r_id;
 	}
 	this->level = lvl;
+	this->limit = limit;
 	currently_playing = false;
 	active = true;
 	//TODO leer las cosas del archivo y mandarlo acá
@@ -129,12 +130,13 @@ bool Room::swapMade(std::string user_id, Position position1, Position position2)
 }
 
 Room::~Room() {
+	if (clients.size() <= 0) return;
 	for (std::vector<ClientHandler*>::iterator it = clients.begin();
 			it < clients.end();
 			it++){
 		ClientHandler* actual_ch = *it;
 		actual_ch->closeConnection();
-		actual_ch->join();
+		//actual_ch->join();
 		delete actual_ch;
 	}
 }
