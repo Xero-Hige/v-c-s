@@ -33,6 +33,7 @@
 #include "../../libs/level_reader/level_reader.h"
 #include "../../libs/combination_effects/combination_effect.h"
 #include "../../libs/boards/refiller.h"
+#include "../../libs/score_tracker/score_tracker.h"
 
 #include "../../libs/boards/replacements_generator.h" // FIXME borrame
 
@@ -62,7 +63,6 @@ private:
 	// Tableros lógicos
 	Board board;
 	Board replacements_board;
-
 	Refiller refiller;
 
 	// Checkers
@@ -70,6 +70,8 @@ private:
 	CombinationChecker combination_checker;
 
 	LevelReader level_reader;
+
+	ScoreTracker score_tracker;
 
 	std::list<CombinationEffect*> combination_effects_queue;
 
@@ -178,6 +180,12 @@ public:
 	/* Devuelve la constante que corresponde a la animación a aplicar para *
 	 * el efecto de combinación actual                                     */
 	int getEffectAnimation();
+
+	/* Suma al score de un jugador                                *
+	 * Si el jugador no está agregado al score tracker, lo agrega */
+	void addToPlayerScore(std::string user_id, int score);
+
+	//TODO método para leer los puntajes
 
 	//ASYNC
 	//Connect

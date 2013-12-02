@@ -28,7 +28,7 @@ using std::string;
 using std::map;
 
 bool ScoreTracker::addPlayer(string user_id) {
-    if (scores.find(user_id) == scores.end()) {
+    if (scores.find(user_id) != scores.end()) {
         return false;
     }
     scores[user_id] = 0;

@@ -84,17 +84,7 @@ void GameManager::makeSwap(Position position1, Position position2, string user_i
         string score_update_msg = msg_builder.buildScoreUpdateMsg(user_id, score_tracker.getPlayerScore(user_id));
         room->notifyClients(score_update_msg);
         ////////////////////////////////////////////////////////////////////
-        for (int column = 0; column < board.getWidth(); column++) {
-            int empty_cells = replacements_board.getEmptyCellsInColumn(column);
-            if (empty_cells > 0) {
-                list<Product*> replacements = replacements_generator.getReplacements(empty_cells, column);
-                //TODO mandar los reemplazos (hecho, probarlo)
-                string product_refill_msg = msg_builder.buildProductRefill(column, replacements);
-                room->notifyClients(product_refill_msg);
-                //////////////////////////////////////////////
-                refiller.addReplacements(column, replacements);
-            }
-        }
+        refill();
         refiller.realocateBoard();
         effects = combiner.makeChainedCombinations();
     } while (effects.size() > 0);
@@ -142,4 +132,18 @@ bool GameManager::checkCombination(Position position1, Position position2) {
     }
     board.swapProducts(position1, position1);
     return false;
+}
+
+void GameManager::refill() {
+    for (int column = 0; column < board.getWidth(); column++) {
+        int empty_cells = replacements_board.getEmptyCellsInColumn(column);
+        if (empty_cells > 0) {
+            list<Product*> replacements = replacements_generator.getReplacements(empty_cells, column);
+            //TODO mandar los reemplazos (hecho, probarlo)
+            string product_refill_msg = msg_builder.buildProductRefill(column, replacements);
+            room->notifyClients(product_refill_msg);
+            //////////////////////////////////////////////
+            refiller.addReplacements(column, replacements);
+        }
+    }
 }

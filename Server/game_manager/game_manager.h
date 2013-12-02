@@ -69,6 +69,7 @@ public:
 private:
     /* Configura los tableros (tamaño y esquema) según los datos del nivel */
     void configureBoards();
+
     /* Configura el generador de reemplazos según los datos del nivel */
     void configureReplacementsGenerator();
 
@@ -78,6 +79,10 @@ private:
     /* Verifica si hay combinación con el cambio de las dos posiciones *
      * De ser así, hace el cambio de productos en el tablero           */
     bool checkCombination(Position position1, Position position2);
+
+    /* Rellena los tableros con nuevos productos. Envía los reemplazos a los *
+     * clientes                                                              */
+    void refill();
 };
 
 #endif /* GAME_MANAGER_H_ */
