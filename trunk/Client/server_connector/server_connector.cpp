@@ -50,6 +50,8 @@ Server_Connector::Server_Connector(){
 	auth.setSocket(this->sock);
 	this->exit_char_pressed = false;
 	level_received = false;
+	board_received = false;
+	replacements_received = false;
 }
 
 void Server_Connector::communicate(){
@@ -154,10 +156,40 @@ void Server_Connector::setLevel(std::string lvl){
 	this->level_received = true;
 }
 
+void Server_Connector::setBoard(std::string board){
+	this->board = board;
+	this->board_received = true;
+}
+
+void Server_Connector::setReplacements(std::string rep){
+	this->replacements = rep;
+	this->replacements_received = true;
+}
+
 bool Server_Connector::getLevel(std::string &data){
 	if (level_received){
 		level_received = false;
 		data.assign(level_data);
+		return true;
+	} else {
+		return false;
+	}
+}
+
+bool Server_Connector::getBoard(std::string &data){
+	if (board_received){
+		board_received = false;
+		data.assign(board);
+		return true;
+	} else {
+		return false;
+	}
+}
+
+bool Server_Connector::getReplacements(std::string &data){
+	if (replacements_received){
+		replacements_received = false;
+		data.assign(replacements);
 		return true;
 	} else {
 		return false;

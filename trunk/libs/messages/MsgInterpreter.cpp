@@ -23,6 +23,10 @@ bool MsgInterpreter::interpret(std::string s) {
 		exitRoom();
 	} else if (s.compare(LEVEL_DATA) == 0){
 		manageLevel();
+	} else if (s.compare(BOARD_PRODUCTS) == 0){
+		manageBoard();
+	} else if (s.compare(REPLACEMENT_PRODUCTS) == 0){
+		manageReplacements();
 	}
 	interpretParticularMsg(s);
 	return false;

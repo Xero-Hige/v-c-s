@@ -23,7 +23,8 @@
 #define CLOSE_CONNECTION "CONNECTION ENDED"
 
 #define LEVEL_DATA "LEVEL DATA"
-
+#define BOARD_PRODUCTS "BOARD PRODUCTS"
+#define REPLACEMENT_PRODUCTS "REPLACEMENT PRODUCTS"
 #define CLIENT_EXIT_ROOM "e" //es menester que esto sea un char ptr
 
 #endif /* COMMON_MSGCONSTANTS_H_ */
