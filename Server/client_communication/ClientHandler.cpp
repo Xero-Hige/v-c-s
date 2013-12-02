@@ -32,7 +32,7 @@ void ClientHandler::run(void * data){
 }
 
 void ClientHandler::exitRoom(){
-	room->exitRoom(this);
+	if (room) room->exitRoom(this);
 }
 
 void ClientHandler::setPassword(std::string pass){
