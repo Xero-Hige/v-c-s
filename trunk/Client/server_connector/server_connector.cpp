@@ -157,9 +157,7 @@ void Server_Connector::setLevel(std::string lvl){
 bool Server_Connector::getLevel(std::string &data){
 	if (level_received){
 		level_received = false;
-		data.clear();
-		data.append(level_data);
-		level_data.clear();
+		data.assign(level_data);
 		return true;
 	} else {
 		return false;
