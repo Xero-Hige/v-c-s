@@ -8,6 +8,8 @@
 #ifndef ROOM_H_
 #define ROOM_H_
 
+#include "../game_manager/game_manager.h"
+
 #include <vector>
 #include <string>
 
@@ -21,6 +23,8 @@ class Room {
 	std::vector<ClientHandler *> clients;
 	std::vector<std::string> usernames;
 	bool currently_playing;
+	LevelReader level_reader;
+	GameManager game_manager;
 
 	void eraseUsername(std::string username);
 

@@ -275,7 +275,7 @@ bool Backend::async_make_swap(Position pos1_graphic, Position pos2_graphic) {
     //FIXME esto va en el server y/o otro lado
     Combiner combiner = Combiner(board);
     list<CombinationEffect*> effects = combiner.makeCombinations(pos1_logic, pos2_logic);
-    do {
+//    do {
     combination_effects_queue.splice(combination_effects_queue.end(), effects);
     for (int column = 0; column < board.getWidth(); column++) {
         int empty_cells = replacements_board.getEmptyCellsInColumn(column);
@@ -285,17 +285,10 @@ bool Backend::async_make_swap(Position pos1_graphic, Position pos2_graphic) {
         }
     }
     refiller.realocateBoard();
-    effects = combiner.makeChainedCombinations();
-    } while (effects.size() > 0);
+//    effects = combiner.makeChainedCombinations();
+//    } while (effects.size() > 0);
     std::cout << "Puntos obtenidos en el último movimiento: " << combiner.getLastCombinationsPoints() << std::endl;
     std::cout << "Efectos a aplicar: " << combination_effects_queue.size() << std::endl;
-//    for (list<CombinationEffect*>::iterator it = combination_effects_queue.begin(); it != combination_effects_queue.end(); ++it ) {
-//        CombinationEffect* combination_effect = (*it);
-//        combination_effect->applyEffect();
-//        std::vector<Position> eliminated_product = combination_effect->getEliminatedProducts();
-//        products_to_remove.insert(products_to_remove.end(), eliminated_product.begin(), eliminated_product.end());
-//    }
-
     /////////////////////////////////////////
     return true;
 }

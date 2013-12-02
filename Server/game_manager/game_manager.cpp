@@ -42,6 +42,11 @@ using std::list;
 using std::vector;
 using std::map;
 
+GameManager::GameManager(Room* room)
+    : room(room), level_reader(NULL), combiner(board) {
+    refiller = Refiller(&board, &replacements_board);
+}
+
 GameManager::GameManager(Room* room, LevelReader* level_reader)
     : room(room), level_reader(level_reader), combiner(board) {
     refiller = Refiller(&board, &replacements_board);
