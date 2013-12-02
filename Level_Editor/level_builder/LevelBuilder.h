@@ -33,9 +33,8 @@ private:
 	int win_points;
 	int max_players;
 	std::vector<std::string> cell_files;
-
-private:
 	std::vector<std::vector<int> > board_schema;
+	std::vector<std::vector<std::vector<int> > > board_values;
 
 public:
 	LevelBuilder();
@@ -58,6 +57,9 @@ public:
 	int getColumns();
 	int getRows();
 	std::vector<std::string> getCellFiles();
+	void setProbValues(int x,int y,std::vector<int> values);
+	void store();
+
 };
 
 #endif /* LEVELBUILDER_H_ */
