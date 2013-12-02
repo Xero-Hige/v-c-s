@@ -81,7 +81,7 @@ void ClientHandler::closeConnection(){
 	this->sock.socketShutdown();
 	this->sock.closeConnection();
 	this->is_active = false;
-	this->join();
+//	this->join();
 	this->exitRoom();
 }
 
