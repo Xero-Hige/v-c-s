@@ -27,6 +27,7 @@
 #include <jsoncpp/json.h>
 #include <string>
 #include <vector>
+#include <map>
 
 class LevelReader {
 private:
@@ -47,6 +48,7 @@ public:
     int getBoardHeight();
     std::vector<std::vector<int> > getBoardSchema();
 
+    bool getProbabilitiesTable(int column, std::map<std::string, int>& probabilities_table);
 };
 
 #endif /* LEVEL_READER_H_ */

@@ -26,11 +26,13 @@
 #include <jsoncpp/json.h>
 #include <string>
 #include <vector>
+#include <map>
 
 #include <iostream> //FIXME
 
 using std::string;
 using std::vector;
+using std::map;
 
 LevelReader::LevelReader(string& input_data) {
     this->changeLevelData(input_data);
@@ -104,3 +106,18 @@ vector<vector<int> > LevelReader::getBoardSchema() {
     return schema;
 }
 
+bool LevelReader::getProbabilitiesTable(int column, map<string, int>& probabilities_table) {
+    if (! level_data["valid"].asBool()) {
+        return false;
+    }
+    if (! level_data["columns probabilities"].isValidIndex(column)) {
+        return false;
+    }
+    Json::Value probabilities = level_data["columns probabilities"][column];
+    probabilities_table["red"] = probabilities["red"].asInt();
+    probabilities_table["yellow"] = probabilities["yellow"].asInt();
+    probabilities_table["green"] = probabilities["green"].asInt();
+    probabilities_table["blue"] = probabilities["blue"].asInt();
+    probabilities_table["violet"] = probabilities["violet"].asInt();
+    return true;
+}
