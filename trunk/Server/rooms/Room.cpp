@@ -9,6 +9,7 @@
 #include "../client_communication/ClientHandler.h"
 #include "Lobby.h"
 #include <iostream>
+#include <fstream>
 #include <sstream>
 #include <vector>
 #include <string>
@@ -18,7 +19,8 @@
 
 unsigned long Room::id_counter = 0;
 
-Room::Room(Lobby * lob, unsigned limit,unsigned lvl, unsigned long r_id) {
+Room::Room(Lobby * lob, unsigned limit,unsigned lvl, unsigned long r_id):
+	game_manager(this, &level_reader){
 	this->lob = lob;
 	if (!r_id){
 		//el id se auto-genera
@@ -32,7 +34,6 @@ Room::Room(Lobby * lob, unsigned limit,unsigned lvl, unsigned long r_id) {
 	//TODO leer las cosas del archivo y mandarlo acá
 //	level_reader.changeLevelData(loadLevel());
 //	this->limit = level_reader.getNumberOfPlayers();
-	game_manager = GameManager(this, &level_reader);
 }
 
 std::string Room::getLevelName(){
@@ -43,7 +44,7 @@ std::string Room::getLevelName(){
 
 std::string Room::loadLevel(){
 	std::string path = getLevelName();
-	std::ifstream file (path);
+	std::ifstream file(path.c_str());
 	std::string str((std::istreambuf_iterator<char>(file)),
 			std::istreambuf_iterator<char>());
 	return str;
