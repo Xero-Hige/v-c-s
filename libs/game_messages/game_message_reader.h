@@ -28,6 +28,7 @@
 #include "../boards/product.h"
 #include "../combination_effects/combination_effect.h"
 #include "combination_effects_factory.h"
+#include "game_msg_constants.h"
 
 #include <string>
 #include <vector>

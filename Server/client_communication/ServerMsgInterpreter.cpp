@@ -9,6 +9,7 @@
 #include "../../libs/messages/MsgConstants.h"
 #include "../../libs/game_messages/game_message_reader.h"
 #include "../../libs/game_messages/message_reader.h"
+#include "../../libs/game_messages/game_msg_constants.h"
 
 #include <string>
 
@@ -36,7 +37,7 @@ void ServerMsgInterpreter::interpretParticularMsg(std::string msg){
 	}
 	msg_reader.processNewMessage(msg);
 	string header = msg_reader.getMessageHeader();
-	if (header == "swap") {
+	if (header == SWAP) {
 	    string user_id;
 	    Position position1, position2;
 	    game_msg_reader.readSwapMessage(user_id, position1, position2, msg_reader);

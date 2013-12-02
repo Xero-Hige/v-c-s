@@ -27,6 +27,7 @@
 #include "../boards/product.h"
 #include "../combination_effects/combination_effect.h"
 #include "combination_effects_factory.h"
+#include "game_msg_constants.h"
 
 #include <string>
 #include <vector>
@@ -38,26 +39,26 @@ using std::vector;
 using std::list;
 
 void GameMessageReader::readScoreUpdateMsg(string& user_id, int& score, MessageReader& msg_body) {
-    user_id = msg_body.getStringField("user id");
-    score = msg_body.getIntField("score");
+    user_id = msg_body.getStringField(USER_ID);
+    score = msg_body.getIntField(SCORE);
 }
 
 void GameMessageReader::readGameOverMsg(std::string& user_id, MessageReader& msg_body) {
-    user_id = msg_body.getStringField("user id");
+    user_id = msg_body.getStringField(USER_ID);
 }
 
 void GameMessageReader::readSwapMessage(std::string& user_id, Position& position1, Position& position2, MessageReader& msg_body) {
-    user_id = msg_body.getStringField("user id");
-    msg_body.getObjectField("position 1", &position1);
-    msg_body.getObjectField("position 2", &position2);
+    user_id = msg_body.getStringField(USER_ID);
+    msg_body.getObjectField(POSITION_1, &position1);
+    msg_body.getObjectField(POSITION_2, &position2);
 }
 
 void GameMessageReader::readProductRefill(int& column, std::list<Product*>& products, MessageReader& msg_body) {
-    column = msg_body.getIntField("column");
-    int n_products = msg_body.getObjectArraySize("products");
+    column = msg_body.getIntField(COLUMN);
+    int n_products = msg_body.getObjectArraySize(PRODUCTS);
     for (int index = 0; index < n_products; index++) {
         Product* product = new Product();
-        if (msg_body.getObjectFromArray("products", product, index)) {
+        if (msg_body.getObjectFromArray(PRODUCTS, product, index)) {
             products.push_back(product);
         }
 
@@ -65,12 +66,12 @@ void GameMessageReader::readProductRefill(int& column, std::list<Product*>& prod
 }
 
 void GameMessageReader::readCombinationEffectsMsg(std::list<CombinationEffect*>& effects, MessageReader& msg_body) {
-    int n_effects = msg_body.getObjectArraySize("effects");
+    int n_effects = msg_body.getObjectArraySize(EFFECTS);
     for (int index = 0; index < n_effects; index++) {
         Json::Value effect_value;
-        msg_body.getObjectFromArray("effects", effect_value, index);
+        msg_body.getObjectFromArray(EFFECTS, effect_value, index);
         CombinationEffect* effect = effects_factory->getCombinationEffect(effect_value["type"].asString());
-        msg_body.getObjectFromArray("effects", effect, index);
+        msg_body.getObjectFromArray(EFFECTS, effect, index);
         effects.push_back(effect);
     }
 }
