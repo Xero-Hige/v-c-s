@@ -47,6 +47,7 @@ int FormattedSocket::recvMsg(std::string & msg){
 	uint32_t size = readSize(s_size.c_str());
 	//Recibo el mensaje de long size
 	int r = Socket::recvMsg(msg, size);
+//	std::cout << msg << std::endl;
 	return r;
 }
 

@@ -18,8 +18,8 @@ MatchMakingStrategy::MatchMakingStrategy() {
 
 void MatchMakingStrategy::addClient(Lobby * lob, ClientHandler * ch){
 	std::string s;
-	ch->recvMsg(s);//matchmaking message
-	unsigned msg = atoi(s.c_str());
+	//ch->recvMsg(s);//matchmaking message
+	//unsigned msg = atoi(s.c_str());
 	if (/*msg == MM_USER_DEF*/ false)
 		addUserDefined(lob, ch);
 	else if (/*msg == MM_DEFAULT*/ true)
@@ -47,9 +47,7 @@ void MatchMakingStrategy::addDefault(Lobby * lob, ClientHandler * ch){
 	Room * r = lob->getNotFullNotPlayingRoom();
 	if (!r){
 		//Si no hay uno creado o si no pudo insertar en uno vacio crea uno nuevo
-		Room * new_room = new Room(lob, 2, ch->getLevel());
-		new_room->addClient(ch);
-		lob->addRoom(new_room->id,new_room);
+		lob->createRoom(ch);
 	} else {
 		r->addClient(ch);
 	}

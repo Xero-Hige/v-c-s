@@ -25,7 +25,7 @@ ClientHandler::ClientHandler(int s) : sock(s){
 void ClientHandler::run(void * data){
 	while (keep_listening){
 		std::string rcvd_msg;
-		if (this->sock.recvMsg(rcvd_msg) < 0) return; //error en la conexion
+		if (this->recvMsg(rcvd_msg) < 0) return; //error en la conexion
 		ServerMsgInterpreter msg_int(this);
 		if (msg_int.interpret(rcvd_msg)) keep_listening = false;
 	}
@@ -76,10 +76,12 @@ void ClientHandler::closeConnection(){
 	//mutuos diciendo que la conexion se va a cerrar. Por ej:
 	//server manda -> CLOSE_CONNECTION y cierra
 	//cliente recibe, interpreta manda -> CLOSE_CONNECTION y cierra.
+	this->keep_listening = false;
 	this->sock.sendMsg(CLOSE_CONNECTION);
 	this->sock.socketShutdown();
 	this->sock.closeConnection();
 	this->is_active = false;
+	this->join();
 	this->exitRoom();
 }
 

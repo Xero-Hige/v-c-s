@@ -40,8 +40,12 @@ void Lobby::addNewClient(ClientHandler * ch) {
 	this->start((void*)data, DETACHED);
 }
 
-void Lobby::addRoom(unsigned long id, Room * r){
-	rooms.insert(map_pair(id,r));
+#define LIMIT 4
+
+void Lobby::createRoom(ClientHandler * ch){
+	Room * new_r = new Room(this, LIMIT, ch->getLevel());
+	rooms.insert(map_pair(new_r->id,new_r));
+	new_r->addClient(ch);
 }
 
 void Lobby::addClient(ClientHandler * ch){
@@ -60,17 +64,17 @@ Room * Lobby::getRoom(unsigned long id){
 	}
 }
 
-void Lobby::endMatch(unsigned long id){
-	if (rooms.size() == 0) return;
-	std::map<unsigned long, Room*>::iterator it;
-	it = rooms.find(id);
-	if (it == rooms.end()){
-		return;//Si no lo encontro termina
-	} else {
-		Room * room_actual = it->second;
-		delete room_actual;
-	}
-}
+//void Lobby::endMatch(unsigned long id){
+//	if (rooms.size() == 0) return;
+//	std::map<unsigned long, Room*>::iterator it;
+//	it = rooms.find(id);
+//	if (it == rooms.end()){
+//		return;//Si no lo encontro termina
+//	} else {
+//		Room * room_actual = it->second;
+//		delete room_actual;
+//	}
+//}
 
 //void Lobby::endAllMatches(){
 //	std::map<unsigned long, Room*>::iterator it = rooms.begin();
@@ -83,7 +87,7 @@ void Lobby::endMatch(unsigned long id){
 //}
 
 Room * Lobby::getNotFullNotPlayingRoom(){
-	if (rooms.size() == 0) return 0;
+	if (rooms.size() == 0) return NULL;
 	std::map<unsigned long, Room*>::iterator it;
 	for (it = rooms.begin(); it != rooms.end(); it++){
 		if (! it->second->isFull() && ! it->second->isPlaying())
@@ -95,7 +99,7 @@ Room * Lobby::getNotFullNotPlayingRoom(){
 Lobby::~Lobby() {
 //	endAllMatches();
 	std::map<unsigned long, Room*>::iterator it = rooms.begin();
-	while(it != rooms.end()){
+	while(it != rooms.end() && rooms.size() > 0){
 		Room* actual_room = it->second;
 		delete actual_room;
 		//erase(it++) funciona porque borra y luego incrementa el iter
