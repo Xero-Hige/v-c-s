@@ -2,7 +2,7 @@
 #General
 CC = gcc
 CPPFLAGS = -Wall -Wextra -g -pedantic
-CPPLDFLAGS = -lstdc++ -lcrypto -lssl -lpthread -lsqlite3
+CPPLDFLAGS = -lstdc++ -lcrypto -lssl -lpthread -lsqlite3 -ljsoncpp
 
 all: run-server
 
@@ -55,9 +55,110 @@ Database.o: libs/wrappers/Database.h libs/wrappers/Database.cpp
 MyDatabase.o: libs/database/MyDatabase.h libs/database/MyDatabase.cpp
 	$(CC) $(CPPFLAGS) -c libs/database/MyDatabase.cpp
 	
+#Game Messages
+
+GAME_MESSAGES_LIBS = json_serializer.o message_builder.o game_message_builder.o combination_effects_factory.o json_deserializer.o message_reader.o game_message_reader.o    
+
+json_serializer.o: libs/game_messages/json_serializer.h libs/game_messages/json_serializer.cpp
+		$(CC) $(CPPFLAGS) -c libs/game_messages/json_serializer.cpp
+
+message_builder.o: libs/game_messages/message_builder.h libs/game_messages/message_builder.cpp
+		$(CC) $(CPPFLAGS) -c libs/game_messages/message_builder.cpp
+
+game_message_builder.o: libs/game_messages/game_message_builder.h libs/game_messages/game_message_builder.cpp
+		$(CC) $(CPPFLAGS) -c libs/game_messages/game_message_builder.cpp
+
+combination_effects_factory.o: libs/game_messages/combination_effects_factory.h libs/game_messages/combination_effects_factory.cpp
+		$(CC) $(CPPFLAGS) -c libs/game_messages/combination_effects_factory.cpp
+
+json_deserializer.o: libs/game_messages/json_deserializer.h libs/game_messages/json_deserializer.cpp
+		$(CC) $(CPPFLAGS) -c libs/game_messages/json_deserializer.cpp
+
+message_reader.o: libs/game_messages/message_reader.h libs/game_messages/message_reader.cpp
+		$(CC) $(CPPFLAGS) -c libs/game_messages/message_reader.cpp
+
+game_message_reader.o: libs/game_messages/game_message_reader.h libs/game_messages/game_message_reader.cpp
+		$(CC) $(CPPFLAGS) -c libs/game_messages/game_message_reader.cpp
+
+#Position
+
+POSITION = position.o
+
+position.o: libs/position/position.h libs/position/position.cpp
+	$(CC) $(CPPFLAGS) -c libs/position/position.cpp
+	
+#Logic boards builder
+
+BOARDS_LIBS = product.o tile.o board.o product_generator.o refiller.o replacements_generator.o
+
+product.o: libs/boards/product.h libs/boards/product.cpp
+	$(CC) $(CPPFLAGS) -c libs/boards/product.cpp
+	
+tile.o: libs/boards/tile.h libs/boards/tile.cpp
+	$(CC) $(CPPFLAGS) -c libs/boards/tile.cpp
+	
+board.o: libs/boards/board.h libs/boards/board.cpp
+	$(CC) $(CPPFLAGS) -c libs/boards/board.cpp
+
+product_generator.o: libs/boards/product_generator.h libs/boards/product_generator.cpp
+	$(CC) $(CPPFLAGS) -c libs/boards/product_generator.cpp	
+
+refiller.o: libs/boards/refiller.h libs/boards/refiller.cpp
+	$(CC) $(CPPFLAGS) -c libs/boards/refiller.cpp
+	
+replacements_generator.o: libs/boards/replacements_generator.h libs/boards/replacements_generator.cpp
+	$(CC) $(CPPFLAGS) -c libs/boards/replacements_generator.cpp
+
+#Checkers builder
+
+CHECKERS_LIBS = physical_checker.o combination_checker.o
+
+physical_checker.o: libs/checkers/physical_checker.h libs/checkers/physical_checker.cpp
+	$(CC) $(CPPFLAGS) -c libs/checkers/physical_checker.cpp
+
+combination_checker.o: libs/checkers/combination_checker.h libs/checkers/combination_checker.cpp
+	$(CC) $(CPPFLAGS) -c libs/checkers/combination_checker.cpp
+
+#Level reader builder
+
+level_reader.o: libs/level_reader/level_reader.h libs/level_reader/level_reader.cpp libs/boards/tile.h
+	$(CC) $(CPPFLAGS) -c libs/level_reader/level_reader.cpp
+	
+#Combiner 
+
+combiner.o: libs/combiner/combiner.h libs/combiner/combiner.cpp
+	$(CC) $(CPPFLAGS) -c libs/combiner/combiner.cpp
+
+#Combination effects
+
+COMBINATION_EFFECTS_LIBS = combination_effect.o change_product_effect.o take_out_product_effect.o take_out_column_effect.o take_out_row_effect.o clean_board_effect.o
+
+combination_effect.o: libs/combination_effects/combination_effect.h libs/combination_effects/combination_effect.cpp
+	$(CC) $(CPPFLAGS) -c libs/combination_effects/combination_effect.cpp
+	
+change_product_effect.o: libs/combination_effects/change_product_effect.h libs/combination_effects/change_product_effect.cpp
+	$(CC) $(CPPFLAGS) -c libs/combination_effects/change_product_effect.cpp
+	
+clean_board_effect.o: libs/combination_effects/clean_board_effect.h libs/combination_effects/clean_board_effect.cpp
+	$(CC) $(CPPFLAGS) -c libs/combination_effects/clean_board_effect.cpp
+	
+take_out_product_effect.o: libs/combination_effects/take_out_product_effect.h libs/combination_effects/take_out_product_effect.cpp
+	$(CC) $(CPPFLAGS) -c libs/combination_effects/take_out_product_effect.cpp
+	
+take_out_row_effect.o: libs/combination_effects/take_out_row_effect.h libs/combination_effects/take_out_row_effect.cpp
+	$(CC) $(CPPFLAGS) -c libs/combination_effects/take_out_row_effect.cpp
+	
+take_out_column_effect.o: libs/combination_effects/take_out_column_effect.h libs/combination_effects/take_out_column_effect.cpp
+	$(CC) $(CPPFLAGS) -c libs/combination_effects/take_out_column_effect.cpp
+
+#Score Tracker
+
+score_tracker.o: libs/score_tracker/score_tracker.h libs/score_tracker/score_tracker.cpp
+	$(CC) $(CPPFLAGS) -c libs/score_tracker/score_tracker.cpp
+	
 #Server
 
-SERVER_EXTERN = $(THREAD_LIBS) $(SOCKET_LIBS) $(MESSAGES_LIBS) $(COMMUNICATION_PROTOCOL_LIBS) $(DATABASE_LIBS)
+SERVER_EXTERN = $(BOARDS_LIBS) $(CHECKERS_LIBS) $(COMBINATION_EFFECTS_LIBS) $(GAME_MESSAGES_LIBS) score_tracker.o combiner.o $(THREAD_LIBS) $(SOCKET_LIBS) $(MESSAGES_LIBS) $(COMMUNICATION_PROTOCOL_LIBS) $(DATABASE_LIBS)
 
 SERVER_OBJ = $(SERVER_EXTERN) ClientAuthenticator.o ClientHandler.o ServerMsgInterpreter.o Room.o Lobby.o SocketHandler.o MatchMakingStrategy.o Server.o
 
