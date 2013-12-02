@@ -30,6 +30,15 @@
 
 using std::vector;
 
+void ChangeProductEffect::applyEffect(Board& board) {
+    if (isApplied()) {
+        return;
+    }
+    Product* product = new Product(color, new_type);
+    board.setProduct(product, origin);
+    setApplied();
+}
+
 vector<Position> ChangeProductEffect::getChangedProducts() {
     vector<Position> ret_vector;
     ret_vector.push_back(getOrigin());

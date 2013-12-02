@@ -93,6 +93,8 @@ public:
     std::list<Product*> takeOutRow(int row);
     /* Saca todos los productos de una columna y los devuelve en una lista */
     std::list<Product*> takeOutColumn(int column);
+    /* Elimina todos los productos del tablero */
+    void cleanBoard();
     /* Inserta los productos de la lista en la columna especificada   *
      * Se insertan en el orden que vienen en la lista, de abajo hacia *
      * arriba. Devuelve la cantidad de productos insertados           */

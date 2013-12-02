@@ -38,7 +38,7 @@ public:
         : CombinationEffect() {}
     CleanBoardEffect(Position origin)
         : CombinationEffect(origin) {}
-    void applyEffect() {std::cout << "CleanBoardEffect" << std::endl; setApplied();}
+    void applyEffect(Board& board);
     std::vector<Position> getEliminatedProducts();
     std::vector<Position> getChangedProducts() {return std::vector<Position>();}
     std::vector<int> getNewProductsTypes() {return std::vector<int>();}

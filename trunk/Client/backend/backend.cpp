@@ -167,7 +167,8 @@ bool Backend::poolEffect() {
         combination_effects_queue.pop_front();
         return poolEffect();
     }
-    combination_effect->applyEffect();
+//    combination_effect->applyEffect(board); //FIXME descomentar cuando se saque el combiner
+    combination_effect->setApplied(); //FIXME borrar cuando se saque el combiner
     return true;
 }
 

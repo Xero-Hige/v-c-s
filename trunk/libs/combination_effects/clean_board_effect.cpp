@@ -30,9 +30,13 @@
 
 using std::vector;
 
-//void applyEffect() {
-//    //TODO
-//}
+void CleanBoardEffect::applyEffect(Board& board) {
+    if (isApplied()) {
+        return;
+    }
+    board.cleanBoard();
+    setApplied();
+}
 
 vector<Position> CleanBoardEffect::getEliminatedProducts() {
     vector<Position> ret_vector;

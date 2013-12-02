@@ -41,7 +41,7 @@ public:
         : CombinationEffect(), board_height(-1) {}
     TakeOutColumnEffect(Position origin, int board_height)
         : CombinationEffect(origin), board_height(board_height) {}
-    void applyEffect() {std::cout << "TakeOutColumnEffect" << std::endl; setApplied();}
+    void applyEffect(Board& board);
     std::vector<Position> getEliminatedProducts();
     void serialize(Json::Value& root);
     void deserialize(Json::Value& root);

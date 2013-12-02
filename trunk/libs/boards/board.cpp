@@ -205,6 +205,12 @@ list<Product*> Board::takeOutColumn(int column) {
     return products;
 }
 
+void Board::cleanBoard() {
+    for (int i = 0; i < tiles.size(); i++) {
+        tiles[i].eliminateProduct();
+    }
+}
+
 int Board::pushInColumn(list<Product*> products, int column) {
     int inserted = 0;
     for (int y = rows-1; y >= 0; y--) {
