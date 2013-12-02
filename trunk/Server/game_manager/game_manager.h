@@ -85,8 +85,8 @@ private:
     bool checkCombination(Position position1, Position position2);
 
     /* Rellena los tableros con nuevos productos. Envía los reemplazos a los *
-     * clientes                                                              */
-    void refill();
+     * clientes si "send" es true                                            */
+    void refill(bool send = true);
 };
 
 #endif /* GAME_MANAGER_H_ */
