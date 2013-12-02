@@ -16,9 +16,16 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
+
 #include "../level_config_screen.h"
 
+#include <SDL2/SDL_events.h>
+#include <SDL2/SDL_messagebox.h>
+#include <exception>
+#include <iostream>
+
 using std::string;
+using std::exception;
 
 const string levelConfigScreen::TITLE = "Level Config";
 
@@ -64,14 +71,12 @@ void levelConfigScreen::setup_markers() {
 	max_players_marker.move(10, start_position);
 
 	start_position += text_box.get_scaled_height();
-	columns_marker = TextBox(12, "resources/game_editor/font.ttf", 45,
-			window);
+	columns_marker = TextBox(12, "resources/game_editor/font.ttf", 45, window);
 	columns_marker.setAlternativeText("Columns", window);
 	columns_marker.move(10, start_position);
 
 	start_position += text_box.get_scaled_height();
-	rows_marker = TextBox(12, "resources/game_editor/font.ttf", 45,
-			window);
+	rows_marker = TextBox(12, "resources/game_editor/font.ttf", 45, window);
 	rows_marker.setAlternativeText("Rows", window);
 	rows_marker.move(10, start_position);
 }
@@ -79,39 +84,39 @@ void levelConfigScreen::setup_markers() {
 void levelConfigScreen::setup_textboxes() {
 	int start_position = 10;
 	level_name = TextBox(120, "resources/game_editor/font.ttf", 45, window);
-	level_name.setAlternativeText("Name", window);
-	level_name.move(text_box.get_scaled_width()+10, start_position);
+	level_name.setAlternativeText(" ", window);
+	level_name.move(text_box.get_scaled_width() + 10, start_position);
 
 	start_position += text_box.get_scaled_height();
 	background_file = TextBox(12, "resources/game_editor/font.ttf", 45, window);
 	background_file.setAlternativeText(" ", window);
-	background_file.move(text_box.get_scaled_width()+10, start_position);
+	background_file.move(text_box.get_scaled_width() + 10, start_position);
 
 	start_position += text_box.get_scaled_height();
 	cell_file = TextBox(12, "resources/game_editor/font.ttf", 45, window);
 	cell_file.setAlternativeText(" ", window);
-	cell_file.move(text_box.get_scaled_width()+10, start_position);
+	cell_file.move(text_box.get_scaled_width() + 10, start_position);
 
 	start_position += text_box.get_scaled_height();
 	win_points_needed = TextBox(12, "resources/game_editor/font.ttf", 45,
 			window);
-	win_points_needed.setAlternativeText("9000", window);
-	win_points_needed.move(text_box.get_scaled_width()+10, start_position);
+	win_points_needed.setAlternativeText(" ", window);
+	win_points_needed.move(text_box.get_scaled_width() + 10, start_position);
 
 	start_position += text_box.get_scaled_height();
 	max_players = TextBox(12, "resources/game_editor/font.ttf", 45, window);
-	max_players.setAlternativeText("8", window);
-	max_players.move(text_box.get_scaled_width()+10, start_position);
+	max_players.setAlternativeText(" ", window);
+	max_players.move(text_box.get_scaled_width() + 10, start_position);
 
 	start_position += text_box.get_scaled_height();
 	columns = TextBox(12, "resources/game_editor/font.ttf", 45, window);
-	columns.setAlternativeText("30", window);
-	columns.move(text_box.get_scaled_width()+10, start_position);
+	columns.setAlternativeText(" ", window);
+	columns.move(text_box.get_scaled_width() + 10, start_position);
 
 	start_position += text_box.get_scaled_height();
 	rows = TextBox(12, "resources/game_editor/font.ttf", 45, window);
-	rows.setAlternativeText("20", window);
-	rows.move(text_box.get_scaled_width()+10, start_position);
+	rows.setAlternativeText(" ", window);
+	rows.move(text_box.get_scaled_width() + 10, start_position);
 }
 
 bool levelConfigScreen::initialize() {
@@ -140,6 +145,9 @@ void levelConfigScreen::handleEvent(SDL_Event& event) {
 	case SDL_TEXTINPUT:
 		textInputEvent(event);
 		break;
+	case SDL_KEYDOWN:
+		keyPressEvent(event);
+		break;
 	}
 }
 
@@ -150,7 +158,8 @@ void levelConfigScreen::setupButtons() {
 
 	add_cell = Button("resources/game_editor/add_button.png", window);
 	add_cell.scale_with_height(text_box.get_scaled_height());
-	add_cell.move(2*text_box.get_scaled_width(),2*text_box.get_scaled_height());
+	add_cell.move(2 * text_box.get_scaled_width(),
+			2 * text_box.get_scaled_height());
 }
 
 void levelConfigScreen::textInputEvent(SDL_Event& event) {
@@ -161,6 +170,93 @@ void levelConfigScreen::textInputEvent(SDL_Event& event) {
 	max_players.handleEvent(event);
 	columns.handleEvent(event);
 	rows.handleEvent(event);
+}
+
+void levelConfigScreen::addCell() {
+	try {
+		string path = "resources/game_board/cell/" + cell_file.getText()
+				+ ".png";
+		Sprite aux = Sprite(path, window);
+		aux.free();
+
+		window.show_message_box(SDL_MESSAGEBOX_INFORMATION, "Agregado",
+				"Agregada la celda " + cell_file.getText() + "con exito.");
+		cells.push_back(cell_file.getText());
+	} catch (exception& e) {
+		window.show_message_box(SDL_MESSAGEBOX_ERROR, "Error",
+				"El archivo de celda no es valido");
+	}
+	add_cell.set_clicked(false);
+}
+
+bool levelConfigScreen::check_values() {
+
+	if (level_name.getText() == "") {
+		window.show_message_box(SDL_MESSAGEBOX_ERROR, "Error",
+				"Debe especificar un nombre para el nivel");
+		return false;
+	}
+
+	level.setName(level_name.getText());
+
+	try {
+		string path = "resources/game_board/backgrounds/"
+				+ background_file.getText() + ".jpg";
+		Sprite aux = Sprite(path, window);
+		aux.free();
+	} catch (exception& e) {
+		window.show_message_box(SDL_MESSAGEBOX_ERROR, "Error",
+				"El archivo de fondo no es valido");
+		return false;
+	}
+
+	level.setBackgroundFile(background_file.getText());
+
+	int value = atoi(win_points_needed.getText().c_str());
+	if (value < 300) {
+		window.show_message_box(SDL_MESSAGEBOX_ERROR, "Error",
+				"Debe especificar un puntaje valido (mayor a 300)");
+		return false;
+	}
+
+	level.setWinPoints(value);
+
+	value = atoi(max_players.getText().c_str());
+	if (value > MAX_PLAYERS || value < 2) {
+		window.show_message_box(SDL_MESSAGEBOX_ERROR, "Error",
+				"Debe especificar una cantidad de jugadores valida ( 2 a 8 )");
+		return false;
+	}
+
+	level.setMaxPlayers(value);
+
+	value = atoi(columns.getText().c_str());
+	if (value > MAX_BOARD_COLUMNS || value < MIN_BOARD_COLUMNS) {
+		window.show_message_box(SDL_MESSAGEBOX_ERROR, "Error",
+				"Debe especificar un numero valido de columnas ( 3 a 30 )");
+		return false;
+	}
+
+	level.setColumns(value);
+
+	value = atoi(rows.getText().c_str());
+	if (value > MAX_BOARD_ROWS || value < MIN_BOARD_ROWS) {
+		window.show_message_box(SDL_MESSAGEBOX_ERROR, "Error",
+				"Debe especificar un numero valido de filas ( 3 a 20 )");
+		return false;
+	}
+
+	level.setRows(value);
+
+	if (cells.size() < 1) {
+		window.show_message_box(SDL_MESSAGEBOX_ERROR, "Error",
+				"Debe agregar al menos una celda");
+		return false;
+	}
+
+	level.setCellFiles(cells);
+
+	return true;
 }
 
 void levelConfigScreen::mouseButtonEvent(SDL_Event& event) {
@@ -174,6 +270,16 @@ void levelConfigScreen::mouseButtonEvent(SDL_Event& event) {
 
 	next_step.handle_event(event);
 	add_cell.handle_event(event);
+
+	if (add_cell.is_clicked()) {
+		addCell();
+	}
+
+	if (next_step.is_clicked()) {
+		if (check_values()) {
+			status = STATUS_ENDED_OK;
+		}
+	}
 }
 
 void levelConfigScreen::loop() {
@@ -223,5 +329,16 @@ void levelConfigScreen::render() {
 	window.render();
 }
 
+void levelConfigScreen::keyPressEvent(SDL_Event& event) {
+	level_name.handleEvent(event);
+	background_file.handleEvent(event);
+	cell_file.handleEvent(event);
+	win_points_needed.handleEvent(event);
+	max_players.handleEvent(event);
+	columns.handleEvent(event);
+	rows.handleEvent(event);
+}
+
 void levelConfigScreen::cleanup() {
+	window.free();
 }

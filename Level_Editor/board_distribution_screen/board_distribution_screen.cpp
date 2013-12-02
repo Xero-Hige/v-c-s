@@ -17,19 +17,21 @@
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
 
+#include "../board_distribution_screen.h"
+
 #include <stddef.h>
 #include <SDL2/SDL_events.h>
-#include <string>
-#include <vector>
+#include <iostream>
+//#include <string>
+//#include <vector>
 
-#include "../../libs/position/position.h"
-#include "../../libs/screen_grid/screen_grid.h"
-#include "../../libs/sprite/sprite.h"
+//#include "../../libs/position/position.h"
+//#include "../../libs/screen_grid/screen_grid.h"
+//#include "../../libs/sprite/sprite.h"
 #include "../../libs/surface/surface.h"
-#include "../../libs/window/window.h"
-#include "../app.h"
-#include "../board_distribution_screen.h"
-#include "../level_builder/LevelBuilder.h"
+//#include "../../libs/window/window.h"
+//#include "../app.h"
+//#include "../level_builder/LevelBuilder.h"
 
 //FIXME
 #define DIMENSION_X 36
@@ -47,7 +49,7 @@ void BoardDistributionScreen::mouseButtonEvent(SDL_Event& event) {
 	if (pos.is_valid()) {
 		if (board_schema[pos[0]][pos[1]] == 0)
 			return; //no hay nada
-		board_schema[pos[0]][pos[1]] = (board_schema[pos[0]][pos[1]] + 1) % 3;
+		board_schema[pos[0]][pos[1]] = (board_schema[pos[0]][pos[1]] + 1) % cells.size();
 		if (board_schema[pos[0]][pos[1]] == 0)
 			board_schema[pos[0]][pos[1]] = 1;
 	}
@@ -56,7 +58,7 @@ void BoardDistributionScreen::mouseButtonEvent(SDL_Event& event) {
 void BoardDistributionScreen::setupBackground() {
 
 	Surface temporal_background = Surface(
-			"resources/game_board/backgrounds/Zangoose.jpg");
+			"resources/game_board/backgrounds/"+level.getBackgroundFile()+".jpg");
 	temporal_background.set_scaled_dimensions(SCREEN_WIDTH, SCREEN_HEIGHT);
 	background = temporal_background.convert_to_sprite(window);
 
@@ -69,7 +71,7 @@ BoardDistributionScreen::BoardDistributionScreen(LevelBuilder& level) :
 }
 
 void BoardDistributionScreen::setupBoard() {
-	grid = ScreenGrid(INICIO_X, INICIO_Y, DIMENSION_Y, DIMENSION_X, 30, 20);
+	grid = ScreenGrid(INICIO_X, INICIO_Y, DIMENSION_Y, DIMENSION_X, level.getColumns(), level.getRows());
 
 	vector<string> cell_files = level.getCellFiles();
 	for (size_t i = 0; i < cell_files.size(); i++) {
@@ -106,15 +108,15 @@ void BoardDistributionScreen::loop() {
 void BoardDistributionScreen::renderBoard() {
 	background.draw(window);
 
-	for (int i = 0; i < board_columns; i++) {
-		for (int j = 0; j < board_rows; j++) {
+	for (int i = 0; i < level.getColumns(); i++) {
+		for (int j = 0; j < level.getRows(); j++) {
 			int cell = board_schema[i][j];
-			if (cell != 0) {
+			if (cell > 0) {
 				cell--; //Corregido para que vaya de 0 a longitud-1
 
 				int x = INICIO_X + (DIMENSION_X * i);
 				int y = INICIO_Y + (DIMENSION_Y * j);
-
+				std::cout << cell << std::endl;
 				cells[cell].move(x, y);
 				cells[cell].draw(window);
 			}

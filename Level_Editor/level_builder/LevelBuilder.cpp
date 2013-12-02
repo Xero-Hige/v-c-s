@@ -33,8 +33,7 @@ LevelBuilder::~LevelBuilder() {
 	// TODO Auto-generated destructor stub
 }
 
-void LevelBuilder::setBoardSchema(
-		std::vector<std::vector<int> > board_schema) {
+void LevelBuilder::setBoardSchema(std::vector<std::vector<int> > board_schema) {
 	this->board_schema = board_schema;
 }
 
@@ -42,9 +41,58 @@ vector<vector<int> >& LevelBuilder::getBoardSchema() {
 	return this->board_schema;
 }
 
+std::string LevelBuilder::getName() {
+	return level_name;
+}
+
+std::string LevelBuilder::getBackgroundFile() {
+	return background_file;
+}
+
+int LevelBuilder::getWinPoints() {
+	return win_points;
+}
+
+int LevelBuilder::getMaxPlayers() {
+	return max_players;
+}
+
+int LevelBuilder::getColumns() {
+	return columns;
+}
+
+int LevelBuilder::getRows() {
+	return rows;
+}
+
 vector<string> LevelBuilder::getCellFiles() {
-	vector<string> files;
-	files.push_back("cell_A");
-	files.push_back("hover_cell_A");
-	return files;
+	return cell_files;
+}
+
+void LevelBuilder::setName(std::string name) {
+	level_name = name;
+}
+
+void LevelBuilder::setBackgroundFile(std::string file) {
+	background_file = file;
+}
+
+void LevelBuilder::setWinPoints(int points) {
+	win_points = points;
+}
+
+void LevelBuilder::setMaxPlayers(int players) {
+	max_players = players;
+}
+
+void LevelBuilder::setColumns(int columns) {
+	this->columns = columns;
+}
+
+void LevelBuilder::setRows(int rows) {
+	this->rows = rows;
+}
+
+void LevelBuilder::setCellFiles(std::vector<std::string> files) {
+	this->cell_files = files;
 }
