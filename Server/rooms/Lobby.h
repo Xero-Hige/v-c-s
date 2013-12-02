@@ -35,7 +35,8 @@ public:
 										//thread
 	/*
 	 * addNewClient agrega un nuevo cliente a un room, iniciando previamente el
-	 * hilo del cliente.
+	 * hilo del cliente. Cada vez que se agrega un nuevo cliente,
+	 * tambien se hace una limpieza de los rooms que no estan activos.
 	 */
 	void addNewClient(ClientHandler * ch); //Usar solo cuando es un nuevo cliente
 	/*
