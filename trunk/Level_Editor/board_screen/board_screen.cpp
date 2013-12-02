@@ -43,8 +43,7 @@ void BoardScreen::mouseButtonEvent(SDL_Event& event) {
 		return;
 	}
 	next_step.handle_event(event);
-	if (next_step.is_clicked())
-	{
+	if (next_step.is_clicked()) {
 		render();
 		level.setBoardSchema(board_schema);
 		status = STATUS_ENDED_OK;
@@ -54,7 +53,7 @@ void BoardScreen::mouseButtonEvent(SDL_Event& event) {
 void BoardScreen::setupBackground() {
 
 	Surface temporal_background = Surface(
-			"resources/game_board/backgrounds/Zangoose.jpg");
+			"resources/game_board/backgrounds/"+level.getBackgroundFile()+".jpg");
 	temporal_background.set_scaled_dimensions(SCREEN_WIDTH, SCREEN_HEIGHT);
 	background = temporal_background.convert_to_sprite(window);
 
@@ -63,15 +62,15 @@ void BoardScreen::setupBackground() {
 
 BoardScreen::BoardScreen(LevelBuilder& level) :
 		App(), level(level), window(Window()), background(Sprite()), cell(
-				Sprite()), grid(ScreenGrid()) {
+				Sprite()), grid(ScreenGrid()), board_columns(0), board_rows(0) {
 
 }
 
 void BoardScreen::setupBoard() {
-	grid = ScreenGrid(INICIO_X, INICIO_Y, DIMENSION_Y, DIMENSION_X, 30, 20);
+	grid = ScreenGrid(INICIO_X, INICIO_Y, DIMENSION_Y, DIMENSION_X, board_columns, board_rows);
 
-	//TODO: agregar soporte para multiples celdas
-	cell = Sprite("resources/game_board/cell/cell_A.png", window);
+	//Elijo una celda al azar
+	cell = Sprite("resources/game_board/cell/"+level.getCellFiles()[0]+".png", window);
 
 	board_schema = vector<vector<int> >();
 	for (size_t i = 0; i < board_columns; i++) {
@@ -90,7 +89,9 @@ void BoardScreen::setupButtons() {
 
 bool BoardScreen::initialize() {
 	window = Window(TITLE, SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_FLAGS);
-	//TODO: excepciones
+
+	board_columns = level.getColumns();
+	board_rows = level.getRows();
 
 	setupBackground();
 	setupBoard();

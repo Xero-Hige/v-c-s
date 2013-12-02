@@ -26,6 +26,15 @@
 class LevelBuilder {
 
 private:
+	int columns;
+	int rows;
+	std::string level_name;
+	std::string background_file;
+	int win_points;
+	int max_players;
+	std::vector<std::string> cell_files;
+
+private:
 	std::vector<std::vector<int> > board_schema;
 
 public:
@@ -33,7 +42,21 @@ public:
 	virtual ~LevelBuilder();
 
 	void setBoardSchema(std::vector<std::vector<int> > board_schema);
+	void setName(std::string name);
+	void setBackgroundFile(std::string file);
+	void setWinPoints(int points);
+	void setMaxPlayers(int players);
+	void setColumns(int columns);
+	void setRows(int rows);
+	void setCellFiles(std::vector<std::string> files);
+
 	std::vector<std::vector<int> >& getBoardSchema();
+	std::string getName();
+	std::string getBackgroundFile();
+	int getWinPoints();
+	int getMaxPlayers();
+	int getColumns();
+	int getRows();
 	std::vector<std::string> getCellFiles();
 };
 

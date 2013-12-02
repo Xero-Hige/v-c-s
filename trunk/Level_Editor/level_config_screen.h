@@ -41,11 +41,13 @@ private:
 	static const int SCREEN_HEIGHT = 900;
 	static const int WINDOW_FLAGS = SDL_WINDOW_RESIZABLE;
 
-	static const int max_board_columns = 30;
-	static const int max_board_rows = 20;
+	static const int MAX_BOARD_COLUMNS = 30;
+	static const int MAX_BOARD_ROWS = 20;
 
-	static const int min_board_columns = 3;
-	static const int min_board_rows = 3;
+	static const int MIN_BOARD_COLUMNS = 3;
+	static const int MIN_BOARD_ROWS = 3;
+
+	static const int MAX_PLAYERS = 8;
 
 private:
 
@@ -74,16 +76,22 @@ private:
 	Button add_cell;
 	Button next_step;
 
+	std::vector<std::string> cells;
+
 	void setup_markers();
 	void setup_textboxes();
 
 	void textInputEvent(SDL_Event& event);
 	void mouseButtonEvent(SDL_Event& event);
+	void keyPressEvent(SDL_Event& event);
+
 	void render_markers();
 	void render_textboxes();
 
 	void setupButtons();
 	void draw_buttons();
+	void addCell();
+	bool check_values();
 
 public:
 	levelConfigScreen(LevelBuilder& level);

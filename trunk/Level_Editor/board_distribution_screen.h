@@ -40,9 +40,6 @@ class BoardDistributionScreen: public App {
 	static const int SCREEN_HEIGHT = 900;
 	static const int WINDOW_FLAGS = SDL_WINDOW_RESIZABLE;
 
-	static const int board_columns = 30;
-	static const int board_rows = 20;
-
 private:
 
 	LevelBuilder& level;
