@@ -42,7 +42,7 @@ using std::map; //FIXME borrar
 
 Backend::Backend() : server_listener(&server_connector, this) {
 
-	is_connected=true; //false;
+	is_connected=false; //false;
 	ip="";
 	port=0;
 
@@ -98,13 +98,13 @@ string Backend::operation_error() {
 
 void Backend::async_log_in
 (const std::string& user,const std::string& password,int auth_type){
-//    //FIXME lo comenté porque se rompía
-//	std::cout << "Autenticacion al server.";
-//	bool success = this->server_connector.connectServer(user, password, "2");
-//	std::cout << " Exito? " << success << std::endl;
-//	if (!success) _operation_error = "User/Password incorrecta";
-//	else server_listener.start();
-//	_operation_ended = true;
+    //FIXME lo comenté porque se rompía
+	std::cout << "Autenticacion al server.";
+	bool success = this->server_connector.connectServer(user, password, "2");
+	std::cout << " Exito? " << success << std::endl;
+	if (!success) _operation_error = "User/Password incorrecta";
+	else server_listener.start();
+	_operation_ended = true;
 }
 
 Backend::~Backend() {
@@ -315,13 +315,13 @@ bool Backend::async_make_swap(Position pos1_graphic, Position pos2_graphic) {
 
 void Backend::asyncGetLevelSpecification() {
     //TODO Que lo pida al server y obtenga data en serio
-//    std::string level_data;
-//  server_connector.requestLevel();
-//    bool received = false;
-//    while (!received){
-//    	received = server_connector.getLevel(level_data);
-//    }
-	string level_data = getLevelData();
+    std::string level_data;
+    server_connector.requestLevel();
+    bool received = false;
+    while (!received){
+    	received = server_connector.getLevel(level_data);
+    }
+//	string level_data = getLevelData();
     level_reader.changeLevelData(level_data);
     score_tracker.setGoalScore(level_reader.getGoalScore());
 }
