@@ -21,6 +21,8 @@ bool MsgInterpreter::interpret(std::string s) {
 		return true;
 	} else if (s.compare(CLIENT_EXIT_ROOM) == 0){
 		exitRoom();
+	} else if (s.compare(LEVEL_DATA) == 0){
+		manageLevel();
 	}
 	interpretParticularMsg(s);
 	return false;

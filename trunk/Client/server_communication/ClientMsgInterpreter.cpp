@@ -43,6 +43,12 @@ void ClientMsgInterpreter::interpretParticularMsg(string msg){
     }
 }
 
+void ClientMsgInterpreter::manageLevel(){
+	std::cout << "Cliente recibe datos del nivel" << std::endl;
+	std::string level_data;
+	client->recvMsg(level_data);
+	client->setLevel(level_data);
+}
 
 void ClientMsgInterpreter::exitCharPressed(){
 	client->exitCharPressed();

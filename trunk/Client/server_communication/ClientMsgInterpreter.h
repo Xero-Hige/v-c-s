@@ -27,6 +27,7 @@ class ClientMsgInterpreter : public MsgInterpreter{
 	 * Los metodos de esta clase interpretan el mensaje devuelto por el servidor
 	 * y llaman a los metodos que correspondan.
 	 */
+	void manageLevel();
 	void closeConnection();
 	void exitRoom();
 	void exitCharPressed();

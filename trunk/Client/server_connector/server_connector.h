@@ -18,6 +18,8 @@ class Server_Connector {
 	Authenticator auth;
 	FormattedSocket * sock; //socket file descriptor
 	bool exit_char_pressed;
+	std::string level_data;
+	bool level_received;
 
 	/*
 	 * getMatchmaking le pide al usuario de que modo quiere obtener su room.
@@ -76,7 +78,19 @@ public:
 	 */
 	void closeConnection();
 	FormattedSocket * getSocket();
-	std::string getLevel();
+	/*
+	 * requestLevel pide al servidor que se envie los datos del nivel
+	 */
+	void requestLevel();
+	/*
+	 * setLevel setea los datos del nivel entrante.
+	 */
+	void setLevel(std::string lvl);
+	/*
+	 * getLevel devuelve si el nivel llego o no desde el server, y en caso de
+	 * haber llegado devuelve los datos del nivel a traves de data.
+	 */
+	bool getLevel(std::string &data);
 	virtual ~Server_Connector();
 };
 

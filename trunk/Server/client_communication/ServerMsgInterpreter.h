@@ -23,6 +23,7 @@ class ServerMsgInterpreter : public MsgInterpreter {
 	 * exitRoom, exitCharPressed y closeConnection llaman a los respectivos
 	 *  metodos del ClientHandler.
 	 */
+	void manageLevel();
 	void closeConnection();
 	void exitRoom();
 	void exitCharPressed();

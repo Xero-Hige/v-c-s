@@ -12,6 +12,7 @@
 #include "../../libs/game_messages/game_msg_constants.h"
 
 #include <string>
+#include <iostream>
 
 using std::string;
 
@@ -31,10 +32,12 @@ void ServerMsgInterpreter::exitCharPressed(){
 	//todo cortar comunicacion con el user.
 }
 
+void ServerMsgInterpreter::manageLevel(){
+	std::cout << "Servidor envia datos del nivel." << std::endl;
+	client->sendLevelData();
+}
+
 void ServerMsgInterpreter::interpretParticularMsg(std::string msg){
-	if (msg.compare(LEVEL_DATA) == 0){
-		client->sendLevelData();
-	}
 	msg_reader.processNewMessage(msg);
 	string header = msg_reader.getMessageHeader();
 	if (header == SWAP) {

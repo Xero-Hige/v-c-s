@@ -49,6 +49,7 @@ Server_Connector::Server_Connector(){
 	this->sock = new FormattedSocket(sockfd);
 	auth.setSocket(this->sock);
 	this->exit_char_pressed = false;
+	level_received = false;
 }
 
 void Server_Connector::communicate(){
@@ -144,11 +145,25 @@ FormattedSocket * Server_Connector::getSocket(){
 	return this->sock;
 }
 
-std::string Server_Connector::getLevel(){
+void Server_Connector::requestLevel(){
 	sendMsg(LEVEL_DATA);
-	std::string level;
-	recvMsg(level);
-	return level;
+}
+
+void Server_Connector::setLevel(std::string lvl){
+	this->level_data = lvl;
+	this->level_received = true;
+}
+
+bool Server_Connector::getLevel(std::string &data){
+	if (level_received){
+		level_received = false;
+		data.clear();
+		data.append(level_data);
+		level_data.clear();
+		return true;
+	} else {
+		return false;
+	}
 }
 
 Server_Connector::~Server_Connector() {

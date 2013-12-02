@@ -29,6 +29,7 @@ void ClientHandler::run(void * data){
 		ServerMsgInterpreter msg_int(this);
 		if (msg_int.interpret(rcvd_msg)) keep_listening = false;
 	}
+	std::cout << "Termina el thread de un cliente" << std::endl;
 }
 
 void ClientHandler::exitRoom(){
@@ -91,6 +92,7 @@ bool ClientHandler::isActive(){
 
 void ClientHandler::sendLevelData(){
 	std::string lvl = room->loadLevel();
+	sendMsg(LEVEL_DATA); //Avisa que va a enviar el level.
 	sendMsg(lvl);
 }
 
