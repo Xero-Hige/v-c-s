@@ -45,7 +45,7 @@ Editor_App::Editor_App() {
 }
 
 Editor_App::~Editor_App() {
-    apps.clear();
+	apps.clear();
 	SDL_Quit();
 }
 
@@ -56,6 +56,9 @@ void Editor_App::change_app() {
 			return;
 		}
 		switch (actual_app) {
+		case 3:
+			running = false;
+			return;
 		default:
 			apps[actual_app]->cleanup();
 			actual_app++;
@@ -111,4 +114,5 @@ void Editor_App::render() {
 
 void Editor_App::cleanup() {
 	apps[actual_app]->cleanup();
+	apps.clear();
 }

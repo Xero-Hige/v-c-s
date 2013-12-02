@@ -21,17 +21,8 @@
 
 #include <stddef.h>
 #include <SDL2/SDL_events.h>
-#include <iostream>
-//#include <string>
-//#include <vector>
 
-//#include "../../libs/position/position.h"
-//#include "../../libs/screen_grid/screen_grid.h"
-//#include "../../libs/sprite/sprite.h"
 #include "../../libs/surface/surface.h"
-//#include "../../libs/window/window.h"
-//#include "../app.h"
-//#include "../level_builder/LevelBuilder.h"
 
 //FIXME
 #define DIMENSION_X 36
@@ -49,7 +40,7 @@ void BoardDistributionScreen::mouseButtonEvent(SDL_Event& event) {
 	if (pos.is_valid()) {
 		if (board_schema[pos[0]][pos[1]] == 0)
 			return; //no hay nada
-		board_schema[pos[0]][pos[1]] = (board_schema[pos[0]][pos[1]] + 1) % cells.size();
+		board_schema[pos[0]][pos[1]] = (board_schema[pos[0]][pos[1]] + 1) % (cells.size()+1);
 		if (board_schema[pos[0]][pos[1]] == 0)
 			board_schema[pos[0]][pos[1]] = 1;
 	}
@@ -130,7 +121,6 @@ void BoardDistributionScreen::renderBoard() {
 
 				int x = INICIO_X + (DIMENSION_X * i);
 				int y = INICIO_Y + (DIMENSION_Y * j);
-				std::cout << cell << std::endl;
 				cells[cell].move(x, y);
 				cells[cell].draw(window);
 			}
@@ -149,4 +139,11 @@ void BoardDistributionScreen::render() {
 }
 
 void BoardDistributionScreen::cleanup() {
+	background.free();
+	for (int i=0;i<cells.size();i++){
+		cells[i].free();
+	}
+	next_step.free();
+	window.free();
+
 }

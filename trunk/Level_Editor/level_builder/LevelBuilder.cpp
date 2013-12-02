@@ -24,17 +24,27 @@
 using std::string;
 using std::vector;
 
-LevelBuilder::LevelBuilder() {
-	// TODO Auto-generated constructor stub
+LevelBuilder::LevelBuilder():win_points(0),columns(0),rows(0),max_players(0){}
 
-}
-
-LevelBuilder::~LevelBuilder() {
-	// TODO Auto-generated destructor stub
-}
+LevelBuilder::~LevelBuilder() {}
 
 void LevelBuilder::setBoardSchema(std::vector<std::vector<int> > board_schema) {
 	this->board_schema = board_schema;
+
+	vector<int> values;
+	for (int i=0;i<5;i++)
+	{
+		values.push_back(1);
+	}
+
+	for (size_t i=0;i<board_schema.size();i++)
+	{
+		board_values.push_back(vector<vector<int> >());
+		for (size_t j=0;j<board_schema[i].size();j++)
+		{
+			board_values[i].push_back(values);
+		}
+	}
 }
 
 vector<vector<int> >& LevelBuilder::getBoardSchema() {
@@ -95,4 +105,11 @@ void LevelBuilder::setRows(int rows) {
 
 void LevelBuilder::setCellFiles(std::vector<std::string> files) {
 	this->cell_files = files;
+}
+
+void LevelBuilder::setProbValues(int x, int y, std::vector<int> values) {
+	board_values[x][y] = values;
+}
+
+void LevelBuilder::store() {
 }

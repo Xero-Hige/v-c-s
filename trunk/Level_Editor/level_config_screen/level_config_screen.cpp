@@ -21,8 +21,9 @@
 
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_messagebox.h>
+#include <cstdlib>
 #include <exception>
-#include <iostream>
+#include <vector>
 
 using std::string;
 using std::exception;

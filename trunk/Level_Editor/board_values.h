@@ -1,3 +1,7 @@
+#include "../libs/text_box/text_box.h"
+
+class LevelBuilder;
+
 /**
  board_creen.h
 
@@ -30,7 +34,6 @@
 #include "../libs/window/window.h"
 #include "../libs/button/button.h"
 
-
 #include "app.h"
 
 class BoardValues: public App {
@@ -48,18 +51,22 @@ private:
 	Sprite background;
 	Sprite hover_cell;
 
-
-	std::vector<Sprite> cells;
-
-	std::vector<std::vector<int> > board_schema;
-	std::vector<std::vector<int> > selected_board;
-
-
-	ScreenGrid grid;
+	Sprite probability_table;
 
 	Button next_step;
 	Button apply;
 
+	TextBox prob_a;
+	TextBox prob_b;
+	TextBox prob_c;
+	TextBox prob_d;
+	TextBox prob_e;
+
+	std::vector<Sprite> cells;
+	std::vector<std::vector<int> > board_schema;
+	std::vector<std::vector<int> > selected_board;
+
+	ScreenGrid grid;
 
 private:
 	/**
@@ -82,10 +89,17 @@ private:
 	/**
 	 * Inicializa los mugshots
 	 */
-	void setup_sprites();
+	void setupSprites();
 	void renderBoard();
 	void setupBoard();
 	void setupButtons();
+	void renderButtons();
+	void renderTexboxes();
+	void setupTextboxes();
+
+	void textInputEvent(SDL_Event& event);
+	void keyPressEvent(SDL_Event& event);
+	void applyValues();
 
 public:
 
