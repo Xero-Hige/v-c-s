@@ -93,14 +93,29 @@ void GameManager::makeSwap(Position position1, Position position2, string user_i
     } while (effects.size() > 0);
 }
 
+void GameManager::getSerializedBoardProducts(std::string& serialized_products) {
+    //TODO
+}
+
 void GameManager::configureBoards() {
     board = Board(level_reader->getBoardHeight(), level_reader->getBoardWidth());
     replacements_board = Board(level_reader->getBoardHeight(), level_reader->getBoardWidth());
     physical_checker = PhysicalChecker(board);
     combination_checker = CombinationChecker(&board);
-    vector<vector<int> > schema = level_reader->getBoardSchema();
+    vector<vector<int> > schema;
+    level_reader->getBoardSchema(schema);
     board.setSchema(schema);
     replacements_board.setSchema(schema);
+}
+
+void GameManager::setInitialProducts() {
+    list<Product*> products;
+    level_reader->getInitialProducts(products);
+    for (int x = 0; x < board.getWidth(); x++) {
+        for (int y = 0; y < board.getHeight(); y++) {
+            //TODO
+        }
+    }
 }
 
 void GameManager::configureReplacementsGenerator() {

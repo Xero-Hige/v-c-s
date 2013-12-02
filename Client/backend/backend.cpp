@@ -251,7 +251,8 @@ vector<vector<int> > Backend::get_board_schema() {
     asyncGetLevelSpecification();
     configureBoards();
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    vector<vector<int> > schema = level_reader.getBoardSchema();
+    vector<vector<int> > schema;
+    level_reader.getBoardSchema(schema);
     // TODO Esto no me gusta acá, habría que ver donde/como se puede poner. Dónde se configuran los tableros (configureBoards)??
     board.setSchema(schema);
     replacements_board.setSchema(schema);

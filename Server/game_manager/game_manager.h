@@ -65,10 +65,14 @@ public:
     void configure();
     bool addPlayer(std::string user_id);
     void makeSwap(Position position1, Position position2, std::string user_id);
+    void getSerializedBoardProducts(std::string& serialized_products);
 
 private:
     /* Configura los tableros (tamaño y esquema) según los datos del nivel */
     void configureBoards();
+
+    /* Crea los productos iniciales y los coloca en el tablero */
+    void setInitialProducts();
 
     /* Configura el generador de reemplazos según los datos del nivel */
     void configureReplacementsGenerator();

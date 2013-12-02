@@ -61,6 +61,9 @@ public:
 	bool isPlaying();
 	/* Notifica al game manager que un cliente hizo un swap */
 	void swapMade(std::string user_id, Position position1, Position position2);
+	/* Serializa los productos del tablero de juego en formato Json y lo *
+	 * guarda en el string.                                              */
+	void getSerializedBoardProducts(std::string& serialized_products);
 	/*
 	 * endMatch termina la partida y se lo notifica al lobby.
 	 */
