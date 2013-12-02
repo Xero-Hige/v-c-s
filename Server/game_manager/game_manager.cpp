@@ -21,6 +21,8 @@
 
 #include "game_manager.h"
 
+#include "../../libs/boards/product.h"
+#include "../../libs/boards/tile.h"
 #include "../../libs/boards/board.h"
 #include "../../libs/boards/refiller.h"
 #include "../../libs/boards/product_generator.h"
@@ -52,6 +54,7 @@ GameManager::GameManager(Room* room, LevelReader* level_reader)
 void GameManager::configure() {
     configureBoards();
     configureReplacementsGenerator();
+    setInitialProducts();
     score_tracker.setGoalScore(level_reader->getGoalScore());
 }
 
@@ -94,7 +97,7 @@ void GameManager::makeSwap(Position position1, Position position2, string user_i
 }
 
 void GameManager::getSerializedBoardProducts(std::string& serialized_products) {
-    //TODO
+
 }
 
 void GameManager::configureBoards() {
@@ -111,9 +114,14 @@ void GameManager::configureBoards() {
 void GameManager::setInitialProducts() {
     list<Product*> products;
     level_reader->getInitialProducts(products);
+    list<Product*>::iterator it;
     for (int x = 0; x < board.getWidth(); x++) {
         for (int y = 0; y < board.getHeight(); y++) {
-            //TODO
+            if (board.getTileType(x,y) == Tile::HOLE) {
+                continue;
+            }
+            board.setProduct((*it), x, y);
+            ++it;
         }
     }
 }
@@ -151,15 +159,17 @@ bool GameManager::checkCombination(Position position1, Position position2) {
     return false;
 }
 
-void GameManager::refill() {
+void GameManager::refill(bool send) {
     for (int column = 0; column < board.getWidth(); column++) {
         int empty_cells = replacements_board.getEmptyCellsInColumn(column);
         if (empty_cells > 0) {
             list<Product*> replacements = replacements_generator.getReplacements(empty_cells, column);
-            //TODO mandar los reemplazos (hecho, probarlo)
-            string product_refill_msg = msg_builder.buildProductRefill(column, replacements);
-            room->notifyClients(product_refill_msg);
-            //////////////////////////////////////////////
+            if (send) {
+                //TODO mandar los reemplazos (hecho, probarlo)
+                string product_refill_msg = msg_builder.buildProductRefill(column, replacements);
+                room->notifyClients(product_refill_msg);
+                //////////////////////////////////////////////
+            }
             refiller.addReplacements(column, replacements);
         }
     }
