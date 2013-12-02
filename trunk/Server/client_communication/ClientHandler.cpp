@@ -89,6 +89,11 @@ bool ClientHandler::isActive(){
 	return this->is_active;
 }
 
+void ClientHandler::sendLevelData(){
+	std::string lvl = room->loadLevel();
+	sendMsg(lvl);
+}
+
 FormattedSocket * ClientHandler::getSocket(){
 	return &sock;
 }

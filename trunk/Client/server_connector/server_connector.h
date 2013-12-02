@@ -76,6 +76,7 @@ public:
 	 */
 	void closeConnection();
 	FormattedSocket * getSocket();
+	std::string getLevel();
 	virtual ~Server_Connector();
 };
 

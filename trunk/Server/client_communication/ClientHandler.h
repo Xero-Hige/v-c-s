@@ -54,6 +54,10 @@ public:
 	 * servidor esta cerrando la conexion.
 	 */
 	void closeConnection();
+	/*
+	 * sendLevelData envia al cliente los datos del nivel.
+	 */
+	void sendLevelData();
 	bool isActive();
 	virtual ~ClientHandler();
 };

@@ -26,7 +26,6 @@ class Room {
 	LevelReader level_reader;
 	GameManager game_manager;
 	std::string getLevelName();
-	std::string loadLevel();
 	void eraseUsername(std::string username);
 
 public:
@@ -58,6 +57,10 @@ public:
 	 * endMatch termina la partida y se lo notifica al lobby.
 	 */
 //	void endMatch();
+	/*
+	 * loadLevel devuelve un string con los datos del nivel.
+	 */
+	std::string loadLevel();
 	virtual ~Room();
 };
 
