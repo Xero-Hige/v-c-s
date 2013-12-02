@@ -52,7 +52,7 @@ public:
 	/*
 	 * endMatch termina la partida y se lo notifica al lobby.
 	 */
-	void endMatch();
+//	void endMatch();
 	virtual ~Room();
 };
 

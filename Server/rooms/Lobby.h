@@ -36,9 +36,9 @@ public:
 	 */
 	void addNewClient(ClientHandler * ch); //Usar solo cuando es un nuevo cliente
 	/*
-	 * addRoom agrega un room a la lista con el id indicado.
+	 * createRoom agrega un room a la lista para el CH indicado.
 	 */
-	void addRoom(unsigned long id, Room * r);
+	void createRoom(ClientHandler * ch);
 	/*
 	 * getRoom devuelve el room que tiene el id indicado, o null si no lo hay.
 	 */
@@ -46,7 +46,7 @@ public:
 	/*
 	 * endMatch termina un room.
 	 */
-	void endMatch(unsigned long id);
+//	void endMatch(unsigned long id);
 	/*
 	 * endAllMatches termina las partidas del servidor.
 	 */

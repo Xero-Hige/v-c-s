@@ -47,6 +47,7 @@ void Room::eraseUsername(std::string username){
 		std::string username_actual = *it;
 		if (username_actual.compare(username) == 0){
 			usernames.erase(it);
+			return;
 		}
 	}
 }
@@ -58,14 +59,12 @@ bool Room::exitRoom(ClientHandler* ch){
 		ClientHandler* actual_ch = *it;
 		if (ch == actual_ch){//si los ptrs son iguales
 			clients.erase(it);
-			std::cout << "El cliente salio del room" << std::endl;
-			//Si se quedo sin clientes se termine la partida
-			if (!clients.size()) this->endMatch();
 			ch->setRoom(NULL);
 			eraseUsername(ch->getUserid());
 			//Si sigue activo lo agrega a un room.
 			if(ch->isActive()) this->lob->addClient(ch);
 			else delete ch;
+			std::cout << "El cliente salio del room" << std::endl;
 			return true;
 		}
 	}
@@ -80,14 +79,14 @@ bool Room::isPlaying(){
 	return currently_playing;
 }
 
-void Room::endMatch(){
-	for (std::vector<ClientHandler*>::iterator it = clients.begin();
-			it < clients.end();
-			it++){
-		exitRoom(*it);
-	}
-	this->lob->endMatch(this->id);
-}
+//void Room::endMatch(){
+//	for (std::vector<ClientHandler*>::iterator it = clients.begin();
+//			it < clients.end();
+//			it++){
+//		exitRoom(*it);
+//	}
+//	this->lob->endMatch(this->id);
+//}
 
 void Room::notifyClients(std::string msg){
 	std::vector<ClientHandler*>::iterator it;
