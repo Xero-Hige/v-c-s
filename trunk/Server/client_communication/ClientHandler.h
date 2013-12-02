@@ -7,9 +7,12 @@
 
 #ifndef CLIENTHANDLER_H_
 #define CLIENTHANDLER_H_
+
 #include "../../libs/wrappers/Thread.h"
 #include "../../libs/messages/MsgConstants.h"
 #include "../../libs/communication_protocol/FormattedSocket.h"
+#include "../../libs/position/position.h"
+
 #include <stdlib.h>
 #include <string>
 
@@ -45,6 +48,10 @@ public:
 	 * conexion.
 	 */
 	int recvMsg(std::string & s);
+
+	/* Le notifica al room que el cliente hizo un swap */
+	void swapMade(Position position1, Position position2);
+
 	/*
 	 * exitRoom le avisa al room que este cliente desea salir.
 	 */

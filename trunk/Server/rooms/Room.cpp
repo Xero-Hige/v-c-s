@@ -107,14 +107,14 @@ bool Room::isActive(){
 	return active;
 }
 
-//void Room::endMatch(){
+void Room::endMatch(){
 //	for (std::vector<ClientHandler*>::iterator it = clients.begin();
 //			it < clients.end();
 //			it++){
 //		exitRoom(*it);
 //	}
 //	this->lob->endMatch(this->id);
-//}
+}
 
 void Room::notifyClients(std::string msg){
 	std::vector<ClientHandler*>::iterator it;
@@ -122,6 +122,10 @@ void Room::notifyClients(std::string msg){
 		ClientHandler* ch = *it;
 		ch->sendMsg(msg);
 	}
+}
+
+bool Room::swapMade(std::string user_id, Position position1, Position position2) {
+    return game_manager.makeSwap(position1, position2, user_id);
 }
 
 Room::~Room() {

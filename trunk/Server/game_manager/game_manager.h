@@ -64,7 +64,7 @@ public:
     GameManager(Room* room, LevelReader* level_reader);
     void configure();
     bool addPlayer(std::string user_id);
-    void makeSwap(Position position1, Position position2, std::string user_id);
+    bool makeSwap(Position position1, Position position2, std::string user_id);
 
 private:
     /* Configura los tableros (tamaño y esquema) según los datos del nivel */

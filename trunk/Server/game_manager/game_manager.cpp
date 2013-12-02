@@ -60,16 +60,14 @@ bool GameManager::addPlayer(std::string user_id) {
 }
 
 //TODO comunicación! Mandarle a los clientes los resultados y eso
-void GameManager::makeSwap(Position position1, Position position2, string user_id) {
+bool GameManager::makeSwap(Position position1, Position position2, string user_id) {
     // Chequeo físico
     if (! checkSwap(position1, position2)) {
-        return;
-//        return false;
+        return false;
     }
     // Chequeo de combinación
     if (! checkCombination(position1, position2)) {
-        return;
-//        return false;
+        return false;
     }
     list<CombinationEffect*> effects = combiner.makeCombinations(position1, position2);
     do {
@@ -79,16 +77,19 @@ void GameManager::makeSwap(Position position1, Position position2, string user_i
         /////////////////////////////////////////////////////////////////////////////////
         int combination_score = combiner.getLastCombinationsPoints();
         score_tracker.addToPlayerScore(user_id, combination_score);
-        //TODO chequeo si termino el juego. Hay que cerrar la room?
-        //TODO mandar el puntaje (hecho, probarlo), y si ganó algún jugador
+        //TODO mandar el puntaje (hecho, probarlo) y si ganó algún jugador, terminar la partida (ver método de Room)
         string score_update_msg = msg_builder.buildScoreUpdateMsg(user_id, score_tracker.getPlayerScore(user_id));
         room->notifyClients(score_update_msg);
-        ////////////////////////////////////////////////////////////////////
+        if (score_tracker.goalScoreReached()) {
+            // Terminó la partida
+            room->endMatch();
+        }
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
         refill();
         refiller.realocateBoard();
         effects = combiner.makeChainedCombinations();
     } while (effects.size() > 0);
-//    return true;
+    return true;
 }
 
 void GameManager::configureBoards() {

@@ -98,6 +98,10 @@ FormattedSocket * ClientHandler::getSocket(){
 	return &sock;
 }
 
+void ClientHandler::swapMade(Position position1, Position position2) {
+    room->swapMade(userid, position1, position2);
+}
+
 ClientHandler::~ClientHandler() {
 	// TODO Auto-generated destructor stub
 }
