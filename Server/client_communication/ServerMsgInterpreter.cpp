@@ -37,6 +37,14 @@ void ServerMsgInterpreter::manageLevel(){
 	client->sendLevelData();
 }
 
+void ServerMsgInterpreter::manageBoard(){
+	client->sendBoardData();
+}
+
+void ServerMsgInterpreter::manageReplacements(){
+	client->sendReplacementsData();
+}
+
 void ServerMsgInterpreter::interpretParticularMsg(std::string msg){
 	msg_reader.processNewMessage(msg);
 	string header = msg_reader.getMessageHeader();

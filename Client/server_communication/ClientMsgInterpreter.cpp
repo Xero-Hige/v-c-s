@@ -59,6 +59,18 @@ void ClientMsgInterpreter::manageLevel(){
 	client->setLevel(level_data);
 }
 
+void ClientMsgInterpreter::manageBoard(){
+	std::string data;
+	client->recvMsg(data);
+	client->setBoard(data);
+}
+
+void ClientMsgInterpreter::manageReplacements(){
+	std::string data;
+	client->recvMsg(data);
+	client->setReplacements(data);
+}
+
 void ClientMsgInterpreter::exitCharPressed(){
 	client->exitCharPressed();
 }

@@ -66,6 +66,14 @@ public:
 	 */
 	void sendLevelData();
 	/*
+	 * sendBoardData envia al cliente los datos del tablero.
+	 */
+	void sendBoardData();
+	/*
+	 * sendReplacementsData envia al cliente los datos de los reemplazos.
+	 */
+	void sendReplacementsData();
+	/*
 	 * isActive pregunta al cliente si esta activo, es decir, si el cliente todavia
 	 * esta conectado.
 	 */

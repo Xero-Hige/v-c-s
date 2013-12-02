@@ -12,6 +12,8 @@
 #include "MsgConstants.h"
 
 class MsgInterpreter {
+	virtual void manageBoard() = 0;
+	virtual void manageReplacements() = 0;
 	virtual void manageLevel() = 0;
 	virtual void closeConnection() = 0;
 	virtual void exitRoom() = 0;

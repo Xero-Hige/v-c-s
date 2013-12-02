@@ -96,6 +96,20 @@ void ClientHandler::sendLevelData(){
 	sendMsg(lvl);
 }
 
+void ClientHandler::sendBoardData(){
+	std::string data;
+	room->getSerializedBoardProducts(data);
+	sendMsg(BOARD_PRODUCTS);
+	sendMsg(data);
+}
+
+void ClientHandler::sendReplacementsData(){
+	std::string data;
+	room->getSerializedReplacementProducts(data);
+	sendMsg(REPLACEMENT_PRODUCTS); //Avisa que va a enviar el level.
+	sendMsg(data);
+}
+
 FormattedSocket * ClientHandler::getSocket(){
 	return &sock;
 }
