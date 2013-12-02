@@ -84,6 +84,10 @@ bool Tile::setProduct(Product* product) {
     return true;
 }
 
+Product* Tile::getProduct() {
+    return product;
+}
+
 void Tile::eliminateProduct() {
     Product* del_product = popProduct();
     delete(del_product);

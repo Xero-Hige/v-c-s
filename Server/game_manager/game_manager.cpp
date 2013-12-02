@@ -33,6 +33,7 @@
 #include "../../libs/score_tracker/score_tracker.h"
 #include "../../libs/game_messages/game_message_builder.h"
 #include "../rooms/Room.h"
+#include "../../libs/game_messages/json_serializer.h"
 
 #include <string>
 #include <list>
@@ -55,6 +56,7 @@ void GameManager::configure() {
     configureBoards();
     configureReplacementsGenerator();
     setInitialProducts();
+    refill(false);
     score_tracker.setGoalScore(level_reader->getGoalScore());
 }
 
@@ -97,7 +99,11 @@ void GameManager::makeSwap(Position position1, Position position2, string user_i
 }
 
 void GameManager::getSerializedBoardProducts(std::string& serialized_products) {
+    board.serializeProducts(serialized_products);
+}
 
+void GameManager::getSerializedReplacementProducts(std::string& serialized_products) {
+    replacements_board.serializeProducts(serialized_products);
 }
 
 void GameManager::configureBoards() {

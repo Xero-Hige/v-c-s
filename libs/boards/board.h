@@ -25,6 +25,7 @@
 #include "tile.h"
 #include "product.h"
 #include "../position/position.h"
+#include "../game_messages/json_serializer.h"
 
 #include <vector>
 #include <list>
@@ -103,6 +104,8 @@ public:
     /* Devuelve la cantidad de celdas vacias en la columna dada *
      * Si el número de columna es inválido devuelve -1          */
     int getEmptyCellsInColumn(int column_number);
+    /* Serializa en formato Json los productos del tablero */
+    void serializeProducts(std::string& serialized_products);
     ~Board();
 
 private:

@@ -24,6 +24,7 @@
 #include "tile.h"
 #include "product.h"
 #include "../position/position.h"
+#include "../game_messages/json_serializer.h"
 
 #include <vector>
 #include <list>
@@ -241,6 +242,20 @@ int Board::getEmptyCellsInColumn(int column_number) {
         return -1;
     }
     return cellsInColumn[column_number] - productsInColumn[column_number];
+}
+
+void Board::serializeProducts(std::string& serialized_products) {
+    JsonSerializer serializer;
+    serializer.startNewObject();
+    list<Product*> products;
+    for (int i = 0; i < tiles.size(); i++) {
+        Product* product = tiles[i].getProduct();
+        if (product != NULL) {
+            products.push_back(product);
+        }
+    }
+    serializer.addObjectArrayField("board products", (list<IJsonSerializable*>&)products);
+    serialized_products = serializer.getParsedObject();
 }
 
 Board::~Board() {
