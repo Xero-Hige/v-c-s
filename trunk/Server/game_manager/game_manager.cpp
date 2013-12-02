@@ -73,16 +73,25 @@ void GameManager::makeSwap(Position position1, Position position2, string user_i
     }
     list<CombinationEffect*> effects = combiner.makeCombinations(position1, position2);
     do {
-        //TODO mandar los CombinationEffects
+        //TODO mandar los CombinationEffects (hecho, probarlo)
+        string combination_effects_msg = msg_builder.buildCombinationEffectsMsg(effects);
+        room->notifyClients(combination_effects_msg);
+        /////////////////////////////////////////////////////////////////////////////////
         int combination_score = combiner.getLastCombinationsPoints();
         score_tracker.addToPlayerScore(user_id, combination_score);
         //TODO chequeo si termino el juego. Hay que cerrar la room?
-        //TODO mandar el puntaje, y si ganó algún jugador
+        //TODO mandar el puntaje (hecho, probarlo), y si ganó algún jugador
+        string score_update_msg = msg_builder.buildScoreUpdateMsg(user_id, score_tracker.getPlayerScore(user_id));
+        room->notifyClients(score_update_msg);
+        ////////////////////////////////////////////////////////////////////
         for (int column = 0; column < board.getWidth(); column++) {
             int empty_cells = replacements_board.getEmptyCellsInColumn(column);
             if (empty_cells > 0) {
                 list<Product*> replacements = replacements_generator.getReplacements(empty_cells, column);
-                //TODO mandar los reemplazos
+                //TODO mandar los reemplazos (hecho, probarlo)
+                string product_refill_msg = msg_builder.buildProductRefill(column, replacements);
+                room->notifyClients(product_refill_msg);
+                //////////////////////////////////////////////
                 refiller.addReplacements(column, replacements);
             }
         }
@@ -115,7 +124,7 @@ void GameManager::configureReplacementsGenerator() {
     vector<ProductGenerator*> product_generators;
     for (int column = 0; column < replacements_board.getWidth(); column++) {
         map<string, int> probabilities_table;
-        level_reader->getProbabilitiesTable(column, probabilities_table));
+        level_reader->getProbabilitiesTable(column, probabilities_table);
         ProductGenerator* product_generator = new ProductGenerator(probabilities_table);
         product_generators.push_back(product_generator);
     }
