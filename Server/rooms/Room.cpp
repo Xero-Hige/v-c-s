@@ -125,8 +125,8 @@ void Room::notifyClients(std::string msg){
 	}
 }
 
-bool Room::swapMade(std::string user_id, Position position1, Position position2) {
-    return game_manager.makeSwap(position1, position2, user_id);
+void Room::swapMade(std::string user_id, Position position1, Position position2) {
+    game_manager.makeSwap(position1, position2, user_id);
 }
 
 Room::~Room() {

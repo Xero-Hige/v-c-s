@@ -189,6 +189,12 @@ public:
 
 	//TODO método para leer los puntajes
 
+	/* Agrega los CombinationEffect a la cola de efectos del backend */
+	void addEffectsToQueue(std::list<CombinationEffect*>& effects);
+
+	/* Usa los productos de la lista para rellenar la columna especificada */
+	void addRefillerProducts(int column, std::list<Product*> products);
+
 	//ASYNC
 	//Connect
 	/**

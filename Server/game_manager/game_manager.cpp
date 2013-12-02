@@ -60,14 +60,16 @@ bool GameManager::addPlayer(std::string user_id) {
 }
 
 //TODO comunicación! Mandarle a los clientes los resultados y eso
-bool GameManager::makeSwap(Position position1, Position position2, string user_id) {
+void GameManager::makeSwap(Position position1, Position position2, string user_id) {
     // Chequeo físico
     if (! checkSwap(position1, position2)) {
-        return false;
+//        return false;
+        return;
     }
     // Chequeo de combinación
     if (! checkCombination(position1, position2)) {
-        return false;
+//        return false;
+        return;
     }
     list<CombinationEffect*> effects = combiner.makeCombinations(position1, position2);
     do {
@@ -89,7 +91,6 @@ bool GameManager::makeSwap(Position position1, Position position2, string user_i
         refiller.realocateBoard();
         effects = combiner.makeChainedCombinations();
     } while (effects.size() > 0);
-    return true;
 }
 
 void GameManager::configureBoards() {

@@ -234,6 +234,14 @@ void Backend::addToPlayerScore(std::string user_id, int score) {
     score_tracker.addToPlayerScore(user_id, score);
 }
 
+void Backend::addEffectsToQueue(std::list<CombinationEffect*>& effects) {
+    combination_effects_queue.splice(combination_effects_queue.end(), effects);
+}
+
+void Backend::addRefillerProducts(int column, std::list<Product*> products) {
+    refiller.addReplacements(column, products);
+}
+
 void Backend::async_get_room() {
 	_operation_ended = true;
 }
@@ -286,7 +294,7 @@ bool Backend::async_make_swap(Position pos1_graphic, Position pos2_graphic) {
     Combiner combiner = Combiner(board);
     list<CombinationEffect*> effects = combiner.makeCombinations(pos1_logic, pos2_logic);
 //    do {
-    combination_effects_queue.splice(combination_effects_queue.end(), effects);
+    addEffectsToQueue(effects);
     for (int column = 0; column < board.getWidth(); column++) {
         int empty_cells = replacements_board.getEmptyCellsInColumn(column);
         if (empty_cells > 0) {
