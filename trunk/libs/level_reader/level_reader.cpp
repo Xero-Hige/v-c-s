@@ -22,16 +22,20 @@
 #include "level_reader.h"
 
 #include "../boards/tile.h"
+#include "../boards/product.h"
+#include "../boards/product_generator.h"
 
 #include <jsoncpp/json.h>
 #include <string>
 #include <vector>
+#include <list>
 #include <map>
 
 #include <iostream> //FIXME
 
 using std::string;
 using std::vector;
+using std::list;
 using std::map;
 
 LevelReader::LevelReader(string& input_data) {
@@ -80,13 +84,12 @@ int LevelReader::getBoardHeight() {
     return level_data["board_height"].asInt();
 }
 
-vector<vector<int> > LevelReader::getBoardSchema() {
+void LevelReader::getBoardSchema(std::vector<std::vector<int> >& schema) {
     if (! level_data["valid"].asBool()) {
-        return vector<vector<int> >();
+        schema = vector<vector<int> >();
     }
     int width = getBoardWidth();
     int height = getBoardHeight();
-    vector<vector<int> > schema;
     Json::Value tiles = level_data["tiles"];
     for (int x = 0; x < width; x++) {
         schema.push_back(vector<int>());
@@ -103,7 +106,28 @@ vector<vector<int> > LevelReader::getBoardSchema() {
             index++;
         }
     }
-    return schema;
+}
+
+void LevelReader::getInitialProducts(list<Product*>& products) {
+    if (! level_data["valid"].asBool()) {
+        products = list<Product*>();
+    }
+    Json::Value tiles = level_data["tiles"];
+    int n_tiles = tiles.size();
+    for (int index = 0; index < n_tiles; index++) {
+        Json::Value current_tile = tiles[index];
+        if (current_tile["type"].asString() == "hole") {
+            continue;
+        }
+        map<string, int> probabilities_table;
+        probabilities_table["red"] = current_tile["red"].asInt();
+        probabilities_table["yellow"] = current_tile["yellow"].asInt();
+        probabilities_table["green"] = current_tile["green"].asInt();
+        probabilities_table["blue"] = current_tile["blue"].asInt();
+        probabilities_table["violet"] = current_tile["violet"].asInt();
+        ProductGenerator product_generator = ProductGenerator(probabilities_table);
+        products.push_back(product_generator.getNewProduct());
+    }
 }
 
 bool LevelReader::getProbabilitiesTable(int column, map<string, int>& probabilities_table) {

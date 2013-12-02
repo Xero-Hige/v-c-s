@@ -23,10 +23,12 @@
 #define LEVEL_READER_H_
 
 #include "../boards/tile.h"
+#include "../boards/product.h"
 
 #include <jsoncpp/json.h>
 #include <string>
 #include <vector>
+#include <list>
 #include <map>
 
 class LevelReader {
@@ -46,7 +48,8 @@ public:
 
     int getBoardWidth();
     int getBoardHeight();
-    std::vector<std::vector<int> > getBoardSchema();
+    void getBoardSchema(std::vector<std::vector<int> >& schema);
+    void getInitialProducts(std::list<Product*>& products);
 
     bool getProbabilitiesTable(int column, std::map<std::string, int>& probabilities_table);
 };
