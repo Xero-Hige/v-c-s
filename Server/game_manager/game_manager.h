@@ -22,6 +22,7 @@
 #ifndef GAME_MANAGER_H_
 #define GAME_MANAGER_H_
 
+#include "../../libs/position/position.h"
 #include "../../libs/boards/board.h"
 #include "../../libs/boards/refiller.h"
 #include "../../libs/boards/product_generator.h"
@@ -42,11 +43,9 @@ private:
     Room* room;
     LevelReader* level_reader;  //TODO puntero o referencia?
 
-    // Lógica
     // Tableros lógicos
     Board board;
     Board replacements_board;
-
     // Reemplazos
     Refiller refiller;
     ReplacementsGenerator replacements_generator;
@@ -54,15 +53,17 @@ private:
     // Checkers
     PhysicalChecker physical_checker;
     CombinationChecker combination_checker;
-
     Combiner combiner;
 
-    // Comunicación
+    ScoreTracker score_tracker;
+
     GameMessageBuilder msg_builder;
 
 public:
     GameManager(Room* room, LevelReader* level_reader);
     void configure();
+    bool addPlayer(std::string user_id);
+    void makeSwap(Position position1, Position position2, std::string user_id);
 
 private:
     /* Configura los tableros (tamaño y esquema) según los datos del nivel */

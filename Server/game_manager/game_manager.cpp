@@ -50,6 +50,44 @@ GameManager::GameManager(Room* room, LevelReader* level_reader)
 void GameManager::configure() {
     configureBoards();
     configureReplacementsGenerator();
+    score_tracker.setGoalScore(level_reader->getGoalScore());
+}
+
+bool GameManager::addPlayer(std::string user_id) {
+    return score_tracker.addPlayer(user_id);
+}
+
+//TODO comunicación! Mandarle a los clientes los resultados y eso
+void GameManager::makeSwap(Position position1, Position position2, string user_id) {
+    // Chequeo físico
+    if (! checkSwap(position1, position2)) {
+        return;
+//        return false;
+    }
+    // Chequeo de combinación
+    if (! checkCombination(position1, position2)) {
+        return;
+//        return false;
+    }
+    list<CombinationEffect*> effects = combiner.makeCombinations(position1, position2);
+    do {
+        //TODO mandar los CombinationEffects
+        int combination_score = combiner.getLastCombinationsPoints();
+        score_tracker.addToPlayerScore(user_id, combination_score);
+        //TODO chequeo si termino el juego. Hay que cerrar la room?
+        //TODO mandar el puntaje, y si ganó algún jugador
+        for (int column = 0; column < board.getWidth(); column++) {
+            int empty_cells = replacements_board.getEmptyCellsInColumn(column);
+            if (empty_cells > 0) {
+                list<Product*> replacements = replacements_generator.getReplacements(empty_cells, column);
+                //TODO mandar los reemplazos
+                refiller.addReplacements(column, replacements);
+            }
+        }
+        refiller.realocateBoard();
+        effects = combiner.makeChainedCombinations();
+    } while (effects.size() > 0);
+//    return true;
 }
 
 void GameManager::configureBoards() {
