@@ -30,9 +30,14 @@
 
 using std::vector;
 
-//void TakeOutColumnEffect::applyEffect() {
-//    //TODO
-//}
+void TakeOutColumnEffect::applyEffect(Board& board) {
+    if (isApplied()) {
+        return;
+    }
+    int column = origin.getX();
+    board.takeOutColumn(column);
+    setApplied();
+}
 
 vector<Position> TakeOutColumnEffect::getEliminatedProducts() {
     vector<Position> products_to_eliminate;

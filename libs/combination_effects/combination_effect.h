@@ -24,6 +24,7 @@
 
 #include "../game_messages/interface_json_serializable.h"
 #include "../position/position.h"
+#include "../boards/board.h"
 
 #include <vector>
 
@@ -41,7 +42,7 @@ public:
     CombinationEffect(Position origin)
         : applied(false), origin(origin) {}
     //TODO ver bien que pasarle de parámetro y si tiene que devolver algo (Gaston si ves esto, con vos tengo que hablarlo =P)
-    virtual void applyEffect() {std::cout << "CombinationEffect" << std::endl;}
+    virtual void applyEffect(Board& board) {}
     bool isApplied();
     virtual std::vector<Position> getEliminatedProducts() {std::cout << "Muerte no polimórfica!" <<std::endl; return std::vector<Position>();}
     virtual std::vector<Position> getChangedProducts() {return std::vector<Position>();}
@@ -50,7 +51,7 @@ public:
     void serialize(Json::Value& root);
     void deserialize(Json::Value& root);
     virtual ~CombinationEffect() {}
-protected:
+//protected:
     void setApplied();
 };
 

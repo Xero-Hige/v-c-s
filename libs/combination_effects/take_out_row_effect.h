@@ -40,7 +40,7 @@ public:
         : CombinationEffect(), board_width(-1) {}
     TakeOutRowEffect(Position origin, int board_width)
         : CombinationEffect(origin), board_width(board_width) {}
-    void applyEffect() {std::cout << "TakeOutRowEffect" << std::endl; setApplied();}
+    void applyEffect(Board& board);
     std::vector<Position> getEliminatedProducts();
     void serialize(Json::Value& root);
     void deserialize(Json::Value& root);

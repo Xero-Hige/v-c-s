@@ -42,7 +42,7 @@ public:
         : CombinationEffect(), color(Product::NO_COLOR), new_type(Product::NO_TYPE) {}
     ChangeProductEffect(Position origin, int color, int new_type)
         : CombinationEffect(origin), color(color), new_type(new_type) {}
-    void applyEffect() {std::cout << "ChangeProductEffect" << std::endl; setApplied();}
+    void applyEffect(Board& board);
     std::vector<Position> getChangedProducts();
     std::vector<int> getNewProductsTypes();
     std::vector<Position> getEliminatedProducts() {return std::vector<Position>();}

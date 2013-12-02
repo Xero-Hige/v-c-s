@@ -30,9 +30,17 @@
 
 using std::vector;
 
-//void TakeOutProductEffect::applyEffect() {
-//    //TODO
-//}
+void TakeOutProductEffect::applyEffect(Board& board) {
+    if (isApplied()) {
+        return;
+    }
+    vector<Position> eliminated_products = getEliminatedProducts();
+    vector<Position>::iterator it;
+    for (it = eliminated_products.begin(); it != eliminated_products.end(); ++it) {
+        board.takeOutProduct((*it));
+    }
+    setApplied();
+}
 
 vector<Position> TakeOutProductEffect::getEliminatedProducts() {
     vector<Position> products_to_eliminate;
