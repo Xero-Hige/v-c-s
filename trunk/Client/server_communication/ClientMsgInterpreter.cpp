@@ -10,11 +10,15 @@
 #include "../../libs/messages/MsgConstants.h"
 #include "../../libs/game_messages/message_reader.h"
 #include "../../libs/game_messages/game_message_reader.h"
+#include "../../libs/boards/product.h"
+#include "../../libs/combination_effects/combination_effect.h"
 
 #include <string>
+#include <list>
 #include <stdio.h>
 
 using std::string;
+using std::list;
 
 ClientMsgInterpreter::ClientMsgInterpreter(Server_Connector* c, Backend * b) {
 	this->client = c;
@@ -37,9 +41,14 @@ void ClientMsgInterpreter::interpretParticularMsg(string msg){
     } else if (header == GAME_OVER) {
         //TODO
     } else if (header == COMBINATION_EFFECTS) {
-        //TODO
+        list<CombinationEffect*> effects;
+        game_msg_reader.readCombinationEffectsMsg(effects, msg_reader);
+        backend->addEffectsToQueue(effects);
     } else if (header == PRODUCT_REFILL) {
-        //TODO
+        int column;
+        list<Product*> products;
+        game_msg_reader.readProductRefill(column,products,msg_reader);
+        backend->addRefillerProducts(column, products);
     }
 }
 
