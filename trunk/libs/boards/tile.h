@@ -69,6 +69,7 @@ public:
     int getProductType();
     Product* popProduct();
     bool setProduct(Product* product);
+    Product* getProduct();
     // No se si hace falta
     void eliminateProduct();
     ~Tile();

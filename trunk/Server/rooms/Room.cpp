@@ -139,6 +139,10 @@ void Room::getSerializedBoardProducts(std::string& serialized_products) {
     game_manager.getSerializedBoardProducts(serialized_products);
 }
 
+void Room::getSerializedReplacementProducts(std::string& serialized_products) {
+    game_manager.getSerializedReplacementProducts(serialized_products);
+}
+
 Room::~Room() {
 	if (clients.size() <= 0) return;
 	for (std::vector<ClientHandler*>::iterator it = clients.begin();

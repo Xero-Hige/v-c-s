@@ -66,6 +66,7 @@ public:
     bool addPlayer(std::string user_id);
     void makeSwap(Position position1, Position position2, std::string user_id);
     void getSerializedBoardProducts(std::string& serialized_products);
+    void getSerializedReplacementProducts(std::string& serialized_products);
 
 private:
     /* Configura los tableros (tamaño y esquema) según los datos del nivel */
