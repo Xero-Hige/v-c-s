@@ -90,9 +90,11 @@ bool Room::exitRoom(ClientHandler* ch){
 			if(ch->isActive()) this->lob->addClient(ch);
 			else delete ch;
 			std::cout << "El cliente salio del room" << std::endl;
+			updateActive();
 			return true;
 		}
 	}
+	updateActive();
 	return false;
 }
 
@@ -108,13 +110,17 @@ bool Room::isActive(){
 	return active;
 }
 
+void Room::updateActive(){
+	active = clients.size() > 0;
+}
+
 void Room::endMatch(){
-//	for (std::vector<ClientHandler*>::iterator it = clients.begin();
-//			it < clients.end();
-//			it++){
-//		exitRoom(*it);
-//	}
-//	this->lob->endMatch(this->id);
+	for (std::vector<ClientHandler*>::iterator it = clients.begin();
+			it < clients.end();
+			it++){
+		exitRoom(*it);
+	}
+	updateActive();
 }
 
 void Room::notifyClients(std::string msg){

@@ -58,13 +58,17 @@ public:
 	void exitRoom();
 	/*
 	 * closeConnection cierra la conexion del socket y le avisa al cliente que el
-	 * servidor esta cerrando la conexion.
+	 * servidor esta cerrando la conexion. Se borra el cliente del server.
 	 */
 	void closeConnection();
 	/*
 	 * sendLevelData envia al cliente los datos del nivel.
 	 */
 	void sendLevelData();
+	/*
+	 * isActive pregunta al cliente si esta activo, es decir, si el cliente todavia
+	 * esta conectado.
+	 */
 	bool isActive();
 	virtual ~ClientHandler();
 };
