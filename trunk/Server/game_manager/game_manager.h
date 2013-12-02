@@ -60,6 +60,7 @@ private:
     GameMessageBuilder msg_builder;
 
 public:
+    GameManager(Room* room);
     GameManager(Room* room, LevelReader* level_reader);
     void configure();
     bool addPlayer(std::string user_id);

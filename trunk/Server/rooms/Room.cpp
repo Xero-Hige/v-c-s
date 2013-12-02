@@ -26,6 +26,9 @@ Room::Room(Lobby * lob, unsigned limit,unsigned lvl, unsigned long r_id) {
 	this->level = lvl;
 	this->limit = limit;
 	currently_playing = false;
+	//TODO leer las cosas del archivo y mandarlo acá
+//	level_reader.changeLevelData(datos_del_archivo);
+	game_manager = GameManager(this, &level_reader);
 }
 
 bool Room::addClient(ClientHandler* ch){
