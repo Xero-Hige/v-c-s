@@ -62,6 +62,7 @@ void Server_Connector::communicate(){
 }
 
 int Server_Connector::sendMsg(std::string msg){
+	if (this->password.size() == 0) return sock->sendMsg(msg);
 	return sock->sendSignedMsg(msg, this->password);
 }
 int Server_Connector::recvMsg(std::string & msg){
@@ -134,13 +135,20 @@ void Server_Connector::getMatchmaking(std::string & mm){
 }
 
 void Server_Connector::closeConnection(){
-	sock->sendMsg(CLOSE_CONNECTION);
+	sendMsg(CLOSE_CONNECTION);
 	sock->socketShutdown();
 	sock->closeConnection();
 }
 
 FormattedSocket * Server_Connector::getSocket(){
 	return this->sock;
+}
+
+std::string Server_Connector::getLevel(){
+	sendMsg(LEVEL_DATA);
+	std::string level;
+	recvMsg(level);
+	return level;
 }
 
 Server_Connector::~Server_Connector() {

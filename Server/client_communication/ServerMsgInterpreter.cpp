@@ -26,6 +26,9 @@ void ServerMsgInterpreter::exitCharPressed(){
 }
 
 void ServerMsgInterpreter::interpretParticularMsg(std::string msg){
+	if (msg.compare(LEVEL_DATA) == 0){
+		client->sendLevelData();
+	}
 }
 
 ServerMsgInterpreter::~ServerMsgInterpreter() {
