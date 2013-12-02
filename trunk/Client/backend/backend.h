@@ -34,6 +34,7 @@
 #include "../../libs/combination_effects/combination_effect.h"
 #include "../../libs/boards/refiller.h"
 #include "../../libs/score_tracker/score_tracker.h"
+#include "../../libs/game_messages/game_message_builder.h"
 
 #include "../../libs/boards/replacements_generator.h" // FIXME borrame
 
@@ -43,6 +44,7 @@ private:
 
 	Server_Connector server_connector;
 	ServerListener server_listener;
+	GameMessageBuilder msg_builder;
 
 	//Connection info
 	bool is_connected;

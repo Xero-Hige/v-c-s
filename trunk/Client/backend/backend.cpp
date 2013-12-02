@@ -280,6 +280,8 @@ bool Backend::async_make_swap(Position pos1_graphic, Position pos2_graphic) {
         std::cout << ") y (" << pos2_logic.getX() << "," << pos2_logic.getY() << ")" << std::endl;
         return false;
     }
+    string swap_msg = msg_builder.buildSwapMessage(user_nick, pos1_logic, pos2_logic);
+//    server_connector.sendMsg(swap_msg); //FIXME descomentarlo cuando se conecte con el server
     //FIXME esto va en el server y/o otro lado
     Combiner combiner = Combiner(board);
     list<CombinationEffect*> effects = combiner.makeCombinations(pos1_logic, pos2_logic);
@@ -298,6 +300,7 @@ bool Backend::async_make_swap(Position pos1_graphic, Position pos2_graphic) {
     std::cout << "Puntos obtenidos en el último movimiento: " << combiner.getLastCombinationsPoints() << std::endl;
     std::cout << "Efectos a aplicar: " << combination_effects_queue.size() << std::endl;
     /////////////////////////////////////////
+
     return true;
 }
 

@@ -26,6 +26,7 @@
 #include "../position/position.h"
 #include "../boards/product.h"
 #include "../combination_effects/combination_effect.h"
+#include "game_msg_constants.h"
 
 #include <string>
 #include <vector>
@@ -37,35 +38,35 @@ using std::list;
 
 
 string GameMessageBuilder::buildScoreUpdateMsg(string user_id, int score) {
-    msg_builder.startNewMessage("score update");
-    msg_builder.addStringField("user id", user_id);
-    msg_builder.addIntField("score", score);
+    msg_builder.startNewMessage(SCORE_UPDATE);
+    msg_builder.addStringField(USER_ID, user_id);
+    msg_builder.addIntField(SCORE, score);
     return msg_builder.getParsedMessage();
 }
 
 string GameMessageBuilder::buildGameOverMsg(string user_id) {
-    msg_builder.startNewMessage("game over");
-    msg_builder.addStringField("user id", user_id);
+    msg_builder.startNewMessage(GAME_OVER);
+    msg_builder.addStringField(USER_ID, user_id);
     return msg_builder.getParsedMessage();
 }
 
 string GameMessageBuilder::buildSwapMessage(string user_id, Position position1, Position position2) {
-    msg_builder.startNewMessage("swap");
-    msg_builder.addStringField("user id", user_id);
-    msg_builder.addObjectField("position 1", &position1);
-    msg_builder.addObjectField("position 2", &position2);
+    msg_builder.startNewMessage(SWAP);
+    msg_builder.addStringField(USER_ID, user_id);
+    msg_builder.addObjectField(POSITION_1, &position1);
+    msg_builder.addObjectField(POSITION_2, &position2);
     return msg_builder.getParsedMessage();
 }
 
 string GameMessageBuilder::buildProductRefill(int column, list<Product*>& products) {
-    msg_builder.startNewMessage("product refill");
-    msg_builder.addIntField("column", column);
-    msg_builder.addObjectArrayField("products", (list<IJsonSerializable*>&)products);
+    msg_builder.startNewMessage(PRODUCT_REFILL);
+    msg_builder.addIntField(COLUMN, column);
+    msg_builder.addObjectArrayField(PRODUCTS, (list<IJsonSerializable*>&)products);
     return msg_builder.getParsedMessage();
 }
 
 string GameMessageBuilder::buildCombinationEffectsMsg(list<CombinationEffect*>& effects) {
-    msg_builder.startNewMessage("combination effects");
-    msg_builder.addObjectArrayField("effects", (list<IJsonSerializable*>&)effects);
+    msg_builder.startNewMessage(COMBINATION_EFFECTS);
+    msg_builder.addObjectArrayField(EFFECTS, (list<IJsonSerializable*>&)effects);
     return msg_builder.getParsedMessage();
 }
