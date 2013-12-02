@@ -47,14 +47,15 @@ private:
     CombinationChecker checker;
     int last_combination_points;
     int multiplier;
+    std::list<Position> last_combination_positions;
 
 public:
     Combiner(Board& board)
         : board(board), last_combination_points(0), multiplier(1) {
         checker = CombinationChecker(&(this->board));
     }
-    //TODO devuelve los puntos y tiene un efecto adentro? devuelve el efecto? HACE EXPLOTAR EL MUNDO?
-    std::list<CombinationEffect*> makeCombinations(Position pos1, Position pos2, bool chained = false);
+    std::list<CombinationEffect*> makeCombinations(Position pos1, Position pos2);
+    std::list<CombinationEffect*> makeChainedCombinations();
     int getLastCombinationsPoints();
 
 private:
@@ -64,7 +65,7 @@ private:
     int activateProduct(Position product_pos, std::list<CombinationEffect*>& result_list);
     int getPointsPerProduct(int longest_combination_size);
     void upgradeProduct(Position origin, int color, int vertical_combination_size, int horizontal_combination_size, std::list<CombinationEffect*>& result_list);
-//    getCombinationTypes();
+    int eliminateAllProductsColor(int color_to_eliminate, std::list<CombinationEffect*>& result_list);
 };
 
 #endif /* COMBINER_H_ */
