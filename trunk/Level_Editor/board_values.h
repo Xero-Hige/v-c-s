@@ -16,7 +16,7 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses
  */
-#ifndef BOARD_DISTRIBUTION_SCREEN_H_
+#ifndef BoardValues
 #define BOARD_DISTRIBUTION_SCREEN_H_
 
 #include <SDL2/SDL_video.h>
@@ -33,7 +33,7 @@
 
 #include "app.h"
 
-class BoardDistributionScreen: public App {
+class BoardValues: public App {
 
 	static const std::string TITLE;
 	static const int SCREEN_WIDTH = 1600;
@@ -46,14 +46,20 @@ private:
 
 	Window window;
 	Sprite background;
+	Sprite hover_cell;
+
 
 	std::vector<Sprite> cells;
 
 	std::vector<std::vector<int> > board_schema;
+	std::vector<std::vector<int> > selected_board;
+
 
 	ScreenGrid grid;
 
 	Button next_step;
+	Button apply;
+
 
 private:
 	/**
@@ -77,7 +83,6 @@ private:
 	 * Inicializa los mugshots
 	 */
 	void setup_sprites();
-	void setup_audio();
 	void renderBoard();
 	void setupBoard();
 	void setupButtons();
@@ -87,7 +92,7 @@ public:
 	/**
 	 * Constructor que recibe un Backend
 	 */
-	BoardDistributionScreen(LevelBuilder& level);
+	BoardValues(LevelBuilder& level);
 
 	/**
 	 * Metodo para inicializar la app

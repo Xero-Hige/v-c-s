@@ -121,7 +121,7 @@ private:
 	void renderBanners();
 	void renderMask();
 
-	void render_animations();
+	void renderAnimations();
 	void delete_animation(std::vector<Position>& deleted);
 	void change_animation();
 	void animate_efects();
