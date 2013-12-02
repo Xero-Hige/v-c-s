@@ -35,10 +35,12 @@ void Lobby::run(void * data){
 }
 
 void Lobby::addNewClient(ClientHandler * ch) {
+	room_killer.start();
 	struct thread_data * data = new struct thread_data();
 	data->lobby = this;
 	data->ch = ch;
 	this->start((void*)data, DETACHED);
+	room_killer.join();
 }
 
 #define LIMIT 4
