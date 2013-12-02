@@ -32,11 +32,12 @@
 #include "../../libs/combiner/combiner.h"  //FIXME cuando se saque el combiner del cliente y de libs, y se pase al server, hay que arreglar este include
 #include "../../libs/score_tracker/score_tracker.h"
 #include "../../libs/game_messages/game_message_builder.h"
-#include "../rooms/Room.h"
 #include "../../libs/level_reader/level_reader.h"
 
 #include <string>
 #include <list>
+
+class Room;
 
 class GameManager {
 private:

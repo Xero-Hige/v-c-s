@@ -102,6 +102,7 @@ void Backend::async_log_in
 //	bool success = this->server_connector.connectServer(user, password, "2");
 //	std::cout << " Exito? " << success << std::endl;
 //	if (!success) _operation_error = "User/Password incorrecta";
+//	_operation_ended = true;
 }
 
 Backend::~Backend() {
