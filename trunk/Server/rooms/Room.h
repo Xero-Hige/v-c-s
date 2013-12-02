@@ -25,7 +25,8 @@ class Room {
 	bool currently_playing;
 	LevelReader level_reader;
 	GameManager game_manager;
-
+	std::string getLevelName();
+	std::string loadLevel();
 	void eraseUsername(std::string username);
 
 public:

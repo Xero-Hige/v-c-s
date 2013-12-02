@@ -9,8 +9,12 @@
 #include "../client_communication/ClientHandler.h"
 #include "Lobby.h"
 #include <iostream>
+#include <sstream>
 #include <vector>
 #include <string>
+
+#define FILE_COMMON_NAME "level"
+#define FILE_EXT ".json"
 
 unsigned long Room::id_counter = 0;
 
@@ -24,12 +28,27 @@ Room::Room(Lobby * lob, unsigned limit,unsigned lvl, unsigned long r_id) {
 		this->id = r_id;
 	}
 	this->level = lvl;
-	this->limit = limit;
 	currently_playing = false;
 	//TODO leer las cosas del archivo y mandarlo acá
-//	level_reader.changeLevelData(datos_del_archivo);
+//	level_reader.changeLevelData(loadLevel());
+//	this->limit = level_reader.getNumberOfPlayers();
 	game_manager = GameManager(this, &level_reader);
 }
+
+std::string Room::getLevelName(){
+	std::stringstream name;
+	name << FILE_COMMON_NAME << this->level << FILE_EXT;
+	return name.str();
+}
+
+std::string Room::loadLevel(){
+	std::string path = getLevelName();
+	std::ifstream file (path);
+	std::string str((std::istreambuf_iterator<char>(file)),
+			std::istreambuf_iterator<char>());
+	return str;
+}
+
 
 bool Room::addClient(ClientHandler* ch){
 	if (this->clients.size() >= limit ||
