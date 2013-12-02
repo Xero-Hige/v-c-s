@@ -1,0 +1,441 @@
+{
+   "board_height" : 12,
+   "board_width" : 12,
+   "goal_score" : 3000,
+   "level_number" : 1,
+   "number_players" : 4,
+   "tiles" : [
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "hole"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "hole"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "hole"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "hole"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "hole"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "hole"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "hole"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "hole"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "hole"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "hole"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "hole"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "hole"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "hole"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "hole"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "hole"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      },
+      {
+         "type" : "cell"
+      }
+   ]
+}
