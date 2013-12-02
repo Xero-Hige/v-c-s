@@ -36,7 +36,8 @@ private:
 
 public:
     /* Dummy, el objeto queda en un estado inválido */
-    ReplacementsGenerator() {}
+    ReplacementsGenerator()
+        : replacements_board(NULL) {}
     ReplacementsGenerator(Board* replacements_board, std::vector<ProductGenerator*>& product_generators);
     std::list<Product*> getReplacements(int n, int column_number);
     ~ReplacementsGenerator();

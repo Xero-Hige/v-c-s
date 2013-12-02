@@ -116,6 +116,7 @@ void Backend::configureBoards() {
 }
 
 vector<string> Backend::get_board_pokemon_codes() {
+    //TODO esto de dónde sale? de los datos del nivel?
 	vector<string> codes;
 	codes.push_back("001");
 	codes.push_back("025");
@@ -300,7 +301,7 @@ bool Backend::async_make_swap(Position pos1_graphic, Position pos2_graphic) {
 }
 
 void Backend::asyncGetLevelSpecification() {
-    //TODO Que ande en serio
+    //TODO Que lo pida al server y obtenga data en serio
     string level_data = getLevelData();
     level_reader.changeLevelData(level_data);
 }
@@ -309,7 +310,6 @@ void Backend::asyncSetUpInitialProducts() {
     //TODO que en serio lo pida al server, no que lo invente acá
     for (int x = 0; x < board.getWidth(); x++) {
         for (int y = 0; y < board.getHeight(); y++) {
-            //TODO Pedirlo a board y a replacements_board en lugar de inventarlo acá
             if (board.getTileType(x, y) == Tile::CELL){
 //                int color = rand()%5;
 //                int type = rand()%3;
