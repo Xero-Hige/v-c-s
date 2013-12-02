@@ -25,6 +25,7 @@
 #include "../../libs/checkers/combination_checker.h"
 #include "../../libs/checkers/physical_checker.h"
 #include "../../libs/level_reader/level_reader.h"
+#include "../../libs/score_tracker/score_tracker.h"
 
 #include <stddef.h>
 #include <cstdlib> //TODO sacar
@@ -227,6 +228,12 @@ int Backend::getEffectAnimation() {
     return 0;
 }
 
+//FIXME Si va a haber más información sobre los jugadores, acomodarlo a eso
+void Backend::addToPlayerScore(std::string user_id, int score) {
+    score_tracker.addPlayer(user_id);
+    score_tracker.addToPlayerScore(user_id, score);
+}
+
 void Backend::async_get_room() {
 	_operation_ended = true;
 }
@@ -298,6 +305,7 @@ void Backend::asyncGetLevelSpecification() {
     //TODO Que lo pida al server y obtenga data en serio
     string level_data = getLevelData();
     level_reader.changeLevelData(level_data);
+    score_tracker.setGoalScore(level_reader.getGoalScore());
 }
 
 void Backend::asyncSetUpInitialProducts() {
