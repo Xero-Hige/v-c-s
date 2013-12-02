@@ -9,11 +9,16 @@
 #define SERVERMSGINTERPRETER_H_
 
 #include <string>
+
 #include "../../libs/messages/MsgInterpreter.h"
 #include "ClientHandler.h"
+#include "../../libs/game_messages/game_message_reader.h"
+#include "../../libs/game_messages/message_reader.h"
 
 class ServerMsgInterpreter : public MsgInterpreter {
 	ClientHandler * client;
+	MessageReader msg_reader;
+	GameMessageReader game_msg_reader;
 	/*
 	 * exitRoom, exitCharPressed y closeConnection llaman a los respectivos
 	 *  metodos del ClientHandler.

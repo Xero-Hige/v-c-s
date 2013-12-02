@@ -54,10 +54,12 @@ public:
 	 * isPlaying devuelve si en el room se esta jugando.
 	 */
 	bool isPlaying();
+	/* Notifica al game manager que un cliente hizo un swap */
+	bool swapMade(std::string user_id, Position position1, Position position2);
 	/*
 	 * endMatch termina la partida y se lo notifica al lobby.
 	 */
-//	void endMatch();
+	void endMatch();
 	/*
 	 * loadLevel devuelve un string con los datos del nivel.
 	 */
