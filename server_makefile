@@ -156,9 +156,14 @@ take_out_column_effect.o: libs/combination_effects/take_out_column_effect.h libs
 score_tracker.o: libs/score_tracker/score_tracker.h libs/score_tracker/score_tracker.cpp
 	$(CC) $(CPPFLAGS) -c libs/score_tracker/score_tracker.cpp
 	
+#Game Manager
+
+game_manager.o: Server/game_manager/game_manager.h Server/game_manager/game_manager.cpp
+	$(CC) $(CPPFLAGS) -c Server/game_manager/game_manager.cpp
+	
 #Server
 
-SERVER_EXTERN = $(BOARDS_LIBS) $(CHECKERS_LIBS) $(COMBINATION_EFFECTS_LIBS) $(GAME_MESSAGES_LIBS) score_tracker.o combiner.o $(THREAD_LIBS) $(SOCKET_LIBS) $(MESSAGES_LIBS) $(COMMUNICATION_PROTOCOL_LIBS) $(DATABASE_LIBS)
+SERVER_EXTERN = $(POSITION) $(BOARDS_LIBS) $(CHECKERS_LIBS) $(COMBINATION_EFFECTS_LIBS) $(GAME_MESSAGES_LIBS) level_reader.o score_tracker.o combiner.o game_manager.o $(THREAD_LIBS) $(SOCKET_LIBS) $(MESSAGES_LIBS) $(COMMUNICATION_PROTOCOL_LIBS) $(DATABASE_LIBS)
 
 SERVER_OBJ = $(SERVER_EXTERN) ClientAuthenticator.o ClientHandler.o ServerMsgInterpreter.o Room.o Lobby.o SocketHandler.o MatchMakingStrategy.o Server.o
 
