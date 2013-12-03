@@ -69,9 +69,14 @@ void LoginScreen::setupTextboxes() {
 	user_nick.move(X_USER_NICK, Y_USER_NICK);
 	user_nick.setAlternativeText("USUARIO", window);
 
-	user_pass = SecretTextBox(14, "resources/login/logfont.ttf", 20, window);
+	user_pass = TextBox(14, "resources/login/logfont.ttf", 20, window);
 	user_pass.move(X_USER_PASS, Y_USER_PASS);
 	user_pass.setAlternativeText("PASSWORD", window);
+
+	secret_user_pass = SecretTextBox(14, "resources/login/logfont.ttf", 20,
+			window);
+	secret_user_pass.move(X_USER_PASS, Y_USER_PASS);
+	secret_user_pass.setAlternativeText("PASSWORD", window);
 
 }
 
@@ -118,6 +123,13 @@ void LoginScreen::setupAudio() {
 	background_music.play(-1);
 }
 
+void LoginScreen::setupButtons() {
+	_register = Button("resources/login/login-register.png", window);
+	_register.move(SCREEN_WIDTH - _register.get_scaled_width(),
+			SCREEN_HEIGHT - _register.get_scaled_height());
+	registrer_action = false;
+}
+
 bool LoginScreen::initialize() {
 
 	window = Window(TITLE, SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_FLAGS);
@@ -128,6 +140,7 @@ bool LoginScreen::initialize() {
 	setupLoadingScreen();
 	setupMugshots();
 	setupAudio();
+	setupButtons();
 	return true;
 }
 
@@ -143,8 +156,13 @@ void LoginScreen::render() {
 	mugshot_left.draw(window);
 	mugshot_right.draw(window);
 	user_nick.draw(window);
-	user_pass.draw(window);
-	//_register.draw(window);
+	if (registrer_action) {
+		user_pass.draw(window);
+	} else {
+		secret_user_pass.draw(window);
+	}
+	_register.set_clicked(registrer_action);
+	_register.draw(window);
 
 	window.render();
 
@@ -155,6 +173,7 @@ void LoginScreen::cleanup() {
 
 	user_nick.free();
 	user_pass.free();
+	secret_user_pass.free();
 
 	mugshot_left.free();
 	mugshot_right.free();

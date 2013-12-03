@@ -40,6 +40,7 @@ void LoginScreen::handleEvent(SDL_Event& event) {
 void LoginScreen::keyPressEvent(SDL_Event& event) {
 	user_nick.handleEvent(event);
 	user_pass.handleEvent(event);
+	secret_user_pass.handleEvent(event);
 
 	if (SDL_SCANCODE_RETURN == event.key.keysym.scancode) {
 		if (user_nick.getText() == "" || user_pass.getText() == "") {
@@ -59,8 +60,12 @@ void LoginScreen::keyPressEvent(SDL_Event& event) {
 				return;
 			}
 		}
+		if (registrer_action) { //FIXME las constantes no se donde estan
+			backend.async_log_in(user_nick.getText(), user_pass.getText(),0);
+		} else {
+			backend.async_log_in(user_nick.getText(), user_pass.getText(),1);
+		}
 
-		backend.async_log_in(user_nick.getText(), user_pass.getText());
 		while (!backend.operation_ended()) {
 			renderLoadscreen(); //FIXME
 			SDL_Delay(10);
@@ -77,10 +82,16 @@ void LoginScreen::keyPressEvent(SDL_Event& event) {
 void LoginScreen::textInputEvent(SDL_Event& event) {
 	user_nick.handleEvent(event);
 	user_pass.handleEvent(event);
+	secret_user_pass.handleEvent(event);
+
 }
 
 void LoginScreen::mouseButtonEvent(SDL_Event& event) {
 	user_nick.handleEvent(event);
 	user_pass.handleEvent(event);
-	//_register.handle_event(event);
+	secret_user_pass.handleEvent(event);
+	_register.handle_event(event);
+	if (_register.is_clicked()) {
+		registrer_action = !registrer_action;
+	}
 }
