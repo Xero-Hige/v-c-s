@@ -341,7 +341,6 @@ void GameScreen::loop() {
 }
 
 void GameScreen::renderBoard() {
-	animate_efects();
 	background.draw(window);
 
 	for (int i = 0; i < board_columns; i++) {
@@ -380,6 +379,7 @@ void GameScreen::renderMask() {
 }
 
 void GameScreen::render() {
+    animate_efects();
 	window.clear();
 
 	renderBoard();
