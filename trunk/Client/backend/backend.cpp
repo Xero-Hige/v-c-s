@@ -56,15 +56,17 @@ Backend::Backend() : server_listener(&server_connector, this) {
 
 	refiller = Refiller(&board, &replacements_board);
 
-	//FIXME borrar cuando haya conexión con el server
-	map<string, unsigned int> convertion_table;
-	convertion_table["red"] = Product::RED;
-	convertion_table["yellow"] = Product::YELLOW;
-	convertion_table["green"] = Product::GREEN;
-	convertion_table["blue"] = Product::BLUE;
-	convertion_table["violet"] = Product::VIOLET;
-	ProductGenerator::setConvertionTable(convertion_table);
-	/////////////////////////////////////////////////
+	effects_to_apply.size(); //FIXME borrar
+
+//	//FIXME borrar cuando haya conexión con el server
+//	map<string, unsigned int> convertion_table;
+//	convertion_table["red"] = Product::RED;
+//	convertion_table["yellow"] = Product::YELLOW;
+//	convertion_table["green"] = Product::GREEN;
+//	convertion_table["blue"] = Product::BLUE;
+//	convertion_table["violet"] = Product::VIOLET;
+//	ProductGenerator::setConvertionTable(convertion_table);
+//	/////////////////////////////////////////////////
 }
 
 
@@ -149,9 +151,7 @@ std::vector<std::vector<int> > Backend::get_full_board() {
 			if (board.getTileType(x, y) == Tile::CELL){
 				product_code = getProductCode(board, x, y);
 				replacement_code = getProductCode(replacements_board, x, y);
-			}
-			else
-			{
+			} else {
 				product_code = replacement_code = -1;
 			}
 	        // Tablero de reemplazos
@@ -161,13 +161,13 @@ std::vector<std::vector<int> > Backend::get_full_board() {
 		}
 		products.push_back(column);
 	}
-
 	return products;
 }
 
 bool Backend::poolEffect() {
-    if (effects_to_apply.size() == 0) {
-        if (combination_effects_queue.size() > 0) {
+    if (effects_to_apply.empty()) {
+        if (! combination_effects_queue.empty()) {
+            std::cout << "poolEffect, combination_effects_queue no vacío" << std::endl;
             list<CombinationEffect*>& effects = combination_effects_queue.front();
             effects_to_apply.splice(effects_to_apply.end(), effects);
             combination_effects_queue.pop_front();

@@ -76,7 +76,9 @@ private:
 	ScoreTracker score_tracker;
 
 	std::list<CombinationEffect*> effects_to_apply;
-	std::list<std::list<CombinationEffect*> >combination_effects_queue;
+	std::list<std::list<CombinationEffect*> > combination_effects_queue;
+
+	std::vector<std::string> players_list;
 
 	//FIXME a borrar!
 	Position l[2];
