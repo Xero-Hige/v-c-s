@@ -44,13 +44,16 @@ private:
 
 private:
 
+	bool registrer_action;
+
 	Backend& backend;
 
 	Window window;
 	Sprite background;
 
 	TextBox user_nick;
-	SecretTextBox user_pass;
+	TextBox user_pass;
+	SecretTextBox secret_user_pass;
 
 	Sprite mugshot_left;
 	Sprite mugshot_right;
@@ -102,6 +105,7 @@ private:
 	 * Inicializa el audio de la ventana
 	 */
 	void setupAudio();
+	void setupButtons();
 
 public:
 
