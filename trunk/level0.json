@@ -2,7 +2,7 @@
    "board_height" : 12,
    "board_width" : 12,
    "goal_score" : 3000,
-   "level_number" : 1,
+   "level_number" : 0,
    "number_players" : 4,
    "tiles" : [
       {
@@ -436,6 +436,92 @@
       },
       {
          "type" : "cell"
+      }
+   ],
+   "columns probabilities" : [
+      {
+         "red" : 20,
+         "yellow" : 20,
+         "green" : 20,
+         "blue" : 20,
+         "violet" : 20
+      },
+      {
+         "red" : 20,
+         "yellow" : 20,
+         "green" : 20,
+         "blue" : 20,
+         "violet" : 20
+      },
+      {
+         "red" : 20,
+         "yellow" : 20,
+         "green" : 20,
+         "blue" : 20,
+         "violet" : 20
+      },
+      {
+         "red" : 20,
+         "yellow" : 20,
+         "green" : 20,
+         "blue" : 20,
+         "violet" : 20
+      },
+      {
+         "red" : 20,
+         "yellow" : 20,
+         "green" : 20,
+         "blue" : 20,
+         "violet" : 20
+      },
+      {
+         "red" : 20,
+         "yellow" : 20,
+         "green" : 20,
+         "blue" : 20,
+         "violet" : 20
+      },
+      {
+         "red" : 20,
+         "yellow" : 20,
+         "green" : 20,
+         "blue" : 20,
+         "violet" : 20
+      },
+      {
+         "red" : 20,
+         "yellow" : 20,
+         "green" : 20,
+         "blue" : 20,
+         "violet" : 20
+      },
+      {
+         "red" : 20,
+         "yellow" : 20,
+         "green" : 20,
+         "blue" : 20,
+         "violet" : 20
+      },
+      {
+         "red" : 20,
+         "yellow" : 20,
+         "green" : 20,
+         "blue" : 20,
+         "violet" : 20
+      },
+      {
+         "red" : 20,
+         "yellow" : 20,
+         "green" : 20,
+         "blue" : 20,
+         "violet" : 20
+      },
+      {
+         "red" : 20,
+         "yellow" : 20,
+         "green" : 20,
+         "blue" : 20,
+         "violet" : 20
       }
    ]
 }

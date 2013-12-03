@@ -40,6 +40,8 @@
 #include <vector>
 #include <map>
 
+#include <iostream> //FIXME borrar
+
 using std::string;
 using std::list;
 using std::vector;
@@ -64,6 +66,10 @@ bool GameManager::addPlayer(std::string user_id) {
     return score_tracker.addPlayer(user_id);
 }
 
+void GameManager::removePlayer(std::string user_id) {
+    score_tracker.removePlayer(user_id);
+}
+
 //TODO comunicación! Mandarle a los clientes los resultados y eso
 void GameManager::makeSwap(Position position1, Position position2, string user_id) {
     // Chequeo físico
@@ -78,22 +84,28 @@ void GameManager::makeSwap(Position position1, Position position2, string user_i
     }
     list<CombinationEffect*> effects = combiner.makeCombinations(position1, position2);
     do {
+        std::cout << "Combinación hecha" << std::endl;
         //TODO mandar los CombinationEffects (hecho, probarlo)
         string combination_effects_msg = msg_builder.buildCombinationEffectsMsg(effects);
         room->notifyClients(combination_effects_msg);
         /////////////////////////////////////////////////////////////////////////////////
         int combination_score = combiner.getLastCombinationsPoints();
         score_tracker.addToPlayerScore(user_id, combination_score);
+        std::cout << "Añadidos " << combination_score << " puntos al jugador " << user_id << std::endl;
         //TODO mandar el puntaje (hecho, probarlo) y si ganó algún jugador, terminar la partida (ver método de Room)
         string score_update_msg = msg_builder.buildScoreUpdateMsg(user_id, score_tracker.getPlayerScore(user_id));
         room->notifyClients(score_update_msg);
         if (score_tracker.goalScoreReached()) {
             // Terminó la partida
+            std::cout << "Terminó la partida" << std::endl;
             room->endMatch();
         }
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+        std::cout << "Generando productos de relleno" << std::endl;
         refill();
+        std::cout << "Reordenando tableros" << std::endl;
         refiller.realocateBoard();
+        std::cout << "Chequeando combinaciones encadenadas" << std::endl;
         effects = combiner.makeChainedCombinations();
     } while (effects.size() > 0);
 }
@@ -118,16 +130,32 @@ void GameManager::configureBoards() {
 }
 
 void GameManager::setInitialProducts() {
-    list<Product*> products;
-    level_reader->getInitialProducts(products);
-    list<Product*>::iterator it;
+//    list<Product*> products;
+//    level_reader->getInitialProducts(products);
+//    list<Product*>::iterator it;
+//    for (int x = 0; x < board.getWidth(); x++) {
+//        for (int y = 0; y < board.getHeight(); y++) {
+//            if (board.getTileType(x,y) == Tile::HOLE) {
+//                continue;
+//            }
+//            board.setProduct((*it), x, y);
+//            ++it;
+//        }
+//    }
     for (int x = 0; x < board.getWidth(); x++) {
         for (int y = 0; y < board.getHeight(); y++) {
-            if (board.getTileType(x,y) == Tile::HOLE) {
-                continue;
+            if (board.getTileType(x, y) == Tile::CELL) {
+                //                int color = rand()%5;
+                //                int type = rand()%3;
+                //                Product* product = new Product(color, type);
+                //                Product* replacement = new Product(color, type);
+                //FIXME
+                int color = y%5;
+                Product* product = new Product(color, Product::BUTTON);
+                board.setProduct(product, x, y);
+//                Product* replacement = new Product(color, Product::BUTTON);
+//                replacements_board.setProduct(replacement, x, y);
             }
-            board.setProduct((*it), x, y);
-            ++it;
         }
     }
 }
@@ -166,7 +194,7 @@ bool GameManager::checkCombination(Position position1, Position position2) {
 }
 
 void GameManager::refill(bool send) {
-    for (int column = 0; column < board.getWidth(); column++) {
+    for (int column = 0; column < replacements_board.getWidth(); column++) {
         int empty_cells = replacements_board.getEmptyCellsInColumn(column);
         if (empty_cells > 0) {
             list<Product*> replacements = replacements_generator.getReplacements(empty_cells, column);

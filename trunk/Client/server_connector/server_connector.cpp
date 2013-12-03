@@ -151,6 +151,14 @@ void Server_Connector::requestLevel(){
 	sendMsg(LEVEL_DATA);
 }
 
+void Server_Connector::requestBoard(){
+    sendMsg(BOARD_PRODUCTS);
+}
+
+void Server_Connector::requestReplacements(){
+    sendMsg(REPLACEMENT_PRODUCTS);
+}
+
 void Server_Connector::setLevel(std::string lvl){
 	this->level_data = lvl;
 	this->level_received = true;

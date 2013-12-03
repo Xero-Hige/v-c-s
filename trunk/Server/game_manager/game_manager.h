@@ -64,6 +64,7 @@ public:
     GameManager(Room* room, LevelReader* level_reader);
     void configure();
     bool addPlayer(std::string user_id);
+    void removePlayer(std::string user_id);
     void makeSwap(Position position1, Position position2, std::string user_id);
     void getSerializedBoardProducts(std::string& serialized_products);
     void getSerializedReplacementProducts(std::string& serialized_products);

@@ -41,13 +41,16 @@ void ClientMsgInterpreter::interpretParticularMsg(string msg){
     } else if (header == GAME_OVER) {
         //TODO
     } else if (header == COMBINATION_EFFECTS) {
+        std::cout << "Nuevos efectos de combinación recibidos: ";
         list<CombinationEffect*> effects;
         game_msg_reader.readCombinationEffectsMsg(effects, msg_reader);
+        std::cout << effects.size() << std::endl;
         backend->addEffectsToQueue(effects);
     } else if (header == PRODUCT_REFILL) {
         int column;
         list<Product*> products;
-        game_msg_reader.readProductRefill(column,products,msg_reader);
+        game_msg_reader.readProductRefill(column, products, msg_reader);
+        std::cout << "Productos para rellenar columna " << column << ": " << products.size() << std::endl;
         backend->addRefillerProducts(column, products);
     }
 }
