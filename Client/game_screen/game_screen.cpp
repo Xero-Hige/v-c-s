@@ -90,13 +90,14 @@ void GameScreen::animate_swap() {
 }
 
 void GameScreen::animate_efects() {
+	loop();
 	while (backend.poolEffect()) {
-		vector<Position> del = backend.get_removed_pokemons();
+		vector < Position > del = backend.get_removed_pokemons();
 
 		if (del.size() < 1) {
 			change_animation();
 		} else {
-			delete_animation(del);
+			delete_animation (del);
 		}
 	}
 
@@ -108,7 +109,7 @@ void GameScreen::change_animation() {
 }
 
 void GameScreen::delete_animation(vector<Position>& deleted) {
-	vector<Position> positions;
+	vector < Position > positions;
 	positions.resize(board_columns, Position());
 
 	for (size_t i = 0; i < deleted.size(); i++) {
@@ -203,7 +204,7 @@ void GameScreen::setupBackground() {
 	//FIXME
 	//temporal_cell.set_scaled_dimensions(DIMENSION_X, DIMENSION_Y);
 
-	vector<vector<int> > schema = backend.get_board_schema();
+	vector < vector<int> > schema = backend.get_board_schema();
 
 	for (size_t i = 0; i < schema.size(); i++) {
 		for (size_t j = 0; j < schema[i].size(); j++) {
@@ -251,7 +252,7 @@ void GameScreen::setupBanners() {
 }
 
 void GameScreen::setup_sprites() {
-	vector<string> pokemon_codes = backend.get_board_pokemon_codes();
+	vector < string > pokemon_codes = backend.get_board_pokemon_codes();
 
 	for (int i = 0; i < 5; i++) {
 		sprites.push_back(
@@ -389,4 +390,24 @@ void GameScreen::render() {
 }
 
 void GameScreen::cleanup() {
+	background.free();
+	over_mask.free();
+
+	left_banner.free();
+	right_banner.free();
+
+	hover_cell.free();
+
+	//Sprite loading_mask;
+	//Animated_Sprite loading_icon;
+
+	Music::halt_music();
+	background_music.free();
+
+	for (size_t i = 0; i < sprites.size(); i++) {
+		sprites[i].free();
+	}
+
+	window.free();
+
 }
