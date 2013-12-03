@@ -56,16 +56,17 @@ void Board::setSchema(vector<vector<int> >& schema) {
 }
 
 void Board::setUp(list<Product*> products) {
-    for (int x = 0; x < columns; x++) {
-        for (int y = 0; y < rows; y++) {
-            if (products.size()) {
+    list<Product*>::iterator it = products.begin();
+    for (int y = 0; y < rows; y++) {
+        for (int x = 0; x < columns; x++) {
+            if (products.size() == 0) {
                 return;
             }
             int index = getIndexFromPos(x, y);
             Tile& tile = tiles[index];
             if (tile.isCell()) {
-                tile.setProduct(products.front());
-                products.pop_front();
+                tile.setProduct((*it));
+                ++it;
                 productsInColumn[x]++;
             }
         }
@@ -146,13 +147,10 @@ void Board::swapProducts(Position& pos1, Position& pos2) {
 
 void Board::rearrangeColumn(int column_number) {
     //TODO revisar esta cosa
-    std::cout << "Reacomodando columna " << column_number;
     // If not a valid value, it is ignored
     if (0 > column_number || column_number >= columns) {
-        std::cout << " - Número de columna inválido (válidos de 0 a " << columns << "): " << column_number << std::endl;;
         return;
     }
-    std::cout << std::endl;
     int x = column_number;
     int y = rows-1;
     while (y >= 0) {

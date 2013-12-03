@@ -26,6 +26,7 @@
 #include "../../libs/checkers/physical_checker.h"
 #include "../../libs/level_reader/level_reader.h"
 #include "../../libs/score_tracker/score_tracker.h"
+#include "../../libs/game_messages/json_deserializer.h"
 
 #include <stddef.h>
 #include <cstdlib> //TODO sacar
@@ -115,6 +116,12 @@ void Backend::configureBoards() {
     replacements_board = Board(level_reader.getBoardHeight(), level_reader.getBoardWidth());
     physical_checker = PhysicalChecker(board);
     combination_checker = CombinationChecker(&board);
+    vector<vector<int> > schema;
+    level_reader.getBoardSchema(schema);
+    board.setSchema(schema);
+    replacements_board.setSchema(schema);
+    //TODO esto no sé si ponerlo acá
+    asyncSetUpInitialProducts();
 }
 
 vector<string> Backend::get_board_pokemon_codes() {
@@ -159,24 +166,30 @@ std::vector<std::vector<int> > Backend::get_full_board() {
 }
 
 bool Backend::poolEffect() {
-    if (combination_effects_queue.size() == 0) {
+    if (effects_to_apply.size() == 0) {
+        if (combination_effects_queue.size() > 0) {
+            list<CombinationEffect*>& effects = combination_effects_queue.front();
+            effects_to_apply.splice(effects_to_apply.end(), effects);
+            combination_effects_queue.pop_front();
+            refiller.realocateBoard();
+        }
         return false;
     }
-    CombinationEffect* combination_effect = combination_effects_queue.front();
+    CombinationEffect* combination_effect = effects_to_apply.front();
     if (combination_effect->isApplied()) {
-        combination_effects_queue.pop_front();
+        effects_to_apply.pop_front();
         return poolEffect();
     }
-//    combination_effect->applyEffect(board); //FIXME descomentar cuando se saque el combiner
-    combination_effect->setApplied(); //FIXME borrar cuando se saque el combiner
+    combination_effect->applyEffect(board); //FIXME descomentar cuando se saque el combiner
+//    combination_effect->setApplied(); //FIXME borrar cuando se saque el combiner
     return true;
 }
 
 vector<Position> Backend::get_removed_pokemons() {
-    if (combination_effects_queue.size() == 0) {
+    if (effects_to_apply.size() == 0) {
         return vector<Position>();
     }
-    CombinationEffect* combination_effect = combination_effects_queue.front();
+    CombinationEffect* combination_effect = effects_to_apply.front();
     std::cout << "CAE " << combination_effect->getEliminatedProducts().size() << std::endl;
     return combination_effect->getEliminatedProducts();
 //	Position a=l[0];
@@ -201,26 +214,26 @@ vector<Position> Backend::get_removed_pokemons() {
 }
 
 vector<Position> Backend::getChangedProductsPositions() {
-    if (combination_effects_queue.size() == 0) {
+    if (effects_to_apply.size() == 0) {
         return vector<Position>();
     }
-    CombinationEffect* combination_effect = combination_effects_queue.front();
+    CombinationEffect* combination_effect = effects_to_apply.front();
     return combination_effect->getChangedProducts();
 }
 
 vector<int> Backend::getChangedProductsTypes() {
-    if (combination_effects_queue.size() == 0) {
+    if (effects_to_apply.size() == 0) {
         return vector<int>();
     }
-    CombinationEffect* combination_effect = combination_effects_queue.front();
+    CombinationEffect* combination_effect = effects_to_apply.front();
     return combination_effect->getNewProductsTypes();
 }
 
 Position Backend::getEffectOrigin() {
-    if (combination_effects_queue.size() == 0) {
+    if (effects_to_apply.size() == 0) {
         return Position();
     }
-    CombinationEffect* combination_effect = combination_effects_queue.front();
+    CombinationEffect* combination_effect = effects_to_apply.front();
     return combination_effect->getOrigin();
 }
 
@@ -236,7 +249,13 @@ void Backend::addToPlayerScore(std::string user_id, int score) {
 }
 
 void Backend::addEffectsToQueue(std::list<CombinationEffect*>& effects) {
-    combination_effects_queue.splice(combination_effects_queue.end(), effects);
+    if (effects_to_apply.size() == 0 && combination_effects_queue.size() == 0) {
+        effects_to_apply.splice(effects_to_apply.end(), effects);
+    } else {
+        combination_effects_queue.push_back(list<CombinationEffect*>());
+        list<CombinationEffect*>& new_effects = combination_effects_queue.back();
+        new_effects.splice(new_effects.end(), effects);
+    }
 }
 
 void Backend::addRefillerProducts(int column, std::list<Product*> products) {
@@ -254,22 +273,17 @@ vector<vector<int> > Backend::get_board_schema() {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     vector<vector<int> > schema;
     level_reader.getBoardSchema(schema);
-    // TODO Esto no me gusta acá, habría que ver donde/como se puede poner. Dónde se configuran los tableros (configureBoards)??
-    board.setSchema(schema);
-    replacements_board.setSchema(schema);
-    //TODO esto no va acá, hay que acomodarlo donde corresponda
-    asyncSetUpInitialProducts();
     ///////////////////////////////////////////////////////////
     //FIXME esto se hace en el server, borrar cuando haya conexión
-    map<string, int> probabilities_table;
-    probabilities_table["red"] = 20;
-    probabilities_table["yellow"] = 20;
-    probabilities_table["green"] = 20;
-    probabilities_table["blue"] = 20;
-    probabilities_table["violet"] = 20;
-    vector<ProductGenerator*> product_generators;
-    product_generators.resize(replacements_board.getWidth(), new ProductGenerator(probabilities_table));
-    replacements_generator = ReplacementsGenerator(&replacements_board, product_generators);
+//    map<string, int> probabilities_table;
+//    probabilities_table["red"] = 20;
+//    probabilities_table["yellow"] = 20;
+//    probabilities_table["green"] = 20;
+//    probabilities_table["blue"] = 20;
+//    probabilities_table["violet"] = 20;
+//    vector<ProductGenerator*> product_generators;
+//    product_generators.resize(replacements_board.getWidth(), new ProductGenerator(probabilities_table));
+//    replacements_generator = ReplacementsGenerator(&replacements_board, product_generators);
     ///////////////////////////////////////////////////////////////
     return schema;
 }
@@ -291,26 +305,25 @@ bool Backend::async_make_swap(Position pos1_graphic, Position pos2_graphic) {
         return false;
     }
     string swap_msg = msg_builder.buildSwapMessage(user_nick, pos1_logic, pos2_logic);
-//    server_connector.sendMsg(swap_msg); //FIXME descomentarlo cuando se conecte con el server
+    server_connector.sendMsg(swap_msg); //FIXME descomentarlo cuando se conecte con el server
     //FIXME esto va en el server y/o otro lado
-    Combiner combiner = Combiner(board);
-    list<CombinationEffect*> effects = combiner.makeCombinations(pos1_logic, pos2_logic);
-//    do {
-    addEffectsToQueue(effects);
-    for (int column = 0; column < board.getWidth(); column++) {
-        int empty_cells = replacements_board.getEmptyCellsInColumn(column);
-        if (empty_cells > 0) {
-            list<Product*> replacements = replacements_generator.getReplacements(empty_cells, column);
-            refiller.addReplacements(column, replacements);
-        }
-    }
-    refiller.realocateBoard();
-//    effects = combiner.makeChainedCombinations();
-//    } while (effects.size() > 0);
-    std::cout << "Puntos obtenidos en el último movimiento: " << combiner.getLastCombinationsPoints() << std::endl;
-    std::cout << "Efectos a aplicar: " << combination_effects_queue.size() << std::endl;
+//    Combiner combiner = Combiner(board);
+//    list<CombinationEffect*> effects = combiner.makeCombinations(pos1_logic, pos2_logic);
+////    do {
+//    addEffectsToQueue(effects);
+//    for (int column = 0; column < board.getWidth(); column++) {
+//        int empty_cells = replacements_board.getEmptyCellsInColumn(column);
+//        if (empty_cells > 0) {
+//            list<Product*> replacements = replacements_generator.getReplacements(empty_cells, column);
+//            refiller.addReplacements(column, replacements);
+//        }
+//    }
+//    refiller.realocateBoard();
+////    effects = combiner.makeChainedCombinations();
+////    } while (effects.size() > 0);
+//    std::cout << "Puntos obtenidos en el último movimiento: " << combiner.getLastCombinationsPoints() << std::endl;
+//    std::cout << "Efectos a aplicar: " << combination_effects_queue.size() << std::endl;
     /////////////////////////////////////////
-
     return true;
 }
 
@@ -329,22 +342,45 @@ void Backend::asyncGetLevelSpecification() {
 
 void Backend::asyncSetUpInitialProducts() {
     //TODO que en serio lo pida al server, no que lo invente acá
-    for (int x = 0; x < board.getWidth(); x++) {
-        for (int y = 0; y < board.getHeight(); y++) {
-            if (board.getTileType(x, y) == Tile::CELL){
-//                int color = rand()%5;
-//                int type = rand()%3;
-//                Product* product = new Product(color, type);
-//                Product* replacement = new Product(color, type);
-                //FIXME
-                int color = y%5;
-                Product* product = new Product(color, Product::BUTTON);
-                board.setProduct(product, x, y);
-                Product* replacement = new Product(color, Product::BUTTON);
-                replacements_board.setProduct(replacement, x, y);
-            }
-        }
+//    for (int x = 0; x < board.getWidth(); x++) {
+//        for (int y = 0; y < board.getHeight(); y++) {
+//            if (board.getTileType(x, y) == Tile::CELL){
+////                int color = rand()%5;
+////                int type = rand()%3;
+////                Product* product = new Product(color, type);
+////                Product* replacement = new Product(color, type);
+//                //FIXME
+//                int color = y%5;
+//                Product* product = new Product(color, Product::BUTTON);
+//                board.setProduct(product, x, y);
+//                Product* replacement = new Product(color, Product::BUTTON);
+//                replacements_board.setProduct(replacement, x, y);
+//            }
+//        }
+//    }
+    JsonDeserializer deserializer;
+    string serialized_products;
+    server_connector.requestBoard();
+    while (! server_connector.getBoard(serialized_products));
+    std::cout << "Se recibieron datos de los productos: " << ((serialized_products.size() != 0)?"OK":"ERROR") << std::endl;
+    deserializer.processNewObject(serialized_products);
+    int n_products = deserializer.getObjectArraySize("board products");
+    list<Product*> products;
+    for (int c = 0; c < n_products; c++) {
+        products.push_back(new Product());
     }
+    deserializer.getObjectArrayField("board products", (list<IJsonSerializable*>&)products);
+    board.setUp(products);
+    string serialized_replacements;
+    server_connector.requestReplacements();
+    while (! server_connector.getReplacements(serialized_replacements));
+    std::cout << "Se recibieron datos de los reemplazos: " << ((serialized_replacements.size() != 0)?"OK":"ERROR") << std::endl;
+    deserializer.processNewObject(serialized_replacements);
+    int n_replacements = deserializer.getObjectArraySize("board products");
+    list<Product*> replacements;
+    replacements.resize(n_replacements, new Product());
+    deserializer.getObjectArrayField("board products", (list<IJsonSerializable*>&)replacements);
+    replacements_board.setUp(replacements);
 }
 
 bool Backend::checkSwap(Position pos1_logic, Position pos2_logic) {

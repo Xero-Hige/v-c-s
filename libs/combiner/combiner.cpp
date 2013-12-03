@@ -60,7 +60,8 @@ list<CombinationEffect*> Combiner::makeCombinations(Position pos1, Position pos2
 list<CombinationEffect*> Combiner::makeChainedCombinations() {
     multiplier++;
     list<CombinationEffect*> result_list;
-    while (last_combination_positions.size() > 0) {
+    int last_combination_size = last_combination_positions.size();
+    for (int c = 0; c < last_combination_size; c++) {
         Position pos = last_combination_positions.front();
         if (board.getProductType(pos) != Product::STAR) {
             makeCombination(pos, result_list);
@@ -145,7 +146,6 @@ int Combiner::makeCombination(Position pos, std::list<CombinationEffect*>& resul
     if (longest_combination_size > 3) {
         upgradeProduct(pos, origin_product_color, vertical_count, horizontal_count, result_list);
     }
-    std::cout << "Productos eliminados: " << products_eliminated << " - Puntos por producto: " << points_per_product << " - Multiplicador: " << multiplier << std::endl;
     return products_eliminated * points_per_product * multiplier;
 }
 
@@ -162,10 +162,8 @@ int Combiner::activateCombination(Position initial_pos, Position ending_pos, Pos
 }
 
 int Combiner::activateProduct(Position product_pos, list<CombinationEffect*>& result_list) {
-    std::cout << "Activando posición (" << product_pos.getX() << "," << product_pos.getY() << ")" << std::endl;
     int products_eliminated = 0;
     int product_type = board.getProductType(product_pos);
-    std::cout << "Tipo de producto al activar: " << product_type << std::endl;
     delete board.takeOutProduct(product_pos);
     products_eliminated++;
     last_combination_positions.push_back(product_pos);

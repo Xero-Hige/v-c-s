@@ -90,6 +90,16 @@ public:
 	 */
 	void requestLevel();
 	/*
+	 * requestBoard pide al servidor que se envie los datos serializados de
+	 * los productos del tablero de juego
+	 */
+	void requestBoard();
+	/*
+	 * requestReplacements pide al servidor que se envie los datos
+	 * serializados de los productos del tablero de juego
+	 */
+	void requestReplacements();
+	/*
 	 * setLevel setea los datos del nivel entrante.
 	 */
 	void setLevel(std::string lvl);

@@ -24,8 +24,10 @@ bool MsgInterpreter::interpret(std::string s) {
 	} else if (s.compare(LEVEL_DATA) == 0){
 		manageLevel();
 	} else if (s.compare(BOARD_PRODUCTS) == 0){
+	    std::cout << "Mensaje: Serializar tablero" << std::endl;
 		manageBoard();
 	} else if (s.compare(REPLACEMENT_PRODUCTS) == 0){
+	    std::cout << "Mensaje: Serializar reemplazos" << std::endl;
 		manageReplacements();
 	}
 	interpretParticularMsg(s);

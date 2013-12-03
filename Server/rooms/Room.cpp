@@ -14,6 +14,8 @@
 #include <vector>
 #include <string>
 
+using std::string;
+
 #define FILE_COMMON_NAME "level"
 #define FILE_EXT ".json"
 
@@ -34,8 +36,10 @@ Room::Room(Lobby * lob, unsigned limit,unsigned lvl, unsigned long r_id):
 	currently_playing = false;
 	active = true;
 	//TODO leer las cosas del archivo y mandarlo acá
-//	level_reader.changeLevelData(loadLevel());
+	string level_data = loadLevel();
+	level_reader.changeLevelData(level_data);
 //	this->limit = level_reader.getNumberOfPlayers();
+	game_manager.configure();
 }
 
 std::string Room::getLevelName(){
@@ -60,8 +64,10 @@ bool Room::addClient(ClientHandler* ch){
 	std::cout << "Se agrego un cliente al room " << this->id;
 	std::cout << std::endl;
 	clients.push_back(ch);
-	usernames.push_back(ch->getUserid());
+	string user_id = ch->getUserid();
+	usernames.push_back(user_id);
 	ch->setRoom(this);
+	game_manager.addPlayer(user_id);
 	return true;
 }
 
@@ -72,6 +78,7 @@ void Room::eraseUsername(std::string username){
 		std::string username_actual = *it;
 		if (username_actual.compare(username) == 0){
 			usernames.erase(it);
+			game_manager.removePlayer(username);
 			return;
 		}
 	}
