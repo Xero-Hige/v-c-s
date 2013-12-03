@@ -401,7 +401,7 @@ void GameScreen::cleanup() {
 	//Sprite loading_mask;
 	//Animated_Sprite loading_icon;
 
-	Music::halt_music();
+	Music::halt_audio();
 	background_music.free();
 
 	for (size_t i = 0; i < sprites.size(); i++) {
