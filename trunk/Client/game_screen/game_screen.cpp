@@ -90,7 +90,6 @@ void GameScreen::animate_swap() {
 }
 
 void GameScreen::animate_efects() {
-	loop();
 	while (backend.poolEffect()) {
 		vector<Position> del = backend.get_removed_pokemons();
 
@@ -341,6 +340,7 @@ void GameScreen::loop() {
 }
 
 void GameScreen::renderBoard() {
+	animate_efects();
 	background.draw(window);
 
 	for (int i = 0; i < board_columns; i++) {
